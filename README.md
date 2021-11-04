@@ -43,13 +43,13 @@ Return a JSON OBJECT with booking id
 	{"ID_Booking":1}
 	
 #### PUT /api/bookingstate
-
-Edit the state of an existing booking
+Edit the state of an existing booking.
 
 Receive a JSON object:
 
-   {"ID_Booking":1,
-   "New_State":"DELIVERED"}
+   	{"ID_Booking":1,
+   	"New_State":"DELIVERED"}
+
 
 #### GET /api/bookings
 
@@ -86,7 +86,7 @@ Add a new client in the table Client
 
 Receive a JSON object, password is the HASH of the password
 
-  {"Email":"antonio.bianchi@mail.it",
+  	{"Email":"antonio.bianchi@mail.it",
 	"Name":"Antonio",
 	"Surname":"Bianchi",
 	"Password":"sdojnids3204klvncxpkèpf"}
@@ -101,11 +101,11 @@ Return the client ID
 
 Get a client by mail. Receives a JSON object with the email
   
-  {"email":"antonio.bianchi@mail.it"}
+  	{"email":"antonio.bianchi@mail.it"}
 
 Return the client id if exists, -1 if not exists
 
-  {"id_client":-1}
+  	{"id_client":-1}
 
 #### GET /api/wallet
 
@@ -113,7 +113,7 @@ Get the balance of a client.
 
 Receive a JSON Object with client ID
 
-  {"Client_id":1}
+  	{"Client_id":1}
 
 Return a JSON with balance
   
@@ -128,6 +128,6 @@ Edit the wallet balance for a certain client
 Receive a JSON Object with client ID and new balance
   
 	{"Client_id":1,
-	 "New_Balance":19.99}
+	"New_Balance":19.99}
 	
 
