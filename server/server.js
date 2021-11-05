@@ -39,10 +39,13 @@ app.use(passport.session());
 
 /*** PASSPORT METHODS ***/
 
-/* TO BE IMPLEMENTED
-passport.use(new LocalStrategy(
+passport.use('client-local',new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password' // this is the virtual field on the model
+  },
   function(username, password, done){
-    dao.getUser(username,password)
+    dao.getClient(username,password)
     .then((user) => {
       if(!user)
         return done(null,false, {message: "Incorrect username and/or password"});
@@ -53,18 +56,78 @@ passport.use(new LocalStrategy(
     });
   }));
 
+  passport.use('farmer-local',new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password' // this is the virtual field on the model
+    },
+    function(username, password, done){
+      dao.getFarmer(username,password)
+      .then((user) => {
+        if(!user)
+          return done(null,false, {message: "Incorrect username and/or password"});
+        return done(null,user);    
+      })
+      .catch((err)=>{
+        return done(err);
+      });
+    }));
+
+    passport.use('shop-employee-local',new LocalStrategy(
+      {
+        usernameField: 'email',
+        passwordField: 'password' // this is the virtual field on the model
+      },
+      function(username, password, done){
+        dao.getShopEmployee(username,password)
+        .then((user) => {
+          if(!user)
+            return done(null,false, {message: "Incorrect username and/or password"});
+          return done(null,user);    
+        })
+        .catch((err)=>{
+          return done(err);
+        });
+      }));
+
 passport.serializeUser((user,done) => {
   done(null,user.id);
 });
 
 passport.deserializeUser((id,done) => {
-  dao.getUserById(id).then((user) => {
-    done(null,user);
-  })
-  .catch((err) => {
-    done(err,null)
-  });
-}); */
+
+  //Catch first letter from ID and decide what kind of user we have
+  const type = id.charAt(0);
+  const identifier = id.substring(1);
+
+  if(type === 'C'){
+    dao.getClientById(identifier).then((user) => {
+      done(null,user);
+    })
+    .catch((err) => {
+      done(err,null)
+    });
+  }
+  if (type === 'F'){
+    dao.getFarmerById(identifier).then((user) => {
+      done(null,user);
+    })
+    .catch((err) => {
+      done(err,null)
+    });
+  }
+  if (type === 'S'){
+    dao.getShopEmployeeById(identifier).then((user) => {
+      done(null,user);
+    })
+    .catch((err) => {
+      done(err,null)
+    });
+  }
+
+  
+});
+
 
 
 // activate the server
