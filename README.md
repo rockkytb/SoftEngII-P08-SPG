@@ -1,5 +1,10 @@
 # SoftEngII-P08-SPG
 
+## HOW TO TEST? SERVER SIDE
+
+1) cd server
+2) npm run test
+
 ## LIST OF API SPRINT 1
 
 ### http://localhost:3000 is the default path
