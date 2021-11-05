@@ -218,6 +218,45 @@ app.post('/api/bookings', //isLoggedIn,
     res.status(201).json({idBooking: bookingId});
 });
 
+//POST /api/newclient
+app.post('/api/newclient', //isLoggedIn,
+    async (req, res) => {
+
+    if(!validator.isEmail(req.body.email)){
+      return res.status(422).json({error: `Invalid client's email`});
+    }
+
+    if(!validator.isLength(req.body.name,{min:1, max:100})){
+      return res.status(422).json({error: `Invalid client's name`});
+    }
+
+    if(!validator.isLength(req.body.surname,{min:1, max:100})){
+      return res.status(422).json({error: `Invalid client's surname`});
+    }
+    
+    if(!validator.isLength(req.body.password,{min:60, max:60})){
+      return res.status(422).json({error: `Invalid client's password hash`});
+    }
+
+    const client = {
+      email: req.body.email,
+      name : req.body.name,
+      surname : req.body.surname,
+      password: req.body.password
+    };
+
+    let clientId;
+  
+    try {
+      clientId=await dao.createClient(client);
+      
+    } catch(err) {
+      res.status(503).json({error: `Database error during the creation of client: ${client.email}.`});
+    }
+
+    //All went fine
+    res.status(201).json({idClient: clientId});
+});
 
 
 

@@ -99,16 +99,18 @@ Add a new client in the table Client
 
 Receive a JSON object, password is the HASH of the password
 
-  	{"Email":"antonio.bianchi@mail.it",
-	"Name":"Antonio",
-	"Surname":"Bianchi",
-	"Password":"sdojnids3204klvncxpkèpf"}
+  	{"email":"antonio.bianchi@mail.it",
+	"name":"Antonio",
+	"surname":"Bianchi",
+	"password":"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"}
+
+	plaintext password for this user is : 'testpassword'
   
 Add also a record in the table client_Wallet with the same client ID and balance = 0
 
 Return the client ID
 
-	{"ID":3}
+	{"idClient":3}
 
 #### GET /api/client
 

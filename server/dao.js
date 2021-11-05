@@ -13,7 +13,7 @@ const db = new sqlite.Database(testmode ? ('testdatabase.db'):('database.db'), (
   });
 
 
-  //get Client
+//get Client
 exports.getClient = (email,password) => {
   return new Promise((resolve, reject) => {
     const sql= 'SELECT * FROM CLIENT WHERE EMAIL = ?';
@@ -124,6 +124,20 @@ exports.createBooking = (booking) => {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO BOOKING (CLIENT_ID, STATE) VALUES(?, ?)';
     db.run(sql, [booking.idClient, booking.state], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(this.lastID);
+    });
+  });
+};
+
+// add a new client
+exports.createClient = (client) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD) VALUES(?, ?, ?, ?)';
+    db.run(sql, [client.email, client.name, client.surname, client.password], function (err) {
       if (err) {
         reject(err);
         return;
