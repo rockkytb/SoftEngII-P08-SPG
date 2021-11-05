@@ -40,10 +40,6 @@ app.use(passport.session());
 /*** PASSPORT METHODS ***/
 
 passport.use('client-local',new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password' // this is the virtual field on the model
-  },
   function(username, password, done){
     dao.getClient(username,password)
     .then((user) => {
@@ -57,10 +53,6 @@ passport.use('client-local',new LocalStrategy(
   }));
 
   passport.use('farmer-local',new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password' // this is the virtual field on the model
-    },
     function(username, password, done){
       dao.getFarmer(username,password)
       .then((user) => {
@@ -74,10 +66,6 @@ passport.use('client-local',new LocalStrategy(
     }));
 
     passport.use('shop-employee-local',new LocalStrategy(
-      {
-        usernameField: 'email',
-        passwordField: 'password' // this is the virtual field on the model
-      },
       function(username, password, done){
         dao.getShopEmployee(username,password)
         .then((user) => {
