@@ -43,17 +43,17 @@ return the JSON list of all products. Example
 	"Farmer_ID":3},
 	...]
 
-#### POST /api/booking
+#### POST /api/bookings
 
 Create a new booking with state = BOOKED
 
 Receive a JSON object
 
-	{"Client_id":3}
+	{"idClient":3}
   
 Return a JSON OBJECT with booking id
 
-	{"ID_Booking":1}
+	{"idBooking":1}
 	
 #### PUT /api/bookingstate
 Edit the state of an existing booking.

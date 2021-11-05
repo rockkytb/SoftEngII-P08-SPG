@@ -21,7 +21,7 @@ exports.getClient = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'C'+'${row.id}', username: row.email, name: row.name, surname: row.surname};
+        const user = {id: `C${row.id}`, username: row.email, name: row.name, surname: row.surname};
         
         bcrypt.compare(password, row.password).then(result => {
           if(result) resolve(user);
@@ -41,7 +41,7 @@ exports.getClientById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'C'+'${row.id}', username: row.email};
+        const user = {id: `C${row.id}`, username: row.email};
         resolve(user);
       }
     });
@@ -56,7 +56,7 @@ exports.getFarmer = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'F'+'${row.id}', username: row.email};
+        const user = {id: `F${row.id}`, username: row.email};
         
         bcrypt.compare(password, row.password).then(result => {
           if(result) resolve(user);
@@ -77,7 +77,7 @@ exports.getShopEmployee = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'S'+'${row.id}', username: row.email};
+        const user = {id: `S${row.id}`, username: row.email};
         
         bcrypt.compare(password, row.password).then(result => {
           if(result) resolve(user);
@@ -97,7 +97,7 @@ exports.getFarmerById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'F'+'${row.id}', username: row.email};
+        const user = {id: `F${row.id}`, username: row.email};
         resolve(user);
       }
     });
@@ -112,9 +112,23 @@ exports.getShopEmployeeById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: 'S'+'${row.id}', username: row.email};
+        const user = {id: `S${row.id}`, username: row.email};
         resolve(user);
       }
+    });
+  });
+};
+
+// add a new booking
+exports.createBooking = (booking) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO BOOKING (CLIENT_ID, STATE) VALUES(?, ?)';
+    db.run(sql, [booking.idClient, booking.state], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(this.lastID);
     });
   });
 };

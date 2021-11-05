@@ -192,6 +192,36 @@ app.get("/api/userinfo", isLoggedIn, (req,res)=>{
   res.status(200).json(req.user);
 });
 
+//POST /api/bookings
+app.post('/api/bookings', //isLoggedIn,
+    async (req, res) => {
+    const errors = validationResult(req);
+    
+    console.log(`ciao  ${req.body.idClient}`);
+
+    if(!validator.isInt(`${req.body.idClient}`,{min:0})){
+      return res.status(422).json({error: `Invalid client id, it must be positive`});
+    }
+    
+    const booking = {
+      idClient: req.body.idClient,
+      state : 'BOOKED'
+    };
+
+    let bookingId;
+  
+    try {
+      bookingId=await dao.createBooking(booking);
+      
+    } catch(err) {
+      res.status(503).json({error: `Database error during the creation of booking for client: ${booking.idClient}.`});
+    }
+
+    //All went fine
+    res.status(201).json({idBooking: bookingId});
+});
+
+
 
 
 // activate the server
