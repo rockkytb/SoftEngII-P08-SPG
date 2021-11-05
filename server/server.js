@@ -116,6 +116,82 @@ passport.deserializeUser((id,done) => {
   
 });
 
+//WRITE API HERE
+
+//POST /api/clientSessions FOR LOGIN OF CLIENT
+app.post('/api/clientSessions',function(req, res, next) {
+  passport.authenticate('client-local', (err, user, info) => {
+    if (err)
+      return next(err);
+      if (!user) {
+        // display wrong login messages
+        return res.status(401).json(info);
+      }
+      // success, perform the login
+      req.login(user, (err) => {
+        if (err)
+          return next(err);
+        
+        // req.user contains the authenticated user, we send all the user info back
+        // this is coming from userDao.getUser()
+        return res.json(req.user);
+      });
+  })(req, res, next);
+});
+
+//POST /api/famerSessions FOR LOGIN OF FARMERS
+app.post('/api/farmerSessions',function(req, res, next) {
+  passport.authenticate('farmer-local', (err, user, info) => {
+    if (err)
+      return next(err);
+      if (!user) {
+        // display wrong login messages
+        return res.status(401).json(info);
+      }
+      // success, perform the login
+      req.login(user, (err) => {
+        if (err)
+          return next(err);
+        
+        // req.user contains the authenticated user, we send all the user info back
+        // this is coming from userDao.getUser()
+        return res.json(req.user);
+      });
+  })(req, res, next);
+});
+
+//POST /api/shopEmployeeSessions FOR LOGIN OF SHOP EMPLOYEE
+app.post('/api/shopEmployeeSessions',function(req, res, next) {
+  passport.authenticate('shop-employee-local', (err, user, info) => {
+    if (err)
+      return next(err);
+      if (!user) {
+        // display wrong login messages
+        return res.status(401).json(info);
+      }
+      // success, perform the login
+      req.login(user, (err) => {
+        if (err)
+          return next(err);
+        
+        // req.user contains the authenticated user, we send all the user info back
+        // this is coming from userDao.getUser()
+        return res.json(req.user);
+      });
+  })(req, res, next);
+});
+
+//POST /api/logout
+app.post("/api/logout", (req,res)=>{
+  req.logout();
+  res.end();
+});
+
+//GET /api/userinfo
+app.get("/api/userinfo", isLoggedIn, (req,res)=>{
+  res.status(200).json(req.user);
+});
+
 
 
 // activate the server

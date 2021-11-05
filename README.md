@@ -4,6 +4,19 @@
 
 ### http://localhost:3000 is the default path
 
+
+#### POST /api/clientSessions
+
+Login of clients
+
+#### POST /api/famerSessions
+
+Login of farmers
+
+#### POST /api/shopEmployeeSessions
+
+Login of shop employees
+
 #### GET /api/clients 
 
 return the JSON vector of all clients.
@@ -32,7 +45,7 @@ return the JSON list of all products. Example
 
 #### POST /api/booking
 
-Create a new booking with state = PENDING
+Create a new booking with state = BOOKED
 
 Receive a JSON object
 
