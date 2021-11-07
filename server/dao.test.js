@@ -110,8 +110,7 @@ describe('Test suite DAO', () => {
     });
     test('get client return false because no user with that email exists', () => {
         const email = "marco.bianchi@mail.it";
-        const password="testpassword";
-        return expect(dao.getClient(email,password)).resolves.toBe(false);
+        return expect(dao.getClient(email,'testpassword')).resolves.toBe(false);
     });
 
     
@@ -128,8 +127,7 @@ describe('Test suite DAO', () => {
         expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
 
         const email = "antonio.bianchi@mail.it";
-        const password="ciaociao";
-        return expect(dao.getClient(email,password)).resolves.toBe(false);
+        return expect(dao.getClient(email,'ciaociao')).resolves.toBe(false);
     },10000);
 
     test('get client return success', () => {
@@ -144,7 +142,6 @@ describe('Test suite DAO', () => {
         expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
 
         const email = "antonio.bianchi@mail.it";
-        const password="testpassword";
-        return expect(dao.getClient(email,password)).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
+        return expect(dao.getClient(email,'testpassword')).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
     },10000);
 });
