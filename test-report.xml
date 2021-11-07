@@ -4,17 +4,17 @@
     <testCase name="renders learn react link" duration="1"/>
   </file>
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="38"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="8"/>
     <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="1"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="10"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="77"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="59"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="4"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="59"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="13"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="5"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="35"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="84"/>
-    <testCase name="Test suite DAO get client return success" duration="89"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="68"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="122"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="86"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="134"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="31"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="117"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="4"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="19"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="198"/>
+    <testCase name="Test suite DAO get client return success" duration="191"/>
   </file>
 </testExecutions>

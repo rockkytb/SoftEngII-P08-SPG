@@ -64,19 +64,21 @@ describe('Test suite DAO', () => {
     });
 
     test('the creation of a new client fails because name is missing', () => {
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
             surname: "Bianchi", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password: hash
         }
         return expect(dao.createClient(client)).rejects.toHaveProperty('errno', 19);
     });
 
     test('the creation of a new client fails because surname is missing', () => {
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
             name: "Antonio", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password:hash 
         }
         return expect(dao.createClient(client)).rejects.toHaveProperty('errno', 19);
     });
@@ -91,11 +93,12 @@ describe('Test suite DAO', () => {
     });
 
     test('the creation of a new client is done', () => {
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
             name: "Antonio",
             surname: "Bianchi", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password: hash
         }
         return expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
     });
@@ -103,23 +106,23 @@ describe('Test suite DAO', () => {
     //TEST DAO FUNCTION GET CLIENT
     test('get client return false because no email provided', () => {
         const email = "marco.bianchi@mail.it";
-        const password="$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty";
         return expect(dao.getClient()).resolves.toBe(false);
     });
     test('get client return false because no user with that email exists', () => {
         const email = "marco.bianchi@mail.it";
-        const password="$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty";
+        const password="testpassword";
         return expect(dao.getClient(email,password)).resolves.toBe(false);
     });
 
     
     test('get client return false because wrong password', () => {
         //Create the user
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
             name: "Antonio",
             surname: "Bianchi", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password: hash
         }
         
         expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
@@ -130,12 +133,12 @@ describe('Test suite DAO', () => {
     },10000);
 
     test('get client return success', () => {
-
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
             name: "Antonio",
             surname: "Bianchi", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password:hash 
         }
 
         expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
