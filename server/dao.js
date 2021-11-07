@@ -21,9 +21,9 @@ exports.getClient = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `C${row.id}`, username: row.email, name: row.name, surname: row.surname};
-        
-        bcrypt.compare(password, row.password).then(result => {
+        const user = {id: `C${row.ID}`, username: row.EMAIL, name: row.NAME, surname: row.SURNAME};
+
+        bcrypt.compare(password, row.PASSWORD).then(result => {
           if(result) resolve(user);
           
           else resolve(false);
@@ -41,7 +41,7 @@ exports.getClientById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `C${row.id}`, username: row.email};
+        const user = {id: `C${row.ID}`, username: row.EMAIL};
         resolve(user);
       }
     });
@@ -56,9 +56,9 @@ exports.getFarmer = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `F${row.id}`, username: row.email};
+        const user = {id: `F${row.ID}`, username: row.EMAIL};
         
-        bcrypt.compare(password, row.password).then(result => {
+        bcrypt.compare(password, row.PASSWORD).then(result => {
           if(result) resolve(user);
           
           else resolve(false);
@@ -77,9 +77,9 @@ exports.getShopEmployee = (email,password) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `S${row.id}`, username: row.email};
+        const user = {id: `S${row.ID}`, username: row.EMAIL};
         
-        bcrypt.compare(password, row.password).then(result => {
+        bcrypt.compare(password, row.PASSWORD).then(result => {
           if(result) resolve(user);
           
           else resolve(false);
@@ -97,7 +97,7 @@ exports.getFarmerById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `F${row.id}`, username: row.email};
+        const user = {id: `F${row.ID}`, username: row.EMAIL};
         resolve(user);
       }
     });
@@ -112,7 +112,7 @@ exports.getShopEmployeeById = (id) => {
       if(err) {reject(err);}
       else if (row===undefined) {resolve (false);}
       else {
-        const user = {id: `S${row.id}`, username: row.email};
+        const user = {id: `S${row.ID}`, username: row.EMAIL};
         resolve(user);
       }
     });

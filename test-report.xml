@@ -4,8 +4,17 @@
     <testCase name="renders learn react link" duration="1"/>
   </file>
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="the creation fails because id client is missing" duration="7"/>
-    <testCase name="the creation fails because state is missing" duration="1"/>
-    <testCase name="the creation is done" duration="20"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="4"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="1"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="73"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="2"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="19"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="19"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="18"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="28"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="29"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="20"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="80"/>
+    <testCase name="Test suite DAO get client return success" duration="113"/>
   </file>
 </testExecutions>
