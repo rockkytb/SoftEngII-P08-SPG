@@ -1,5 +1,6 @@
 const dao = require('./dao');
 const sqlite = require('sqlite3');
+const bcrypt = require('bcrypt');
 
 jest.useRealTimers();
 
@@ -53,10 +54,11 @@ describe('Test suite DAO', () => {
 
     //TEST DAO FUNCTION CREATE CLIENT
     test('the creation of a new client fails because email is missing', () => {
+        const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             name : "Antonio",
             surname: "Bianchi", 
-            password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
+            password:hash
         }
         return expect(dao.createClient(client)).rejects.toHaveProperty('errno', 19);
     });
