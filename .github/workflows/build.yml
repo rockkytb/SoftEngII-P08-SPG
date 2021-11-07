@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Run Tests Server
         run: cd server
-        run:  npm run test
+             npm run test
       # -name: Run Tests client
         # run: cd client
         #  run: npm run test
