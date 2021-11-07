@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 jest.useRealTimers();
 
 describe('Test suite DAO', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
        // code to run before each test
     
        const db = new sqlite.Database('testdatabase.db', (err) => {
@@ -14,14 +14,14 @@ describe('Test suite DAO', () => {
 
        //Clean the db
 
-       db.run('DELETE FROM BOOKING', (err) => {
+       await db.run('DELETE FROM BOOKING', (err) => {
         if (err) {
           throw(err);
         } 
       });
     
       
-      db.run('DELETE FROM CLIENT', (err) => {
+      await db.run('DELETE FROM CLIENT', (err) => {
         if (err) {
           throw(err);
         } 
@@ -108,6 +108,7 @@ describe('Test suite DAO', () => {
         const email = "marco.bianchi@mail.it";
         return expect(dao.getClient()).resolves.toBe(false);
     });
+
     test('get client return false because no user with that email exists', () => {
         const email = "marco.bianchi@mail.it";
         return expect(dao.getClient(email,'testpassword')).resolves.toBe(false);
@@ -144,4 +145,25 @@ describe('Test suite DAO', () => {
         const email = "antonio.bianchi@mail.it";
         return expect(dao.getClient(email,'testpassword')).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
     },10000);
+
+    //TEST API GET CLIENT BY ID
+    test('get client by id return false because no user with that id exists', () => {
+        const id = 12;
+        return expect(dao.getClientById(id)).resolves.toBe(false);
+    });
+
+    test('get client by id return success', async () => {
+        const hash = bcrypt.hashSync('testpassword', 10);
+        const client = {
+            email:"antonio.bianchi@mail.it",
+            name: "Antonio",
+            surname: "Bianchi", 
+            password:hash 
+        }
+
+        const id = await dao.createClient(client);
+        
+        return expect(dao.getClientById(id)).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
+    },10000);
+
 });

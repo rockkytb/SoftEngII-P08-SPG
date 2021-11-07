@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies test
         run:  npm install
       - name: Run Tests
-        run: npm run test
+        run: npm run test --runInBand
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
