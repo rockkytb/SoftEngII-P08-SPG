@@ -14,9 +14,11 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Run Tests Server
-        run: cd server | npm run test
+        working-directory: ./server
+        run: npm run test
       # -name: Run Tests client
-        # run: cd client | npm run test
+        # working-directory: ./client
+        # run: npm run test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
