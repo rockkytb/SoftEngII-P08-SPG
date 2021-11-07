@@ -14,6 +14,9 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies server
+        working-directory: ./server
+        run:  npm install
+      - name: Install dependencies test
         working-directory: ./test
         run:  npm install
       - name: Run Tests
