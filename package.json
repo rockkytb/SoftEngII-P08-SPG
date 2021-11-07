@@ -1,13 +1,24 @@
 {
-  "name": "test",
+  "name": "softengii-p08-spg",
   "version": "1.0.0",
-  "description": "",
+  "description": "1) cd server\r 2) npm run test",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockkytb/SoftEngII-P08-SPG.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rockkytb/SoftEngII-P08-SPG/issues"
+  },
+  "homepage": "https://github.com/rockkytb/SoftEngII-P08-SPG#readme",
   "dependencies": {
     "jest": "^27.3.1"
   },
