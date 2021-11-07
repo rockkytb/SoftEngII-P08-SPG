@@ -1,6 +1,9 @@
 import { Carousel } from 'react-bootstrap';
 import { useState } from 'react';
 import  sfondo_cibo  from './immagini/sfondo_cibo.jpg';
+import  cibo2 from './immagini/cibo2.jpg';
+import  cibo3 from './immagini/cibo3.jpg';
+
 
 
 function CarouselCustom(props) {
@@ -15,7 +18,8 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="holder.js/800x400?text=First slide&bg=373940"
+          height="450px"
+          src={cibo3}
           alt="First slide"
         />
         <Carousel.Caption>
@@ -26,7 +30,8 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
+          height="450px"
+          src={cibo2}
           alt="Second slide"
         />
 
@@ -38,6 +43,7 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
+          height="450px"
           src={sfondo_cibo}
           alt="Third slide"
         />

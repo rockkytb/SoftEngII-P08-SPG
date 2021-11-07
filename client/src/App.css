@@ -3,8 +3,7 @@
   margin-right:0px;
 }
 
-#customCarousel {
-  height: 25%;
+.width100 {
   width: 100%;
-  max-height: 500px;
 }
+

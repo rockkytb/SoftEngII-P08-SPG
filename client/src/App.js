@@ -13,14 +13,15 @@ function App() {
       <Container fluid className="p-0">
         <NavbarCustom />
 
-        
+        <Row className="page" >
           <Switch>
 
             <Route path="/" render={() =>
-              /**  */
-              <>
-                  <CarouselCustom id="customCarousel" />
-              </>
+              /** Main */
+              <div className="width100" >
+                <CarouselCustom className="customCarousel" />
+              </div>
+
             } />
 
 
@@ -81,10 +82,12 @@ function App() {
               <></>
             } />
 
+
           </Switch>
+        </Row>
 
       </Container>
-    </Router>
+    </Router >
   );
 }
 
