@@ -119,12 +119,8 @@ describe('Test suite DAO', () => {
             surname: "Bianchi", 
             password:"$2a$10$k5YXDZMVIkeTqchdp..kquVqsqsYNk9Wvxfw7J7WnqKhqCIg723ty"
         }
-        try {
-            dao.createClient(client);
-        }
-        catch (err){
-            fail('It should not happen');
-        }
+        
+        expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
 
         const email = "antonio.bianchi@mail.it";
         const password="ciaociao";
