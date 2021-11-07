@@ -23,3 +23,6 @@ test('the creation is done', () => {
     return expect(dao.createBooking(booking)).resolves.toBeGreaterThanOrEqual(1);
 });
 
+//TEST DAO FUNCTION CREATE CLIENT
+
+
