@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="the creation fails because id client is missing" duration="35"/>
-    <testCase name="the creation fails because state is missing" duration="1"/>
-    <testCase name="the creation is done" duration="14"/>
+    <testCase name="the creation fails because id client is missing" duration="24"/>
+    <testCase name="the creation fails because state is missing" duration="4"/>
+    <testCase name="the creation is done" duration="18"/>
   </file>
 </testExecutions>
