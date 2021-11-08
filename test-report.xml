@@ -4,26 +4,30 @@
     <testCase name="renders learn react link" duration="1"/>
   </file>
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="40"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="1"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="62"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="111"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="74"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="94"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="25"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="86"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="34"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="45"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="213"/>
-    <testCase name="Test suite DAO get client return success" duration="186"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get client by id return success" duration="128"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="2"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="20"/>
-    <testCase name="Test suite DAO get farmer return success" duration="3632">
-      <failure message="Error: SQLITE_BUSY: database is locked"><![CDATA[Error: SQLITE_BUSY: database is locked]]></failure>
-      <failure message="Error: SQLITE_BUSY: database is locked"><![CDATA[Error: SQLITE_BUSY: database is locked]]></failure>
-      <failure message="Error: SQLITE_BUSY: database is locked"><![CDATA[Error: SQLITE_BUSY: database is locked]]></failure>
-    </testCase>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="38"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="21"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="41"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="99"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="94"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="98"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="22"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="113"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="20"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="19"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="190"/>
+    <testCase name="Test suite DAO get client return success" duration="199"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="21"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="22"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="22"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="95"/>
+    <testCase name="Test suite DAO get farmer return success" duration="94"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="20"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="20"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="21"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="20"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="96"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="93"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="22"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="21"/>
   </file>
 </testExecutions>

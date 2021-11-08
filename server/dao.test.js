@@ -5,40 +5,10 @@ const bcrypt = require('bcrypt');
 jest.useRealTimers();
 
 describe('Test suite DAO', () => {
-    beforeEach(async () => {
+    beforeEach( async () => {
        // code to run before each test
     
-       const db = new sqlite.Database('testdatabase.db', (err) => {
-        if(err) throw err;
-      });
-
-       //Clean the db
-
-       await db.run('DELETE FROM BOOKING', (err) => {
-        if (err) {
-          throw(err);
-        } 
-      });
-
-      await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[0,'BOOKING'], (err) => {
-        if (err) {
-          throw(err);
-        } 
-      });
-
-    
-      
-      await db.run('DELETE FROM CLIENT', (err) => {
-        if (err) {
-          throw(err);
-        } 
-      });
-
-      await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[0,'CLIENT'], (err) => {
-        if (err) {
-          throw(err);
-        } 
-      });
+       await dao.cleanDb();
        
     });
 
@@ -165,7 +135,7 @@ describe('Test suite DAO', () => {
         return expect(dao.getClientById(id)).resolves.toBe(false);
     });
 
-    test('get client by id return success', async () => {
+    /*test('get client by id return success', async () => {
         const hash = bcrypt.hashSync('testpassword', 10);
         const client = {
             email:"antonio.bianchi@mail.it",
@@ -175,9 +145,10 @@ describe('Test suite DAO', () => {
         }
 
         const id = await dao.createClient(client);
+
         
         return expect(dao.getClientById(id)).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
-    },10000);
+    },10000); */
 
     //TEST GET FARMER
     test('get farmer return false because no email provided', () => {
@@ -199,6 +170,55 @@ describe('Test suite DAO', () => {
         
         const email = "antonio.bianchi@mail.it";
         return expect(dao.getFarmer(email,'testpassword')).resolves.toHaveProperty('id', 'F1');
+    },10000);
+
+    //TEST GET FARMER BY ID
+    test('get farmer by id return false because no farmer with that id exists', () => {
+        const id = 12;
+        return expect(dao.getFarmerById(id)).resolves.toBe(false);
+    });
+
+    test('get farmer by id return a farmer', async () => {
+
+        const id = 1;
+        
+        return expect(dao.getFarmerById(id)).resolves.toHaveProperty('id', 'F1');
+    },10000);
+
+
+    //TEST GET SHOP EMPLOYEE
+    test('get shop employee return false because no email provided', () => {
+        const email = "marco.bianchi@mail.it";
+        return expect(dao.getShopEmployee()).resolves.toBe(false);
+    });
+
+    test('get shop employee return false because no user with that email exists', () => {
+        const email = "marco.bianchi@mail.it";
+        return expect(dao.getShopEmployee(email,'testpassword')).resolves.toBe(false);
+    });
+
+    test('get shop employee return false because wrong psw', () => {
+        const email = "antonio.bianchi@mail.it";
+        return expect(dao.getShopEmployee(email,'testp')).resolves.toBe(false);
+    },10000);
+
+    test('get shop employee return success', () => {
+        
+        const email = "antonio.bianchi@mail.it";
+        return expect(dao.getShopEmployee(email,'testpassword')).resolves.toHaveProperty('id', 'S1');
+    },10000);
+
+    //TEST GET SHOP EMPLOYEE BY ID
+    test('get shop employee by id return false because no shop employee with that id exists', () => {
+        const id = 12;
+        return expect(dao.getShopEmployeeById(id)).resolves.toBe(false);
+    });
+
+    test('get shop employee by id return a shop employee', async () => {
+
+        const id = 1;
+        
+        return expect(dao.getShopEmployeeById(id)).resolves.toHaveProperty('id', 'S1');
     },10000);
 
 });
