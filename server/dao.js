@@ -209,3 +209,36 @@ exports.createClient = (client) => {
     );
   });
 };
+
+
+
+//USED ONLY FOR TESTS TO CLEAN DB
+exports.cleanDb = async () => {
+  if (testmode){
+    //Clean the db
+
+    await db.run('DELETE FROM BOOKING', (err) => {
+      if (err) {
+        throw(err);
+      } 
+    });
+
+    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[0,'BOOKING'], (err) => {
+      if (err) {
+        throw(err);
+      } 
+    });
+    
+    await db.run('DELETE FROM CLIENT WHERE ID != ?',[1], (err) => {
+      if (err) {
+        throw(err);
+      } 
+    });
+
+    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[1,'CLIENT'], (err) => {
+      if (err) {
+        throw(err);
+      } 
+    });
+  }
+}

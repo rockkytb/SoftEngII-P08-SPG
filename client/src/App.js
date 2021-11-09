@@ -1,38 +1,66 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarCustom from './NavbarCustom.js';
-import CarouselCustom from './CarouselCustom.js';
-import NewClientForm from './NewClientForm.js'
-import { useState } from 'react';
-import { Container, Row } from 'react-bootstrap';
-import { Switch, Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
-import API from './API';
-
-
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavbarCustom from "./NavbarCustom.js";
+import CarouselCustom from "./CarouselCustom.js";
+import { useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Employee from "./Employee";
 
 function App() {
+  const [products, setProducts] = useState();
+  const [clients, setClients] = useState();
 
   const [dirty, setDirty] = useState(false);
 
-const addUser = (newUser) => {
-  const add = async () => {
-    const res = await API.addUser(newUser);
-    if (res && res.lastID) {
-      newUser.id = res.idClient;
-      setDirty(true);
-    }
-  };
-  add()
-  {/* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */ }
-  {/*.catch(err => handleErrors(err)) */ };
-}
+  const addUser = (newUser) => {
+    const add = async () => {
+      const res = await API.addUser(newUser);
+      if (res && res.lastID) {
+        newUser.id = res.idClient;
+        setDirty(true);
+      }
+    };
+    add()
+    {/* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */ }
+    {/*.catch(err => handleErrors(err)) */ };
+  }
+
+  useEffect(() => {
+    const getProducts = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        setProducts(productList);
+      }
+    };
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    const getClients = async () => {
+      // call: GET /api/clients
+      const response = await fetch("/api/clients");
+      const clientList = await response.json();
+      if (response.ok) {
+        setClients(clientList);
+      }
+    };
+    getClients();
+  }, []);
 
   return (
     <Router>
       <Container fluid className="p-0">
         <NavbarCustom />
 
-        <Row className="page" >
+        <Row className="page">
           <Switch>
 
             { /*<Route path="/" render={() =>
@@ -110,9 +138,8 @@ const addUser = (newUser) => {
 
           </Switch>
         </Row>
-
       </Container>
-    </Router >
+    </Router>
   );
 }
 
