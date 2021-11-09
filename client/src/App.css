@@ -1,14 +1,12 @@
 .page {
   min-height: 100vh;
   margin-right: 0px;
+  margin: 0%;
+  padding: 0%;
 }
 
 .width100 {
   width: 100%;
-}
-
-.width96 {
-  width: 96%;
 }
 
 .navbar {
@@ -18,4 +16,9 @@
 .below-nav {
   padding-top: 5rem;
   position:relative;
+}
+
+.resize {
+  height: auto;
+  width: auto;
 }
