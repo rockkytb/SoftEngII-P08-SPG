@@ -18,7 +18,7 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          height="450px"
+          height="720px"
           src={cibo3}
           alt="First slide"
         />
@@ -30,7 +30,7 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          height="450px"
+          height="720px"
           src={cibo2}
           alt="Second slide"
         />
@@ -43,7 +43,7 @@ function CarouselCustom(props) {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          height="450px"
+          height="720px"
           src={sfondo_cibo}
           alt="Third slide"
         />

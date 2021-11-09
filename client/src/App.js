@@ -2,12 +2,31 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarCustom from './NavbarCustom.js';
 import CarouselCustom from './CarouselCustom.js';
+import NewClientForm from './NewClientForm.js'
 import { useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Switch, Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import API from './API';
+
 
 
 function App() {
+
+  const [dirty, setDirty] = useState(false);
+
+const addUser = (newUser) => {
+  const add = async () => {
+    const res = await API.addUser(newUser);
+    if (res && res.lastID) {
+      newUser.id = res.idClient;
+      setDirty(true);
+    }
+  };
+  add()
+  {/* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */ }
+  {/*.catch(err => handleErrors(err)) */ };
+}
+
   return (
     <Router>
       <Container fluid className="p-0">
@@ -16,7 +35,11 @@ function App() {
         <Row className="page" >
           <Switch>
 
-            <Route path="/" render={() =>
+            { /*<Route path="/" render={() =>
+              <Redirect to={"/home"} />
+            } /> */ }
+
+            <Route path="/home" render={() =>
               /** Main */
               <div className="width100" >
                 <CarouselCustom className="customCarousel" />
@@ -32,7 +55,9 @@ function App() {
 
             <Route path="/register" render={() =>
               /** REGISTER */
-              <></>
+              <Container>
+                <NewClientForm addUser={addUser} />
+              </Container>
             } />
 
             <Route path="/products" render={() =>
