@@ -9,12 +9,16 @@ import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
 import NewClientForm from "./NewClientForm";
+import { Login } from "./Login";
 
 function App() {
   const [products, setProducts] = useState();
   const [clients, setClients] = useState();
 
   const [dirty, setDirty] = useState(false);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user_name, setUserName] = useState("");
 
   const addUser = (newUser) => {
     const add = async () => {
@@ -54,20 +58,44 @@ function App() {
     getClients();
   }, []);
 
+  const doLogIn = async (credentials) => {
+    try {
+      console.log("inside doLogin");
+      console.log(credentials);
+      const user = await API.logIn(credentials);
+      setUserName(user.name);
+      console.log(user);
+      console.log("loggggin");
+      setLoggedIn(true);
+    } catch (err) {
+      //toast.error("Wrong email or/and password, try again");
+      console.log(err);
+    }
+  }
+
+  const doLogOut = async () => {
+    await API.logOut();
+    setLoggedIn(false);
+    setUserName("");
+  }
+
   return (
     <Router>
 
       <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
- 
 
       <Row className="page">
         <Switch>
 
 
 
-
-          <Route path="/login" exact render={() =>
+          <Route exact path="/login" render={() =>
             /** LOGIN  */
+            <>{loggedIn ? <Redirect to="/" /> : <Login handleSubmit={doLogIn} />} </>
+          } />
+
+          <Route path="/products" render={() =>
+            /**  */
             <></>
           } />
 
@@ -83,7 +111,6 @@ function App() {
             /**  */
             <></>
           } />
-
 
 
           <Route path="/cust/:id" exact render={({ match }) =>
