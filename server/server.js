@@ -222,7 +222,7 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 //GET /api/client/
 app.get("/api/client", isLoggedIn, (req, res) => {
   dao
-    .getClientByEmail(req.email)
+    .getClientByEmail(req.body.email)
     .then((client) => {
       res.status(200).json(client);
     })
@@ -237,7 +237,7 @@ app.get("/api/client", isLoggedIn, (req, res) => {
 app.post(
   "/api/bookings", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.idClient}`, { min: 0 })) {
       return res
         .status(422)
         .json({ error: `Invalid client id, it must be positive` });
@@ -306,8 +306,6 @@ app.post(
 );
 
 // activate the server
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
-
-module.exports = server;
