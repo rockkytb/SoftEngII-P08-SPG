@@ -107,7 +107,7 @@ function App() {
           } />
 
           <Route path="/products" render={() =>
-            /**  */
+            /**/
             <></>
           } />
 
@@ -128,7 +128,7 @@ function App() {
             <></>
           } />
 
-          <Route path="/cust/:id/newClient" exact render={({ match }) =>
+          <Route path="/emp/:id/newClient" exact render={({ match }) =>
             /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
             <></>
           } />
