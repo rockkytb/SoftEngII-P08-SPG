@@ -1,5 +1,5 @@
 .page {
-  min-height: 100vh!important;
+  min-height: 100vh;
   margin-right:0px;
 }
 
@@ -7,3 +7,10 @@
   width: 100%;
 }
 
+.width96 {
+  width: 96%;
+}
+
+.navbar{
+  background-color: transparent;
+}

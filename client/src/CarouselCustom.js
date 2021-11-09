@@ -17,7 +17,7 @@ function CarouselCustom(props) {
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
         <img
-          className="d-block width96"
+          className="d-block width100"
           width="100vh"
           height="720px"
           src={cibo3}
@@ -30,7 +30,7 @@ function CarouselCustom(props) {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block width96"
+          className="d-block width100"
           width="100vh"
           height="720px"
           src={cibo2}

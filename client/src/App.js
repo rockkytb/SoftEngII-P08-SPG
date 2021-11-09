@@ -55,7 +55,7 @@ function App() {
 
   return (
     <Router>
-      <Container fluid className="p-0 width100">
+
         <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
         <SidebarCustom/>
 
@@ -133,7 +133,7 @@ function App() {
 
           </Switch>
         </Row>
-      </Container>
+
     </Router>
   );
 }
