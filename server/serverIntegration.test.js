@@ -16,6 +16,12 @@ describe('Test suite DAO', () => {
        
     });
 
+    afterAll(done => {
+      //close the server
+      app.close();
+      done();
+    });
+
     //TEST API POST BOOKING
 
     describe('Post booking fail', () => {
