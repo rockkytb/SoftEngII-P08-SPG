@@ -4,14 +4,11 @@ import NavbarCustom from "./NavbarCustom.js";
 import CarouselCustom from "./CarouselCustom.js";
 import { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import {
-  Switch,
-  Route,
-  Redirect,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
+import API from "./API";
+import NewClientForm from "./NewClientForm";
 
 function App() {
   const [products, setProducts] = useState();
@@ -42,7 +39,7 @@ function App() {
       }
     };
     getProducts();
-  }, []);
+  }, [dirty]);
 
   useEffect(() => {
     const getClients = async () => {
@@ -58,20 +55,15 @@ function App() {
 
   return (
     <Router>
-      <Container fluid className="p-0">
-        <NavbarCustom />
+      <Container fluid className="p-0 width100">
+        <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
         <SidebarCustom/>
 
         <Row className="page">
           <Switch>
-<<<<<<< Updated upstream
 
-            { /*<Route path="/" render={() =>
-              <Redirect to={"/home"} />
-            } /> */ }
-
-            <Route path="/home" render={() =>
-              /** Main */
+            <Route path="/*" render={() =>
+       
               <div className="width100" >
                 <CarouselCustom className="customCarousel" />
               </div>
@@ -79,12 +71,12 @@ function App() {
             } />
 
 
-            <Route path="/login" render={() =>
+            <Route path="/login" exact render={() =>
               /** LOGIN  */
               <></>
             } />
 
-            <Route path="/register" render={() =>
+            <Route path="/register" exact render={() =>
               /** REGISTER */
               <Container>
                 <NewClientForm addUser={addUser} />
@@ -98,148 +90,47 @@ function App() {
 
 
 
-            <Route path="/cust/:id" render={({ match }) =>
+            <Route path="/cust/:id" exact render={({ match }) =>
               /** Customer page */
               <></>
             } />
 
-            <Route path="/cust/:id/cart" render={({ match }) =>
+            <Route path="/cust/:id/cart" exact render={({ match }) =>
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
               <></>
             } />
 
-            <Route path="/cust/:id/newOrder" render={({ match }) =>
+            <Route path="/cust/:id/newOrder" exact render={({ match }) =>
               /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
               <></>
             } />
 
-            <Route path="/cust/:id/newClient" render={({ match }) =>
+            <Route path="/cust/:id/newClient" exact render={({ match }) =>
               /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
               <></>
             } />
 
-            <Route path="/emp/:id" render={({ match }) =>
+            <Route path="/emp/:id" exact render={({ match }) =>
               /** Employee page */
               <></>
             } />
 
-            <Route path="/emp/:id/cart" render={({ match }) =>
+            <Route path="/emp/:id/cart" exact render={({ match }) =>
               /** Employee cart page da poter includere nel componente employee con path='{$path}/cart'*/
               <></>
             } />
 
-            <Route path="/emp/:id/newOrder" render={({ match }) =>
+            <Route path="/emp/:id/newOrder" exact render={({ match }) =>
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <></>
             } />
 
-            <Route path="/emp/:id/pagah" render={({ match }) =>
+            <Route path="/emp/:id/pagah" exact render={({ match }) =>
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
               <></>
             } />
 
 
-=======
-            <Route
-              path="/"
-              render={() => (
-                /** Main */
-                <div className="width100">
-                  <CarouselCustom className="customCarousel" />
-                </div>
-              )}
-            />
-
-            <Route
-              path="/login"
-              render={() => (
-                /** LOGIN  */
-                <></>
-              )}
-            />
-
-            <Route
-              path="/register"
-              render={() => (
-                /** REGISTER */
-                <></>
-              )}
-            />
-
-            <Route
-              path="/products"
-              render={() => (
-                /**  */
-                <></>
-              )}
-            />
-
-            <Route
-              path="/cust/:id"
-              render={({ match }) => (
-                /** Customer page */
-                <></>
-              )}
-            />
-
-            <Route
-              path="/cust/:id/cart"
-              render={({ match }) => (
-                /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-                <></>
-              )}
-            />
-
-            <Route
-              path="/cust/:id/newOrder"
-              render={({ match }) => (
-                /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-                <></>
-              )}
-            />
-
-            <Route
-              path="/cust/:id/newClient"
-              render={({ match }) => (
-                /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
-                <></>
-              )}
-            />
-
-            <Route
-              path="/emp/:id"
-              render={() => (
-                /** Employee page */
-                <div className="width100">
-                  <Employee />
-                </div>
-              )}
-            />
-
-            <Route
-              path="/emp/:id/cart"
-              render={({ match }) => (
-                /** Employee cart page da poter includere nel componente employee con path='{$path}/cart'*/
-                <></>
-              )}
-            />
-
-            <Route
-              path="/emp/:id/newOrder"
-              render={({ match }) => (
-                /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-                <></>
-              )}
-            />
-
-            <Route
-              path="/emp/:id/pagah"
-              render={({ match }) => (
-                /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-                <></>
-              )}
-            />
->>>>>>> Stashed changes
           </Switch>
         </Row>
       </Container>
