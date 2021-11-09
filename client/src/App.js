@@ -4,7 +4,7 @@ import NavbarCustom from "./NavbarCustom.js";
 import CarouselCustom from "./CarouselCustom.js";
 import { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import { Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
+import { Switch, Route, Redirect, BrowserRouter as Router } from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
@@ -25,7 +25,7 @@ function App() {
       }
     };
     add()
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
     {/* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */ }
     {/*.catch(err => handleErrors(err)) */ };
   }
@@ -57,83 +57,89 @@ function App() {
   return (
     <Router>
 
-        <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
-        <SidebarCustom/>
+      <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
+ 
 
-        <Row className="page">
-          <Switch>
-
-            <Route path="/*" render={() =>
-       
-              <div className="width100" >
-                <CarouselCustom className="customCarousel" />
-              </div>
-
-            } />
-
-
-            <Route path="/login" exact render={() =>
-              /** LOGIN  */
-              <></>
-            } />
-
-            <Route path="/register" exact render={() =>
-              /** REGISTER */
-              <Container>
-                <NewClientForm addUser={addUser} />
-              </Container>
-            } />
-
-            <Route path="/products" render={() =>
-              /**  */
-              <></>
-            } />
+      <Row className="page">
+        <Switch>
 
 
 
-            <Route path="/cust/:id" exact render={({ match }) =>
-              /** Customer page */
-              <></>
-            } />
 
-            <Route path="/cust/:id/cart" exact render={({ match }) =>
-              /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-              <></>
-            } />
+          <Route path="/login" exact render={() =>
+            /** LOGIN  */
+            <></>
+          } />
 
-            <Route path="/cust/:id/newOrder" exact render={({ match }) =>
-              /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-              <></>
-            } />
+          <Route path="/register" exact render={() =>
+            /** REGISTER */
+            <Container>
 
-            <Route path="/cust/:id/newClient" exact render={({ match }) =>
-              /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
-              <></>
-            } />
+              <NewClientForm addUser={addUser} />
+            </Container>
+          } />
 
-            <Route path="/emp/:id" exact render={({ match }) =>
-              /** Employee page */
-              <></>
-            } />
-
-            <Route path="/emp/:id/cart" exact render={({ match }) =>
-              /** Employee cart page da poter includere nel componente employee con path='{$path}/cart'*/
-              <></>
-            } />
-
-            <Route path="/emp/:id/newOrder" exact render={({ match }) =>
-              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-              <></>
-            } />
-
-            <Route path="/emp/:id/pagah" exact render={({ match }) =>
-              /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              <></>
-            } />
+          <Route path="/products" render={() =>
+            /**  */
+            <></>
+          } />
 
 
-          </Switch>
-        </Row>
+
+          <Route path="/cust/:id" exact render={({ match }) =>
+            /** Customer page */
+
+            <></>
+          } />
+
+          <Route path="/cust/:id/cart" exact render={({ match }) =>
+            /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
+            <></>
+          } />
+
+          <Route path="/cust/:id/newOrder" exact render={({ match }) =>
+            /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
+            <></>
+          } />
+
+          <Route path="/cust/:id/newClient" exact render={({ match }) =>
+            /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
+            <></>
+          } />
+
+          <Route path="/emp/:id" exact render={({ match }) =>
+            /** Employee page */
+            <>
+               <SidebarCustom  />
+               <Employee />
+            </>
+          } />
+
+          <Route path="/emp/:id/cart" exact render={({ match }) =>
+            /** Employee cart page da poter includere nel componente employee con path='{$path}/cart'*/
+            <></>
+          } />
+
+          <Route path="/emp/:id/newOrder" exact render={({ match }) =>
+            /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
+            <></>
+          } />
+
+          <Route path="/emp/:id/pagah" exact render={({ match }) =>
+            /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
+            <></>
+          } />
+
+          <Route path="/*" render={() =>
+
+            <div className="width100" >
+              <CarouselCustom className="customCarousel" />
+            </div>
+
+          } />
+
+        </Switch>
+      </Row>
 
     </Router>
   );
