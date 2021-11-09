@@ -30,8 +30,8 @@ function App() {
 
   useEffect(() => {
     const getClients = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/products");
+      // call: GET /api/clients
+      const response = await fetch("/api/clients");
       const clientList = await response.json();
       if (response.ok) {
         setClients(clientList);
