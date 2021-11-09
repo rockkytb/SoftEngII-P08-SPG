@@ -237,7 +237,7 @@ app.get("/api/client", isLoggedIn, (req, res) => {
 app.post(
   "/api/bookings", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.idClient}`, { min: 0 })) {
+    if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid client id, it must be positive` });

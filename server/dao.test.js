@@ -93,7 +93,7 @@ describe('Test suite DAO', () => {
     });
 
     test('get client return false because no user with that email exists', () => {
-        const email = "marco.bianchi@mail.it";
+        const email = "luca.bianchi@mail.it";
         return expect(dao.getClient(email,'testpassword')).resolves.toBe(false);
     });
 
@@ -114,19 +114,9 @@ describe('Test suite DAO', () => {
         return expect(dao.getClient(email,'ciaociao')).resolves.toBe(false);
     },10000);
 
-    test('get client return success', () => {
-        const hash = bcrypt.hashSync('testpassword', 10);
-        const client = {
-            email:"antonio.bianchi@mail.it",
-            name: "Antonio",
-            surname: "Bianchi", 
-            password:hash 
-        }
-
-        expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
-
-        const email = "antonio.bianchi@mail.it";
-        return expect(dao.getClient(email,'testpassword')).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
+    test('get client return success', async () => {
+        const email = "marco.bianchi@mail.it";
+        return expect(dao.getClient(email,'testpassword')).resolves.toHaveProperty('username', 'marco.bianchi@mail.it');
     },10000);
 
     //TEST GET CLIENT BY ID
@@ -135,20 +125,10 @@ describe('Test suite DAO', () => {
         return expect(dao.getClientById(id)).resolves.toBe(false);
     });
 
-    /*test('get client by id return success', async () => {
-        const hash = bcrypt.hashSync('testpassword', 10);
-        const client = {
-            email:"antonio.bianchi@mail.it",
-            name: "Antonio",
-            surname: "Bianchi", 
-            password:hash 
-        }
-
-        const id = await dao.createClient(client);
-
+    test('get client by id return success', async () => {
         
-        return expect(dao.getClientById(id)).resolves.toHaveProperty('username', 'antonio.bianchi@mail.it');
-    },10000); */
+        return expect(dao.getClientById(1)).resolves.toHaveProperty('username', 'marco.bianchi@mail.it');
+    },10000);
 
     //TEST GET FARMER
     test('get farmer return false because no email provided', () => {

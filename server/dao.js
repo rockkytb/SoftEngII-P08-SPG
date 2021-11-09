@@ -229,13 +229,13 @@ exports.cleanDb = async () => {
       } 
     });
     
-    await db.run('DELETE FROM CLIENT', (err) => {
+    await db.run('DELETE FROM CLIENT WHERE ID != ?',[1], (err) => {
       if (err) {
         throw(err);
       } 
     });
 
-    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[0,'CLIENT'], (err) => {
+    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[1,'CLIENT'], (err) => {
       if (err) {
         throw(err);
       } 
