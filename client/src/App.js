@@ -14,6 +14,7 @@ import Employee from "./Employee";
 
 function App() {
   const [products, setProducts] = useState();
+  const [clients, setClients] = useState();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -25,6 +26,18 @@ function App() {
       }
     };
     getProducts();
+  }, []);
+
+  useEffect(() => {
+    const getClients = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/products");
+      const clientList = await response.json();
+      if (response.ok) {
+        setClients(clientList);
+      }
+    };
+    getClients();
   }, []);
 
   return (
