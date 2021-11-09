@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  margin-right:0px;
+  margin-right: 0px;
 }
 
 .width100 {
@@ -11,6 +11,11 @@
   width: 96%;
 }
 
-.navbar{
+.navbar {
   background-color: transparent;
+}
+
+.below-nav {
+  padding-top: 5rem;
+  position:relative;
 }
