@@ -11,6 +11,7 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import Employee from "./Employee";
+import SidebarCustom from "./Sidebar";
 
 function App() {
   const [products, setProducts] = useState();
@@ -59,6 +60,7 @@ function App() {
     <Router>
       <Container fluid className="p-0">
         <NavbarCustom />
+        <SidebarCustom/>
 
         <Row className="page">
           <Switch>
