@@ -25,6 +25,7 @@ function App() {
       }
     };
     add()
+    .catch((err) => console.log(err));
     {/* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */ }
     {/*.catch(err => handleErrors(err)) */ };
   }
