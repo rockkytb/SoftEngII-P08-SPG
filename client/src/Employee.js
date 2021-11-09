@@ -5,6 +5,11 @@ function Employee(){
 
     const [show, setShow] = useState(false);
 
+<<<<<<< Updated upstream
+=======
+    
+
+>>>>>>> Stashed changes
   return (
     <>
       <h1>Sono un impiegato lmao</h1>
@@ -47,12 +52,15 @@ function Employee(){
         </Modal>
 
       <Button class="bi bi-plus-circle-fill" onClick={handleShow}/>
+<<<<<<< Updated upstream
             <ModalNewTicket
                 show={modalNewTicketShow}
                 onHide={() => setModalNewTicketShow(false)}
                 newTicket={props.newTicket}
 
             />
+=======
+>>>>>>> Stashed changes
     </>
   );
 }
