@@ -84,7 +84,6 @@ function App() {
 
       <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
 
-      <Row className="page">
         <Switch>
 
 
@@ -166,7 +165,6 @@ function App() {
           } />
 
         </Switch>
-      </Row>
 
     </Router>
   );
