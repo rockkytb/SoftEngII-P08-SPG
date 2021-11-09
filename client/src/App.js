@@ -5,6 +5,7 @@ import CarouselCustom from './CarouselCustom.js';
 import { useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Switch, Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import Employee from './Employee';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
             <Route path="/" render={() =>
               /** Main */
               <div className="width100" >
-                <CarouselCustom className="customCarousel" />
+                <CarouselCustom className="customCarousel"/>
               </div>
 
             } />
@@ -64,7 +65,7 @@ function App() {
 
             <Route path="/emp/:id" render={({ match }) =>
               /** Employee page */
-              <></>
+              <Employee/>
             } />
 
             <Route path="/emp/:id/cart" render={({ match }) =>
