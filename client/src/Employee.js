@@ -1,5 +1,6 @@
 import { Button, Modal, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 
 function Register() {
   return (
