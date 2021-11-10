@@ -102,7 +102,7 @@ function App() {
   return (
     <Router>
 
-      <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" logged = {loggedIn} logout={logOut}/>
+      <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" logged = {loggedIn} logout={doLogOut}/>
 
         <Switch>
 
