@@ -1,4 +1,4 @@
-import { Modal, Form, Row, Col, Alert, Card, Button } from "react-bootstrap";
+import { Modal, Form, Row, Col, Alert, Card, Button, CardColumns} from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -21,6 +21,7 @@ function BookingReview(props) {
   };
 
   function productsActions() {
+    console.log(props.cart);
     return props.cart.map((product) => (
       <Col>
         <Card>
@@ -95,6 +96,10 @@ function BookingReview(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <CardColumns xs={1} md={5}>
+        <>{/*props.cart.length ? */productsActions()/* : <></>*/}</>
+      </CardColumns>
 
       <Button variant="secondary" onClick={() => setShowAlert(true)}>
         Cancel

@@ -328,10 +328,12 @@ app.post(
     }
 
     const bookingProduct = {
-      ID_Booking = req.body.ID_Booking,
-      ID_Product = req.body.ID_Product,
-      Qty = req.body.Qty
+      ID_Booking : req.body.ID_Booking,
+      ID_Product : req.body.ID_Product,
+      Qty : req.body.Qty
     }
+
+    let result;
 
     try {
       result = await dao.createBookingProduct(bookingProduct);

@@ -194,9 +194,10 @@ exports.createBooking = (booking) => {
 
 // add a new bookingProduct
 exports.createBookingProduct = (bookingProduct) => {
+  console.log(bookingProduct);
   return new Promise((resolve, reject) => {
     const sql = "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
-    db.run(sql, [bookingProduct.idBooking, bookingProduct.idProduct, bookingProduct.qty], function (err) {
+    db.run(sql, [bookingProduct.ID_Booking, bookingProduct.ID_Product, bookingProduct.Qty], function (err) {
       if (err) {
         reject(err);
         return;

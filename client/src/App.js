@@ -168,6 +168,7 @@ function App() {
             <ProductsList
               products={products}
               cart={cart}
+              setCart={setCart}
               //farmers = {farmers}
             />
           )}
