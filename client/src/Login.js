@@ -6,17 +6,17 @@ import "react-toastify/dist/ReactToastify.css";
 import './Login.css'
 
 function Login(props) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("C")
 
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    return username.length > 0 && password.length > 0;
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.handleSubmit({ email, password }, type)
+    props.handleSubmit({ username, password }, type)
   }
 
   return (
@@ -28,8 +28,8 @@ function Login(props) {
           <Form.Control
             autoFocus
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
