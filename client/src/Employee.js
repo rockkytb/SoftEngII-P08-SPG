@@ -13,10 +13,6 @@ import { Link, Redirect } from "react-router-dom";
 function Employee(props) {
   const [show, setShow] = useState(false);
 
-
-
-
-
   return (
     <>
       <h1 className="below-nav">Sono un impiegato lmao</h1>
@@ -28,9 +24,9 @@ function Employee(props) {
 
 
       <Link to="./newOrder">
-      <Button>
-        Confirm Booking
-      </Button>
+        <Button>
+          Confirm Booking
+        </Button>
       </Link>
     </>
   );

@@ -22,7 +22,9 @@ export default function ProductsList(props) {
   function handleAddToCart() {
     //TODO
     let product = {id:productId, name:name, quantity:orderQuantity, price:price}
-    props.cart.push(product);
+    let tmp = props.cart;
+    tmp.push(product);
+    props.setCart(tmp);
     props.products.map((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
     });

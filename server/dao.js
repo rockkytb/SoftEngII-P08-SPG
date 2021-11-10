@@ -19,7 +19,7 @@ const db = new sqlite.Database(
 exports.getClients = () => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM CLIENT";
-    db.get_all(sql, [], (err, rows) => {
+    db.all(sql, [], (err, rows) => {
       if (err) {
         reject(err);
       } else if (rows === undefined) {
