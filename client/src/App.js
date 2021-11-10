@@ -58,7 +58,7 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [user_name, setUserName] = useState("");
 
   const [cart, setCart] = useState([]);
@@ -170,7 +170,6 @@ function App() {
             <ProductsList
               products={products}
               cart={cart}
-              setCart={setCart}
               //farmers = {farmers}
             />
           )}
