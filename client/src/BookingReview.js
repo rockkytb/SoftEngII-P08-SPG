@@ -6,18 +6,16 @@ function BookingReview(props) {
   const [showAlert, setShowAlert] = useState(false);
 
   async function handleCreateBooking() {
-    let bookingID = await fetch("/api/tasks/" + task.id + "/" + completed, {
+    let bookingID = await fetch("/api/bokings/", {
       method: "POST",
     });
 
-    handleViewClose();
+    handleClose();
   }
 
-  const handleViewClose = () => {
-    setShowView(false);
-    setProductId();
-    setName("");
-    setQuantity(1);
+  const handleClose = () => {
+    setShow(false);
+    
   };
 
   function cancelOrder() {
@@ -25,7 +23,7 @@ function BookingReview(props) {
 
     return (
       <>
-        <Alert show={show} variant="success">
+        <Alert show={showAlert} variant="success">
           <Alert.Heading>Are you sure?!</Alert.Heading>
           <p>
             You are going to erase the cart, win32 and possibly destroy the
@@ -44,8 +42,6 @@ function BookingReview(props) {
             </Link>
           </div>
         </Alert>
-
-        {!show && <Button onClick={() => setShow(true)}>Show Alert</Button>}
       </>
     );
   }
