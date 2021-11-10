@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function NavbarCustom(props) {
   return (
-    <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top d-flex">
+    <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top">
       
       <Col >
       <Button

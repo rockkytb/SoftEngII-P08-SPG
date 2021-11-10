@@ -1,32 +1,33 @@
-import {BrowserRouter as Router, NavLink, Route, Switch,} from "react-router-dom";
+import { Row } from "react-bootstrap";
 
-function SidebarCustom(props) {
+function SidebarCustom() {
   return (
-    <div className="navbar navbar-dark navbar-expand-sm sidebar">
+    
+    <div>
       <aside
-        className="collapse d-sm-block col-sm-4 col-7 below-nav"
+        className=" col-sm-4 col-7 below-nav"
         id="left-sidebar"
       >
-        <div className="list-group list-group-flush">
+        <Row className="list-group list-group-flush">
           
           Photo: rotfl
              
-        </div>
-        <div className="list-group list-group-flush">
+        </Row>
+        <Row className="list-group list-group-flush">
           
           Name: Zeb
              
-        </div>
-        <div className="list-group list-group-flush">
+        </Row>
+        <Row className="list-group list-group-flush">
           
           Id:6546984
              
-        </div>
-        <div className="list-group list-group-flush">
+        </Row>
+        <Row className="list-group list-group-flush">
           
           Mhanz
              
-        </div>
+        </Row>
       </aside>
     </div>
   );

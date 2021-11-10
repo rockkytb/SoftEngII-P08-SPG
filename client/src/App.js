@@ -58,7 +58,7 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [user_name, setUserName] = useState("");
 
   const [cart, setCart] = useState([]);
@@ -137,13 +137,15 @@ function App() {
   };
 
   return (
-    <Router>
+    <div className="page">
+    <Router >
+      
       <NavbarCustom
         className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
         logged={loggedIn}
         logout={doLogOut}
       />
-
+      
       <Switch>
         <Route
           exact
@@ -218,7 +220,7 @@ function App() {
           render={({ match }) => (
             /** Employee page */
             <>
-              {/*<SidebarCustom  />*/}
+              {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
               <Employee
                 className="below-nav main-content"
                 cart={cart}
@@ -234,12 +236,13 @@ function App() {
           render={({ match }) => (
             /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
             <>
-              <SidebarCustom />
+            {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
               <BookingReview
                 products={products}
                 cart={cart}
                 setCart={setCart}
                 clients={clients}
+                className="below-nav main-content"
               />
             </>
           )}
@@ -250,7 +253,7 @@ function App() {
           exact
           render={({ match }) => (
             /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-            <></>
+            <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}</>
           )}
         />
 
@@ -267,6 +270,7 @@ function App() {
         <Route path="/*" render={() => <Redirect to="/home" />} />
       </Switch>
     </Router>
+    </div>
   );
 }
 

@@ -15,19 +15,17 @@ function Employee(props) {
 
   return (
     <>
-      <h1 className="below-nav">Sono un impiegato lmao</h1>
-      <Link to="/register">
-        <Button>
-          New Client
-        </Button>
-      </Link>
+      <h1 className="below-nav main-content">Sono un impiegato lmao</h1>
 
+      <div className="main-content">
+        <Link to="/register">
+          <Button>New Client</Button>
+        </Link>
 
-      <Link to="./newOrder">
-        <Button>
-          Confirm Booking
-        </Button>
-      </Link>
+        <Link to="./newOrder">
+          <Button>Confirm Booking</Button>
+        </Link>
+      </div>
     </>
   );
 }

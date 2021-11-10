@@ -3,6 +3,7 @@
   margin-right: 0px;
   margin: 0%;
   padding: 0%;
+  background-color: gray  ;
 }
 
 .width100 {
@@ -11,12 +12,14 @@
 
 .navbar {
   background-color: transparent;
+  z-index: 10;
 }
 
-.sidebar {
-  padding-top: 5rem;
-  position:relative;
+.below-nav {
+  position: sticky;
+  z-index: 10;
 }
+
 
 .main-content{
   padding-left: 100px;
