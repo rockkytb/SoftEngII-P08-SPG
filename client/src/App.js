@@ -10,10 +10,12 @@ import SidebarCustom from "./Sidebar";
 import API from "./API";
 import NewClientForm from "./NewClientForm";
 import { Login } from "./Login";
+import ProductsList from "./ProductsList";
 
 function App() {
   const [products, setProducts] = useState();
   const [clients, setClients] = useState();
+  const [bookings, setBookings]=useState();
 
   const [dirty, setDirty] = useState(false);
 
@@ -43,7 +45,18 @@ function App() {
         setProducts(productList);
       }
     };
+
+    const getBookings= async () => {
+      // call: GET /api/bookings
+      const response = await fetch("/api/bookings");
+      const bookingList = await response.json();
+      if (response.ok) {
+        setBookings(bookingList);
+      }
+    };
+
     getProducts();
+    getBookings();
   }, [dirty]);
 
   useEffect(() => {
@@ -58,11 +71,11 @@ function App() {
     getClients();
   }, []);
 
-  const doLogIn = async (credentials) => {
+  const doLogIn = async (credentials, type) => {
     try {
       console.log("inside doLogin");
       console.log(credentials);
-      const user = await API.logIn(credentials);
+      const user = await API.logIn(credentials, type);
       setUserName(user.name);
       console.log(user);
       console.log("loggggin");
@@ -86,8 +99,6 @@ function App() {
 
         <Switch>
 
-
-
           <Route exact path="/login" render={() =>
             /** LOGIN  */
             <>{loggedIn ? <Redirect to="/" /> : <Login handleSubmit={doLogIn} />} </>
@@ -95,7 +106,10 @@ function App() {
 
           <Route path="/products" render={() =>
             /**  */
-            <></>
+            <ProductsList  
+              products = {products}
+              //farmers = {farmers}
+            />
           } />
 
           <Route path="/register" exact render={() =>
