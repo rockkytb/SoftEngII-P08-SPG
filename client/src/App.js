@@ -141,7 +141,7 @@ function App() {
       <NavbarCustom
         className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
         logged={loggedIn}
-        logout={logOut}
+        logout={doLogOut}
       />
 
       <Switch>

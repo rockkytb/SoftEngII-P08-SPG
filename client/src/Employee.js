@@ -21,9 +21,7 @@ function Employee(props) {
     <>
       <h1 className="below-nav">Sono un impiegato lmao</h1>
       <Link to="/register">
-        <Button
-        //onClick={() => Register()}
-        >
+        <Button>
           New Client
         </Button>
       </Link>

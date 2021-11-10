@@ -1,30 +1,29 @@
-import { Modal, Form, Row, Col, Alert } from "react-bootstrap";
+import { Modal, Form, Row, Col, Alert, Card, Button} from "react-bootstrap";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function BookingReview(props) {
   const [clientID, setClientID] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
 
   async function handleCreateBooking() {
-    let bookingID = await fetch("/api/tasks/" + task.id + "/" + completed, {
-      method: "POST",
-    });
-
-    handleViewClose();
+    //TODO
+    handleClose();
   }
 
-  const handleViewClose = () => {
-    setShowView(false);
-    setProductId();
+  const handleClose = () => {
+    setShow(false);
+    /*setProductId();
     setName("");
-    setQuantity(1);
+    setQuantity(1);*/
   };
 
   function cancelOrder() {
-    const [showAlert, setShowAlert] = useState(false);
 
     return (
       <>
-        <Alert show={show} variant="success">
+        <Alert show={showAlert} variant="success">
           <Alert.Heading>Are you sure?!</Alert.Heading>
           <p>
             You are going to erase the cart, win32 and possibly destroy the
@@ -73,7 +72,7 @@ function BookingReview(props) {
   }
   return (
     <>
-      <Modal show={showView} onHide={handleViewClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
         </Modal.Header>
