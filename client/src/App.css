@@ -1,9 +1,24 @@
 .page {
-  min-height: 100vh!important;
-  margin-right:0px;
+  min-height: 100vh;
+  margin-right: 0px;
+  margin: 0%;
+  padding: 0%;
 }
 
 .width100 {
   width: 100%;
 }
 
+.navbar {
+  background-color: transparent;
+}
+
+.sidebar {
+  padding-top: 5rem;
+  position:relative;
+}
+
+.main-content{
+  padding-left: 100px;
+  padding-top: 50px;
+}

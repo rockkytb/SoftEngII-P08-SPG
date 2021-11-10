@@ -8,7 +8,7 @@ function NewClientForm(props) {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
-    const [hashPassword, setHashPassword] = useState("");
+    const bcrypt = require('bcryptjs');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -21,7 +21,7 @@ function NewClientForm(props) {
                 email: email,
                 name: name,
                 surname: surname,
-                password: password, /* da cambiare con hashpassword*/
+                password: bcrypt.hashSync(password, 10), /* da cambiare con hashpassword*/
 
             };
            
@@ -91,10 +91,10 @@ function NewClientForm(props) {
             <Row>
                 <Col xs={8} />
                 <Col xs={1}>
-                    <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                    <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                 </Col>
-                <Col xs={1}>
-                    <Button type="submit" variant="primary" className="float-right">Save</Button>
+                <Col xs={1} className="pl-5">
+                    <Button type="submit" variant="primary" className="float-right ">Save</Button>
                 </Col>
                 <Col xs={2} />
             </Row>

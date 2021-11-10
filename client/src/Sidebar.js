@@ -1,29 +1,35 @@
-import { BrowserRouter as Router, NavLink, Route, Switch } from "react-router-dom"
+import {BrowserRouter as Router, NavLink, Route, Switch,} from "react-router-dom";
 
 function SidebarCustom(props) {
-    return (
-        <Switch>
-            <aside
-                className="collapse d-sm-block col-sm-4 col-12 bg-light below-nav"
-                id="left-sidebar"
-            >
-                <div className="list-group list-group-flush">
-                    Photo: Lmao
-                </div>
-                <div className="list-group list-group-flush">
-                    Name: Rocco Papaleo
-                </div>
-                <div className="list-group list-group-flush">
-                    Id:103847582
-                </div>
-                <div className="list-group list-group-flush">
-                    Lezzo
-                </div>
-            </aside>
-        </Switch>
-    );
+  return (
+    <div className="navbar navbar-dark navbar-expand-sm sidebar">
+      <aside
+        className="collapse d-sm-block col-sm-4 col-7 below-nav"
+        id="left-sidebar"
+      >
+        <div className="list-group list-group-flush">
+          
+          Photo: rotfl
+             
+        </div>
+        <div className="list-group list-group-flush">
+          
+          Name: Zeb
+             
+        </div>
+        <div className="list-group list-group-flush">
+          
+          Id:6546984
+             
+        </div>
+        <div className="list-group list-group-flush">
+          
+          Mhanz
+             
+        </div>
+      </aside>
+    </div>
+  );
 }
-
-
 
 export default SidebarCustom;
