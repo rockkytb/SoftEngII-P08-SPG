@@ -53,15 +53,15 @@ function App() {
       farmerId: 3,
     },
   ]);
-  const [clients, setClients] = useState();
-  const [bookings, setBookings] = useState();
+  const [clients, setClients] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const [dirty, setDirty] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [user_name, setUserName] = useState("");
 
-  let cart = [];
+  const [cart, setCart] = useState([]);
 
   const addUser = (newUser) => {
     const add = async () => {
@@ -101,7 +101,7 @@ function App() {
 
     getProducts();
     getBookings();
-  }, [dirty]);
+  }, []);
 
   useEffect(() => {
     const getClients = async () => {
@@ -238,6 +238,7 @@ function App() {
               <BookingReview
                 products={products}
                 cart={cart}
+                setCart={setCart}
                 clients={clients}
               />
             </>

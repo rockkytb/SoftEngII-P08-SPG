@@ -1,4 +1,4 @@
-import { Modal, Form, Row, Col, Alert, Card, Button} from "react-bootstrap";
+import { Modal, Form, Row, Col, Alert, Card, Button } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,7 +6,6 @@ function BookingReview(props) {
   const [clientID, setClientID] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
 
   async function handleCreateBooking() {
     let bookingID = await fetch("/api/bokings/", {
@@ -20,33 +19,6 @@ function BookingReview(props) {
     setShow(false);
     
   };
-
-  function cancelOrder() {
-
-    return (
-      <>
-        <Alert show={showAlert} variant="success">
-          <Alert.Heading>Are you sure?!</Alert.Heading>
-          <p>
-            You are going to erase the cart, win32 and possibly destroy the
-            Universe. Do you really want to?
-          </p>
-          <hr />
-          <div className="d-flex justify-content-end">
-            <Link to="/home">
-              <Button
-                onClick={() => {
-                  props.cart = [];
-                }}
-              >
-                You may fire when ready.
-              </Button>
-            </Link>
-          </div>
-        </Alert>
-      </>
-    );
-  }
 
   function productsActions() {
     return props.cart.map((product) => (
@@ -72,6 +44,25 @@ function BookingReview(props) {
   }
   return (
     <>
+      <Alert show={showAlert} variant="success">
+          <Alert.Heading>Are you sure?!</Alert.Heading>
+          <p>
+            You are going to erase the cart, win32 and possibly destroy the
+            Universe. Do you really want to?
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <Link to="/home">
+              <Button
+                onClick={() => {
+                  props.setCart([]);
+                }}
+              >
+                You may fire when ready.
+              </Button>
+            </Link>
+          </div>
+        </Alert>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
@@ -85,11 +76,11 @@ function BookingReview(props) {
                   as="select"
                   onChange={(e) => setClientID(e.target.value)}
                 >
-                  {props.clients.map((c) => (
+                  {props.clients.length>0 ? props.clients.map((c) => (
                     <option value={c.id}>
                       {c.name} {c.surname}
                     </option>
-                  ))}
+                  )) : <></>}
                 </Form.Control>
               </Form.Group>
             </Form>
@@ -116,4 +107,4 @@ function BookingReview(props) {
   );
 }
 
-export default { BookingReview };
+export default  BookingReview ;

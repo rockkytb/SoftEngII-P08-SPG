@@ -19,7 +19,7 @@ const db = new sqlite.Database(
 exports.getClients = () => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM CLIENT";
-    db.get_all(sql, [], (err, rows) => {
+    db.all(sql, [], (err, rows) => {
       if (err) {
         reject(err);
       } else if (rows === undefined) {
@@ -192,6 +192,39 @@ exports.createBooking = (booking) => {
   });
 };
 
+// add a new bookingProduct
+exports.createBookingProduct = (bookingProduct) => {
+  return new Promise((resolve, reject) => {
+    const sql = "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
+    db.run(sql, [bookingProduct.idBooking, bookingProduct.idProduct, bookingProduct.qty], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(true);
+    });
+  });
+};
+
+// get a booking
+exports.getBooking = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT * FROM BOOKING WHERE ID = ?";
+      db.get(sql, [id], function (err, row){
+        if(err){
+          reject(err);
+          return;
+        }
+        else if (row === undefined) {
+          resolve(false);
+        } else {
+          const booking = { id: row.ID_BOOKING};
+          resolve(booking);
+        }
+      });
+  });
+}
 // add a new client
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
