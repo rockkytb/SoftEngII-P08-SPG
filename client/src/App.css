@@ -13,7 +13,12 @@
   background-color: transparent;
 }
 
-.below-nav {
+.sidebar {
   padding-top: 5rem;
   position:relative;
+}
+
+.main-content{
+  padding-left: 100px;
+  padding-top: 50px;
 }

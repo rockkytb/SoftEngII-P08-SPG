@@ -15,12 +15,13 @@ export default function ProductsList(props) {
   const [productId, setProductId] = useState();
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(0);
 
   const [orderQuantity, setOrderQuantity] = useState(1);
 
   function handleAddToCart() {
     //TODO
-    let product = {id:productId, quantity:orderQuantity}
+    let product = {id:productId, name:name, quantity:orderQuantity, price:price}
     props.cart.push(product);
     props.products.map((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
@@ -56,6 +57,7 @@ export default function ProductsList(props) {
                 setProductId(product.id);
                 setName(product.name);
                 setQuantity(product.quantity);
+                setPrice(product.price);
                 setShowView(true);
               }}
             >
