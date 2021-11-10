@@ -8,15 +8,16 @@ function BookingReview(props) {
   const [show, setShow] = useState(false);
 
   async function handleCreateBooking() {
-    //TODO
+    let bookingID = await fetch("/api/bokings/", {
+      method: "POST",
+    });
+
     handleClose();
   }
 
   const handleClose = () => {
     setShow(false);
-    /*setProductId();
-    setName("");
-    setQuantity(1);*/
+    
   };
 
   function productsActions() {
