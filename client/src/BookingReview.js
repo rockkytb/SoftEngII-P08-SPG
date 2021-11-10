@@ -6,6 +6,7 @@ function BookingReview(props) {
   const [clientID, setClientID] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   async function handleCreateBooking() {
     //TODO

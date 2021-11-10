@@ -27,12 +27,11 @@ function Employee(props) {
       </Link>
 
 
-
-      <Button
-        onClick={() => setShow(true)}
-      >
+      <Link to="./newOrder">
+      <Button>
         Confirm Booking
       </Button>
+      </Link>
     </>
   );
 }
