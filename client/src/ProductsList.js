@@ -16,9 +16,11 @@ export default function ProductsList(props) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  const [orderQuantity, setOrderQuantity] = useState(1);
+
   function handleAddToCart() {
     //TODO
-    newProd = {id:productId, quantity:quantity}
+    let product = {id:productId, quantity:orderQuantity}
     props.cart.push(product);
     props.products.map((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
@@ -37,7 +39,7 @@ export default function ProductsList(props) {
   };
 
   function productsActions() {
-    return props.memes.map((product) => (
+    return props.products.map((product) => (
       <Col>
         <Card>
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
@@ -79,10 +81,10 @@ export default function ProductsList(props) {
                 <Form.Label>Quantity</Form.Label>
                 <Form.Control
                   type="number"
+                  defaultValue="1"
                   min="1"
-                  max={
-                    quantity
-                  } onChange={e => { setQuantity(e.target.value); }}
+                  max={quantity} 
+                  onChange={e => { setOrderQuantity(e.target.value); }}
                 />
               </Form.Group>
             </Form>

@@ -1,5 +1,7 @@
-import { NavLink, Navbar, Button, Form, Col } from "react-bootstrap";
+import { NavLink, Navbar, Button, Form, Col} from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons"
+import { Link } from "react-router-dom";
+
 function NavbarCustom(props) {
   return (
     <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top d-flex">
@@ -26,8 +28,19 @@ function NavbarCustom(props) {
 
       <Col className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link" href="#">
-         <PersonCircle />
-        
+          <>
+          {
+            props.logged ? 
+            <Link to="/emp/:id">
+              <PersonCircle />
+            </Link>
+            : <Link to="/login">
+              <PersonCircle />
+            </Link>
+          }
+          </>
+          
+          
         </NavLink>
 
         <NavLink className="nav-item nav-link" href="#" onClick={props.logout}>

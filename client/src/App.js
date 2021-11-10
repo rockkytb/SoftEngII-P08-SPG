@@ -13,7 +13,12 @@ import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 
 function App() {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([
+    {id:1, name:"Culo", category:42, price:69.42, quantity:5, farmerId:1},
+    {id:2, name:"Culone", category:43, price:69.42, quantity:10, farmerId:1},
+    {id:3, name:"Culetto", category:42, price:79.42, quantity:1, farmerId:2},
+    {id:4, name:"Culissimo", category:44, price:69.42, quantity:3, farmerId:3}
+  ]);
   const [clients, setClients] = useState();
   const [bookings, setBookings]=useState();
 
@@ -97,7 +102,7 @@ function App() {
   return (
     <Router>
 
-      <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" />
+      <NavbarCustom className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top" logged = {loggedIn} logout={logOut}/>
 
         <Switch>
 
@@ -110,6 +115,7 @@ function App() {
             /**  */
             <ProductsList  
               products = {products}
+              cart={cart}
               //farmers = {farmers}
             />
           } />
@@ -120,13 +126,6 @@ function App() {
 
               <NewClientForm addUser={addUser} />
             </Container>
-          } />
-
-          <Route path="/products" render={() =>
-            /**/
-            <>
-            <ProductsList cart={cart}/>
-            </>
           } />
 
 
@@ -154,8 +153,8 @@ function App() {
           <Route path="/emp/:id" exact render={({ match }) =>
             /** Employee page */
             <>
-               <SidebarCustom  />
-               <Employee cart={cart} clients={clients}/>
+               {/*<SidebarCustom  />*/}
+               <Employee className="below-nav justify-content-centered" cart={cart} clients={clients}/>
             </>
           } />
 
