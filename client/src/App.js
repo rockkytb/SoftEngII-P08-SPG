@@ -22,6 +22,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user_name, setUserName] = useState("");
 
+  let cart = [];
+
   const addUser = (newUser) => {
     const add = async () => {
       const res = await API.addUser(newUser);
@@ -122,7 +124,9 @@ function App() {
 
           <Route path="/products" render={() =>
             /**/
-            <></>
+            <>
+            <ProductsList cart={cart}/>
+            </>
           } />
 
 
@@ -151,7 +155,7 @@ function App() {
             /** Employee page */
             <>
                <SidebarCustom  />
-               <Employee />
+               <Employee cart={cart}/>
             </>
           } />
 

@@ -28,7 +28,7 @@ const isLoggedIn = (req, res, next) => {
 // enable sessions in Express
 app.use(
   session({
-    secret: "secret phrase choosen by me",
+    secret: "secret phrase chosen by me",
     resave: false,
     saveUninitialized: false,
   })

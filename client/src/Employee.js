@@ -1,4 +1,4 @@
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 
@@ -10,24 +10,39 @@ function Register() {
   );
 }
 
-function Employee() {
+function Employee(props) {
   const [show, setShow] = useState(false);
+  
+
+
+
 
   return (
     <>
-      <h1>Sono un impiegato lmao</h1>
 
-      <Button
-        onclick={() => {
-          return (
-            <>
-              <Redirect to="/register" />
-            </>
-          );
-        }}
-      >
-        New Client
-      </Button>
+      <Row>
+        <h1 className="below-nav">Sono un impiegato lmao</h1>
+      </Row>
+      <Row>
+        <Button
+          onclick={() => {
+            return (
+              <>
+                <Redirect to="/register" />
+              </>
+            );
+          }}
+        >
+          New Client
+        </Button>
+      </Row>
+      <Row>
+        <Button
+          onclick={setShow(true)}
+        >
+          Confirm Booking
+        </Button>
+      </Row>
     </>
   );
 }
