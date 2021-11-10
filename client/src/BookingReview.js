@@ -1,7 +1,10 @@
-import { Modal, Form, Row, Col, Alert } from "react-bootstrap";
+import { Modal, Form, Row, Col, Alert, Card, Button} from "react-bootstrap";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function BookingReview(props) {
   const [clientID, setClientID] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -19,7 +22,6 @@ function BookingReview(props) {
   };
 
   function cancelOrder() {
-    
 
     return (
       <>
@@ -70,7 +72,7 @@ function BookingReview(props) {
   }
   return (
     <>
-      <Modal show={showView} onHide={handleViewClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
         </Modal.Header>
