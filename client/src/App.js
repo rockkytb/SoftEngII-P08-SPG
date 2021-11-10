@@ -155,7 +155,7 @@ function App() {
             /** Employee page */
             <>
                <SidebarCustom  />
-               <Employee cart={cart}/>
+               <Employee cart={cart} clients={clients}/>
             </>
           } />
 
