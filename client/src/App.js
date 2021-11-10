@@ -262,13 +262,8 @@ function App() {
             </div>
           )}
         />
-        
-        <Route
-          path="/*"
-          render={() => (
-            <Redirect to="/home"/>
-          )}
-        />
+
+        <Route path="/*" render={() => <Redirect to="/home" />} />
       </Switch>
     </Router>
   );
