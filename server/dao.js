@@ -192,6 +192,40 @@ exports.createBooking = (booking) => {
   });
 };
 
+// add a new bookingProduct
+exports.createBookingProduct = (bookingProduct) => {
+  console.log(bookingProduct);
+  return new Promise((resolve, reject) => {
+    const sql = "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
+    db.run(sql, [bookingProduct.ID_Booking, bookingProduct.ID_Product, bookingProduct.Qty], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(true);
+    });
+  });
+};
+
+// get a booking
+exports.getBooking = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT * FROM BOOKING WHERE ID = ?";
+      db.get(sql, [id], function (err, row){
+        if(err){
+          reject(err);
+          return;
+        }
+        else if (row === undefined) {
+          resolve(false);
+        } else {
+          const booking = { id: row.ID_BOOKING};
+          resolve(booking);
+        }
+      });
+  });
+}
 // add a new client
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {

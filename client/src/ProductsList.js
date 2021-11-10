@@ -4,7 +4,6 @@ import {
   Card,
   Col,
   Button,
-  Row,
   Modal,
   Form,
 } from "react-bootstrap";
@@ -21,10 +20,12 @@ export default function ProductsList(props) {
 
   function handleAddToCart() {
     //TODO
-    let product = {id:productId, name:name, quantity:orderQuantity, price:price}
-    let tmp = props.cart;
-    tmp.push(product);
-    props.setCart(tmp);
+    let product = { id: productId, name: name, quantity: orderQuantity, price: price }
+    /*let tmp = [...props.cart];
+    tmp.push(product);*/
+    console.log(props.cart)
+    props.setCart([...props.cart, product]);
+    console.log(props.cart);
     props.products.map((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
     });
@@ -87,7 +88,7 @@ export default function ProductsList(props) {
                   type="number"
                   defaultValue="1"
                   min="1"
-                  max={quantity} 
+                  max={quantity}
                   onChange={e => { setOrderQuantity(e.target.value); }}
                 />
               </Form.Group>
