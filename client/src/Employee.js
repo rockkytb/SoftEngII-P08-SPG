@@ -25,13 +25,7 @@ function Employee(props) {
       </Row>
       <Row>
         <Button
-          onclick={() => {
-            return (
-              <>
-                <Redirect to="/register" />
-              </>
-            );
-          }}
+          onclick={Register}
         >
           New Client
         </Button>
