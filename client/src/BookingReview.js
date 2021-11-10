@@ -3,6 +3,7 @@ import { Modal, Form, Row, Col, Alert } from "react-bootstrap";
 function BookingReview(props) {
   const [clientID, setClientID] = useState();
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   async function handleCreateBooking() {
     let bookingID = await fetch("/api/tasks/" + task.id + "/" + completed, {
@@ -20,7 +21,7 @@ function BookingReview(props) {
   };
 
   function cancelOrder() {
-    const [showAlert, setShowAlert] = useState(false);
+    
 
     return (
       <>
