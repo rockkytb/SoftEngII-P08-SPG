@@ -59,9 +59,9 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   //const [user_name, setUserName] = useState("");
-  const [userdata, setUserData] = useState();
+  const [userdata, setUserData] = useState({});
 
   const [cart, setCart] = useState([]);
 
@@ -164,6 +164,7 @@ function App() {
           className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
           logged={loggedIn}
           logout={doLogOut}
+          user={userdata}
         />
 
         <Switch>
@@ -207,19 +208,23 @@ function App() {
           />
 
           <Route
-            path="/cust/"
+            path="/cust"
             exact
             render={() => (
               <>
                 {
                   loggedIn
-                    ? 
-                    <>
-                    <SidebarCustom/>
-                    <Customer
+                    ? <>
+                      {userdata.id && userdata.id.charAt(0) == 'C' ?
+                        <>
+                          <SidebarCustom />
+                          <Customer
 
-                    />
-                    </>
+                          />
+                        </>
+                        : <p>No. You no customer, you bad boi.</p>
+                      } </>
+
                     : <Redirect to="/login" />
                 }
               </>
@@ -229,7 +234,7 @@ function App() {
           <Route
             path="/cust/cart"
             exact
-            render={({ match }) => (
+            render={() => (
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
               <></>
             )}
@@ -247,20 +252,25 @@ function App() {
           <Route
             path="/emp"
             exact
-            render={({ match }) => (
+            render={() => (
               /** Employee page */
               <>
                 {loggedIn ?
                   <>
-                    <SidebarCustom className="below-nav" />
-                    <Employee
-                      className="below-nav main-content"
-                      cart={cart}
-                      clients={clients}
-                    />
+                    {userdata.id && userdata.id.charAt(0) == 'S' ?
+                      <>
+                        <SidebarCustom />
+                        <Employee
+                          className="below-nav main-content"
+                          cart={cart}
+                          clients={clients}
+                        />
+                      </>
+                      : <p>No. You no employeet, you bad boi.</p>
+                    }
                   </>
-                  : <Redirect to="/login" />}
 
+                  : <Redirect to="/login" />}
               </>
             )}
           />

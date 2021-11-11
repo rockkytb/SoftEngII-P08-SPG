@@ -1,46 +1,80 @@
-import { NavLink, Navbar, Button, Form, Col} from "react-bootstrap";
+import { NavLink, Navbar, Button, Col } from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
 
 function NavbarCustom(props) {
+
+  function checkType() {
+    if (props.user.id && props.user.id.charAt(0) == 'C') {
+      return (
+        <>
+          <Link to="/cust">
+            <PersonCircle />
+          </Link>
+        </>
+      )
+    }
+    else if (props.user.id && props.user.id.charAt(0) == 'S') {
+      return (
+        <>
+          <Link to="/emp">
+            <PersonCircle />
+          </Link>
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <Link to="/register">
+            <PersonCircle />
+          </Link>
+        </>
+      )
+    }
+  }
+
   return (
     <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top">
-      
+
       <Col >
-      <Button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#left-sidebar"
-        aria-controls="left-sidebar"
-        aria-expanded="false"
-        aria-label="Toggle sidebar"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </Button>
+        <Button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#left-sidebar"
+          aria-controls="left-sidebar"
+          aria-expanded="false"
+          aria-label="Toggle sidebar"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </Button>
       </Col>
 
       <Col className="d-flex  justify-content-center">
-      <NavLink className="navbar-brand">
-        Le_Cose SPG s.p.a.
-      </NavLink>
+        <NavLink className="navbar-brand">
+          Le_Cose SPG s.p.a.
+        </NavLink>
       </Col>
 
       <Col className="navbar-nav ml-md-auto justify-content-end">
-        <NavLink className="nav-item nav-link" href="#">
+        <NavLink className="nav-item nav-link">
           <>
-          {
-            props.logged ? 
-            <Link to="/emp/:id">
-              <PersonCircle />
-            </Link>
-            : <Link to="/login">
-              <PersonCircle />
-            </Link>
-          }
+            {
+              props.logged ?
+                <>
+                  {
+                    checkType()
+                  }
+                </>
+                :
+                <Link to="/login">
+                  <PersonCircle />
+                </Link>
+            }
           </>
-          
-          
+
+
         </NavLink>
 
         <NavLink className="nav-item nav-link" href="#" onClick={props.logout}>
