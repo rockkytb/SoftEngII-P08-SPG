@@ -1,90 +1,311 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarCustom from './NavbarCustom.js';
-import CarouselCustom from './CarouselCustom.js';
-import { useState } from 'react';
-import { Container, Row } from 'react-bootstrap';
-import { Switch, Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
-
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavbarCustom from "./NavbarCustom.js";
+import CarouselCustom from "./CarouselCustom.js";
+import { useState, useEffect } from "react";
+import { Container, Row } from "react-bootstrap";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Employee from "./Employee";
+import SidebarCustom from "./Sidebar";
+import API from "./API";
+import NewClientForm from "./NewClientForm";
+import { Login } from "./Login";
+import ProductsList from "./ProductsList";
+import BookingReview from "./BookingReview";
+import Customer from "./Customer";
 
 function App() {
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Culo",
+      category: 42,
+      price: 69.42,
+      quantity: 5,
+      farmerId: 1,
+    },
+    {
+      id: 2,
+      name: "Culone",
+      category: 43,
+      price: 69.42,
+      quantity: 10,
+      farmerId: 1,
+    },
+    {
+      id: 3,
+      name: "Culetto",
+      category: 42,
+      price: 79.42,
+      quantity: 1,
+      farmerId: 2,
+    },
+    {
+      id: 4,
+      name: "Culissimo",
+      category: 44,
+      price: 69.42,
+      quantity: 3,
+      farmerId: 3,
+    },
+  ]);
+  const [clients, setClients] = useState([]);
+  const [bookings, setBookings] = useState([]);
+
+  const [dirty, setDirty] = useState(false);
+
+  const [loggedIn, setLoggedIn] = useState(true);
+  //const [user_name, setUserName] = useState("");
+  const [userdata, setUserData] = useState();
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await API.getUserInfo().then((user) => {
+          console.log(user);
+          //setUserName(user.name);
+          setUserData(user);
+          setLoggedIn(true);
+        });
+        //console.log("is logged : " + loggedIn);
+      } catch (err) {
+        console.error(err.error);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const doLogIn = async (credentials, type) => {
+    try {
+      console.log("inside doLogin");
+      console.log(credentials);
+      const user = await API.logIn(credentials, type);
+      setUserData(user);
+      console.log(user);
+      setLoggedIn(true);
+    } catch (err) {
+      //toast.error("Wrong email or/and password, try again");
+      console.log(err);
+    }
+  };
+
+  const doLogOut = async () => {
+    await API.logOut();
+    setLoggedIn(false);
+    setUserData();
+  };
+
+  const addUser = (newUser) => {
+    const add = async () => {
+      const res = await API.addUser(newUser);
+      if (res && res.lastID) {
+        newUser.id = res.idClient;
+        setDirty(true);
+      }
+    };
+    add().catch((err) => console.log(err));
+    {
+      /* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */
+    }
+    {
+      /*.catch(err => handleErrors(err)) */
+    }
+  };
+
+  useEffect(() => {
+    const getProducts = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        setProducts(productList);
+      }
+    };
+
+    const getBookings = async () => {
+      // call: GET /api/bookings
+      const response = await fetch("/api/bookings");
+      const bookingList = await response.json();
+      if (response.ok) {
+        setBookings(bookingList);
+      }
+    };
+
+    getProducts();
+    getBookings();
+  }, []);
+
+  useEffect(() => {
+    const getClients = async () => {
+      // call: GET /api/clients
+      const response = await fetch("/api/clients");
+      const clientList = await response.json();
+      if (response.ok) {
+        setClients(clientList);
+      }
+    };
+    getClients();
+  }, []);
+
+
+
   return (
-    <Router>
-      <Container fluid className="p-0">
-        <NavbarCustom />
+    <div className="page">
+      <Router >
 
-        
-          <Switch>
+        <NavbarCustom
+          className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
+          logged={loggedIn}
+          logout={doLogOut}
+        />
 
-            <Route path="/" render={() =>
-              /**  */
-              <>
-                  <CarouselCustom id="customCarousel" />
-              </>
-            } />
-
-
-            <Route path="/login" render={() =>
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => (
               /** LOGIN  */
-              <></>
-            } />
+              <>
+                {loggedIn ? (
+                  <Redirect to="/" />
+                ) : (
+                  <Login handleSubmit={doLogIn} />
+                )}{" "}
+              </>
+            )}
+          />
 
-            <Route path="/register" render={() =>
-              /** REGISTER */
-              <></>
-            } />
-
-            <Route path="/products" render={() =>
+          <Route
+            path="/products"
+            exact
+            render={() => (
               /**  */
-              <></>
-            } />
+              <ProductsList
+                products={products}
+                cart={cart}
+              //farmers = {farmers} //???
+              />
+            )}
+          />
 
+          <Route
+            path="/register"
+            exact
+            render={() => (
+              /** REGISTER */
+              <Container>
+                <NewClientForm addUser={addUser} />
+              </Container>
+            )}
+          />
 
+          <Route
+            path="/cust/:id"
+            exact
+            render={() => (
+              <>
+                {
+                  loggedIn
+                    ? 
+                    <>
+                    <SidebarCustom/>
+                    <Customer
 
-            <Route path="/cust/:id" render={({ match }) =>
-              /** Customer page */
-              <></>
-            } />
+                    />
+                    </>
+                    : <Redirect to="/login" />
+                }
+              </>
+            )}
+          />
 
-            <Route path="/cust/:id/cart" render={({ match }) =>
+          <Route
+            path="/cust/:id/cart"
+            exact
+            render={({ match }) => (
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
               <></>
-            } />
+            )}
+          />
 
-            <Route path="/cust/:id/newOrder" render={({ match }) =>
+          <Route
+            path="/cust/:id/newOrder"
+            exact
+            render={({ match }) => (
               /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
               <></>
-            } />
+            )}
+          />
 
-            <Route path="/cust/:id/newClient" render={({ match }) =>
-              /** Customer newClient page ????????? da poter includere nel componente customer con path='{$path}/newClient*/
-              <></>
-            } />
-
-            <Route path="/emp/:id" render={({ match }) =>
+          <Route
+            path="/emp/:id"
+            exact
+            render={({ match }) => (
               /** Employee page */
-              <></>
-            } />
+              <>
+                {loggedIn ?
+                  <>
+                    <SidebarCustom className="below-nav" />
+                    <Employee
+                      className="below-nav main-content"
+                      cart={cart}
+                      clients={clients}
+                    />
+                  </>
+                  : <Redirect to="/login" />}
 
-            <Route path="/emp/:id/cart" render={({ match }) =>
-              /** Employee cart page da poter includere nel componente employee con path='{$path}/cart'*/
-              <></>
-            } />
+              </>
+            )}
+          />
 
-            <Route path="/emp/:id/newOrder" render={({ match }) =>
+          <Route
+            path="/emp/:id/newOrder"
+            exact
+            render={({ match }) => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-              <></>
-            } />
+              <>
+                {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}
+                <BookingReview
+                  products={products}
+                  cart={cart}
+                  setCart={setCart}
+                  clients={clients}
+                  className="below-nav main-content"
+                />
+              </>
+            )}
+          />
 
-            <Route path="/emp/:id/pagah" render={({ match }) =>
+          <Route
+            path="/emp/:id/pagah"
+            exact
+            render={({ match }) => (
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              <></>
-            } />
+              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}</>
+            )}
+          />
 
-          </Switch>
+          <Route
+            exact
+            path="/home"
+            render={() => (
+              <div className="width100">
+                <CarouselCustom className="customCarousel" />
+              </div>
+            )}
+          />
 
-      </Container>
-    </Router>
+          <Route path="/*" render={() => <Redirect to="/home" />} />
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

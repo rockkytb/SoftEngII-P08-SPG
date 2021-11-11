@@ -1,10 +1,28 @@
 .page {
-  min-height: 100vh!important;
-  margin-right:0px;
+  min-height: 100vh;
+  margin: 0%;
+  margin-right: 0px;
+  padding: 0%;
+  background-color: gray  ;
 }
 
-#customCarousel {
-  height: 25%;
+.width100 {
   width: 100%;
-  max-height: 500px;
+}
+
+.navbar {
+  background-color: transparent;
+  z-index: 10;
+}
+
+.below-nav {
+  padding-top: 5rem;
+  position: sticky;
+  z-index: 10;
+}
+
+
+.main-content{
+  padding-left: 100px;
+  padding-top: 50px;
 }
