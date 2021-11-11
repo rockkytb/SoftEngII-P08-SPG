@@ -404,12 +404,12 @@ app.put(
       result = await dao.editStateBooking(booking);
     } catch (err) {
       res.status(503).json({
-        error: `Database error during the put of booking state: ${booking}.`,
+        error: `Database error during the put of booking state: ${result}.`,
       });
     }
 
     //All went fine
-    res.status(201).json( booking );
+    res.status(201).json( result );
   }
 )
 

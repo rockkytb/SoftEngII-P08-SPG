@@ -238,14 +238,11 @@ exports.editQtyProductWeek = (product) => {
 exports.editStateBooking = (booking) => {
   return new Promise((resolve, reject) =>{
     const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
-    db.run(sql, [booking.New_State,booking.ID_Booking], function (err, row) {
+    db.run(sql, [booking.New_State,booking.ID_Booking], function (err) {
       if(err){
         reject(err);
         return;
       }
-     else if (row === undefined) {
-      resolve(false);
-     }
      else {
        resolve(true);
      }
