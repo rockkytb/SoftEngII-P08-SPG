@@ -7,7 +7,7 @@ const request = require("supertest");
 
 
 jest.useRealTimers();
-/*
+
 describe('Test suite DAO', () => {
     beforeEach( async () => {
        // code to run before each test
@@ -135,7 +135,7 @@ describe('Test suite DAO', () => {
         expect(res.body).toHaveProperty('idClient',2);
       })
     })
-*/
+
     describe('Get a wallet fail', () => {
       it('send a invalid id of client', async () => {
         const res= await request(app)
@@ -174,44 +174,46 @@ describe('Test suite DAO', () => {
       })
     })
 
-describe('Put a row in the table BOOKING_PRODUCTS', () => {
-  it('send a invalid Booking id', async () => {
-    const res= await request(app)
-      .post('/api/bookingproduct')
-      .send({
-        ID_Booking: 0,
-	      ID_Product: 2,
-	      Qty: 3
-      })
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty('error', 'Invalid booking id, it must be positive')
+  describe('Put a row in the table BOOKING_PRODUCTS', () => {
+    it('send a invalid Booking id', async () => {
+      const res= await request(app)
+        .post('/api/bookingproduct')
+        .send({
+          ID_Booking: 0,
+          ID_Product: 2,
+          Qty: 3
+        })
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty('error', 'Invalid booking id, it must be positive')
+    })
   })
-})
 
-describe('Put a row in the table BOOKING_PRODUCTS', () => {
-  it('send a invalid product id', async () => {
-    const res= await request(app)
-      .post('/api/bookingproduct')
-      .send({
-        ID_Booking: 1,
-	      ID_Product: -1,
-	      Qty: 3
-      })
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty('error', `Invalid product id, it must be positive`)
+  describe('Put a row in the table BOOKING_PRODUCTS', () => {
+    it('send a invalid product id', async () => {
+      const res= await request(app)
+        .post('/api/bookingproduct')
+        .send({
+          ID_Booking: 1,
+          ID_Product: -1,
+          Qty: 3
+        })
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty('error', `Invalid product id, it must be positive`)
+    })
   })
-})
 
-describe('Put a row in the table BOOKING_PRODUCTS', () => {
-  it('send a invalid qty', async () => {
-    const res= await request(app)
-      .post('/api/bookingproduct')
-      .send({
-        ID_Booking: 1,
-	      ID_Product: 1,
-	      Qty: -1
-      })
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty('error', `Invalid qty id, it must be positive`)
+  describe('Put a row in the table BOOKING_PRODUCTS', () => {
+    it('send a invalid qty', async () => {
+      const res= await request(app)
+        .post('/api/bookingproduct')
+        .send({
+          ID_Booking: 1,
+          ID_Product: 1,
+          Qty: -1
+        })
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty('error', `Invalid qty id, it must be positive`)
+    })
   })
+
 })
