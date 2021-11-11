@@ -59,7 +59,7 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   //const [user_name, setUserName] = useState("");
   const [userdata, setUserData] = useState();
 
@@ -190,7 +190,7 @@ function App() {
               <ProductsList
                 products={products}
                 cart={cart}
-              //farmers = {farmers}
+              //farmers = {farmers} //???
               />
             )}
           />
@@ -209,13 +209,17 @@ function App() {
           <Route
             path="/cust/:id"
             exact
-            render={({ match }) => (
+            render={() => (
               <>
                 {
                   loggedIn
-                    ? <Customer
+                    ? 
+                    <>
+                    <SidebarCustom/>
+                    <Customer
 
                     />
+                    </>
                     : <Redirect to="/login" />
                 }
               </>
