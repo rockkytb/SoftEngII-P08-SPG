@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
 //Set to true to enable testdatabase
-const testmode = true;
+const testmode = false;
 
 // open the database
 const db = new sqlite.Database(
@@ -301,6 +301,71 @@ exports.createClient = (client) => {
   });
 };
 
+
+//get all products
+exports.getAllProducts = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const products = rows.map((e) => ({
+        id: e.ID,
+        name: e.NAME,
+        category:e.categoryName,
+        price: e.PRICE,
+        qty:e.QTY,
+        farmer_email:e.EMAIL
+      }));
+      resolve(products);
+    });
+  });
+};
+
+//get all bookings
+exports.getAllBookings = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        state:e.STATE,
+        email:e.EMAIL,
+        name:e.NAME,
+        surname:e.SURNAME,
+        qty:e.QTY,
+        product:e.productName,
+
+      }));
+      resolve(bookings);
+    });
+  });
+};
+
+// Edit the wallet balance for a certain client
+exports.updateWallet = (wallet) => {
+  return new Promise((resolve, reject) =>{
+    const sql = "UPDATE CLIENT_WALLET SET AMOUNT = ?  WHERE ID_CLIENT = ?";
+    db.run(sql, [wallet.New_Balance,wallet.Client_id], function (err, row) {
+      if(err){
+        reject(err);
+        return;
+      }
+     else if (row === undefined) {
+      resolve(false);
+     }
+     else {
+       resolve(true);
+     }
+    });
+  });
+};
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
   if (testmode) {
@@ -339,3 +404,4 @@ exports.cleanDb = async () => {
     );
   }
 };
+

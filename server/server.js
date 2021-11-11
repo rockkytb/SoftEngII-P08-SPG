@@ -438,7 +438,59 @@ app.get(
     res.status(201).json( wallet );
   });
 
+//GET /api/products to get a list of all products
+app.get("/api/products", (req, res) => {
+  dao
+    .getAllProducts()
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
+//GET /api/bookings to get a list of all bookings
+app.get("/api/bookings", (req, res) => {
+  dao
+    .getAllBookings()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      ``
+      res.status(500).json(error);
+    });
+});
+
+//PUT /api/walletbalance to update wallet balance 
+app.put(
+  "/api/walletbalance",isLoggedIn,
+  async (req, res) => {
+    if (!validator.isFloat(`${req.body.New_Balance}`, { min: 0 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid Balance Amount, it must be positive` });
+    }
+    const wallet = {
+      Client_id: req.body.Client_id,
+      New_Balance: req.body.New_Balance
+    }
+
+    let result;
+
+    try {
+      result = await dao.updateWallet(wallet);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during updating the wallet balance: ${wallet}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json(wallet);
+  }
+)
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
