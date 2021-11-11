@@ -219,7 +219,6 @@ exports.getAllProducts = () => {
         reject(err);
         return;
       }
-      console.log(rows)
       const products = rows.map((e) => ({
         id: e.ID,
         name: e.NAME,
@@ -229,6 +228,29 @@ exports.getAllProducts = () => {
         farmer_email:e.EMAIL
       }));
       resolve(products);
+    });
+  });
+};
+
+//get all bookings
+exports.getAllBookings = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        state:e.STATE,
+        email:e.EMAIL,
+        name:e.NAME,
+        surname:e.SURNAME,
+        qty:e.QTY,
+        product:e.productName,
+
+      }));
+      resolve(bookings);
     });
   });
 };

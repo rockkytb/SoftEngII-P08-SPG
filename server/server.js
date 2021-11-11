@@ -315,6 +315,19 @@ app.get("/api/products",(req, res) => {
        res.status(500).json(error);
      });
  }); 
+
+
+app.get("/api/bookings",(req, res) => {
+  dao
+    .getAllBookings()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {``
+      res.status(500).json(error);
+    });
+}); 
+
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
