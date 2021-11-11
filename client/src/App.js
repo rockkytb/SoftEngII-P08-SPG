@@ -58,7 +58,7 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [user_name, setUserName] = useState("");
 
   const [cart, setCart] = useState([]);

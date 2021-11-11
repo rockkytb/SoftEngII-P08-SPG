@@ -22,7 +22,7 @@ function Employee(props) {
           <Button>New Client</Button>
         </Link>
 
-        <Link to="./newOrder">
+        <Link to="newOrder">
           <Button>Confirm Booking</Button>
         </Link>
       </div>
