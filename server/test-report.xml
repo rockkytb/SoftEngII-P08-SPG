@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="81"/>
+  <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js">
+  </file>
+  <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js">
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="5"/>
     <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="93"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="36"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="3"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="37"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="3"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="56"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="55"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="58"/>
     <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="70"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="42"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="2"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="134"/>
-    <testCase name="Test suite DAO get client return success" duration="86"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="58"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="1"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="112"/>
+    <testCase name="Test suite DAO get client return success" duration="56"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="1"/>
+    <testCase name="Test suite DAO get client return success" duration="1"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get client by id return success" duration="1"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="1"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="55"/>
+    <testCase name="Test suite DAO get farmer return success" duration="56"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="2"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="18"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="1"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="57"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="56"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="2"/>
   </file>
 </testExecutions>

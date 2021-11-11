@@ -126,7 +126,7 @@ exports.getFarmer = (email, password) => {
 exports.getShopEmployee = (email, password) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM SHOP_EMPLOYEE WHERE EMAIL = ?";
-    console.log(email + " "+password);
+    console.log(email + " " + password);
     db.get(sql, [email], (err, row) => {
       if (err) {
         reject(err);
@@ -196,36 +196,96 @@ exports.createBooking = (booking) => {
 exports.createBookingProduct = (bookingProduct) => {
   console.log(bookingProduct);
   return new Promise((resolve, reject) => {
-    const sql = "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
-    db.run(sql, [bookingProduct.ID_Booking, bookingProduct.ID_Product, bookingProduct.Qty], function (err) {
-      if (err) {
+    const sql =
+      "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
+    db.run(
+      sql,
+      [
+        bookingProduct.ID_Booking,
+        bookingProduct.ID_Product,
+        bookingProduct.Qty,
+      ],
+      function (err) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(true);
+      }
+    );
+  });
+};
+
+// edit qty of a product_week
+exports.editQtyProductWeek = (product) => {
+  return new Promise((resolve, reject) =>{
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = ? WHERE ID = ?";
+    db.run(sql, [product.New_Qty,product.ID_Product], function (err, row) {
+      if(err){
         reject(err);
         return;
       }
-      resolve(true);
+     else if (row === undefined) {
+      resolve(false);
+     }
+     else {
+       resolve(true);
+     }
     });
   });
 };
 
+// edit state of a booking
+exports.editStateBooking = (booking) => {
+  return new Promise((resolve, reject) =>{
+    const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, [booking.New_State,booking.ID_Booking], function (err, row) {
+      if(err){
+        reject(err);
+        return;
+      }
+     else if (row === undefined) {
+      resolve(false);
+     }
+     else {
+       resolve(true);
+     }
+    });
+  });
+};
 // get a booking
 exports.getBooking = (id) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "SELECT * FROM BOOKING WHERE ID = ?";
-      db.get(sql, [id], function (err, row){
-        if(err){
-          reject(err);
-          return;
-        }
-        else if (row === undefined) {
-          resolve(false);
-        } else {
-          const booking = { id: row.ID_BOOKING};
-          resolve(booking);
-        }
-      });
+    const sql = "SELECT * FROM BOOKING WHERE ID = ?";
+    db.get(sql, [id], function (err, row) {
+      if (err) {
+        reject(err);
+        return;
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const booking = { id: row.ID_BOOKING };
+        resolve(booking);
+      }
+    });
   });
-}
+};
+
+// get a wallet
+exports.getWallet = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM CLIENT_WALLET WHERE ID_CLIENT = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        resolve(row.AMOUNT);
+      }
+    });
+  });
+};
 // add a new client
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
@@ -245,35 +305,41 @@ exports.createClient = (client) => {
   });
 };
 
-
-
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
-  if (testmode){
+  if (testmode) {
     //Clean the db
 
-    await db.run('DELETE FROM BOOKING', (err) => {
+    await db.run("DELETE FROM BOOKING", (err) => {
       if (err) {
-        throw(err);
-      } 
+        throw err;
+      }
     });
 
-    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[0,'BOOKING'], (err) => {
+    await db.run(
+      "UPDATE sqlite_sequence SET seq = ? WHERE name = ?",
+      [0, "BOOKING"],
+      (err) => {
+        if (err) {
+          throw err;
+        }
+      }
+    );
+
+    await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       if (err) {
-        throw(err);
-      } 
-    });
-    
-    await db.run('DELETE FROM CLIENT WHERE ID != ?',[1], (err) => {
-      if (err) {
-        throw(err);
-      } 
+        throw err;
+      }
     });
 
-    await db.run('UPDATE sqlite_sequence SET seq = ? WHERE name = ?',[1,'CLIENT'], (err) => {
-      if (err) {
-        throw(err);
-      } 
-    });
+    await db.run(
+      "UPDATE sqlite_sequence SET seq = ? WHERE name = ?",
+      [1, "CLIENT"],
+      (err) => {
+        if (err) {
+          throw err;
+        }
+      }
+    );
   }
-}
+};
