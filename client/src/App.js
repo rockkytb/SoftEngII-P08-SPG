@@ -17,6 +17,7 @@ import NewClientForm from "./NewClientForm";
 import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
+import Customer from "./Customer";
 
 function App() {
   const [products, setProducts] = useState([
@@ -58,10 +59,48 @@ function App() {
 
   const [dirty, setDirty] = useState(false);
 
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [user_name, setUserName] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  //const [user_name, setUserName] = useState("");
+  const [userdata, setUserData] = useState();
 
   const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await API.getUserInfo().then((user) => {
+          console.log(user);
+          //setUserName(user.name);
+          setUserData(user);
+          setLoggedIn(true);
+        });
+        //console.log("is logged : " + loggedIn);
+      } catch (err) {
+        console.error(err.error);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const doLogIn = async (credentials, type) => {
+    try {
+      console.log("inside doLogin");
+      console.log(credentials);
+      const user = await API.logIn(credentials, type);
+      setUserData(user);
+      console.log(user);
+      setLoggedIn(true);
+    } catch (err) {
+      //toast.error("Wrong email or/and password, try again");
+      console.log(err);
+    }
+  };
+
+  const doLogOut = async () => {
+    await API.logOut();
+    setLoggedIn(false);
+    setUserData();
+  };
 
   const addUser = (newUser) => {
     const add = async () => {
@@ -115,161 +154,153 @@ function App() {
     getClients();
   }, []);
 
-  const doLogIn = async (credentials, type) => {
-    try {
-      console.log("inside doLogin");
-      console.log(credentials);
-      const user = await API.logIn(credentials, type);
-      setUserName(user.name);
-      console.log(user);
-      console.log("loggggin");
-      setLoggedIn(true);
-    } catch (err) {
-      //toast.error("Wrong email or/and password, try again");
-      console.log(err);
-    }
-  };
 
-  const doLogOut = async () => {
-    await API.logOut();
-    setLoggedIn(false);
-    setUserName("");
-  };
 
   return (
     <div className="page">
-    <Router >
-      
-      <NavbarCustom
-        className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
-        logged={loggedIn}
-        logout={doLogOut}
-      />
-      
-      <Switch>
-        <Route
-          exact
-          path="/login"
-          render={() => (
-            /** LOGIN  */
-            <>
-              {loggedIn ? (
-                <Redirect to="/" />
-              ) : (
-                <Login handleSubmit={doLogIn} />
-              )}{" "}
-            </>
-          )}
+      <Router >
+
+        <NavbarCustom
+          className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
+          logged={loggedIn}
+          logout={doLogOut}
         />
 
-        <Route
-          path="/products"
-          exact
-          render={() => (
-            /**  */
-            <ProductsList
-              products={products}
-              cart={cart}
-              //farmers = {farmers}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              /** LOGIN  */
+              <>
+                {loggedIn ? (
+                  <Redirect to="/" />
+                ) : (
+                  <Login handleSubmit={doLogIn} />
+                )}{" "}
+              </>
+            )}
+          />
 
-        <Route
-          path="/register"
-          exact
-          render={() => (
-            /** REGISTER */
-            <Container>
-              <NewClientForm addUser={addUser} />
-            </Container>
-          )}
-        />
-
-        <Route
-          path="/cust/:id"
-          exact
-          render={({ match }) => (
-            /** Customer page */
-
-            <></>
-          )}
-        />
-
-        <Route
-          path="/cust/:id/cart"
-          exact
-          render={({ match }) => (
-            /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-            <></>
-          )}
-        />
-
-        <Route
-          path="/cust/:id/newOrder"
-          exact
-          render={({ match }) => (
-            /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-            <></>
-          )}
-        />
-
-        <Route
-          path="/emp/:id"
-          exact
-          render={({ match }) => (
-            /** Employee page */
-            <>
-              {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
-              <Employee
-                className="below-nav main-content"
-                cart={cart}
-                clients={clients}
-              />
-            </>
-          )}
-        />
-
-        <Route
-          path="/emp/:id/newOrder"
-          exact
-          render={({ match }) => (
-            /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-            <>
-            {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
-              <BookingReview
+          <Route
+            path="/products"
+            exact
+            render={() => (
+              /**  */
+              <ProductsList
                 products={products}
                 cart={cart}
-                setCart={setCart}
-                clients={clients}
-                className="below-nav main-content"
+              //farmers = {farmers}
               />
-            </>
-          )}
-        />
+            )}
+          />
 
-        <Route
-          path="/emp/:id/pagah"
-          exact
-          render={({ match }) => (
-            /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-            <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}</>
-          )}
-        />
+          <Route
+            path="/register"
+            exact
+            render={() => (
+              /** REGISTER */
+              <Container>
+                <NewClientForm addUser={addUser} />
+              </Container>
+            )}
+          />
 
-        <Route
-          exact
-          path="/home"
-          render={() => (
-            <div className="width100">
-              <CarouselCustom className="customCarousel" />
-            </div>
-          )}
-        />
+          <Route
+            path="/cust/:id"
+            exact
+            render={({ match }) => (
+              <>
+                {
+                  loggedIn
+                    ? <Customer
 
-        <Route path="/*" render={() => <Redirect to="/home" />} />
-      </Switch>
-    </Router>
+                    />
+                    : <Redirect to="/login" />
+                }
+              </>
+            )}
+          />
+
+          <Route
+            path="/cust/:id/cart"
+            exact
+            render={({ match }) => (
+              /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
+              <></>
+            )}
+          />
+
+          <Route
+            path="/cust/:id/newOrder"
+            exact
+            render={({ match }) => (
+              /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
+              <></>
+            )}
+          />
+
+          <Route
+            path="/emp/:id"
+            exact
+            render={({ match }) => (
+              /** Employee page */
+              <>
+                {loggedIn ?
+                  <>
+                    <SidebarCustom className="below-nav" />
+                    <Employee
+                      className="below-nav main-content"
+                      cart={cart}
+                      clients={clients}
+                    />
+                  </>
+                  : <Redirect to="/login" />}
+
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/:id/newOrder"
+            exact
+            render={({ match }) => (
+              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
+              <>
+                {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}
+                <BookingReview
+                  products={products}
+                  cart={cart}
+                  setCart={setCart}
+                  clients={clients}
+                  className="below-nav main-content"
+                />
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/:id/pagah"
+            exact
+            render={({ match }) => (
+              /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
+              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}</>
+            )}
+          />
+
+          <Route
+            exact
+            path="/home"
+            render={() => (
+              <div className="width100">
+                <CarouselCustom className="customCarousel" />
+              </div>
+            )}
+          />
+
+          <Route path="/*" render={() => <Redirect to="/home" />} />
+        </Switch>
+      </Router>
     </div>
   );
 }

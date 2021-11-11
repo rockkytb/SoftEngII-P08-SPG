@@ -14,17 +14,6 @@ const validator = require("validator");
 const app = new express();
 const port = 3001;
 
-// set-up the middlewares
-app.use(morgan("dev"));
-app.use(express.json());
-
-// custom middleware: check if a given request is coming from an authenticated user
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-
-  return res.status(401).json({ error: "not authenticated" });
-};
-
 // enable sessions in Express
 app.use(
   session({
@@ -135,6 +124,17 @@ passport.deserializeUser((id, done) => {
   }
 });
 
+// set-up the middlewares
+app.use(morgan("dev"));
+app.use(express.json());
+
+// custom middleware: check if a given request is coming from an authenticated user
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+
+  return res.status(401).json({ error: "not authenticated" });
+};
+
 //WRITE API HERE
 
 //POST /api/clientSessions FOR LOGIN OF CLIENT
@@ -194,8 +194,8 @@ app.post("/api/shopEmployeeSessions", function (req, res, next) {
   })(req, res, next);
 });
 
-//POST /api/logout
-app.post("/api/logout", (req, res) => {
+//DELETE /api/logout
+app.delete("/api/logout", isLoggedIn, (req, res) => {
   req.logout();
   res.end();
 });

@@ -76,8 +76,18 @@ async function logIn(credentials, type) {
 }
 
 async function logOut() {
-    await fetch(url+'/sessions/current', { method: 'DELETE' });
-  }
+    await fetch(url + '/logout', { method: 'DELETE' });
+}
 
-const API = { addUser, logIn, logOut };
+async function getUserInfo() {
+    const response = await fetch(url + '/userinfo');
+    const userInfo = await response.json();
+    if (response.ok) {
+        return userInfo;
+    } else {
+        throw userInfo;  // an object with the error coming from the server
+    }
+}
+
+const API = { addUser, logIn, logOut, getUserInfo};
 export default API;
