@@ -216,4 +216,88 @@ describe('Test suite DAO', () => {
     })
   })
 
+  //TEST POST /api/clientSession
+  describe('Client Session success', () => {
+    it('send a valid user', async () => {
+      const res= await request(app)
+        .post('/api/clientSessions')
+        .send({
+          username: "marco.bianchi@mail.it",
+          password: "testpassword"
+        })
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty('id', `C1`);
+      expect(res.body).toHaveProperty('name', `Marco`);
+    })
+  })
+
+  describe('Client Session fails', () => {
+    it('send a wrong psw', async () => {
+      const res= await request(app)
+        .post('/api/clientSessions')
+        .send({
+          username: "marco.bianchi@mail.it",
+          password: "test"
+        })
+      expect(res.statusCode).toEqual(401);
+      expect(res.body).toHaveProperty('message', `Incorrect username and/or password`);
+    })
+  })
+
+  //TEST POST /api/farmerSession
+  describe('Farmer Session success', () => {
+    it('send a valid user', async () => {
+      const res= await request(app)
+        .post('/api/farmerSessions')
+        .send({
+          username: "antonio.bianchi@mail.it",
+          password: "testpassword"
+        })
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty('id', `F1`);
+    })
+  })
+
+  describe('Farmer Session fails', () => {
+    it('send a wrong psw', async () => {
+      const res= await request(app)
+        .post('/api/farmerSessions')
+        .send({
+          username: "antonio.bianchi@mail.it",
+          password: "test"
+        })
+      expect(res.statusCode).toEqual(401);
+      expect(res.body).toHaveProperty('message', `Incorrect username and/or password`);
+    })
+  })
+
+
+  //TEST POST /api/shopEmployeeSessions
+  describe('Shop Employee Session success', () => {
+    it('send a valid user', async () => {
+      const res= await request(app)
+        .post('/api/shopEmployeeSessions')
+        .send({
+          username: "antonio.bianchi@mail.it",
+          password: "testpassword"
+        })
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty('id', `S1`);
+    })
+  })
+
+  describe('Shop Employee Session fails', () => {
+    it('send a wrong psw', async () => {
+      const res= await request(app)
+        .post('/api/shopEmployeeSessions')
+        .send({
+          username: "antonio.bianchi@mail.it",
+          password: "test"
+        })
+      expect(res.statusCode).toEqual(401);
+      expect(res.body).toHaveProperty('message', `Incorrect username and/or password`);
+    })
+  })
+
+
 })
