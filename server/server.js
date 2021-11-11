@@ -339,12 +339,42 @@ app.post(
       result = await dao.createBookingProduct(bookingProduct);
     } catch (err) {
       res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${bookingProduct}.`,
+        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
       });
     }
 
     //All went fine
     res.status(201).json( bookingProduct );
+  }
+)
+
+// PUT /api/productqty
+app.put(
+  "/api/productqty",  //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.New_Qty}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid qty id, it must be positive` });
+    }
+
+    const product = {
+      ID_Product : req.body.ID_Product,
+      New_Qty : req.body.New_Qty
+    }
+
+    let result;
+
+    try {
+      result = await dao.editQtyProductWeek(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of bookingProduct: ${product}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json( product );
   }
 )
 // activate the server
