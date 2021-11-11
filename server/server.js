@@ -348,7 +348,7 @@ app.post(
   }
 )
 
-// PUT /api/productqty
+//PUT /api/productqty
 app.put(
   "/api/productqty",  //isLoggedIn,
   async (req, res) => {
@@ -356,6 +356,11 @@ app.put(
       return res
         .status(422)
         .json({ error: `Invalid qty id, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product id, it must be positive` });
     }
 
     const product = {
@@ -377,6 +382,63 @@ app.put(
     res.status(201).json( product );
   }
 )
+
+//PUT /api/bookingstate
+app.put(
+  "/api/bookingstate",  //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product id, it must be positive` });
+    }
+
+    const booking = {
+      ID_Booking : req.body.ID_Booking,
+      New_State : req.body.New_State
+    }
+
+    let result;
+
+    try {
+      result = await dao.editStateBooking(booking);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of booking state: ${booking}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json( booking );
+  }
+)
+
+//GET /api/wallet
+app.get(
+  "/api/wallet", //isLoggedIn,
+   async(req, res) => {
+    if (!validator.isInt(`${req.body.Client_id}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid booking id, it must be positive` });
+    }
+    
+    let result;
+
+    try {
+      result = await dao.getWallet(req.body.Client_id);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
+      });
+    }
+
+    const wallet = {Balance: result}
+    //All went fine
+    res.status(201).json( wallet );
+  });
+
+
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

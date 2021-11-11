@@ -234,6 +234,25 @@ exports.editQtyProductWeek = (product) => {
     });
   });
 };
+
+// edit state of a booking
+exports.editStateBooking = (booking) => {
+  return new Promise((resolve, reject) =>{
+    const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, [booking.New_State,booking.ID_Booking], function (err, row) {
+      if(err){
+        reject(err);
+        return;
+      }
+     else if (row === undefined) {
+      resolve(false);
+     }
+     else {
+       resolve(true);
+     }
+    });
+  });
+};
 // get a booking
 exports.getBooking = (id) => {
   return new Promise((resolve, reject) => {
@@ -247,6 +266,22 @@ exports.getBooking = (id) => {
       } else {
         const booking = { id: row.ID_BOOKING };
         resolve(booking);
+      }
+    });
+  });
+};
+
+// get a wallet
+exports.getWallet = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM CLIENT_WALLET WHERE ID_CLIENT = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        resolve(row.AMOUNT);
       }
     });
   });
