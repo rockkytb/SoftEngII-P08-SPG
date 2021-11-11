@@ -40,12 +40,12 @@ Example
 return the JSON list of all products. Example
 
 	[
-	{"ID":1,
-	"Name":"Apple",
-	"Category_Id":2,
-	"Price":1.99,
-	"Qty":2,
-	"Farmer_ID":3},
+	{"id":1,
+	"name":"Apple",
+	"category":2,
+	"price":1.99,
+	"qty":2,
+	"farmer_email":3},
 	...]
 
 #### POST /api/bookings
