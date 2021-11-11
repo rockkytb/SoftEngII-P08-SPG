@@ -74,11 +74,14 @@ Receive a JSON object:
 Retrieve the list of all bookings, return a JSON Vector
 
 	[{
-		"ID_Booking":1,
-		"Client_id":2,
-		"State":"PENDING"
-	},...]
-	
+        "state": "PENDING",
+        "email": "client@gmail.com",
+        "name": "client1",
+        "surname": "clientSurname",
+        "qty": 3,
+        "product": "pro1"
+    },...]
+ 	
 #### POST /api/bookingproduct
 
 Create a new record of a product for a certain booking.
