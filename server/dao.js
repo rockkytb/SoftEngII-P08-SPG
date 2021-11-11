@@ -254,3 +254,22 @@ exports.getAllBookings = () => {
     });
   });
 };
+
+// Edit the wallet balance for a certain client
+exports.updateWallet = (wallet) => {
+  return new Promise((resolve, reject) =>{
+    const sql = "UPDATE CLIENT_WALLET SET AMOUNT = ?  WHERE ID_CLIENT = ?";
+    db.run(sql, [wallet.New_Balance,wallet.Client_id], function (err, row) {
+      if(err){
+        reject(err);
+        return;
+      }
+     else if (row === undefined) {
+      resolve(false);
+     }
+     else {
+       resolve(true);
+     }
+    });
+  });
+};
