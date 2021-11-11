@@ -207,7 +207,7 @@ function App() {
           />
 
           <Route
-            path="/cust/:id"
+            path="/cust/"
             exact
             render={() => (
               <>
@@ -227,7 +227,7 @@ function App() {
           />
 
           <Route
-            path="/cust/:id/cart"
+            path="/cust/cart"
             exact
             render={({ match }) => (
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
@@ -236,7 +236,7 @@ function App() {
           />
 
           <Route
-            path="/cust/:id/newOrder"
+            path="/cust/newOrder"
             exact
             render={({ match }) => (
               /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
@@ -245,7 +245,7 @@ function App() {
           />
 
           <Route
-            path="/emp/:id"
+            path="/emp"
             exact
             render={({ match }) => (
               /** Employee page */
@@ -266,7 +266,7 @@ function App() {
           />
 
           <Route
-            path="/emp/:id/newOrder"
+            path="/emp/newOrder"
             exact
             render={({ match }) => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
@@ -284,7 +284,7 @@ function App() {
           />
 
           <Route
-            path="/emp/:id/pagah"
+            path="/emp/pagah"
             exact
             render={({ match }) => (
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
