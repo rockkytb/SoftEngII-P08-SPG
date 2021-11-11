@@ -305,6 +305,16 @@ app.post(
   }
 );
 
+app.get("/api/products",(req, res) => {
+   dao
+     .getAllProducts()
+     .then((product) => {
+       res.status(200).json(product);
+     })
+     .catch((error) => {
+       res.status(500).json(error);
+     });
+ }); 
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

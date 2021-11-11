@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
 //Set to true to enable testdatabase
-const testmode = true;
+const testmode = false;
 
 // open the database
 const db = new sqlite.Database(
@@ -207,5 +207,28 @@ exports.createClient = (client) => {
         resolve(this.lastID);
       }
     );
+  });
+};
+
+//get all products
+exports.getAllProducts = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      console.log(rows)
+      const products = rows.map((e) => ({
+        id: e.ID,
+        name: e.NAME,
+        category:e.categoryName,
+        price: e.PRICE,
+        qty:e.QTY,
+        farmer_email:e.EMAIL
+      }));
+      resolve(products);
+    });
   });
 };
