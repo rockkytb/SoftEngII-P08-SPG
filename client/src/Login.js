@@ -21,7 +21,7 @@ function Login(props) {
 
   return (
     <div className="Login">
-      <ToastContainer />
+
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import {
   CardColumns,
@@ -26,7 +27,7 @@ export default function ProductsList(props) {
     console.log(props.cart)
     props.setCart([...props.cart, product]);
     console.log(props.cart);
-    props.products.map((p) => {
+    props.products.forEach((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
     });
     //edit quantity live so that the product is reserved

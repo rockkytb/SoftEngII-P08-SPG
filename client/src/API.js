@@ -129,4 +129,56 @@ async function getWalletById(id){
 }
 
 const API = { addUser, logIn, logOut, getUserInfo, getClientByEmail, getWalletById};
+async function newBooking(clientId) {
+    //call: POST /api/bookings
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                { idClient: clientId }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+
+}
+
+
+async function newProductBooking(ID_Booking, ID_Product, Qty) {
+    //call: POST /api/bookingproduct
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookingproduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {ID_Booking: ID_Booking,
+                   ID_Product: ID_Product,
+                 Qty: Qty}
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail };
 export default API;
