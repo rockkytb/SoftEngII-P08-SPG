@@ -159,7 +159,7 @@ function App() {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   };
 
-  const newBookingProduct = () => {
+  const newProductBooking = () => {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
       const res = await API.newBookingProduct();
@@ -327,8 +327,9 @@ function App() {
                   cart={cart}
                   clients={clients}
                   products={products}
-                  newBooking={API.newBooking}
-                  newProductBooking={API.newProductBooking()}
+                  newBooking={newBooking}
+                  newProductBooking={newProductBooking}
+                  getWallet={getWalletById}
                 />
               </>
             )}

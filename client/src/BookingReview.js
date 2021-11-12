@@ -16,14 +16,25 @@ function BookingReview(props) {
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
   const [newBooking, setNewBooking] = useState(0);
+  const [soldy, setSoldy] = useState(0);
 
   async function handleCreateBooking() {
-    await setNewBooking(props.newBooking(clientID));
+    await setSoldy(props.getWallet(clientID));
+
+    let total = 0;
+
     props.cart.map((p) => {
-      await props.newProductBooking(newBooking, p.id, p.quantity);
+      total += p.price;
     });
 
-    handleClose();
+    if (total <= soldy) {
+      await setNewBooking(props.newBooking(clientID));
+      props.cart.map((p) => {
+        await props.newProductBooking(newBooking, p.id, p.quantity);
+      });
+
+      handleClose();
+    }
   }
 
   const handleClose = () => {
