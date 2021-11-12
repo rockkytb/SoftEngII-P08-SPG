@@ -233,9 +233,6 @@ describe("Test suite DAO", () => {
   test("get shop employee by id return a shop employee", async () => {
     const id = 1;
 
-    return expect(dao.getShopEmployeeById(id)).resolves.toHaveProperty(
-      "id",
-      "S1"
-    );
+    return expect(dao.getShopEmployeeById(id)).resolves.toHaveProperty("id","S1");
   }, 10000);
 });
