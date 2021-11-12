@@ -174,7 +174,15 @@ function App() {
               /** LOGIN  */
               <>
                 {loggedIn ? (
-                  <Redirect to="/" />
+                  <>
+                    { userdata.id.charAt(0) === 'C' ? (<Redirect to="/cust" />)
+                    :
+                      (<>{ userdata.id.charAt(0) === 'S' ? (<Redirect to="/emp" />):
+                            (<Redirect to="/" />)
+                    }</>)
+                    }
+                    
+                  </>
                 ) : (
                   <Login handleSubmit={doLogIn} />
                 )}{" "}

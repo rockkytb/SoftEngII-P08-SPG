@@ -1,5 +1,5 @@
 import { NavLink, Navbar, Button, Col } from "react-bootstrap";
-import { PersonCircle } from "react-bootstrap-icons"
+import { PersonCircle, DoorOpenFill, HouseDoorFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
 
 function NavbarCustom(props) {
@@ -8,8 +8,8 @@ function NavbarCustom(props) {
     if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
       return (
         <>
-          <Link to="/cust">
-            <PersonCircle />
+          <Link to="/cust" style={{color: 'white'}}>
+            <PersonCircle size={30}/>
           </Link>
         </>
       )
@@ -17,8 +17,8 @@ function NavbarCustom(props) {
     else if (props.user && props.user.id && props.user.id.charAt(0) == 'S') {
       return (
         <>
-          <Link to="/emp">
-            <PersonCircle />
+          <Link to="/emp" style={{color: 'white'}}>
+            <PersonCircle size={30}/>
           </Link>
         </>
       )
@@ -26,8 +26,8 @@ function NavbarCustom(props) {
     else {
       return (
         <>
-          <Link to="/register">
-            <PersonCircle />
+          <Link to="/register" style={{color: 'white'}}>
+            <PersonCircle size={30}/>
           </Link>
         </>
       )
@@ -53,11 +53,18 @@ function NavbarCustom(props) {
 
       <Col className="d-flex  justify-content-center">
         <NavLink className="navbar-brand">
-          Le_Cose SPG s.p.a.
+          <Link to="/home" style={{ textDecoration: 'none', color: 'white'}}>
+            SPG s.p.a.
+          </Link>
         </NavLink>
       </Col>
 
       <Col className="navbar-nav ml-md-auto justify-content-end">
+        <NavLink className="nav-item nav-link">
+          <Link to="/home" style={{color: 'white'}}>
+                  <HouseDoorFill size={30}/>
+            </Link>
+        </NavLink>
         <NavLink className="nav-item nav-link">
           <>
             {
@@ -68,8 +75,8 @@ function NavbarCustom(props) {
                   }
                 </>
                 :
-                <Link to="/login">
-                  <PersonCircle />
+                <Link to="/login" style={{color: 'white'}}>
+                  <PersonCircle size={30}/>
                 </Link>
             }
           </>
@@ -78,16 +85,8 @@ function NavbarCustom(props) {
         </NavLink>
 
         <NavLink className="nav-item nav-link" href="#" onClick={props.logout}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-door-open-fill"
-            viewBox="0 0 16 16"
-          >
-            <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z" />
-          </svg>
+          {props.logged && <DoorOpenFill size={30}/>}
+          
         </NavLink>
       </Col>
     </Navbar>
