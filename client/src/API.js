@@ -114,7 +114,7 @@ async function newBooking(clientId) {
 }
 
 
-async function newBookingProduct() {
+async function newProductBooking(ID_Booking, ID_Product, Qty) {
     //call: POST /api/bookingproduct
     return new Promise((resolve, reject) => {
         fetch(url + '/bookingproduct', {
@@ -123,9 +123,9 @@ async function newBookingProduct() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(
-                {/* ID_Booking: ,
-                   ID_Product: ,
-                 Qty: */}
+                {ID_Booking: ID_Booking,
+                   ID_Product: ID_Product,
+                 Qty: Qty}
             ),
         }).then((response) => {
             if (response.ok) {

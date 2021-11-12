@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarCustom from "./NavbarCustom.js";
 import CarouselCustom from "./CarouselCustom.js";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   Switch,
   Route,
   Redirect,
   BrowserRouter as Router,
-  useHistory } from "react-router-dom";
+  useHistory,
+} from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
@@ -83,8 +84,6 @@ function App() {
         setLoggedIn(true);
         setUserData(user);
         setUpdate(true);
-
-
       } catch (err) {
         console.error(err.error);
         setUpdate(true);
@@ -97,13 +96,16 @@ function App() {
     try {
       console.log("inside doLogin");
       console.log(credentials);
-      const user = await API.logIn(credentials, type)
-        .then(() => toast.success(`Welcome ${user.name}!`, { position: "top-center" }));
+      const user = await API.logIn(credentials, type).then(() =>
+        toast.success(`Welcome ${user.name}!`, { position: "top-center" })
+      );
       setUserData(user);
       console.log(user);
       setLoggedIn(true);
     } catch (err) {
-      toast.error("Wrong email or/and password, try again", { position: "top-center" });
+      toast.error("Wrong email or/and password, try again", {
+        position: "top-center",
+      });
       console.log(err);
     }
   };
@@ -111,7 +113,11 @@ function App() {
   const doLogOut = async () => {
     await API.logOut()
       .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
-      .catch(() => toast.error("Error during logout, try again", { position: "top-center" }));
+      .catch(() =>
+        toast.error("Error during logout, try again", {
+          position: "top-center",
+        })
+      );
     setLoggedIn(false);
     setUserData();
     setUpdate(true);
@@ -123,57 +129,64 @@ function App() {
       if (res && res.idClient) {
         newUser.id = res.idClient;
         setDirty(true);
-
       }
     };
     add()
-      .then(() => {toast.success("Registration completed", { position: "top-center" }); })
-      .catch((err) =>{ 
+      .then(() => {
+        toast.success("Registration completed", { position: "top-center" });
+      })
+      .catch((err) => {
         if (err.errors && err.errors[0]) {
-        toast.error(err.errors, { position: "top-center" });
-      
-      } else { toast.error(err.error, {position: "top-center"})};
-    
-    });
-
+          toast.error(err.errors, { position: "top-center" });
+        } else {
+          toast.error(err.error, { position: "top-center" });
+        }
+      });
   };
 
-  const newBooking = (booking) => {  // DA VERIFICARE CON API è PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+  const newBooking = async (clientID) => {
+    // DA VERIFICARE CON API è PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     const book = async () => {
-      const res = await API.newBooking(booking.clientId);
+      const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
         booking.id = res.idBooking;
       }
     };
     book()
-      .then(() => toast.success("Booking completed", { position: "top-center" }))
+      .then(() =>
+        toast.success("Booking completed", { position: "top-center" })
+      )
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
+  };
 
-  }
-
-  const newBookingProduct = () => { //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
+  const newBookingProduct = () => {
+    //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
       const res = await API.newBookingProduct();
-      
-    }
+    };
     bookingProduct()
-      .then(() => toast.success("Booking completed", { position: "top-center" }))
-      .catch((err) => toast.error(err.errors[0].msg, { position: "top-center" }));
-  }
+      .then(() =>
+        toast.success("Booking completed", { position: "top-center" })
+      )
+      .catch((err) =>
+        toast.error(err.errors[0].msg, { position: "top-center" })
+      );
+  };
 
   const getClientbyEmail = (email) => {
-  console.log("sono in get Client by email")
+    console.log("sono in get Client by email");
     const checkEmail = async () => {
-      console.log("sono in check email")
+      console.log("sono in check email");
       const id_client = await API.getClientByEmail(email);
-      console.log("nella funzione id_client= " + id_client)
+      console.log("nella funzione id_client= " + id_client);
       setUsedMail(id_client);
     };
-    checkEmail()
-      .catch((err) => { console.log(err); /* toast.error(err.errors[0].msg, { position: "top-center" }) */ }   );
-
-  }
-
+    checkEmail().catch((err) => {
+      console.log(
+        err
+      ); /* toast.error(err.errors[0].msg, { position: "top-center" }) */
+    });
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -210,12 +223,10 @@ function App() {
     getClients();
   }, []);
 
-
-
   return (
     <div className="page">
-      <Router >
-      <ToastContainer />
+      <Router>
+        <ToastContainer />
         <NavbarCustom
           className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
           logged={loggedIn}
@@ -232,13 +243,17 @@ function App() {
               <>
                 {loggedIn ? (
                   <>
-                    {userdata.id.charAt(0) === 'C' ? (<Redirect to="/cust" />)
-                      :
-                      (<>{userdata.id.charAt(0) === 'S' ? (<Redirect to="/emp" />) :
-                        (<Redirect to="/" />)
-                      }</>)
-                    }
-
+                    {userdata.id.charAt(0) === "C" ? (
+                      <Redirect to="/cust" />
+                    ) : (
+                      <>
+                        {userdata.id.charAt(0) === "S" ? (
+                          <Redirect to="/emp" />
+                        ) : (
+                          <Redirect to="/" />
+                        )}
+                      </>
+                    )}
                   </>
                 ) : (
                   <Login handleSubmit={doLogIn} />
@@ -255,7 +270,7 @@ function App() {
               <ProductsList
                 products={products}
                 cart={cart}
-              //farmers = {farmers} //???
+                //farmers = {farmers} //???
               />
             )}
           />
@@ -265,7 +280,11 @@ function App() {
             exact
             render={() => (
               /** REGISTER */
-              <NewClientForm addUser={addUser} getClientbyEmail={getClientbyEmail} usedMail={usedMail} />
+              <NewClientForm
+                addUser={addUser}
+                getClientbyEmail={getClientbyEmail}
+                usedMail={usedMail}
+              />
             )}
           />
 
@@ -273,22 +292,27 @@ function App() {
             path="/cust"
             exact
             render={() => (
-
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'C' ?
-                        (<>
-                          <SidebarCustom />
-                          <Customer />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                          <>
+                            <SidebarCustom />
+                            <Customer />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -298,7 +322,15 @@ function App() {
             exact
             render={() => (
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-              <></>
+              <>
+                <BookingReview
+                  cart={cart}
+                  clients={clients}
+                  products={products}
+                  newBooking={API.newBooking}
+                  newProductBooking={API.newProductBooking()}
+                />
+              </>
             )}
           />
 
@@ -317,24 +349,30 @@ function App() {
             render={() => (
               /** Employee page */
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'S' ?
-                        (<>
-                          <SidebarCustom />
-                          <Employee
-                            className="below-nav main-content"
-                            cart={cart}
-                            clients={clients}
-                          />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <Employee
+                              className="below-nav main-content"
+                              cart={cart}
+                              clients={clients}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -345,7 +383,11 @@ function App() {
             render={() => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <>
-                {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}
+                {loggedIn ? (
+                  <SidebarCustom className="below-nav" />
+                ) : (
+                  <Redirect to="/" />
+                )}
                 <BookingReview
                   products={products}
                   cart={cart}
@@ -362,7 +404,13 @@ function App() {
             exact
             render={() => (
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              <>
+                {loggedIn ? (
+                  <SidebarCustom className="below-nav" />
+                ) : (
+                  <Redirect to="/home" />
+                )}
+              </>
             )}
           />
 
@@ -370,7 +418,7 @@ function App() {
             exact
             path="/home"
             render={() => (
-              <div className="width100" >
+              <div className="width100">
                 <CarouselCustom className="customCarousel" />
               </div>
             )}
