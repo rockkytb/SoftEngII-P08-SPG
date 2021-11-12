@@ -103,6 +103,7 @@ function App() {
     await API.logOut();
     setLoggedIn(false);
     setUserData();
+    setUpdate(true);
   };
 
   const addUser = (newUser) => {
