@@ -65,18 +65,18 @@ function App() {
 
   const [cart, setCart] = useState([]);
 
-  const [update, setUpdate] = useState (false);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const user = await API.getUserInfo();
-          console.log(user);
-          setLoggedIn(true);
-          setUserData(user);
-          setUpdate(true);
-          
-        
+        console.log(user);
+        setLoggedIn(true);
+        setUserData(user);
+        setUpdate(true);
+
+
       } catch (err) {
         console.error(err.error);
         setUpdate(true);
@@ -180,13 +180,13 @@ function App() {
               <>
                 {loggedIn ? (
                   <>
-                    { userdata.id.charAt(0) === 'C' ? (<Redirect to="/cust" />)
-                    :
-                      (<>{ userdata.id.charAt(0) === 'S' ? (<Redirect to="/emp" />):
-                            (<Redirect to="/" />)
-                    }</>)
+                    {userdata.id.charAt(0) === 'C' ? (<Redirect to="/cust" />)
+                      :
+                      (<>{userdata.id.charAt(0) === 'S' ? (<Redirect to="/emp" />) :
+                        (<Redirect to="/" />)
+                      }</>)
                     }
-                    
+
                   </>
                 ) : (
                   <Login handleSubmit={doLogIn} />
@@ -214,7 +214,7 @@ function App() {
             render={() => (
               /** REGISTER */
               <Container>
-                <NewClientForm addUser={addUser}  />
+                <NewClientForm addUser={addUser} />
               </Container>
             )}
           />
@@ -223,17 +223,21 @@ function App() {
             path="/cust"
             exact
             render={() => (
+
               <>
-                {
-                  loggedIn && userdata.id && userdata.id.charAt(0) === 'C'
-                    ? <>
+                {update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'C' ?
+                        (<>
                           <SidebarCustom />
-                          <Customer 
+                          <Customer/>
+                        </>)
+                        : (<Redirect to="/home" />)
+                      }
+                    </>)
 
-                          />
-                       </>
-
-                    : <Redirect to="/home" />
+                    : (<Redirect to="/login" />)} </> : <></>
                 }
               </>
             )}
@@ -263,7 +267,7 @@ function App() {
             render={() => (
               /** Employee page */
               <>
-                { update ? <>
+                {update ? <>
                   {loggedIn ?
                     (<>
                       {userdata.id && userdata.id.charAt(0) === 'S' ?
@@ -276,7 +280,7 @@ function App() {
                           />
                         </>)
                         : (<Redirect to="/home" />)
-                        }
+                      }
                     </>)
 
                     : (<Redirect to="/login" />)} </> : <></>
