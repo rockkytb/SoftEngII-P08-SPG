@@ -1,10 +1,8 @@
-import React from 'react';
-import { Button, Modal, Form, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Button, } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Customer(props) {
-  const [show, setShow] = useState(false);
+
 
   return (
     <>

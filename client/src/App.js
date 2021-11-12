@@ -3,14 +3,13 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarCustom from "./NavbarCustom.js";
 import CarouselCustom from "./CarouselCustom.js";
-import { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { useState, useEffect} from "react";
 import {
   Switch,
   Route,
   Redirect,
   BrowserRouter as Router,
-} from "react-router-dom";
+  useHistory } from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
@@ -19,6 +18,8 @@ import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [products, setProducts] = useState([
@@ -68,6 +69,12 @@ function App() {
 
   const [update, setUpdate] = useState(false);
 
+  const [booking, setBooking] = useState();
+
+  const history = useHistory();
+
+  const [usedMail, setUsedMail] = useState();
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -90,18 +97,21 @@ function App() {
     try {
       console.log("inside doLogin");
       console.log(credentials);
-      const user = await API.logIn(credentials, type);
+      const user = await API.logIn(credentials, type)
+        .then(() => toast.success(`Welcome ${user.name}!`, { position: "top-center" }));
       setUserData(user);
       console.log(user);
       setLoggedIn(true);
     } catch (err) {
-      //toast.error("Wrong email or/and password, try again");
+      toast.error("Wrong email or/and password, try again", { position: "top-center" });
       console.log(err);
     }
   };
 
   const doLogOut = async () => {
-    await API.logOut();
+    await API.logOut()
+      .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
+      .catch(() => toast.error("Error during logout, try again", { position: "top-center" }));
     setLoggedIn(false);
     setUserData();
     setUpdate(true);
@@ -110,19 +120,60 @@ function App() {
   const addUser = (newUser) => {
     const add = async () => {
       const res = await API.addUser(newUser);
-      if (res && res.lastID) {
+      if (res && res.idClient) {
         newUser.id = res.idClient;
         setDirty(true);
+
       }
     };
-    add().catch((err) => console.log(err));
-    {
-      /* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */
-    }
-    {
-      /*.catch(err => handleErrors(err)) */
-    }
+    add()
+      .then(() => {toast.success("Registration completed", { position: "top-center" }); })
+      .catch((err) =>{ 
+        if (err.errors && err.errors[0]) {
+        toast.error(err.errors, { position: "top-center" });
+      
+      } else { toast.error(err.error, {position: "top-center"})};
+    
+    });
+
   };
+
+  const newBooking = (booking) => {  // DA VERIFICARE CON API è PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+    const book = async () => {
+      const res = await API.newBooking(booking.clientId);
+      if (res && res.idBooking) {
+        booking.id = res.idBooking;
+      }
+    };
+    book()
+      .then(() => toast.success("Booking completed", { position: "top-center" }))
+      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+
+  }
+
+  const newBookingProduct = () => { //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
+    const bookingProduct = async () => {
+      const res = await API.newBookingProduct();
+      
+    }
+    bookingProduct()
+      .then(() => toast.success("Booking completed", { position: "top-center" }))
+      .catch((err) => toast.error(err.errors[0].msg, { position: "top-center" }));
+  }
+
+  const getClientbyEmail = (email) => {
+  console.log("sono in get Client by email")
+    const checkEmail = async () => {
+      console.log("sono in check email")
+      const id_client = await API.getClientByEmail(email);
+      console.log("nella funzione id_client= " + id_client)
+      setUsedMail(id_client);
+    };
+    checkEmail()
+      .catch((err) => { console.log(err); /* toast.error(err.errors[0].msg, { position: "top-center" }) */ }   );
+
+  }
+
 
   useEffect(() => {
     const getProducts = async () => {
@@ -164,7 +215,7 @@ function App() {
   return (
     <div className="page">
       <Router >
-
+      <ToastContainer />
         <NavbarCustom
           className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
           logged={loggedIn}
@@ -214,9 +265,7 @@ function App() {
             exact
             render={() => (
               /** REGISTER */
-              <Container>
-                <NewClientForm addUser={addUser} />
-              </Container>
+              <NewClientForm addUser={addUser} getClientbyEmail={getClientbyEmail} usedMail={usedMail} />
             )}
           />
 
@@ -232,7 +281,7 @@ function App() {
                       {userdata.id && userdata.id.charAt(0) === 'C' ?
                         (<>
                           <SidebarCustom />
-                          <Customer/>
+                          <Customer />
                         </>)
                         : (<Redirect to="/home" />)
                       }

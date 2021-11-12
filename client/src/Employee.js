@@ -1,6 +1,5 @@
-import React from 'react';
-import { Button, Modal, Form, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { Button, } from "react-bootstrap";
+import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 /*function Register() {
