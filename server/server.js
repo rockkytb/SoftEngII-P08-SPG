@@ -220,7 +220,7 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 });
 
 //GET /api/client/
-app.get("/api/client", isLoggedIn, (req, res) => {
+app.post("/api/client", isLoggedIn, (req, res) => {
   dao
     .getClientByEmail(req.body.email)
     .then((client) => {
@@ -414,10 +414,10 @@ app.put(
 )
 
 //GET /api/wallet
-app.get(
+app.post(
   "/api/wallet", //isLoggedIn,
    async(req, res) => {
-    if (!validator.isInt(`${req.body.Client_id}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid booking id, it must be positive` });

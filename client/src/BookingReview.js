@@ -8,7 +8,7 @@ function BookingReview(props) {
   const [show, setShow] = useState(false);
 
   async function handleCreateBooking() {
-    let bookingID = await fetch("/api/bokings/", {
+    let bookingID = await fetch("/api/bookings/", {
       method: "POST",
     });
 
@@ -112,4 +112,4 @@ function BookingReview(props) {
   );
 }
 
-export default  BookingReview ;
+export default BookingReview ;

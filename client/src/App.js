@@ -18,6 +18,7 @@ import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
+import ClientData from "./ClientData";
 
 function App() {
   const [products, setProducts] = useState([
@@ -158,6 +159,34 @@ function App() {
     getClients();
   }, []);
 
+  const getSingleClientByEmail = async (email) =>{
+    let client = {};
+    if(clients){
+      client = clients.find(c => c.email == email)
+    }
+    if (client!= undefined) return client;
+    try{
+      const clientData = await API.getClientByEmail(email);
+      console.log(clientData);
+      return clientData;
+    }
+    catch(err){
+      console.log(err);
+      return undefined;
+    }
+  }
+
+  const getWalletById = async (id) =>{
+    try{
+      const wallet = await API.getWalletById(id);
+      console.log(wallet);
+      return wallet;
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
 
 
   return (
@@ -231,7 +260,7 @@ function App() {
                       {userdata.id && userdata.id.charAt(0) === 'C' ?
                         (<>
                           <SidebarCustom />
-                          <Customer/>
+                          <Customer />
                         </>)
                         : (<Redirect to="/home" />)
                       }
@@ -290,19 +319,58 @@ function App() {
           />
 
           <Route
+            path="/emp/clientData"
+            exact
+            render={() => (
+              <>
+                {update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'S' ?
+                        (<>
+                          <SidebarCustom />
+                          <ClientData
+                            getClient = {getSingleClientByEmail}
+                            getWallet = {getWalletById}
+                            className="below-nav main-content"
+                          />
+                        </>)
+                        : (<Redirect to="/home" />)
+                      }
+                    </>)
+
+                    : (<Redirect to="/login" />)} </> : <></>
+                }
+              </>
+            )}
+          />
+
+          <Route
             path="/emp/newOrder"
             exact
             render={() => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <>
-                {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}
-                <BookingReview
-                  products={products}
-                  cart={cart}
-                  setCart={setCart}
-                  clients={clients}
-                  className="below-nav main-content"
-                />
+                {update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'S' ?
+                        (<>
+                          <SidebarCustom />
+                          <BookingReview
+                            products={products}
+                            cart={cart}
+                            setCart={setCart}
+                            clients={clients}
+                            className="below-nav main-content"
+                          />
+                        </>)
+                        : (<Redirect to="/home" />)
+                      }
+                    </>)
+
+                    : (<Redirect to="/login" />)} </> : <></>
+                }
               </>
             )}
           />
@@ -312,7 +380,21 @@ function App() {
             exact
             render={() => (
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              //<>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              <>
+                {update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'S' ?
+                        (<>
+                          <SidebarCustom className="below-nav" />
+                        </>)
+                        : (<Redirect to="/home" />)
+                      }
+                    </>)
+                    : (<Redirect to="/login" />)} </> : <></>
+                }
+              </>
             )}
           />
 

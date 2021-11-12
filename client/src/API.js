@@ -89,5 +89,44 @@ async function getUserInfo() {
     }
 }
 
-const API = { addUser, logIn, logOut, getUserInfo};
+async function getClientByEmail(email){
+    //Not very secure, should send also employee data to verify identity
+    const response = await fetch(url+"/client", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            { email: email }
+        ),
+    });
+    if(response.ok){
+        return await response.json();
+    }
+    else{
+        throw response.json();
+    }
+}
+
+async function getWalletById(id){
+    //Not very secure, should send also employee data to verify identity
+    const response = await fetch(url+"/client", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            { id: id }
+        ),
+    });
+    const wallet = await response.json();
+    if(response.ok){
+        return wallet;
+    }
+    else{
+        throw wallet;
+    }
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, getClientByEmail, getWalletById};
 export default API;
