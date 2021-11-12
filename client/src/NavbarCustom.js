@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function NavbarCustom(props) {
 
   function checkType() {
-    if (props.user.id && props.user.id.charAt(0) === 'C') {
+    if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
       return (
         <>
           <Link to="/cust" style={{color: 'white'}}>
@@ -14,7 +14,7 @@ function NavbarCustom(props) {
         </>
       )
     }
-    else if (props.user.id && props.user.id.charAt(0) === 'S') {
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'S') {
       return (
         <>
           <Link to="/emp" style={{color: 'white'}}>

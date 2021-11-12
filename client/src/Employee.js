@@ -19,7 +19,7 @@ function Employee(props) {
 
       <div className="main-content">
         <Link to="/register">
-          <Button>New Client</Button>
+          <Button className="mr-2 ">New Client</Button>
         </Link>
 
         <Link to="newOrder">

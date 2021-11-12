@@ -60,7 +60,7 @@ function App() {
   const [dirty, setDirty] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
-  //const [user_name, setUserName] = useState("");
+
   const [userdata, setUserData] = useState({});
 
   const [cart, setCart] = useState([]);
@@ -70,11 +70,10 @@ function App() {
       try {
         await API.getUserInfo().then((user) => {
           console.log(user);
-          //setUserName(user.name);
-          setUserData(user);
           setLoggedIn(true);
+          setUserData(user);
+          
         });
-        //console.log("is logged : " + loggedIn);
       } catch (err) {
         console.error(err.error);
       }
@@ -210,7 +209,7 @@ function App() {
             render={() => (
               /** REGISTER */
               <Container>
-                <NewClientForm addUser={addUser} />
+                <NewClientForm addUser={addUser}  />
               </Container>
             )}
           />
@@ -221,19 +220,15 @@ function App() {
             render={() => (
               <>
                 {
-                  loggedIn
+                  loggedIn && userdata.id && userdata.id.charAt(0) == 'C'
                     ? <>
-                      {userdata.id && userdata.id.charAt(0) == 'C' ?
-                        <>
                           <SidebarCustom />
-                          <Customer
+                          <Customer 
 
                           />
-                        </>
-                        : <p>No. You no customer, you bad boi.</p>
-                      } </>
+                       </>
 
-                    : <Redirect to="/login" />
+                    : <Redirect to="/home" />
                 }
               </>
             )}
@@ -251,7 +246,7 @@ function App() {
           <Route
             path="/cust/newOrder"
             exact
-            render={({ match }) => (
+            render={() => (
               /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
               <></>
             )}
@@ -278,7 +273,7 @@ function App() {
                     }
                   </>
 
-                  : <Redirect to="/login" />}
+                  : <Redirect to="/home" />}
               </>
             )}
           />
@@ -286,7 +281,7 @@ function App() {
           <Route
             path="/emp/newOrder"
             exact
-            render={({ match }) => (
+            render={() => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <>
                 {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}
@@ -304,9 +299,9 @@ function App() {
           <Route
             path="/emp/pagah"
             exact
-            render={({ match }) => (
+            render={() => (
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/" />}</>
+              <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
             )}
           />
 
@@ -314,7 +309,7 @@ function App() {
             exact
             path="/home"
             render={() => (
-              <div className="width100">
+              <div className="width100" >
                 <CarouselCustom className="customCarousel" />
               </div>
             )}
