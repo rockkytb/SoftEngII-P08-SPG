@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
 //Set to true to enable testdatabase
-const testmode = false;
+const testmode = true;
 
 // open the database
 const db = new sqlite.Database(

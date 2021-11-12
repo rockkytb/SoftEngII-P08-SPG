@@ -45,7 +45,7 @@ async function logIn(credentials, type) {
                 body: JSON.stringify(credentials),
             });
             break;
-        case 'E':
+        case 'S':
             response = await fetch(url + '/shopEmployeeSessions', {
                 method: 'POST',
                 headers: {
