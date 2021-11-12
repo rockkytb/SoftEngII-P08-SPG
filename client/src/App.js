@@ -60,21 +60,13 @@ function App() {
   ]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
-
   const [dirty, setDirty] = useState(false);
-
   const [loggedIn, setLoggedIn] = useState(false);
-
   const [userdata, setUserData] = useState({});
-
   const [cart, setCart] = useState([]);
-
   const [update, setUpdate] = useState(false);
-
   const [booking, setBooking] = useState();
-
   const history = useHistory();
-
   const [usedMail, setUsedMail] = useState();
 
   useEffect(() => {
@@ -145,7 +137,8 @@ function App() {
   };
 
   const newBooking = async (clientID) => {
-    // DA VERIFICARE CON API è PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+    // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+    // sì però stai calmo
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
