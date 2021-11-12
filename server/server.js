@@ -432,10 +432,11 @@ app.post(
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
       });
     }
+    console.log(result);
 
-    const wallet = {Balance: result}
+    //const wallet = {balance: result}
     //All went fine
-    res.status(201).json( wallet );
+    res.status(201).json( result );
   });
 
 //GET /api/products to get a list of all products

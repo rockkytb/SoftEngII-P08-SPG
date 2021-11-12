@@ -277,7 +277,8 @@ exports.getWallet = (id) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        resolve(row.AMOUNT);
+        const amount = {balance : row.AMOUNT}
+        resolve(amount);
       }
     });
   });

@@ -25,7 +25,7 @@ function CarouselCustom(props) {
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>Inzia i tuoi acquisti </h3>
+          <h3>Inizia i tuoi acquisti </h3>
           <p>pulsante login</p>
         </Carousel.Caption>
       </Carousel.Item>

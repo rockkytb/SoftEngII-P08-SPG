@@ -110,7 +110,7 @@ async function getClientByEmail(email){
 
 async function getWalletById(id){
     //Not very secure, should send also employee data to verify identity
-    const response = await fetch(url+"/client", {
+    const response = await fetch(url+"/wallet", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -128,7 +128,6 @@ async function getWalletById(id){
     }
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, getClientByEmail, getWalletById};
 async function newBooking(clientId) {
     //call: POST /api/bookings
     return new Promise((resolve, reject) => {
@@ -180,5 +179,5 @@ async function newProductBooking(ID_Booking, ID_Product, Qty) {
 
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail };
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById };
 export default API;

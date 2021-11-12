@@ -30,7 +30,7 @@ function BookingReview(props) {
     if (total <= soldy) {
       await setNewBooking(props.newBooking(clientID));
       props.cart.map((p) => {
-        await props.newProductBooking(newBooking, p.id, p.quantity);
+        props.newProductBooking(newBooking, p.id, p.quantity);
       });
 
       handleClose();

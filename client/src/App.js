@@ -97,10 +97,9 @@ function App() {
     try {
       console.log("inside doLogin");
       console.log(credentials);
-      const user = await API.logIn(credentials, type).then(() =>
-        toast.success(`Welcome ${user.name}!`, { position: "top-center" })
-      );
+      const user = await API.logIn(credentials, type);
       setUserData(user);
+      toast.success(`Welcome ${user.name}!`, { position: "top-center" }) ;
       console.log(user);
       setLoggedIn(true);
     } catch (err) {
@@ -174,7 +173,7 @@ function App() {
       );
   };
 
-  const getClientbyEmail = (email) => {
+  /*const getClientbyEmail = (email) => {
     console.log("sono in get Client by email");
     const checkEmail = async () => {
       console.log("sono in check email");
@@ -185,9 +184,9 @@ function App() {
     checkEmail().catch((err) => {
       console.log(
         err
-      ); /* toast.error(err.errors[0].msg, { position: "top-center" }) */
+      ); /* toast.error(err.errors[0].msg, { position: "top-center" }) 
     });
-  };
+  };*/
 
   useEffect(() => {
     const getProducts = async () => {
@@ -222,28 +221,33 @@ function App() {
       }
     };
     getClients();
-  }, []);
+  }, [loggedIn]);
 
-  const getSingleClientByEmail = async (email) =>{
+  const getSingleClientByEmail = (email) =>{
     let client = {};
     if(clients){
-      client = clients.find(c => c.email == email)
+      client = clients.find(c => c.username == email);
     }
     if (client!= undefined) return client;
-    try{
-      const clientData = await API.getClientByEmail(email);
-      console.log(clientData);
-      return clientData;
+
+    const findUser = async () => {
+      try{
+        const clientData = await API.getClientByEmail(email);
+        console.log(clientData);
+        return clientData;
+      }
+      catch(err){
+        console.log(err);
+        return undefined;
+      }
     }
-    catch(err){
-      console.log(err);
-      return undefined;
-    }
+    findUser();
+    
   }
 
   const getWalletById = async (id) =>{
     try{
-      const wallet = await API.getWalletById(id);
+      const wallet = await API.getWalletById(id.substring(1));
       console.log(wallet);
       return wallet;
     }
@@ -313,7 +317,7 @@ function App() {
               /** REGISTER */
               <NewClientForm
                 addUser={addUser}
-                getClientbyEmail={getClientbyEmail}
+                getClientbyEmail={getSingleClientByEmail}
                 usedMail={usedMail}
               />
             )}
