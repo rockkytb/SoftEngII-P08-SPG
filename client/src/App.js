@@ -65,17 +65,21 @@ function App() {
 
   const [cart, setCart] = useState([]);
 
+  const [update, setUpdate] = useState (false);
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await API.getUserInfo().then((user) => {
+        const user = await API.getUserInfo();
           console.log(user);
           setLoggedIn(true);
           setUserData(user);
+          setUpdate(true);
           
-        });
+        
       } catch (err) {
         console.error(err.error);
+        setUpdate(true);
       }
     };
     checkAuth();
@@ -220,7 +224,7 @@ function App() {
             render={() => (
               <>
                 {
-                  loggedIn && userdata.id && userdata.id.charAt(0) == 'C'
+                  loggedIn && userdata.id && userdata.id.charAt(0) === 'C'
                     ? <>
                           <SidebarCustom />
                           <Customer 
@@ -258,22 +262,24 @@ function App() {
             render={() => (
               /** Employee page */
               <>
-                {loggedIn ?
-                  <>
-                    {userdata.id && userdata.id.charAt(0) == 'S' ?
-                      <>
-                        <SidebarCustom />
-                        <Employee
-                          className="below-nav main-content"
-                          cart={cart}
-                          clients={clients}
-                        />
-                      </>
-                      : <p>No. You no employeet, you bad boi.</p>
-                    }
-                  </>
+                { update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'S' ?
+                        (<>
+                          <SidebarCustom />
+                          <Employee
+                            className="below-nav main-content"
+                            cart={cart}
+                            clients={clients}
+                          />
+                        </>)
+                        : (<Redirect to="/home" />)
+                        }
+                    </>)
 
-                  : <Redirect to="/home" />}
+                    : (<Redirect to="/login" />)} </> : <></>
+                }
               </>
             )}
           />
