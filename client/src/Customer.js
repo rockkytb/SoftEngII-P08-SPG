@@ -11,11 +11,11 @@ function Customer(props) {
           <h1 className="below-nav main-content">I'm a customer lul</h1>
 
           <div className="main-content">
-            <Link to={"./cart"}>
+            <Link to="./cart">
               <Button>Go to you cart</Button>
             </Link>
 
-            <Link to={"./newOrder"}>
+            <Link to="./newOrder">
               <Button>Make a new order</Button>
             </Link>
           </div>
