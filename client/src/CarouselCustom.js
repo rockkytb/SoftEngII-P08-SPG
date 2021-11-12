@@ -1,3 +1,4 @@
+import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import { useState } from 'react';
 import  sfondo_cibo  from './immagini/sfondo_cibo.jpg';
