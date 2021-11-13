@@ -176,8 +176,32 @@ async function newProductBooking(ID_Booking, ID_Product, Qty) {
             }
         }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
     });
-
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById };
+async function setNewWallet(id, amount){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/walletbalance', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    amount:amount
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById, setNewWallet};
 export default API;

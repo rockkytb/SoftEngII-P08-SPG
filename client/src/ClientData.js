@@ -6,7 +6,7 @@ function ClientData(props){
   const [client, setClient] = useState();
   const [custEmail, setEmail] = useState("");
   const [wallet, setWallet] = useState();
-  const [newWallet, setNewWallet] = useState(0);
+  const [newWallet, setNewWallet] = useState();
 
   useEffect(() => {
     if(client){
@@ -62,9 +62,9 @@ function ClientData(props){
             <Form>
                   <Form.Group>
                     <Form.Label>Change wallet value:</Form.Label>
-                      <Form.Control type="number" min="0" default={newWallet} onChange={ev => setNewWallet(ev.target.value)} />
+                      <Form.Control type="number" min="0" step="0.01" value={newWallet} /*defaultValue={newWallet}*/ onChange={ev => setNewWallet(ev.target.value)} />
                   </Form.Group>
-                  <Button variant="primary" onClick={() => {setClient(props.getClient(custEmail))}}>
+                  <Button variant="primary" onClick={() => {props.changeWallet(client.id, newWallet); setWallet(newWallet);}}>
                     Submit
                 </Button>
             </Form>

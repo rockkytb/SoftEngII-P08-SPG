@@ -477,16 +477,16 @@ app.get("/api/bookings", (req, res) => {
 
 //PUT /api/walletbalance to update wallet balance 
 app.put(
-  "/api/walletbalance"/*,isLoggedIn*/,
+  "/api/walletbalance", /*isLoggedIn,*/
   async (req, res) => {
-    if (!validator.isFloat(`${req.body.New_Balance}`, { min: 0 })) {
+    if (!validator.isFloat(`${req.body.amount}`, { min: 0 })) {
       return res
         .status(422)
         .json({ error: `Invalid Balance Amount, it must be positive` });
     }
     const wallet = {
-      Client_id: req.body.Client_id,
-      New_Balance: req.body.New_Balance
+      id: req.body.id,
+      amount: req.body.amount
     }
 
     dao

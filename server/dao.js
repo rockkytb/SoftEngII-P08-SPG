@@ -353,13 +353,13 @@ exports.updateWallet = (wallet) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";
     db.run(
-      sql, [wallet.New_Balance, wallet.Client_id],
+      sql, [wallet.amount, wallet.id],
       function (err) {
         if (err) {
           reject(err.message);
           return;
         }
-        if(wallet.Client_id === undefined){
+        if(wallet.id === undefined){
           reject({err:"CLIENT ID NOT PROVIDED"});
           return;
         }

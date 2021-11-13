@@ -251,6 +251,18 @@ function App() {
     }
   }
 
+  const setNewWallet = async (id, amount) =>{
+    try{
+      const response = await API.setNewWallet(id.substring(1), amount);
+      toast.success("Wallet modified successfully", { position: "top-center" });
+      return response;
+    }
+    catch(err){
+      toast.error("Error updating the wallet", { position: "top-center" });
+      console.log(err);
+    }
+  }
+
 
 
   return (
@@ -418,6 +430,7 @@ function App() {
                           <ClientData
                             getClient = {getSingleClientByEmail}
                             getWallet = {getWalletById}
+                            changeWallet={setNewWallet}
                             className="below-nav main-content"
                           />
                         </>)
