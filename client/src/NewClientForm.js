@@ -17,10 +17,10 @@ function NewClientForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        console.log("valore setUsedMail " + props.getClientbyEmail(email))
+        console.log("valore setUsedMail " + props.getClientbyEmail(email).id)
         props.getClientbyEmail(email);
 
-        if (form.checkValidity() === false && (props.usedMail === -1 || props.usedMail === undefined )) {
+        if (form.checkValidity() === false && !(props.usedMail === -1 /*|| props.usedMail === undefined */)) {
             event.stopPropagation();
         } else {
             const newUser = {
@@ -100,7 +100,7 @@ function NewClientForm(props) {
                                 </Form.Control.Feedback>
                             }
 
-                            {(props.usedMail === -1 || props.usedMail === undefined) && <Form.Control.Feedback type="invalid">
+                            {!(props.usedMail === -1 /*|| props.usedMail === undefined*/) && <Form.Control.Feedback type="invalid">
                                 Email already used
                             </Form.Control.Feedback>}
                         </Form.Group>

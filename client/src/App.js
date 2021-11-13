@@ -90,9 +90,8 @@ function App() {
       console.log("inside doLogin");
       console.log(credentials);
       const user = await API.logIn(credentials, type);
+      toast.success(`Welcome ${user.username}!`, { position: "top-center" }) ;
       setUserData(user);
-      toast.success(`Welcome ${user.name}!`, { position: "top-center" }) ;
-      console.log(user);
       setLoggedIn(true);
     } catch (err) {
       toast.error("Wrong email or/and password, try again", {
@@ -221,11 +220,15 @@ function App() {
     if(clients){
       client = clients.find(c => c.username == email);
     }
-    if (client!= undefined) return client;
+    if (client!= undefined){
+      setUsedMail(client.id);
+      return client;
+    } 
 
     const findUser = async () => {
       try{
         const clientData = await API.getClientByEmail(email);
+        setUsedMail(clientData.id);
         console.log(clientData);
         return clientData;
       }
@@ -234,8 +237,7 @@ function App() {
         return undefined;
       }
     }
-    findUser();
-    
+    return findUser();
   }
 
   const getWalletById = async (id) =>{
