@@ -300,4 +300,84 @@ describe('Test suite DAO', () => {
   })
 
 
+  describe('get all products success', () => {
+    it('test get api/products endpoint', async() => {
+        const response = await request(app).get("/api/products");
+        expect(response.body).toEqual([
+          {
+            "id": 1,
+            "name": "Mele",
+            "category": "Froit",
+            "price": 14,
+            "qty": 5,
+            "farmer_email": "antonio.bianchi@mail.it"
+          }
+        ]);
+        expect(response.body).toHaveLength(1);
+        expect(response.statusCode).toBe(200);
+
+    }) 
+  })
+
+
+  describe('get all bookings success', () => {
+    it('test get api/bookings endpoint', async() => {
+        const response = await request(app).get("/api/bookings");
+        expect(response.body).toEqual([]);
+        expect(response.body).toHaveLength(0);
+        expect(response.statusCode).toBe(200);
+
+    }) 
+  })
+
+    describe('update wallet balance fails', () => {
+      it('send a negative balance amount', async () => {
+        const res= await request(app)
+          .put('/api/walletbalance')
+          .send({
+            Client_id: 1,
+            New_Balance: -20.99
+        })
+        expect(res.statusCode).toEqual(422);
+        expect(res.body).toHaveProperty("error", "Invalid Balance Amount, it must be positive");
+      })
+    })
+
+    describe('update wallet balance fails', () => {
+      it('send a client id which does not exist', async () => {
+        const res= await request(app)
+          .put('/api/walletbalance')
+          .send({
+            Client_id: 110,
+            New_Balance: 20.99
+        })
+        expect(res.statusCode).toEqual(500);
+        expect(res.body).toHaveProperty("err", "CLIENT NOT FOUND");
+      })
+    })
+
+    describe('update wallet balance fails', () => {
+      it(' do not send a client id ', async () => {
+        const res= await request(app)
+          .put('/api/walletbalance')
+          .send({
+            New_Balance: 20.99
+        })
+        expect(res.statusCode).toEqual(500);
+        expect(res.body).toHaveProperty("err", "CLIENT ID NOT PROVIDED");
+      })
+    })
+
+    describe('update wallet balance success', () => {
+      it('send a valid body', async () => {
+        const res= await request(app)
+          .put('/api/walletbalance')
+          .send({
+            Client_id: 1,
+            New_Balance: 20.99
+        })
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty("New_Balance", 20.99);
+      })
+    })
 })

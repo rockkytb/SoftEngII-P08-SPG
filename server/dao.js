@@ -217,35 +217,35 @@ exports.createBookingProduct = (bookingProduct) => {
 
 // edit qty of a product_week
 exports.editQtyProductWeek = (product) => {
-  return new Promise((resolve, reject) =>{
+  return new Promise((resolve, reject) => {
     const sql = "UPDATE PRODUCT_WEEK SET QTY = ? WHERE ID = ?";
-    db.run(sql, [product.New_Qty,product.ID_Product], function (err, row) {
-      if(err){
+    db.run(sql, [product.New_Qty, product.ID_Product], function (err, row) {
+      if (err) {
         reject(err);
         return;
       }
-     else if (row === undefined) {
-      resolve(false);
-     }
-     else {
-       resolve(true);
-     }
+      else if (row === undefined) {
+        resolve(false);
+      }
+      else {
+        resolve(true);
+      }
     });
   });
 };
 
 // edit state of a booking
 exports.editStateBooking = (booking) => {
-  return new Promise((resolve, reject) =>{
+  return new Promise((resolve, reject) => {
     const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
-    db.run(sql, [booking.New_State,booking.ID_Booking], function (err) {
-      if(err){
+    db.run(sql, [booking.New_State, booking.ID_Booking], function (err) {
+      if (err) {
         reject(err);
         return;
       }
-     else {
-       resolve(true);
-     }
+      else {
+        resolve(true);
+      }
     });
   });
 };
@@ -277,7 +277,7 @@ exports.getWallet = (id) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        const amount = {balance : row.AMOUNT}
+        const amount = { balance: row.AMOUNT }
         resolve(amount);
       }
     });
@@ -315,10 +315,10 @@ exports.getAllProducts = () => {
       const products = rows.map((e) => ({
         id: e.ID,
         name: e.NAME,
-        category:e.categoryName,
+        category: e.categoryName,
         price: e.PRICE,
-        qty:e.QTY,
-        farmer_email:e.EMAIL
+        qty: e.QTY,
+        farmer_email: e.EMAIL
       }));
       resolve(products);
     });
@@ -335,12 +335,12 @@ exports.getAllBookings = () => {
         return;
       }
       const bookings = rows.map((e) => ({
-        state:e.STATE,
-        email:e.EMAIL,
-        name:e.NAME,
-        surname:e.SURNAME,
-        qty:e.QTY,
-        product:e.productName,
+        state: e.STATE,
+        email: e.EMAIL,
+        name: e.NAME,
+        surname: e.SURNAME,
+        qty: e.QTY,
+        product: e.productName,
 
       }));
       resolve(bookings);
@@ -350,20 +350,29 @@ exports.getAllBookings = () => {
 
 // Edit the wallet balance for a certain client
 exports.updateWallet = (wallet) => {
-  return new Promise((resolve, reject) =>{
-    const sql = "UPDATE CLIENT_WALLET SET AMOUNT = ?  WHERE ID_CLIENT = ?";
-    db.run(sql, [wallet.New_Balance,wallet.Client_id], function (err, row) {
-      if(err){
-        reject(err);
-        return;
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";
+    db.run(
+      sql, [wallet.New_Balance, wallet.Client_id],
+      function (err) {
+        if (err) {
+          reject(err.message);
+          return;
+        }
+        if(wallet.Client_id === undefined){
+          reject({err:"CLIENT ID NOT PROVIDED"});
+          return;
+        }
+        if (this.changes === 0) {
+          reject({err:"CLIENT NOT FOUND"});
+          return;
+        }
+        else
+          resolve(wallet);
+
       }
-     else if (row === undefined) {
-      resolve(false);
-     }
-     else {
-       resolve(true);
-     }
-    });
+
+    );
   });
 };
 
