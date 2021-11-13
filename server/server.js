@@ -220,22 +220,25 @@ app.get("/api/clients", (req, res) => {
 });
 
 //GET /api/client/
-app.get("/api/client", (req, res) => {
-  dao
-    .getClientByEmail(req.body.email)
-    .then((client) => {
-      if (client.id == -1) {
-        res.status(401).json(client);
-      } else {
-        res.status(200).json(client);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({
-        errors: `Database errors: ${err}.`,
+app.post(
+  "/api/client",
+  /*isLoggedIn,*/ (req, res) => {
+    dao
+      .getClientByEmail(req.body.email)
+      .then((client) => {
+        if (client.id == -1) {
+          res.status(401).json(client);
+        } else {
+          res.status(200).json(client);
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: `Database errors: ${err}.`,
+        });
       });
-    });
-});
+  }
+);
 
 //POST /api/bookings
 app.post(
@@ -294,18 +297,30 @@ app.post(
       password: req.body.password,
     };
 
+    /*dao.getClientByEmail(client.email).then(
+        (c) => {
+          if(c.id != -1){
+            return res.status(503).json({
+              error: `Error: ${client.email} already used.`,
+            });
+          }
+        }
+    ).catch((err) => {
+      return res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });*/
+
     let clientId;
 
     try {
       clientId = await dao.createClient(client);
+      res.status(201).json({ idClient: clientId });
     } catch (err) {
       res.status(503).json({
         error: `Database error during the creation of client: ${client.email}.`,
       });
     }
-
-    //All went fine
-    res.status(201).json({ idClient: clientId });
   }
 );
 
@@ -430,7 +445,7 @@ app.post(
     let result;
 
     try {
-      result = await dao.getWallet(req.body.Client_id);
+      result = await dao.getWallet(req.body.id);
     } catch (err) {
       res.status(503).json({
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
