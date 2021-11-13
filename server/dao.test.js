@@ -150,6 +150,20 @@ describe("Test suite DAO", () => {
     );
   }, 10000);
 
+  //TEST DAO FUNCTION GET CLIENTS
+
+  test("get client return success", async () => {
+    const email = "marco.bianchi@mail.it";
+    return expect(dao.getClients()).resolves.toEqual([
+      {
+        id: "C1",
+        username: "marco.bianchi@mail.it",
+        name: "Marco",
+        surname: "Bianchi",
+      },
+    ]);
+  }, 10000);
+
   //TEST GET CLIENT BY ID
   test("get client by id return false because no user with that id exists", () => {
     const id = 12;
@@ -233,7 +247,10 @@ describe("Test suite DAO", () => {
   test("get shop employee by id return a shop employee", async () => {
     const id = 1;
 
-    return expect(dao.getShopEmployeeById(id)).resolves.toHaveProperty("id", "S1");
+    return expect(dao.getShopEmployeeById(id)).resolves.toHaveProperty(
+      "id",
+      "S1"
+    );
   }, 10000);
 });
 
@@ -241,19 +258,18 @@ describe("Test suite DAO", () => {
 test("get all products success", async () => {
   return expect(dao.getAllProducts()).resolves.toEqual([
     {
-      "id": 1,
-      "name": "Mele",
-      "category": "Froit",
-      "price": 14,
-      "qty": 5,
-      "farmer_email": "antonio.bianchi@mail.it"
-    }
-  ])
+      id: 1,
+      name: "Mele",
+      category: "Froit",
+      price: 14,
+      qty: 5,
+      farmer_email: "antonio.bianchi@mail.it",
+    },
+  ]);
 }, 10000);
 
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
-
   // //the booking table was cleared before running this test so I had to add a record into it manually.
   // const booking = {
   //   idClient: 1,
@@ -261,40 +277,38 @@ test("get all bookings success", async () => {
   // };
   // dao.createBooking(booking);
 
-  return expect(dao.getAllBookings()).resolves.toEqual([
-    
-  ])
+  return expect(dao.getAllBookings()).resolves.toEqual([]);
 }, 10000);
 
 //TEST UPDATE WALLET BALANCE
 test("updating the wallet failed bacause client was not found", () => {
   const wallet = {
     Client_id: 200,
-    New_Balance: 120.99
-  }
+    New_Balance: 120.99,
+  };
   return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
-    "err","CLIENT NOT FOUND"
+    "err",
+    "CLIENT NOT FOUND"
   );
 });
 
 test("updating the wallet failed bacause client id was not provided", () => {
   const wallet = {
-    New_Balance: 120.99
-  }
+    New_Balance: 120.99,
+  };
   return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
-    "err","CLIENT ID NOT PROVIDED"
+    "err",
+    "CLIENT ID NOT PROVIDED"
   );
 });
 
 test("update of wallet balance was successfull", () => {
   const wallet = {
     Client_id: 1,
-    New_Balance: 120.99
-  }
-  return expect(dao.updateWallet(wallet)).resolves.toEqual(
-    {
-      "Client_id": 1,
-      "New_Balance": 120.99
-    }
-  );
+    New_Balance: 120.99,
+  };
+  return expect(dao.updateWallet(wallet)).resolves.toEqual({
+    Client_id: 1,
+    New_Balance: 120.99,
+  });
 });
