@@ -332,7 +332,7 @@ app.post(
         .status(422)
         .json({ error: `Invalid product id, it must be positive` });
     }
-    
+
     if (!validator.isInt(`${req.body.Qty}`, { min: 1 })) {
       return res
         .status(422)
@@ -340,9 +340,9 @@ app.post(
     }
 
     const bookingProduct = {
-      ID_Booking : req.body.ID_Booking,
-      ID_Product : req.body.ID_Product,
-      Qty : req.body.Qty
+      ID_Booking: req.body.ID_Booking,
+      ID_Product: req.body.ID_Product,
+      Qty: req.body.Qty
     }
 
     let result;
@@ -356,7 +356,7 @@ app.post(
     }
 
     //All went fine
-    res.status(201).json( bookingProduct );
+    res.status(201).json(bookingProduct);
   }
 )
 
@@ -376,8 +376,8 @@ app.put(
     }
 
     const product = {
-      ID_Product : req.body.ID_Product,
-      New_Qty : req.body.New_Qty
+      ID_Product: req.body.ID_Product,
+      New_Qty: req.body.New_Qty
     }
 
     let result;
@@ -391,7 +391,7 @@ app.put(
     }
 
     //All went fine
-    res.status(201).json( product );
+    res.status(201).json(product);
   }
 )
 
@@ -406,8 +406,8 @@ app.put(
     }
 
     const booking = {
-      ID_Booking : req.body.ID_Booking,
-      New_State : req.body.New_State
+      ID_Booking: req.body.ID_Booking,
+      New_State: req.body.New_State
     }
 
     let result;
@@ -421,20 +421,20 @@ app.put(
     }
 
     //All went fine
-    res.status(201).json( result );
+    res.status(201).json(result);
   }
 )
 
 //GET /api/wallet
 app.post(
   "/api/wallet", //isLoggedIn,
-   async(req, res) => {
+  async (req, res) => {
     if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid booking id, it must be positive` });
     }
-    
+
     let result;
 
     try {
@@ -448,7 +448,7 @@ app.post(
 
     //const wallet = {balance: result}
     //All went fine
-    res.status(201).json( result );
+    res.status(201).json(result);
   });
 
 //GET /api/products to get a list of all products
@@ -477,7 +477,7 @@ app.get("/api/bookings", (req, res) => {
 
 //PUT /api/walletbalance to update wallet balance 
 app.put(
-  "/api/walletbalance",isLoggedIn,
+  "/api/walletbalance"/*,isLoggedIn*/,
   async (req, res) => {
     if (!validator.isFloat(`${req.body.New_Balance}`, { min: 0 })) {
       return res
@@ -489,18 +489,14 @@ app.put(
       New_Balance: req.body.New_Balance
     }
 
-    let result;
-
-    try {
-      result = await dao.updateWallet(wallet);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during updating the wallet balance: ${wallet}.`,
+    dao
+      .updateWallet(wallet)
+      .then(() => {
+        res.status(200).json(wallet);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
       });
-    }
-
-    //All went fine
-    res.status(201).json(wallet);
   }
 )
 // activate the server
