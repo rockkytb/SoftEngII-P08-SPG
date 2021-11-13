@@ -206,7 +206,7 @@ app.get("/api/userinfo", isLoggedIn, (req, res) => {
 });
 
 //GET /api/clients/
-app.get("/api/clients", isLoggedIn, (req, res) => {
+app.get("/api/clients", (req, res) => {
   dao
     .getClients()
     .then((clients) => {
@@ -220,11 +220,15 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 });
 
 //GET /api/client/
-app.post("/api/client", isLoggedIn, (req, res) => {
+app.get("/api/client", (req, res) => {
   dao
     .getClientByEmail(req.body.email)
     .then((client) => {
-      res.status(200).json(client);
+      if (client.id == -1) {
+        res.status(401).json(client);
+      } else {
+        res.status(200).json(client);
+      }
     })
     .catch((err) => {
       res.status(500).json({
@@ -330,8 +334,8 @@ app.post(
     const bookingProduct = {
       ID_Booking: req.body.ID_Booking,
       ID_Product: req.body.ID_Product,
-      Qty: req.body.Qty
-    }
+      Qty: req.body.Qty,
+    };
 
     let result;
 
@@ -346,11 +350,11 @@ app.post(
     //All went fine
     res.status(201).json(bookingProduct);
   }
-)
+);
 
 //PUT /api/productqty
 app.put(
-  "/api/productqty",  //isLoggedIn,
+  "/api/productqty", //isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.New_Qty}`, { min: 1 })) {
       return res
@@ -365,8 +369,8 @@ app.put(
 
     const product = {
       ID_Product: req.body.ID_Product,
-      New_Qty: req.body.New_Qty
-    }
+      New_Qty: req.body.New_Qty,
+    };
 
     let result;
 
@@ -381,11 +385,11 @@ app.put(
     //All went fine
     res.status(201).json(product);
   }
-)
+);
 
 //PUT /api/bookingstate
 app.put(
-  "/api/bookingstate",  //isLoggedIn,
+  "/api/bookingstate", //isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
       return res
@@ -395,8 +399,8 @@ app.put(
 
     const booking = {
       ID_Booking: req.body.ID_Booking,
-      New_State: req.body.New_State
-    }
+      New_State: req.body.New_State,
+    };
 
     let result;
 
@@ -411,13 +415,13 @@ app.put(
     //All went fine
     res.status(201).json(result);
   }
-)
+);
 
 //GET /api/wallet
 app.post(
   "/api/wallet", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.Client_id}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid booking id, it must be positive` });
@@ -437,7 +441,8 @@ app.post(
     //const wallet = {balance: result}
     //All went fine
     res.status(201).json(result);
-  });
+  }
+);
 
 //GET /api/products to get a list of all products
 app.get("/api/products", (req, res) => {
@@ -463,34 +468,30 @@ app.get("/api/bookings", (req, res) => {
     });
 });
 
-//PUT /api/walletbalance to update wallet balance 
-app.put(
-  "/api/walletbalance"/*,isLoggedIn*/,
-  async (req, res) => {
-    if (!validator.isFloat(`${req.body.New_Balance}`, { min: 0 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid Balance Amount, it must be positive` });
-    }
-    const wallet = {
-      Client_id: req.body.Client_id,
-      New_Balance: req.body.New_Balance
-    }
-
-    dao
-      .updateWallet(wallet)
-      .then(() => {
-        res.status(200).json(wallet);
-      })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
+//PUT /api/walletbalance to update wallet balance
+app.put("/api/walletbalance" /*,isLoggedIn*/, async (req, res) => {
+  if (!validator.isFloat(`${req.body.New_Balance}`, { min: 0 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid Balance Amount, it must be positive` });
   }
-)
+  const wallet = {
+    Client_id: req.body.Client_id,
+    New_Balance: req.body.New_Balance,
+  };
+
+  dao
+    .updateWallet(wallet)
+    .then(() => {
+      res.status(200).json(wallet);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
-
 
 module.exports = server;
