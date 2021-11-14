@@ -270,21 +270,31 @@ test("get all products success", async () => {
 
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
-  // //the booking table was cleared before running this test so I had to add a record into it manually.
-  // const booking = {
-  //   idClient: 1,
-  //   state: "PENDING",
-  // };
-  // dao.createBooking(booking);
+  //the booking table was cleared before running this test so I had to add a record into it manually.
+  const booking = {
+  idClient: 1,
+  state: "PENDING",
+  };
+  dao.createBooking(booking);
 
-  return expect(dao.getAllBookings()).resolves.toEqual([]);
+  const received = {  
+    id: 1,
+    state: "PENDING",
+    email: "marco.bianchi@mail.it",
+    name: "Marco",
+    surname: "Bianchi",
+    qty: 3,
+    product: "Mele"
+  }
+
+  return expect(dao.getAllBookings()).resolves.toEqual([received]);
 }, 10000);
 
 //TEST UPDATE WALLET BALANCE
 test("updating the wallet failed bacause client was not found", () => {
   const wallet = {
-    Client_id: 200,
-    New_Balance: 120.99,
+    id: 200,
+    amount: 120.99,
   };
   return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
     "err",
@@ -294,7 +304,7 @@ test("updating the wallet failed bacause client was not found", () => {
 
 test("updating the wallet failed bacause client id was not provided", () => {
   const wallet = {
-    New_Balance: 120.99,
+    amount: 120.99,
   };
   return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
     "err",
@@ -304,11 +314,11 @@ test("updating the wallet failed bacause client id was not provided", () => {
 
 test("update of wallet balance was successfull", () => {
   const wallet = {
-    Client_id: 1,
-    New_Balance: 120.99,
+    id: 1,
+    amount: 120.99,
   };
   return expect(dao.updateWallet(wallet)).resolves.toEqual({
-    Client_id: 1,
-    New_Balance: 120.99,
+    id: 1,
+    amount: 120.99,
   });
 });

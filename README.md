@@ -120,7 +120,7 @@ Return the client ID
 
 	{"idClient":3}
 
-#### GET /api/client
+#### POST /api/client
 
 Get a client by mail. Receives a JSON object with the email
   
@@ -130,7 +130,7 @@ Return the client id if exists, -1 if not exists
 
   	{"id_client":-1}
 
-#### GET /api/wallet
+#### POST /api/wallet
 
 Get the balance of a client.
 
@@ -150,7 +150,7 @@ Edit the wallet balance for a certain client
 	
 Receive a JSON Object with client ID and new balance
   
-	{"Client_id":1,
-	"New_Balance":19.99}
+	{"id":1,
+	"amount":19.99}
 	
 

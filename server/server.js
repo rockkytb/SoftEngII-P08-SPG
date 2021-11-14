@@ -219,14 +219,14 @@ app.get("/api/clients", (req, res) => {
     });
 });
 
-//GET /api/client/
+//POST /api/client/
 app.post(
   "/api/client",
   /*isLoggedIn,*/ (req, res) => {
     dao
       .getClientByEmail(req.body.email)
       .then((client) => {
-        if (client.id == -1) {
+        if (client.id === -1) {
           res.status(401).json(client);
         } else {
           res.status(200).json(client);
@@ -297,7 +297,7 @@ app.post(
       password: req.body.password,
     };
 
-    /*dao.getClientByEmail(client.email).then(
+    dao.getClientByEmail(client.email).then(
         (c) => {
           if(c.id != -1){
             return res.status(503).json({
@@ -309,7 +309,7 @@ app.post(
       return res.status(500).json({
         errors: `Database errors: ${err}.`,
       });
-    });*/
+    });
 
     let clientId;
 
@@ -432,11 +432,11 @@ app.put(
   }
 );
 
-//GET /api/wallet
+//POST /api/wallet
 app.post(
   "/api/wallet", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.Client_id}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid booking id, it must be positive` });
@@ -451,9 +451,7 @@ app.post(
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
       });
     }
-    console.log(result);
-
-    //const wallet = {balance: result}
+  
     //All went fine
     res.status(201).json(result);
   }

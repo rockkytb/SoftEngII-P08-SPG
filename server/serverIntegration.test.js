@@ -7,7 +7,7 @@ const request = require("supertest");
 
 jest.useRealTimers();
 
-describe("Test suite DAO", () => {
+describe("Test suite Integration Server", () => {
   beforeEach(async () => {
     // code to run before each test
 
@@ -130,7 +130,7 @@ describe("Test suite DAO", () => {
 
   describe("Get a wallet fail", () => {
     it("send a invalid id of client", async () => {
-      const res = await request(app).get("/api/wallet").send({
+      const res = await request(app).post("/api/wallet").send({
         id: -1,
       });
       expect(res.statusCode).toEqual(422);
@@ -244,7 +244,7 @@ describe("Test suite DAO", () => {
   //TEST GET /api/client
   describe("Get client by email success", () => {
     it("send a valid email", async () => {
-      const res = await request(app).get("/api/client").send({
+      const res = await request(app).post("/api/client").send({
         email: "marco.bianchi@mail.it",
       });
       expect(res.statusCode).toEqual(200);
@@ -253,7 +253,7 @@ describe("Test suite DAO", () => {
   });
   describe("Get client by email fails", () => {
     it("don't send an email", async () => {
-      const res = await request(app).get("/api/client");
+      const res = await request(app).post("/api/client");
       expect(res.statusCode).toEqual(401);
       expect(res.body).toHaveProperty("id", -1);
     });
@@ -261,7 +261,7 @@ describe("Test suite DAO", () => {
 
   describe("Get client by email fails", () => {
     it("send a wrong email", async () => {
-      const res = await request(app).get("/api/client").send({
+      const res = await request(app).post("/api/client").send({
         email: "bianchi@mail.it",
       });
       expect(res.statusCode).toEqual(401);
@@ -381,8 +381,8 @@ describe("Test suite DAO", () => {
   describe("update wallet balance fails", () => {
     it("send a client id which does not exist", async () => {
       const res = await request(app).put("/api/walletbalance").send({
-        Client_id: 110,
-        New_Balance: 20.99,
+        id: 110,
+        amount: 20.99,
       });
       expect(res.statusCode).toEqual(500);
       expect(res.body).toHaveProperty("err", "CLIENT NOT FOUND");
@@ -392,7 +392,7 @@ describe("Test suite DAO", () => {
   describe("update wallet balance fails", () => {
     it(" do not send a client id ", async () => {
       const res = await request(app).put("/api/walletbalance").send({
-        New_Balance: 20.99,
+        amount: 20.99,
       });
       expect(res.statusCode).toEqual(500);
       expect(res.body).toHaveProperty("err", "CLIENT ID NOT PROVIDED");
@@ -402,11 +402,11 @@ describe("Test suite DAO", () => {
   describe("update wallet balance success", () => {
     it("send a valid body", async () => {
       const res = await request(app).put("/api/walletbalance").send({
-        Client_id: 1,
-        New_Balance: 20.99,
+        id: 1,
+        amount: 20.99,
       });
       expect(res.statusCode).toEqual(200);
-      expect(res.body).toHaveProperty("New_Balance", 20.99);
+      expect(res.body).toHaveProperty("amount", 20.99);
     });
   });
 });
