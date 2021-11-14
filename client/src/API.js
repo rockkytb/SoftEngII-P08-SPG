@@ -104,7 +104,7 @@ async function getClientByEmail(email){
         return await response.json();
     }
     else{
-        throw response.json();
+        throw await response.json();
     }
 }
 

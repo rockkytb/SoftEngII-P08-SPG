@@ -239,7 +239,7 @@ app.post(
       .getClientByEmail(req.body.email)
       .then((client) => {
         if (client.id === -1) {
-          res.status(401).json(client);
+          res.status(200).json(client);
         } else {
           res.status(200).json(client);
         }

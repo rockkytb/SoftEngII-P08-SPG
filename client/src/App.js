@@ -179,29 +179,25 @@ function App() {
     }
 
     const findUser = async () => {
-      try {
-        const clientData = await API.getClientByEmail(email);
-        setUsedMail(clientData.id);
-        console.log(clientData);
-    
-      }
-      catch (err) {
-        console.log(err);
-       
-      }
+        const clientData = await API.getClientByEmail(email)
+          .then((client) => {
+            setUsedMail(clientData.id);
+            return client;
+          })
+          .catch((err) => console.log(err));
+        
     }
-    findUser();
+    return findUser();
   }
 
   const getWalletById = async (id) => {
-    try {
-      const wallet = await API.getWalletById(id.substring(1));
-      console.log(wallet);
+      const wallet = await API.getWalletById(id.substring(1))
+        .then((wallet) => {
+          console.log(wallet);
+          return wallet;
+        })
+        .catch((err) => console.log(err));
       return wallet;
-    }
-    catch (err) {
-      console.log(err);
-    }
   }
 
   const setNewWallet = async (id, amount) => {
