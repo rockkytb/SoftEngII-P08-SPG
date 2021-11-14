@@ -153,7 +153,7 @@ async function newBooking(clientId) {
 }
 
 
-async function newProductBooking(ID_Booking, ID_Product, Qty) {
+async function newBookingProduct(ID_Booking, ID_Product, Qty) {
     //call: POST /api/bookingproduct
     return new Promise((resolve, reject) => {
         fetch(url + '/bookingproduct', {
@@ -228,5 +228,5 @@ async function confirmBooking(id){
     });
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
 export default API;

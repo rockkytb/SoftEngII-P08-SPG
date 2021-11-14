@@ -41,12 +41,11 @@ function App() {
     const checkAuth = async () => {
       try {
         const user = await API.getUserInfo();
-        console.log(user);
         setLoggedIn(true);
         setUserData(user);
         setUpdate(true);
       } catch (err) {
-        console.error(err.error);
+        
         setUpdate(true);
       }
     };
@@ -55,8 +54,7 @@ function App() {
 
   const doLogIn = async (credentials, type) => {
     try {
-      console.log("inside doLogin");
-      console.log(credentials);
+
       const user = await API.logIn(credentials, type);
       toast.success(`Welcome ${user.username}!`, { position: "top-center" });
       setUserData(user);
@@ -65,7 +63,7 @@ function App() {
       toast.error("Wrong email or/and password, try again", {
         position: "top-center",
       });
-      console.log(err);
+   
     }
   };
 
@@ -109,7 +107,8 @@ function App() {
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
-        setBooking ({id : res.idBooking});
+        setBooking({ id: res.idBooking });
+        return booking.id;
       }
     };
     book()
@@ -119,18 +118,12 @@ function App() {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   };
 
-  const newProductBooking = () => {
+  const newProductBooking = (bid, pid, qty) => {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
-      const res = await API.newBookingProduct();
+      const res = await API.newBookingProduct(bid, pid, qty);
     };
-    bookingProduct()
-      .then(() =>
-        toast.success("Booking completed", { position: "top-center" })
-      )
-      .catch((err) =>
-        toast.error(err.errors[0].msg, { position: "top-center" })
-      );
+    bookingProduct();
   };
 
   useEffect(() => {
@@ -171,7 +164,7 @@ function App() {
   const getSingleClientByEmail = (email) => {
     let client = {};
     if (clients) {
-      client = clients.find(c => c.username == email);
+      client = clients.find((c) => c.username == email);
     }
     if (client != undefined) {
       setUsedMail(client.id);
@@ -179,52 +172,49 @@ function App() {
     }
 
     const findUser = async () => {
-        const clientData = await API.getClientByEmail(email)
-          .then((client) => {
-            setUsedMail(clientData.id);
-            return client;
-          })
-          .catch((err) => console.log(err));
-        
-    }
-    return findUser();
-  }
-
-  const getWalletById = async (id) => {
-      const wallet = await API.getWalletById(id.substring(1))
-        .then((wallet) => {
-          console.log(wallet);
-          return wallet.balance;
+      const clientData = await API.getClientByEmail(email)
+        .then((client) => {
+          setUsedMail(clientData.id);
+          return client;
         })
         .catch((err) => console.log(err));
-      //return wallet;
-  }
+    };
+    return findUser();
+  };
+
+  const getWalletById = async (id) => {
+    let tmp = 0;
+    const wallet = await API.getWalletById(id.substring(1))
+      .then((wallet) => {
+        tmp = wallet.balance;
+      })
+      .catch((err) => console.log(err));
+    return tmp;
+  };
 
   const setNewWallet = async (id, amount) => {
     try {
       const response = await API.setNewWallet(id.substring(1), amount);
       toast.success("Wallet modified successfully", { position: "top-center" });
       return response;
-    }
-    catch (err) {
+    } catch (err) {
       toast.error("Error updating the wallet", { position: "top-center" });
       console.log(err);
     }
-  }
+  };
 
   const setCompletedBooking = async (id) => {
     try {
       const response = await API.confirmBooking(id);
-      toast.success("Booking completed successfully", { position: "top-center" });
+      toast.success("Booking completed successfully", {
+        position: "top-center",
+      });
       //getBookings();
-    }
-    catch (err) {
+    } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
       console.log(err);
     }
-  }
-
-
+  };
 
   return (
     <div className="page">
@@ -274,7 +264,7 @@ function App() {
                 products={products}
                 cart={cart}
                 setCart={(val) => setCart(val)}
-              //farmers = {farmers} //???
+                //farmers = {farmers} //???
               />
             )}
           />
@@ -298,20 +288,26 @@ function App() {
             exact
             render={() => (
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'C' ?
-                        (<>
-                          <SidebarCustom />
-                          <Customer />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                          <>
+                            <SidebarCustom />
+                            <Customer />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -328,7 +324,9 @@ function App() {
                   products={products}
                   setCart={(val) => setCart(val)}
                   newBooking={newBooking}
-                  newProductBooking={newProductBooking}
+                  newProductBooking={(bid, pid, qty) =>
+                    newProductBooking(bid, pid, qty)
+                  }
                   getWallet={(id) => getWalletById(id)}
                   className="below-nav main-content"
                 />
@@ -384,25 +382,31 @@ function App() {
             exact
             render={() => (
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'S' ?
-                        (<>
-                          <SidebarCustom />
-                          <ClientData
-                            getClient={getSingleClientByEmail}
-                            getWallet={getWalletById}
-                            changeWallet={setNewWallet}
-                            className="below-nav main-content"
-                          />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <ClientData
+                              getClient={getSingleClientByEmail}
+                              getWallet={getWalletById}
+                              changeWallet={setNewWallet}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -413,29 +417,34 @@ function App() {
             render={() => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'S' ?
-                        (<>
-                          <SidebarCustom />
-                          <BookingReview
-                            cart={cart}
-                            clients={clients}
-                            products={products}
-                            setCart={setCart}
-                            newBooking={newBooking}
-                            newProductBooking={newProductBooking}
-                            getWallet={getWalletById}
-                            className="below-nav main-content"
-                          />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <BookingReview
+                              cart={cart}
+                              clients={clients}
+                              products={products}
+                              setCart={setCart}
+                              newProductBooking={newProductBooking}
+                              getWallet={getWalletById}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -445,25 +454,31 @@ function App() {
             exact
             render={() => (
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'S' ?
-                        (<>
-                          <SidebarCustom />
-                          <BookingAcceptance
-                            bookings={bookings}
-                            confirmBooking={setCompletedBooking}
-                            products={products}
-                            className="below-nav main-content"
-                          />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <BookingAcceptance
+                              bookings={bookings}
+                              confirmBooking={setCompletedBooking}
+                              products={products}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -475,18 +490,25 @@ function App() {
               /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
               //<>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
               <>
-                {update ? <>
-                  {loggedIn ?
-                    (<>
-                      {userdata.id && userdata.id.charAt(0) === 'S' ?
-                        (<>
-                          <SidebarCustom className="below-nav" />
-                        </>)
-                        : (<Redirect to="/home" />)
-                      }
-                    </>)
-                    : (<Redirect to="/login" />)} </> : <></>
-                }
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom className="below-nav" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />

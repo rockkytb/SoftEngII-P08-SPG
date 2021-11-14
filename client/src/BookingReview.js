@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   Form,
@@ -10,39 +10,53 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import API from "./API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function BookingReview(props) {
   const [clientID, setClientID] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
-  const [newBooking, setNewBooking] = useState(0);
+  const [newBookingID, setNewBooking] = useState(0);
   const [soldy, setSoldy] = useState(0);
 
+  async function newBooking(clientID) {
+    // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+    // sì però stai calmo
+    let tmp=0;
+
+    const book = async () => {
+      const res = await API.newBooking(clientID);
+      if (res && res.idBooking) {
+        tmp=res.idBooking;
+      }
+    };
+    book()
+      .then(() =>
+        {toast.success("Booking completed", { position: "top-center" });
+        props.cart.map((p) => {
+          props.newProductBooking(tmp, p.id, p.quantity);
+        });
+      }
+      )
+      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+  };
+
   async function handleCreateBooking() {
-    
-    let tmpSoldy = await props.getWallet(clientID)
-    console.log("tmpSoldy = " + tmpSoldy)
-    setSoldy(tmpSoldy);
-    
+    let tmpSoldy = await props.getWallet(clientID);
     let total = 0;
+    let id = clientID.substring(1);
+
+
+    setSoldy(tmpSoldy);
 
     props.cart.map((p) => {
       total += p.price;
     });
 
-console.log("Soldy = " + soldy)
-console.log("Total = " + total)
-
     if (total <= soldy) {
-      setNewBooking(props.newBooking(clientID));
-      
-      console.log("id = " + clientID)
-
-      props.cart.map((p) => {
-        props.newProductBooking(newBooking, p.id, p.quantity);
-      });
-
-      handleClose();
+      newBooking(id)        
     }
   }
 
@@ -50,13 +64,30 @@ console.log("Total = " + total)
     setShow(false);
   };
 
-  console.log("id = " + clientID)
+  useEffect(() => {
+    const getSoldy = async () => {
+      let id = clientID.substring(1);
+      const response = await fetch("/api/wallet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+      const wallet = await response.json();
+      if (response.ok) {
+        setSoldy(wallet.balance);
+      } else {
+        throw wallet;
+      }
+    };
+    getSoldy();
+  }, [clientID]);
 
   function productsActions() {
-    console.log(props.cart);
     return props.cart.map((product) => (
       <Col>
-        <Card clasName="text-dark">
+        <Card className="text-dark">
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
@@ -137,7 +168,7 @@ console.log("Total = " + total)
       </Modal>
 
       <CardColumns xs={1} md={5}>
-        <>{props.cart.length ?  productsActions()  : <></>}</>
+        <>{props.cart.length ? productsActions() : <></>}</>
       </CardColumns>
 
       <Button variant="secondary" onClick={() => setShowAlert(true)}>
@@ -151,4 +182,4 @@ console.log("Total = " + total)
   );
 }
 
-export default BookingReview ;
+export default BookingReview;
