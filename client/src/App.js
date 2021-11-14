@@ -22,42 +22,10 @@ import Customer from "./Customer";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import BookingAcceptance from "./BookingAcceptance";
 
 function App() {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Culo",
-      category: 42,
-      price: 69.42,
-      quantity: 5,
-      farmerId: 1,
-    },
-    {
-      id: 2,
-      name: "Culone",
-      category: 43,
-      price: 69.42,
-      quantity: 10,
-      farmerId: 1,
-    },
-    {
-      id: 3,
-      name: "Culetto",
-      category: 42,
-      price: 79.42,
-      quantity: 1,
-      farmerId: 2,
-    },
-    {
-      id: 4,
-      name: "Culissimo",
-      category: 44,
-      price: 69.42,
-      quantity: 3,
-      farmerId: 3,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [dirty, setDirty] = useState(false);
@@ -90,7 +58,7 @@ function App() {
       console.log("inside doLogin");
       console.log(credentials);
       const user = await API.logIn(credentials, type);
-      toast.success(`Welcome ${user.username}!`, { position: "top-center" }) ;
+      toast.success(`Welcome ${user.username}!`, { position: "top-center" });
       setUserData(user);
       setLoggedIn(true);
     } catch (err) {
@@ -165,21 +133,6 @@ function App() {
       );
   };
 
-  /*const getClientbyEmail = (email) => {
-    console.log("sono in get Client by email");
-    const checkEmail = async () => {
-      console.log("sono in check email");
-      const id_client = await API.getClientByEmail(email);
-      console.log("nella funzione id_client= " + id_client);
-      setUsedMail(id_client);
-    };
-    checkEmail().catch((err) => {
-      console.log(
-        err
-      ); /* toast.error(err.errors[0].msg, { position: "top-center" }) 
-    });
-  };*/
-
   useEffect(() => {
     const getProducts = async () => {
       // call: GET /api/products
@@ -215,24 +168,24 @@ function App() {
     getClients();
   }, [loggedIn]);
 
-  const getSingleClientByEmail = (email) =>{
+  const getSingleClientByEmail = (email) => {
     let client = {};
-    if(clients){
+    if (clients) {
       client = clients.find(c => c.username == email);
     }
-    if (client!= undefined){
+    if (client != undefined) {
       setUsedMail(client.id);
       return client;
-    } 
+    }
 
     const findUser = async () => {
-      try{
+      try {
         const clientData = await API.getClientByEmail(email);
         setUsedMail(clientData.id);
         console.log(clientData);
         return clientData;
       }
-      catch(err){
+      catch (err) {
         console.log(err);
         return undefined;
       }
@@ -240,25 +193,37 @@ function App() {
     return findUser();
   }
 
-  const getWalletById = async (id) =>{
-    try{
+  const getWalletById = async (id) => {
+    try {
       const wallet = await API.getWalletById(id.substring(1));
       console.log(wallet);
       return wallet;
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
 
-  const setNewWallet = async (id, amount) =>{
-    try{
+  const setNewWallet = async (id, amount) => {
+    try {
       const response = await API.setNewWallet(id.substring(1), amount);
       toast.success("Wallet modified successfully", { position: "top-center" });
       return response;
     }
-    catch(err){
+    catch (err) {
       toast.error("Error updating the wallet", { position: "top-center" });
+      console.log(err);
+    }
+  }
+
+  const setCompletedBooking = async (id) => {
+    try {
+      const response = await API.confirmBooking(id);
+      toast.success("Booking completed successfully", { position: "top-center" });
+      //getBookings();
+    }
+    catch (err) {
+      toast.error("Error updating the booking", { position: "top-center" });
       console.log(err);
     }
   }
@@ -312,7 +277,7 @@ function App() {
               <ProductsList
                 products={products}
                 cart={cart}
-                //farmers = {farmers} //???
+              //farmers = {farmers} //???
               />
             )}
           />
@@ -428,8 +393,8 @@ function App() {
                         (<>
                           <SidebarCustom />
                           <ClientData
-                            getClient = {getSingleClientByEmail}
-                            getWallet = {getWalletById}
+                            getClient={getSingleClientByEmail}
+                            getWallet={getWalletById}
                             changeWallet={setNewWallet}
                             className="below-nav main-content"
                           />
@@ -464,6 +429,34 @@ function App() {
                             newBooking={newBooking}
                             newProductBooking={newProductBooking}
                             getWallet={getWalletById}
+                            className="below-nav main-content"
+                          />
+                        </>)
+                        : (<Redirect to="/home" />)
+                      }
+                    </>)
+
+                    : (<Redirect to="/login" />)} </> : <></>
+                }
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/confirmOrder"
+            exact
+            render={() => (
+              <>
+                {update ? <>
+                  {loggedIn ?
+                    (<>
+                      {userdata.id && userdata.id.charAt(0) === 'S' ?
+                        (<>
+                          <SidebarCustom />
+                          <BookingAcceptance
+                            bookings={bookings}
+                            confirmBooking={setCompletedBooking}
+                            products={products}
                             className="below-nav main-content"
                           />
                         </>)

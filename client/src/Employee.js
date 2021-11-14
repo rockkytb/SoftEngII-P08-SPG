@@ -11,15 +11,19 @@ function Employee(props) {
 
       <div className="main-content">
         <Link to="/register">
-          <Button className="mr-2 ">New Client</Button>
+          <Button className="mr-2 md-2 ">New Client</Button>
         </Link>
 
         <Link to="/emp/clientData">
-          <Button className="mr-2 ">Manage client data</Button>
+          <Button className="mr-2 md-2 ">Manage client data</Button>
         </Link>
 
         <Link to="/emp/newOrder">
-          <Button>Confirm Booking</Button>
+          <Button className="mr-2 md-2 ">Confirm Booking</Button>
+        </Link>
+
+        <Link to="/emp/confirmOrder">
+          <Button className="mr-2 md-2 ">Set bookings as completed</Button>
         </Link>
       </div>
     </>

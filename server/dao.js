@@ -328,13 +328,14 @@ exports.getAllProducts = () => {
 //get all bookings
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    const sql = "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
       const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
         name: e.NAME,

@@ -203,5 +203,30 @@ async function setNewWallet(id, amount){
     });
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById, setNewWallet};
+async function confirmBooking(id){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookingstate', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    state:"COMPLETED"
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newProductBooking, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
 export default API;
