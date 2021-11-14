@@ -99,7 +99,8 @@ function BookingReview(props) {
                 props.products.map((x) => {
                   if (x.id === product.id) x.quantity += product.quantity;
                 });
-                props.cart.filter((p) => p.id !== product.id);
+                let array = props.cart.filter((p) => p.id !== product.id);
+                props.setCart(array);
               }}
             >
               Remove Garfield from Lasagna
