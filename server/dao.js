@@ -380,9 +380,9 @@ exports.updateWallet = (wallet) => {
 exports.createWallet = (id) => {
   return new Promise((resolve, reject) => {
     const sql = 'INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)';
-    db.run(sql, [id, 0], function (err) {
+    db.run(sql, [id, 0.00], function (err) {
       if (err) {
-        reject(err);
+        reject(false);
         return;
       }
       resolve(true);

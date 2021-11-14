@@ -322,3 +322,13 @@ test("update of wallet balance was successfull", () => {
     amount: 120.99,
   });
 });
+
+//TEST CREATE WALLET
+test("Creation of wallet with balance= 0.0 was successfull", () => {
+  return expect(dao.createWallet(2)).resolves.toEqual(true);
+});
+
+test("Creation of wallet fails,id 1 already exists", () => {
+  return expect(dao.createWallet(2)).rejects.toEqual(false);
+});
+
