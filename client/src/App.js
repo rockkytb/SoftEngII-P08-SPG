@@ -183,14 +183,14 @@ function App() {
         const clientData = await API.getClientByEmail(email);
         setUsedMail(clientData.id);
         console.log(clientData);
-        return clientData;
+    
       }
       catch (err) {
         console.log(err);
-        return undefined;
+       
       }
     }
-    return findUser();
+    findUser();
   }
 
   const getWalletById = async (id) => {
@@ -291,6 +291,7 @@ function App() {
                 addUser={addUser}
                 getClientbyEmail={getSingleClientByEmail}
                 usedMail={usedMail}
+                setUsedMail={setUsedMail}
               />
             )}
           />

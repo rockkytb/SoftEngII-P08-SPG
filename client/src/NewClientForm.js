@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react'
 import './NewClientForm.css'
-
+import { ToastContainer, toast } from "react-toastify";
 
 function NewClientForm(props) {
     const [validated, setValidated] = useState(false);
@@ -18,11 +18,16 @@ function NewClientForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        console.log("valore setUsedMail " + props.getClientbyEmail(email).id)
+        console.log("valore setUsedMail " + props.usedMail)
         props.getClientbyEmail(email);
 
-        if (form.checkValidity() === false && !(props.usedMail === -1 /*|| props.usedMail === undefined */)) {
+        if (form.checkValidity() === false || !(props.usedMail === -1 /*|| props.usedMail === undefined */)) {
             event.stopPropagation();
+            if (!(props.usedMail === -1)) {
+                props.setUsedMail("");
+                toast.error("Email already used", { position: "top-center" })
+            }
+
         } else {
             const newUser = {
                 email: email,
@@ -33,8 +38,15 @@ function NewClientForm(props) {
             };
 
             props.addUser(newUser);
+            props.setUsedMail("");
         }
+        if (!(props.usedMail === -1)) {
+            props.setUsedMail("");
+            toast.error("Email already used", { position: "top-center" })
+        } else {
         setValidated(true);
+        }
+
     };
 
 
@@ -100,6 +112,7 @@ function NewClientForm(props) {
                                     Please insert an email address. '@' must be included.
                                 </Form.Control.Feedback>
                             }
+
 
                             {!(props.usedMail === -1 /*|| props.usedMail === undefined*/) && <Form.Control.Feedback type="invalid">
                                 Email already used

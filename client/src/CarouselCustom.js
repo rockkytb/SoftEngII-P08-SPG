@@ -1,10 +1,10 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import { Carousel,  Button } from 'react-bootstrap';
 import { useState } from 'react';
 import  sfondo_cibo  from './immagini/sfondo_cibo.jpg';
 import  cibo2 from './immagini/cibo2.jpg';
 import  cibo3 from './immagini/cibo3.jpg';
-
+import { Link } from "react-router-dom";
 
 
 function CarouselCustom(props) {
@@ -26,7 +26,7 @@ function CarouselCustom(props) {
         />
         <Carousel.Caption>
           <h3>Inizia i tuoi acquisti </h3>
-          <p>pulsante login</p>
+          <Link to="/login"> <Button> Login </Button> </Link>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -39,8 +39,8 @@ function CarouselCustom(props) {
         />
 
         <Carousel.Caption>
-          <h3>Sei nuovo?</h3>
-          <p>pulsante maserati</p>
+          <h3>Join us!</h3>
+         <Link to="/register"> <Button> Sign up </Button> </Link>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
