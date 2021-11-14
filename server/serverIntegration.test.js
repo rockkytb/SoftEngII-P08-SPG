@@ -1,16 +1,19 @@
 // Integration tests for server.js
 
 const dao = require("./dao");
-const app = require("./server");
+const server = require("./server");
+const app = server.server;
+const switchTestMode = server.switchTestMode;
 const bcrypt = require("bcrypt");
 const request = require("supertest");
 
 jest.useRealTimers();
 
 describe("Test suite Integration Server", () => {
+
   beforeEach(async () => {
     // code to run before each test
-
+    switchTestMode();
     await dao.cleanDb();
   });
 

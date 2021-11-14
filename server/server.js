@@ -9,6 +9,13 @@ const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
 //Per validazione aggiuntiva
 const validator = require("validator");
+let testmode = false;
+
+//DO NOT DELETE, NEEDED ONLY FOR INTEGRATION TESTS
+const switchTestMode = () => {
+  testmode = true;
+}
+
 
 // init express
 const app = new express();
@@ -130,9 +137,14 @@ app.use(express.json());
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {
+  if(testmode)
+  {
+    return next();
+  }
+  else{
   if (req.isAuthenticated()) return next();
-
   return res.status(401).json({ error: "not authenticated" });
+  }
 };
 
 //WRITE API HERE
@@ -206,7 +218,7 @@ app.get("/api/userinfo", isLoggedIn, (req, res) => {
 });
 
 //GET /api/clients/
-app.get("/api/clients", (req, res) => {
+app.get("/api/clients", isLoggedIn ,(req, res) => {
   dao
     .getClients()
     .then((clients) => {
@@ -242,7 +254,7 @@ app.post(
 
 //POST /api/bookings
 app.post(
-  "/api/bookings", //isLoggedIn,
+  "/api/bookings", isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
       return res
@@ -510,4 +522,5 @@ const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
-module.exports = server;
+exports.server = server;
+exports.switchTestMode = switchTestMode;
