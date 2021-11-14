@@ -411,7 +411,7 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run("DELETE FROM CLIENT_WALLET WHERE ID != ?", [1], (err) => {
+    await db.run("DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?", [1], (err) => {
       if (err) {
         throw err;
       }
