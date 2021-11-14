@@ -74,6 +74,7 @@ Receive a JSON object:
 Retrieve the list of all bookings, return a JSON Vector
 
 	[{
+		"id": 1, 
         "state": "PENDING",
         "email": "client@gmail.com",
         "name": "client1",

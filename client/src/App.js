@@ -194,10 +194,10 @@ function App() {
       const wallet = await API.getWalletById(id.substring(1))
         .then((wallet) => {
           console.log(wallet);
-          return wallet;
+          return wallet.balance;
         })
         .catch((err) => console.log(err));
-      return wallet;
+      //return wallet;
   }
 
   const setNewWallet = async (id, amount) => {

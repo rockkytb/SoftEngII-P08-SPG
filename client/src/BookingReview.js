@@ -19,8 +19,11 @@ function BookingReview(props) {
   const [soldy, setSoldy] = useState(0);
 
   async function handleCreateBooking() {
-    await setSoldy(props.getWallet(clientID));
-
+    
+    let tmpSoldy = await props.getWallet(clientID)
+    console.log("tmpSoldy = " + tmpSoldy)
+    setSoldy(tmpSoldy);
+    
     let total = 0;
 
     props.cart.map((p) => {
@@ -32,6 +35,9 @@ console.log("Total = " + total)
 
     if (total <= soldy) {
       setNewBooking(props.newBooking(clientID));
+      
+      console.log("id = " + clientID)
+
       props.cart.map((p) => {
         props.newProductBooking(newBooking, p.id, p.quantity);
       });
@@ -44,11 +50,13 @@ console.log("Total = " + total)
     setShow(false);
   };
 
+  console.log("id = " + clientID)
+
   function productsActions() {
     console.log(props.cart);
     return props.cart.map((product) => (
       <Col>
-        <Card>
+        <Card clasName="text-dark">
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
