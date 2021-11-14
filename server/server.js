@@ -327,6 +327,7 @@ app.post(
 
     try {
       clientId = await dao.createClient(client);
+      await dao.createWallet (clientId);
       res.status(201).json({ idClient: clientId });
     } catch (err) {
       res.status(503).json({

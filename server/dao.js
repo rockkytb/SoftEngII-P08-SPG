@@ -376,6 +376,20 @@ exports.updateWallet = (wallet) => {
   });
 };
 
+// Create a new wallet
+exports.createWallet = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)';
+    db.run(sql, [id, 0], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(true);
+    });
+  });
+};
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
   if (testmode) {
