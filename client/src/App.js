@@ -109,7 +109,7 @@ function App() {
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
-        booking.id = res.idBooking;
+        setBooking ({id : res.idBooking});
       }
     };
     book()
