@@ -27,8 +27,11 @@ function BookingReview(props) {
       total += p.price;
     });
 
+console.log("Soldy = " + soldy)
+console.log("Total = " + total)
+
     if (total <= soldy) {
-      await setNewBooking(props.newBooking(clientID));
+      setNewBooking(props.newBooking(clientID));
       props.cart.map((p) => {
         props.newProductBooking(newBooking, p.id, p.quantity);
       });
@@ -116,7 +119,7 @@ function BookingReview(props) {
           </Col>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={() => handleCreateBooking()}>
@@ -126,7 +129,7 @@ function BookingReview(props) {
       </Modal>
 
       <CardColumns xs={1} md={5}>
-        <>{/*props.cart.length ? */ productsActions() /* : <></>*/}</>
+        <>{props.cart.length ?  productsActions()  : <></>}</>
       </CardColumns>
 
       <Button variant="secondary" onClick={() => setShowAlert(true)}>

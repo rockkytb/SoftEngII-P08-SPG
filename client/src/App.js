@@ -273,6 +273,7 @@ function App() {
               <ProductsList
                 products={products}
                 cart={cart}
+                setCart={(val) => setCart(val)}
               //farmers = {farmers} //???
               />
             )}
@@ -325,10 +326,10 @@ function App() {
                   cart={cart}
                   clients={clients}
                   products={products}
-                  setCart={setCart}
+                  setCart={(val) => setCart(val)}
                   newBooking={newBooking}
                   newProductBooking={newProductBooking}
-                  getWallet={getWalletById}
+                  getWallet={(id) => getWalletById(id)}
                   className="below-nav main-content"
                 />
               </>

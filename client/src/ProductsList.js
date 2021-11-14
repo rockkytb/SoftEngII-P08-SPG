@@ -22,11 +22,9 @@ export default function ProductsList(props) {
   function handleAddToCart() {
     //TODO
     let product = { id: productId, name: name, quantity: orderQuantity, price: price }
-    /*let tmp = [...props.cart];
-    tmp.push(product);*/
-    console.log(props.cart)
-    props.setCart([...props.cart, product]);
-    console.log(props.cart);
+    let tmp = props.cart.slice(0);
+    tmp.push(product);
+    props.setCart(tmp);
     props.products.forEach((p) => {
       if (p.id === product.id) p.quantity -= product.quantity;
     });
@@ -88,6 +86,7 @@ export default function ProductsList(props) {
                 <Form.Control
                   type="number"
                   defaultValue="1"
+                  default="1"
                   min="1"
                   max={quantity}
                   onChange={e => { setOrderQuantity(e.target.value); }}
@@ -97,7 +96,7 @@ export default function ProductsList(props) {
           </Col>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
+          <Button variant="secondary" onClick={handleViewClose}>
             Close
           </Button>
           <Button variant="primary" onClick={() => handleAddToCart()}>
