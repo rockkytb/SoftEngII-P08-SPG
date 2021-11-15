@@ -55,7 +55,7 @@ function NavbarCustom(props) {
       <Col className="d-flex  justify-content-center">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white'}}>
-            SPG s.p.a.
+            <h1>Le_Cose SPG s.p.a.</h1>
           </Link>
         </NavLink>
       </Col>
