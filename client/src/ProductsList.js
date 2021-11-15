@@ -51,7 +51,7 @@ export default function ProductsList(props) {
             <Card.Text>
               Price: {product.price}
               <br />
-              Category:TODO
+              Category: {product.category}
             </Card.Text>
             <Button
               variant="primary"

@@ -104,7 +104,7 @@ function BookingReview(props) {
                 props.setCart(array);
               }}
             >
-              Remove Garfield from Lasagna
+              Remove from cart
             </Button>
           </Card.Body>
         </Card>

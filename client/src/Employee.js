@@ -19,6 +19,10 @@ function Employee(props) {
           <Button className="mr-2 md-2 ">Manage client data</Button>
         </Link>
 
+        <Link to="/products">
+          <Button className="mr-2 md-2 ">New Booking</Button>
+        </Link>
+
         <Link to="/emp/newOrder">
           <Button className="mr-2 md-2 ">Confirm Booking</Button>
         </Link>
