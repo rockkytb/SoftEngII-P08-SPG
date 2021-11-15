@@ -46,7 +46,7 @@ function BookingReview(props) {
     let tmpSoldy = await props.getWallet(clientID);
     let total = 0;
     let id;
-    if(clientID)
+    if (clientID)
       id = clientID.substring(1);
 
 
@@ -68,7 +68,7 @@ function BookingReview(props) {
   useEffect(() => {
     const getSoldy = async () => {
       let id;
-      if(clientID)
+      if (clientID)
         id = clientID.substring(1);
       const response = await fetch("/api/wallet", {
         method: "POST",
@@ -96,13 +96,13 @@ function BookingReview(props) {
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>Unit Price: {product.price} €</Card.Text>
-            <Card.Text>Total Price: {product.price*product.quantity} €</Card.Text>
+            <Card.Text>Total Price: {product.price * product.quantity} €</Card.Text>
             <Card.Text>Quantity: {product.quantity}</Card.Text>
             <Button
               variant="primary"
               onClick={() => {
                 props.products.map((x) => {
-                  if (x.id === product.id) x.qty += product.quantity*1;
+                  if (x.id === product.id) x.qty += product.quantity * 1;
                 });
                 let array = props.cart.filter((p) => p.id !== product.id);
                 props.setCart(array);
@@ -164,10 +164,10 @@ function BookingReview(props) {
           </Col>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" id="closeModal" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleCreateBooking()}>
+          <Button variant="primary" id="submitModal" onClick={() => handleCreateBooking()}>
             Submit
           </Button>
         </Modal.Footer>
@@ -181,7 +181,7 @@ function BookingReview(props) {
         Cancel
       </Button>
 
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
         Confirm
       </Button>
     </>
