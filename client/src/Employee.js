@@ -16,7 +16,7 @@ function Employee(props) {
         </Link>
 
         <Link to="/emp/clientData">
-          <Button className="mr-2 md-2 ">Manage client data</Button>
+          <Button className="mr-2 md-2 ">Manage clients wallet</Button>
         </Link>
 
         <Link to="/products">

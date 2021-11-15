@@ -260,7 +260,7 @@ test("get all products success", async () => {
     {
       id: 1,
       name: "Mele",
-      category: "Froit",
+      category: "Fruit",
       price: 14,
       qty: 5,
       farmer_email: "antonio.bianchi@mail.it",

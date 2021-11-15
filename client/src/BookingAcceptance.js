@@ -40,7 +40,7 @@ export default function BookingAcceptance(props) {
                                 props.confirmBooking(booking.id);
                             }}
                         >
-                            Complete order
+                            Set as completed
                         </Button>
                     </Card.Body>
                 </Card>

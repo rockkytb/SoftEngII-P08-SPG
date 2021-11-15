@@ -52,13 +52,15 @@ export default function ProductsList(props) {
               Price: {product.price}
               <br />
               Category: {product.category}
+              <br />
+              Available quantity: {product.qty}
             </Card.Text>
             <Button
               variant="primary"
               onClick={() => {
                 setProductId(product.id);
                 setName(product.name);
-                setQuantity(product.quantity);
+                setQuantity(product.qty);
                 setPrice(product.price);
                 setShowView(true);
               }}
@@ -89,7 +91,14 @@ export default function ProductsList(props) {
                   default="1"
                   min="1"
                   max={quantity}
-                  onChange={e => { setOrderQuantity(e.target.value); }}
+                  onChange={e => { if(e.target.value > 0 && e.target.value <= quantity) 
+                                    setOrderQuantity(e.target.value);
+                                    if(e.target.value < 0) 
+                                    setOrderQuantity(1);
+                                    if(e.target.value > quantity) 
+                                    setOrderQuantity(quantity);
+                                  
+                                  }}
                 />
               </Form.Group>
             </Form>
