@@ -61,7 +61,7 @@ function ClientData(props) {
             </Modal.Footer>
           </Modal>
           :
-          <>
+          <div className="text-center below-nav">
             <p>Client id: {client.id}</p><br />
             <p>Client name: {client.name + " " + client.surname}</p>
             <p>Client wallet: {wallet}€</p><br />
@@ -75,7 +75,7 @@ function ClientData(props) {
               </Button>
             </Form>
 
-          </>
+          </div>
       }
     </>
 
