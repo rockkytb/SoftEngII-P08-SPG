@@ -116,7 +116,7 @@ function BookingReview(props) {
     ));
   }
   return (
-    <>
+    <div className="below-nav">
       <Alert show={showAlert} variant="success">
         <Alert.Heading>Are you sure?!</Alert.Heading>
         <p>
@@ -176,7 +176,7 @@ function BookingReview(props) {
       <CardColumns xs={1} md={5}>
         <>{props.cart.length ? productsActions() : <></>}</>
       </CardColumns>
-
+      
       <Button variant="secondary" onClick={() => setShowAlert(true)}>
         Cancel
       </Button>
@@ -184,7 +184,7 @@ function BookingReview(props) {
       <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
         Confirm
       </Button>
-    </>
+    </div>
   );
 }
 

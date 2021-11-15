@@ -18,7 +18,7 @@ export default function BookingAcceptance(props) {
     }*/
 
     function bookingActions() {
-        let toPrint = props.bookings.filter((bk) => bk.state != "COMPLETED");
+        let toPrint = props.bookings.filter((bk) => bk.state !== "COMPLETED");
         if(toPrint.length == 0){
             return (<>No pending bookings present</>);
         }
