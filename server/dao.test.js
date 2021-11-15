@@ -271,11 +271,11 @@ test("get all products success", async () => {
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.
-  const booking = {
+  /*const booking = {
   idClient: 1,
   state: "PENDING",
   };
-  dao.createBooking(booking);
+  await dao.createBooking(booking);*/
 
   const received = {  
     id: 1,
@@ -329,7 +329,7 @@ test("Creation of wallet with balance= 0.0 was successfull", () => {
 });
 
 test("Creation of wallet fails,id 1 already exists", () => {
-  return expect(dao.createWallet(2)).rejects.toEqual(false);
+  return expect(dao.createWallet(1)).rejects.toEqual(false);
 });
 
 //TEST EDIT STATE OF BOOKING

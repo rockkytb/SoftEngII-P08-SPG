@@ -26,8 +26,8 @@ function CarouselCustom(props) {
         />
         <Carousel.Caption>
           <h3>Start shopping with us!</h3>
-          {props.logged ? (<>
-            <Button> Show the catalogue </Button></>):(
+          {props.logged ? (<><Link to="/products">
+            <Button> Show the catalogue </Button></Link></>):(
             <>  
             <Link to="/login"> <Button> Login </Button> </Link>
             </>

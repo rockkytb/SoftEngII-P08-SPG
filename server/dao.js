@@ -325,7 +325,7 @@ exports.getAllProducts = () => {
 //get all bookings
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    const sql = "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -393,7 +393,13 @@ exports.cleanDb = async () => {
   if (testmode) {
     //Clean the db
 
-    await db.run("DELETE FROM BOOKING", (err) => {
+    await db.run("DELETE FROM BOOKING_PRODUCTS", (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+
+    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?",[1], (err) => {
       if (err) {
         throw err;
       }
@@ -401,7 +407,7 @@ exports.cleanDb = async () => {
 
     await db.run(
       "UPDATE sqlite_sequence SET seq = ? WHERE name = ?",
-      [0, "BOOKING"],
+      [1, "BOOKING"],
       (err) => {
         if (err) {
           throw err;
