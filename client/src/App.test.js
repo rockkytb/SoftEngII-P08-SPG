@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Enzyme, { shallow, mount } from 'enzyme';
+import Enzyme, { shallow, render, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './App.js';
 import NewClientForm from './NewClientForm.js';
@@ -20,98 +19,69 @@ Enzyme.configure({ adapter: new Adapter() })
 //IF SOMETHING IS WRONG, TEST WILL FAIL
 
 test('renders app', () => {
-  shallow(<App/>);
+  shallow(<App />);
 });
 
 test('renders new client form', () => {
-  shallow(<NewClientForm/>);
+  shallow(<NewClientForm />);
 });
 
 test('renders Employee', () => {
-  shallow(<Employee/>);
+  shallow(<Employee />);
 
 });
 
 test('renders Customer', () => {
-  
-  let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
-it("renders with or without a name", () => {
-  act(() => {
-    render(<Customer />, container);
-  });
-  expect(container.textContent).toBe("Hey, stranger");
-
-  act(() => {
-    render(<Hello name="Jenny" />, container);
-  });
-  expect(container.textContent).toBe("Hello, Jenny!");
-
-  act(() => {
-    render(<Hello name="Margaret" />, container);
-  });
-  expect(container.textContent).toBe("Hello, Margaret!");
-});
+  shallow(<Customer/>);
 });
 
 test('renders Sidebar', () => {
-  shallow(<SidebarCustom/>);
+  shallow(<SidebarCustom />);
 });
 
 test('renders Navbar', () => {
-  shallow(<NavbarCustom/>);
+  shallow(<NavbarCustom />);
 });
 
 test('renders BookingReview', () => {
   const clients = [{ id: "C1", name: "Ciccio", surname: "Sultano" },
-    {  id: "C2", name: "prodi", surname: "Ciccio" }]
+  { id: "C2", name: "prodi", surname: "Ciccio" }]
   const cart = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
-    {  id: 2, name: "prod2", quantity: 3, price: 3.50 }]
-  shallow(<BookingReview clients = {clients} cart={cart}/>);
+  { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
+  shallow(<BookingReview clients={clients} cart={cart} />);
 
   let container;
 
-beforeEach(() => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
-
-  act(() => {
-    ReactDOM.render(<BookingReview/>, container);
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
   });
+
+  afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+  });
+
+  /*act(() => {
+    ReactDOM.render(<BookingReview />, container);
+  });*/
+  BookingReview.call()
   BookingReview.setShow(true)
   BookingReview.handleClose()
   expect(BookingReview.show).toBe(false)
 });
 
 test('renders Carousel', () => {
-  shallow(<CarouselCustom/>);
+  shallow(<CarouselCustom />);
 });
 
 test('renders Login and log button', () => {
-  shallow(<Login/>);
-  shallow(<LogButton/>);
+  shallow(<Login />);
+  shallow(<LogButton />);
 });
 
 test('renders ProductList', () => {
   const products = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
-    {  id: 2, name: "prod2", quantity: 3, price: 3.50 }]
-  shallow(<ProductsList products={products}/>);
+  { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
+  shallow(<ProductsList products={products} />);
 });
