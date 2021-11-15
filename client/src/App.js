@@ -506,7 +506,7 @@ function App() {
             path="/home"
             render={() => (
               <div className="width100">
-                <CarouselCustom className="customCarousel" />
+                <CarouselCustom className="customCarousel" logged = {loggedIn} />
               </div>
             )}
           />
