@@ -85,10 +85,11 @@ export default function ProductsList(props) {
   return (
     <>
       <div className="below-nav">
+      <div class="col-md-12 text-center">
         <Link to="/emp/newOrder">
           <Button className="mr-2 md-2 ">Go to cart</Button>
         </Link>
-
+      </div>
         <Modal show={showView} onHide={handleViewClose}>
           <Modal.Header>
             <Modal.Title>Add to cart</Modal.Title>
