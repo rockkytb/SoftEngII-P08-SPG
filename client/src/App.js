@@ -256,17 +256,27 @@ function App() {
             )}
           />
 
+          {/* When logged as farmer or customer we shouldn't get here */}
           <Route
             path="/register"
             exact
             render={() => (
-              /** REGISTER */
-              <NewClientForm className="below-nav main-content"
-                addUser={addUser}
-                getClientbyEmail={getSingleClientByEmail}
-                /*usedMail={usedMail}
-                setUsedMail={setUsedMail}*/
-              />
+              <>
+                {update ? (
+                    <>
+                      { loggedIn && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "F")  ? 
+                        (<Redirect to="/home" />):(
+                      /** REGISTER */
+                      <NewClientForm className="below-nav main-content"
+                        addUser={addUser}
+                        getClientbyEmail={getSingleClientByEmail}
+                        /*usedMail={usedMail}
+                        setUsedMail={setUsedMail}*/
+                        />
+                        )}
+                    </>)
+                    :(<></>)}
+              </>
             )}
           />
 
