@@ -216,8 +216,8 @@ exports.createBookingProduct = (bookingProduct) => {
 // edit qty of a product_week
 exports.editQtyProductWeek = (product) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE PRODUCT_WEEK SET QTY = ? WHERE ID = ?";
-    db.run(sql, [product.New_Qty, product.ID_Product], function (err, row) {
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY - ? WHERE ID = ?";
+    db.run(sql, [product.Dec_Qty, product.ID_Product], function (err, row) {
       if (err) {
         reject(err);
         return;

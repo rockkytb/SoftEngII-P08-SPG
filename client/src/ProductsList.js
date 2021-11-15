@@ -27,7 +27,7 @@ export default function ProductsList(props) {
     tmp.push(product);
     props.setCart(tmp);
     props.products.forEach((p) => {
-      if (p.id === product.id) p.quantity -= product.quantity;
+      if (p.id === product.id) p.qty -= orderQuantity;
     });
     //edit quantity live so that the product is reserved
 
