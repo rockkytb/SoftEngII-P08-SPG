@@ -28,9 +28,9 @@ function NewClientForm(props) {
             setUsedMail(-1);
         }
         console.log("valore setUsedMail " + usedMail);
-        if (form.checkValidity() === false || usedMail === -1 ) {
+        if (form.checkValidity() === false || usedMail == -1 ) {
             event.stopPropagation();
-            if (usedMail === -1) {
+            if (usedMail == -1) {
                 setUsedMail("");
                 toast.error("Email already used", { position: "top-center" })
             }
@@ -115,7 +115,7 @@ function NewClientForm(props) {
                             }
 
 
-                            {!(usedMail === -1 ) && <Form.Control.Feedback type="invalid">
+                            {!(usedMail == -1 ) && <Form.Control.Feedback type="invalid">
                                 Email already used
                             </Form.Control.Feedback>}
                         </Form.Group>

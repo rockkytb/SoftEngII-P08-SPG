@@ -108,7 +108,7 @@ function App() {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
         setBooking({ id: res.idBooking });
-        return booking.id;
+        return res.idBooking;
       }
     };
     book()

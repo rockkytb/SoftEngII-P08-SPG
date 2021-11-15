@@ -46,7 +46,9 @@ function BookingReview(props) {
   async function handleCreateBooking() {
     let tmpSoldy = await props.getWallet(clientID);
     let total = 0;
-    let id = clientID.substring(1);
+    let id;
+    if(clientID)
+      id = clientID.substring(1);
 
 
     setSoldy(tmpSoldy);
