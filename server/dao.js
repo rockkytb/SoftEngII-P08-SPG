@@ -206,7 +206,6 @@ exports.createBookingProduct = (bookingProduct) => {
       function (err) {
         if (err) {
           reject(err);
-          return;
         }
         resolve(true);
       }

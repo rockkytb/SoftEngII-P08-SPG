@@ -342,10 +342,20 @@ test("Edit the state of a booking with non-existent id", ()=>{
   return expect(dao.editStateBooking(booking).rejects.toEqual(false));
 });
 */
-test("Edit the state of a booking with non-existent id", ()=>{
+test("Edit the state of a booking with a valid request", ()=>{
   const booking = {
     id: 1,
     state: "BOOKED",
   };
   return expect(dao.editStateBooking(booking)).resolves.toEqual(true);
+});
+
+//TEST CREATE BOOKING-PRODUCT
+test("create a row in the booking product table", ()=>{
+  const bookingProduct = {
+    ID_Booking: 1,
+    ID_Product: 2,
+    Qty: 3
+  };
+  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(true);
 });
