@@ -326,6 +326,7 @@ function App() {
               <>
                 <BookingReview className="below-nav main-content"
                   cart={cart}
+                  setCart={setCart}
                   clients={clients}
                   products={products}
                   setCart={(val) => setCart(val)}
@@ -434,6 +435,7 @@ function App() {
                             {/*<SidebarCustom />*/}
                             <BookingReview className="below-nav main-content"
                               cart={cart}
+                              setCart={setCart}
                               clients={clients}
                               products={products}
                               setCart={setCart}
