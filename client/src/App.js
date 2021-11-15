@@ -126,7 +126,7 @@ function App() {
       const res1 = await API.editProductQty (pid,qty);
     };
     bookingProduct();
-    setBookingsState(true);
+    
   };
 
   useEffect(() => {
@@ -333,6 +333,7 @@ function App() {
                   newProductBooking={(bid, pid, qty) =>
                     newProductBooking(bid, pid, qty)
                   }
+                  setBookingsState={setBookingsState}
                   getWallet={(id) => getWalletById(id)}
                   className="below-nav main-content"
                 />
@@ -437,6 +438,7 @@ function App() {
                               products={products}
                               setCart={setCart}
                               newProductBooking={newProductBooking}
+                              setBookingsState={setBookingsState}
                               getWallet={getWalletById}
                               className="below-nav main-content"
                             />
