@@ -95,12 +95,12 @@ Receive a JSON object
 
 #### PUT /api/productqty
 
-Edit the qty of a product in product_week table
+Decrements the qty of a product in product_week table
 
 Receive a JSON object
 
 	{"ID_Product":3,
-	"New_Qty":6}
+	"Dec_Qty":6}
 	
 #### POST /api/newclient
 

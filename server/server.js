@@ -384,7 +384,7 @@ app.post(
 app.put(
   "/api/productqty", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.New_Qty}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid qty id, it must be positive` });
@@ -397,7 +397,7 @@ app.put(
 
     const product = {
       ID_Product: req.body.ID_Product,
-      New_Qty: req.body.New_Qty,
+      Dec_Qty: req.body.Dec_Qty,
     };
 
     let result;

@@ -101,7 +101,7 @@ function BookingReview(props) {
               variant="primary"
               onClick={() => {
                 props.products.map((x) => {
-                  if (x.id === product.id) x.quantity += product.quantity;
+                  if (x.id === product.id) x.qty += product.quantity*1;
                 });
                 let array = props.cart.filter((p) => p.id !== product.id);
                 props.setCart(array);

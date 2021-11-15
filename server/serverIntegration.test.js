@@ -148,7 +148,7 @@ describe("Test suite Integration Server", () => {
     it("send a invalid qty", async () => {
       const res = await request(app).put("/api/productqty").send({
         ID_Product: 3,
-        New_Qty: -1,
+        Dec_Qty: -1,
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
@@ -162,7 +162,7 @@ describe("Test suite Integration Server", () => {
     it("send a invalid id product", async () => {
       const res = await request(app).put("/api/productqty").send({
         ID_Product: -1,
-        New_Qty: 2,
+        Dec_Qty: 2,
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
