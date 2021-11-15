@@ -40,6 +40,7 @@ function BookingReview(props) {
         });
         props.setBookingsState(true);
         props.setCart([]);
+        handleClose();
       }
       )
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
