@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Hello from "./hello";
-import Enzyme, { shallow, render, mount } from 'enzyme';
+import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './App.js';
 import NewClientForm from './NewClientForm.js';
