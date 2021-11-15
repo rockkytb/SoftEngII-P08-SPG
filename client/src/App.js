@@ -28,6 +28,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [bookingsState, setBookingsState] = useState(true);
   const [dirty, setDirty] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userdata, setUserData] = useState({});
@@ -125,9 +126,11 @@ function App() {
       const res1 = await API.editProductQty (pid,qty);
     };
     bookingProduct();
+    setBookingsState(true);
   };
 
   useEffect(() => {
+    if(bookingsState){
     const getProducts = async () => {
       // call: GET /api/products
       const response = await fetch("/api/products");
@@ -138,17 +141,20 @@ function App() {
     };
 
     const getBookings = async () => {
-      // call: GET /api/bookings
-      const response = await fetch("/api/bookings");
-      const bookingList = await response.json();
-      if (response.ok) {
-        setBookings(bookingList);
-      }
-    };
+      
+        // call: GET /api/bookings
+        const response = await fetch("/api/bookings");
+        const bookingList = await response.json();
+        if (response.ok) {
+          setBookings(bookingList);
+          setBookingsState(false);
+        }
+      };
 
-    getProducts();
-    getBookings();
-  }, []);
+      getProducts();
+      getBookings();
+    }
+  }, [bookingsState]);
 
   useEffect(() => {
     const getClients = async () => {
