@@ -35,7 +35,7 @@ function App() {
   const [update, setUpdate] = useState(false);
   const [booking, setBooking] = useState();
   const history = useHistory();
-  const [usedMail, setUsedMail] = useState();
+  //const [usedMail, setUsedMail] = useState();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -159,27 +159,14 @@ function App() {
       }
     };
     getClients();
-  }, [loggedIn]);
+  }, [loggedIn, dirty]);
 
   const getSingleClientByEmail = (email) => {
-    let client = {};
+    let client;
     if (clients) {
       client = clients.find((c) => c.username == email);
     }
-    if (client != undefined) {
-      setUsedMail(client.id);
-      return client;
-    }
-
-    const findUser = async () => {
-      const clientData = await API.getClientByEmail(email)
-        .then((client) => {
-          setUsedMail(clientData.id);
-          return client;
-        })
-        .catch((err) => console.log(err));
-    };
-    return findUser();
+    return client;
   };
 
   const getWalletById = async (id) => {
@@ -260,7 +247,7 @@ function App() {
             exact
             render={() => (
               /**  */
-              <ProductsList
+              <ProductsList className="below-nav main-content"
                 products={products}
                 cart={cart}
                 setCart={(val) => setCart(val)}
@@ -274,11 +261,11 @@ function App() {
             exact
             render={() => (
               /** REGISTER */
-              <NewClientForm
+              <NewClientForm className="below-nav main-content"
                 addUser={addUser}
                 getClientbyEmail={getSingleClientByEmail}
-                usedMail={usedMail}
-                setUsedMail={setUsedMail}
+                /*usedMail={usedMail}
+                setUsedMail={setUsedMail}*/
               />
             )}
           />
@@ -295,7 +282,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             <SidebarCustom />
-                            <Customer />
+                            <Customer className="below-nav main-content"/>
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -318,7 +305,7 @@ function App() {
             render={() => (
               /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
               <>
-                <BookingReview
+                <BookingReview className="below-nav main-content"
                   cart={cart}
                   clients={clients}
                   products={products}
@@ -389,9 +376,10 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             <SidebarCustom />
-                            <ClientData
-                              getClient={getSingleClientByEmail}
-                              getWallet={getWalletById}
+                            <ClientData className="below-nav main-content"
+                              clients={clients}
+                              //getClient={getSingleClientByEmail}
+                              getWallet={(id) => getWalletById(id)}
                               changeWallet={setNewWallet}
                               className="below-nav main-content"
                             />
@@ -424,7 +412,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             <SidebarCustom />
-                            <BookingReview
+                            <BookingReview className="below-nav main-content"
                               cart={cart}
                               clients={clients}
                               products={products}
@@ -461,7 +449,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             <SidebarCustom />
-                            <BookingAcceptance
+                            <BookingAcceptance className="below-nav main-content"
                               bookings={bookings}
                               confirmBooking={setCompletedBooking}
                               products={products}

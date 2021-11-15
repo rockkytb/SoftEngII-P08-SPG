@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useState } from 'react'
 import './NewClientForm.css'
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function NewClientForm(props) {
     const [validated, setValidated] = useState(false);
@@ -10,6 +10,7 @@ function NewClientForm(props) {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
+    const [usedMail, setUsedMail] = useState("");
     const bcrypt = require('bcryptjs');
 
     const regex =
@@ -18,13 +19,19 @@ function NewClientForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        console.log("valore setUsedMail " + props.usedMail)
-        props.getClientbyEmail(email);
-
-        if (form.checkValidity() === false || !(props.usedMail === -1 /*|| props.usedMail === undefined */)) {
+        console.log("valore setUsedMail " + usedMail);
+        let val = props.getClientbyEmail(email);
+        if(val){
+            setUsedMail(val.id);
+        }
+        else{
+            setUsedMail(-1);
+        }
+        console.log("valore setUsedMail " + usedMail);
+        if (form.checkValidity() === false || usedMail === -1 ) {
             event.stopPropagation();
-            if (!(props.usedMail === -1)) {
-                props.setUsedMail("");
+            if (usedMail === -1) {
+                setUsedMail("");
                 toast.error("Email already used", { position: "top-center" })
             }
 
@@ -38,15 +45,9 @@ function NewClientForm(props) {
             };
 
             props.addUser(newUser);
-            props.setUsedMail("");
+            setUsedMail("");
+            setValidated(true);
         }
-        if (!(props.usedMail === -1)) {
-            props.setUsedMail("");
-            toast.error("Email already used", { position: "top-center" })
-        } else {
-        setValidated(true);
-        }
-
     };
 
 
@@ -114,7 +115,7 @@ function NewClientForm(props) {
                             }
 
 
-                            {!(props.usedMail === -1 /*|| props.usedMail === undefined*/) && <Form.Control.Feedback type="invalid">
+                            {!(usedMail === -1 ) && <Form.Control.Feedback type="invalid">
                                 Email already used
                             </Form.Control.Feedback>}
                         </Form.Group>

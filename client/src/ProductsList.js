@@ -44,7 +44,7 @@ export default function ProductsList(props) {
   function productsActions() {
     return props.products.map((product) => (
       <Col>
-        <Card>
+        <Card className="text-dark">
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>

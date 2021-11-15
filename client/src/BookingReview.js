@@ -24,17 +24,17 @@ function BookingReview(props) {
   async function newBooking(clientID) {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
-    let tmp=0;
+    let tmp = 0;
 
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
-        tmp=res.idBooking;
+        tmp = res.idBooking;
       }
     };
     book()
-      .then(() =>
-        {toast.success("Booking completed", { position: "top-center" });
+      .then(() => {
+        toast.success("Booking completed", { position: "top-center" });
         props.cart.map((p) => {
           props.newProductBooking(tmp, p.id, p.quantity);
         });
@@ -56,7 +56,7 @@ function BookingReview(props) {
     });
 
     if (total <= soldy) {
-      newBooking(id)        
+      newBooking(id)
     }
   }
 
@@ -81,7 +81,8 @@ function BookingReview(props) {
         throw wallet;
       }
     };
-    getSoldy();
+    if (clientID)
+      getSoldy();
   }, [clientID]);
 
   function productsActions() {

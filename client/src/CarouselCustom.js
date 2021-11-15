@@ -25,7 +25,7 @@ function CarouselCustom(props) {
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>Inizia i tuoi acquisti </h3>
+          <h3>Start shopping with us!</h3>
           <Link to="/login"> <Button> Login </Button> </Link>
         </Carousel.Caption>
       </Carousel.Item>
@@ -53,10 +53,8 @@ function CarouselCustom(props) {
         />
 
         <Carousel.Caption>
-          <h3>Guarda i prodotti lurido</h3>
-          <p>
-            pulsante prodotti
-          </p>
+          <h3>Browse products!</h3>
+          <Link to="/products"> <Button> Show the catalogue </Button> </Link>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
