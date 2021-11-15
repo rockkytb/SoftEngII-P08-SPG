@@ -412,7 +412,6 @@ describe("Test suite Integration Server", () => {
       expect(res.body).toHaveProperty("amount", 20.99);
     });
   });
-<<<<<<< HEAD
 
   describe("edit the state of a booking", () => {
     it("send a invalid id booking", async () => {
@@ -436,6 +435,4 @@ describe("Test suite Integration Server", () => {
     });
   });  
 
-=======
->>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
 });

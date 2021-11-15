@@ -332,7 +332,6 @@ test("Creation of wallet fails,id 1 already exists", () => {
   return expect(dao.createWallet(2)).rejects.toEqual(false);
 });
 
-<<<<<<< HEAD
 //TEST EDIT STATE OF BOOKING
 /*
 test("Edit the state of a booking with non-existent id", ()=>{
@@ -343,12 +342,20 @@ test("Edit the state of a booking with non-existent id", ()=>{
   return expect(dao.editStateBooking(booking).rejects.toEqual(false));
 });
 */
-test("Edit the state of a booking with non-existent id", ()=>{
+test("Edit the state of a booking with a valid request", ()=>{
   const booking = {
     ID_Booking: 1,
     New_State: "BOOKED",
   };
   return expect(dao.editStateBooking(booking)).resolves.toEqual(true);
 });
-=======
->>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
+
+//TEST CREATE BOOKING-PRODUCT
+test("create a row in the booking product table", ()=>{
+  const bookingProduct = {
+    ID_Booking: 1,
+    ID_Product: 2,
+    Qty: 3
+  };
+  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(true);
+});

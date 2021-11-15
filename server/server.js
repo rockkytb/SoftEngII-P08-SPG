@@ -239,11 +239,7 @@ app.post(
       .getClientByEmail(req.body.email)
       .then((client) => {
         if (client.id === -1) {
-<<<<<<< HEAD
-          res.status(200).json(client);
-=======
           res.status(401).json(client);
->>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
         } else {
           res.status(200).json(client);
         }
@@ -430,13 +426,8 @@ app.put(
     }
 
     const booking = {
-<<<<<<< HEAD
       ID_Booking: req.body.ID_Booking,
       New_State: req.body.New_State,
-=======
-      ID_Booking: req.body.id,
-      New_State: req.body.state,
->>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
     };
 
     let result;
