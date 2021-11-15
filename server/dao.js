@@ -236,7 +236,7 @@ exports.editQtyProductWeek = (product) => {
 exports.editStateBooking = (booking) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
-    db.run(sql, [booking.New_State, booking.ID_Booking], function (err) {
+    db.run(sql, [booking.state, booking.id], function (err) {
       if (err) {
         reject(err);
       }

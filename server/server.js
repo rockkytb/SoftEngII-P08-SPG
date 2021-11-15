@@ -426,8 +426,8 @@ app.put(
     }
 
     const booking = {
-      ID_Booking: req.body.ID_Booking,
-      New_State: req.body.New_State,
+      id: req.body.id,
+      state: req.body.state,
     };
 
     let result;

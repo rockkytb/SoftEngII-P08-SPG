@@ -279,7 +279,7 @@ test("get all bookings success", async () => {
 
   const received = {  
     id: 1,
-    state: "PENDING",
+    state: "COMPLETED",
     email: "marco.bianchi@mail.it",
     name: "Marco",
     surname: "Bianchi",

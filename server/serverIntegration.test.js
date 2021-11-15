@@ -363,7 +363,7 @@ describe("Test suite Integration Server", () => {
       const response = await request(app).get("/api/bookings");
       expect(response.body).toEqual([{  
         id: 1,
-        state: "PENDING",
+        state: "BOOKED",
         email: "marco.bianchi@mail.it",
         name: "Marco",
         surname: "Bianchi",
