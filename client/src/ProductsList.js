@@ -22,12 +22,14 @@ export default function ProductsList(props) {
       price: price,
     };
     let tmp = props.cart.slice(0);
+    
     tmp.map((p) => {
       if (p.id === product.id) p.quantity += product.quantity;
       update=1;
     });
+
     if(update===0)
-    tmp.push(product);
+      tmp.push(product);
 
     props.setCart(tmp);
     props.products.forEach((p) => {
