@@ -63,7 +63,7 @@ export default function ProductsList(props) {
                 setShowView(true);
               }}
             >
-              Add to Garfield Kart
+              Add to Cart
             </Button>
           </Card.Body>
         </Card>

@@ -45,7 +45,11 @@ function Login(props) {
           <Form.Control as="select" defaultValue="C" onChange={e => setType(e.target.value)}>
             <option value="C">Customer</option>
             <option value="F">Farmer</option>
+<<<<<<< HEAD
             <option value="S">Employeet</option>
+=======
+            <option value="S">Employee</option>
+>>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
           </Form.Control>
         </Form.Group>
         <Button block size="lg" type="submit" disabled={!validateForm()}>

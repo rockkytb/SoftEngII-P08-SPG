@@ -332,6 +332,7 @@ test("Creation of wallet fails,id 1 already exists", () => {
   return expect(dao.createWallet(2)).rejects.toEqual(false);
 });
 
+<<<<<<< HEAD
 //TEST EDIT STATE OF BOOKING
 /*
 test("Edit the state of a booking with non-existent id", ()=>{
@@ -349,3 +350,5 @@ test("Edit the state of a booking with non-existent id", ()=>{
   };
   return expect(dao.editStateBooking(booking)).resolves.toEqual(true);
 });
+=======
+>>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1

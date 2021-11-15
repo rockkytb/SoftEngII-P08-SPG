@@ -26,7 +26,17 @@ function CarouselCustom(props) {
         />
         <Carousel.Caption>
           <h3>Start shopping with us!</h3>
+<<<<<<< HEAD
           <Link to="/login"> <Button> Login </Button> </Link>
+=======
+          {props.logged ? (<>
+            <Button> Show the catalogue </Button></>):(
+            <>  
+            <Link to="/login"> <Button> Login </Button> </Link>
+            </>
+          )}
+          
+>>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -39,8 +49,19 @@ function CarouselCustom(props) {
         />
 
         <Carousel.Caption>
+<<<<<<< HEAD
           <h3>Join us!</h3>
          <Link to="/register"> <Button> Sign up </Button> </Link>
+=======
+        {props.logged ? (<><h3>Browse products!</h3>
+          <Link to="/products"> <Button> Show the catalogue </Button> </Link></>):(
+            <>  
+            <h3>Join us!</h3>
+           <Link to="/register"> <Button> Sign up </Button> </Link>
+            </>
+          )}
+          
+>>>>>>> 0df3fc8ceb17b5ec849a4cc51609178b4417d8e1
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
