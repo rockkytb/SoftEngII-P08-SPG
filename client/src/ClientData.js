@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, Col, Form, Button } from "react-bootstrap";
+import { Modal, Row,Col, Form, Button } from "react-bootstrap";
 
 function ClientData(props) {
   const [id, setId] = useState(props.clients[0].id);
@@ -68,7 +68,13 @@ function ClientData(props) {
             <Form>
               <Form.Group>
                 <Form.Label>Change wallet value:</Form.Label>
-                <Form.Control type="number" min="0" step="0.01" value={newWallet} onChange={ev => setNewWallet(ev.target.value)} />
+                <Row>
+                  <Col md={5} />
+                  <Col classname="md-2">
+                    <Form.Control type="number" min="0" step="0.01" value={newWallet} onChange={ev => setNewWallet(ev.target.value)} />
+                  </Col>
+                  <Col md={5} />
+                </Row>
               </Form.Group>
               <Button variant="primary" onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
                 Submit
