@@ -11,12 +11,12 @@ function SidebarCustom() {
       >
         <Row className="list-group list-group-flush">
           
-          Photo: rotfl
+          Photo: N/A
              
         </Row>
         <Row className="list-group list-group-flush">
           
-          Name: Zeb
+          Name: N/A
              
         </Row>
         <Row className="list-group list-group-flush">

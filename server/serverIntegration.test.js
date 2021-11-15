@@ -347,7 +347,7 @@ describe("Test suite Integration Server", () => {
         {
           id: 1,
           name: "Mele",
-          category: "Froit",
+          category: "Fruit",
           price: 14,
           qty: 5,
           farmer_email: "antonio.bianchi@mail.it",
