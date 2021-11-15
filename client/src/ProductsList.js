@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import {
   CardColumns,
   Card,
@@ -75,6 +76,10 @@ export default function ProductsList(props) {
 
   return (
     <>
+      <Link to="/emp/newOrder">
+          <Button className="mr-2 md-2 ">Go to cart</Button>
+      </Link>
+      
       <Modal show={showView} onHide={handleViewClose}>
         <Modal.Header>
           <Modal.Title>Add to cart</Modal.Title>

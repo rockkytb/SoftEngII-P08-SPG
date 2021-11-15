@@ -247,12 +247,14 @@ function App() {
             exact
             render={() => (
               /**  */
-              <ProductsList className="below-nav main-content"
-                products={products}
-                cart={cart}
-                setCart={(val) => setCart(val)}
-                //farmers = {farmers} //???
-              />
+              <>
+                <ProductsList className="below-nav main-content"
+                  products={products}
+                  cart={cart}
+                  setCart={(val) => setCart(val)}
+                  //farmers = {farmers} //???
+                />
+              </>
             )}
           />
 
