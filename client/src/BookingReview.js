@@ -68,7 +68,9 @@ function BookingReview(props) {
 
   useEffect(() => {
     const getSoldy = async () => {
-      let id = clientID.substring(1);
+      let id;
+      if(clientID)
+        id = clientID.substring(1);
       const response = await fetch("/api/wallet", {
         method: "POST",
         headers: {
