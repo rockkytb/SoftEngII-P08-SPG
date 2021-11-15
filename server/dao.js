@@ -240,7 +240,6 @@ exports.editStateBooking = (booking) => {
     db.run(sql, [booking.New_State, booking.ID_Booking], function (err) {
       if (err) {
         reject(err);
-        return;
       }
       else {
         resolve(true);

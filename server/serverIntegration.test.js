@@ -412,4 +412,27 @@ describe("Test suite Integration Server", () => {
       expect(res.body).toHaveProperty("amount", 20.99);
     });
   });
+
+  describe("edit the state of a booking", () => {
+    it("send a invalid id booking", async () => {
+      const res = await request(app).put("/api/bookingstate").send({
+        id: 0,
+   	    state: "COMPLETED",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error" , "Invalid product id, it must be positive");
+    });
+  });  
+
+  describe("edit the state of a booking", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/bookingstate").send({
+        id: 1,
+   	    state: "COMPLETED",
+      });
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toEqual(true);
+    });
+  });  
+
 });

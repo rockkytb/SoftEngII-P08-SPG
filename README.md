@@ -65,8 +65,8 @@ Edit the state of an existing booking.
 
 Receive a JSON object:
 
-   	{"ID_Booking":1,
-   	"New_State":"DELIVERED"}
+   	{"id":1,
+   	"state":"COMPLETED"}
 
 
 #### GET /api/bookings
