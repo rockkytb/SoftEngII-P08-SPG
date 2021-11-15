@@ -1,42 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\serverIntegration.test.js">
-    <testCase name="Get a wallet fail send a invalid id of client" duration="150"/>
-    <testCase name="Put a qty of a product send a invalid qty" duration="10"/>
-    <testCase name="Put a qty of a product send a invalid id product" duration="6"/>
-    <testCase name="Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="6"/>
-    <testCase name="Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="6"/>
-    <testCase name="Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="5"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="185"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="8"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="573"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="24"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="16"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="11"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="6"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="1148"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="6"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="6"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="5"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="5"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="5"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="5"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="1310"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="273"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="353"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="193">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 401
+Received: 200
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\serverIntegration.test.js:260:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="1023">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 401
+Received: 200
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\serverIntegration.test.js:270:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="802"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="282"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="259"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="777"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="975"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="147">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 3
++ Received  + 3
+
+  Array [
+    Object {
+      "category": "Froit",
+      "farmer_email": "antonio.bianchi@mail.it",
+      "id": 1,
+-     "name": "Mele",
+-     "price": 14,
+-     "qty": 5,
++     "name": "Culo",
++     "price": 1.4,
++     "qty": 7,
+    },
+  ]
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\serverIntegration.test.js:346:29)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="495"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="11"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="754"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="115"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="244"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="6"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="215">
+      <failure message="Error: expect(received).toHaveProperty(path)"><![CDATA[Error: expect(received).toHaveProperty(path)
+
+Matcher error: expected path must be a string or array
+
+Expected has type:  boolean
+Expected has value: true
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\serverIntegration.test.js:434:24)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
   </file>
   <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="192"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="135"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="278"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="496"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="288"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="219"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="137"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="504"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="567"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="174"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="897"/>
-    <testCase name="Test suite DAO get client return success" duration="593"/>
-    <testCase name="Test suite DAO get client return -1 because no email provided" duration="182"/>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="146"/>
-    <testCase name="Test suite DAO get client return success" duration="163"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="122"/>
-    <testCase name="Test suite DAO get client by id return success" duration="154"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="166"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="123"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="258"/>
-    <testCase name="Test suite DAO get farmer return success" duration="249"/>
-    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="133"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="98"/>
-    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="178"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="131"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="217"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="262"/>
-    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="107"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="277"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="122"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="254"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="1029"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="2181">
+      <failure message="Error: SQLITE_BUSY: database is locked"><![CDATA[Error: SQLITE_BUSY: database is locked]]></failure>
+    </testCase>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="388"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="158"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="1038"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="98"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="100"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="743"/>
+    <testCase name="Test suite DAO get client return success" duration="298"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="419"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="99"/>
+    <testCase name="Test suite DAO get client return success" duration="123"/>
+    <testCase name="Test suite DAO get client return success" duration="167"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="471"/>
+    <testCase name="Test suite DAO get client by id return success" duration="135"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="95"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="158"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="278"/>
+    <testCase name="Test suite DAO get farmer return success" duration="425"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="148"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="134"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="140"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="366"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="266"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="1100"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="193"/>
     <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="112"/>
+    <testCase name="get all products success" duration="26">
+      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
+
+- Expected  - 3
++ Received  + 3
+
+  Array [
+    Object {
+      "category": "Froit",
+      "farmer_email": "antonio.bianchi@mail.it",
+      "id": 1,
+-     "name": "Mele",
+-     "price": 14,
+-     "qty": 5,
++     "name": "Culo",
++     "price": 1.4,
++     "qty": 7,
+    },
+  ]
+    at Object.toEqual (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\expect\build\index.js:242:22)
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\dao.test.js:259:48)
+    at Promise.then.completed (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:390:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:315:10)
+    at _callCircusTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:218:40)
+    at _runTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:155:3)
+    at _runTestsForDescribeBlock (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:66:9)
+    at run (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:25:3)
+    at runAndTransformResultsToJestFormat (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:167:21)]]></failure>
+    </testCase>
+    <testCase name="get all bookings success" duration="212">
+      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+  Array [
+    Object {
+      "email": "marco.bianchi@mail.it",
+      "id": 1,
+      "name": "Marco",
+-     "product": "Mele",
++     "product": "Culo",
+      "qty": 3,
+      "state": "PENDING",
+      "surname": "Bianchi",
+    },
+  ]
+    at Object.toEqual (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\expect\build\index.js:242:22)
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\dao.test.js:290:48)
+    at Promise.then.completed (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:390:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:315:10)
+    at _callCircusTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:218:40)
+    at _runTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:155:3)
+    at _runTestsForDescribeBlock (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:66:9)
+    at run (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:25:3)
+    at runAndTransformResultsToJestFormat (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:167:21)]]></failure>
+    </testCase>
+    <testCase name="updating the wallet failed bacause client was not found" duration="3"/>
+    <testCase name="updating the wallet failed bacause client id was not provided" duration="2"/>
+    <testCase name="update of wallet balance was successfull" duration="123"/>
+    <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="121"/>
+    <testCase name="Creation of wallet fails,id 1 already exists" duration="1"/>
+    <testCase name="Edit the state of a booking with non-existent id" duration="96"/>
   </file>
 </testExecutions>

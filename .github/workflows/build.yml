@@ -16,9 +16,16 @@ jobs:
       - name: Install dependencies server
         working-directory: ./server
         run:  npm install
+      - name: Install dependencies client
+        working-directory: ./client
+        run:  npm install
       - name: Install dependencies test
         run:  npm install
-      - name: Run Tests
+      - name: Run Server Tests
+        working-directory: ./server
+        run: npm run test --runInBand
+      - name: Run Client Tests
+        working-directory: ./client
         run: npm run test --runInBand
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

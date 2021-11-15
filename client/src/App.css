@@ -3,7 +3,9 @@
   margin: 0%;
   margin-right: 0px;
   padding: 0%;
-  background-color: gray  ;
+  background-image: url("./immagini/sfondo_cibo.jpg");
+  color: white;
+  
 }
 
 .width100 {
@@ -17,12 +19,14 @@
 
 .below-nav {
   padding-top: 5rem;
-  position: sticky;
   z-index: 10;
 }
 
 
 .main-content{
-  padding-left: 100px;
-  padding-top: 50px;
+  
+    padding: 60px 0;
+    margin: 0 auto;
+    max-width: 320px;
+  
 }

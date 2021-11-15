@@ -1,17 +1,10 @@
-import { Button, Modal, Form, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import React from 'react';
+import { Button, } from "react-bootstrap";
+import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-/*function Register() {
-  return (
-    <>
-      <Redirect to="/register" />
-    </>
-  );
-}*/
-
 function Employee(props) {
-  const [show, setShow] = useState(false);
+  //const [show, setShow] = useState(false);
 
   return (
     <>
@@ -19,11 +12,19 @@ function Employee(props) {
 
       <div className="main-content">
         <Link to="/register">
-          <Button>New Client</Button>
+          <Button className="mr-2 md-2 ">New Client</Button>
         </Link>
 
-        <Link to="newOrder">
-          <Button>Confirm Booking</Button>
+        <Link to="/emp/clientData">
+          <Button className="mr-2 md-2 ">Manage client data</Button>
+        </Link>
+
+        <Link to="/emp/newOrder">
+          <Button className="mr-2 md-2 ">Confirm Booking</Button>
+        </Link>
+
+        <Link to="/emp/confirmOrder">
+          <Button className="mr-2 md-2 ">Set bookings as completed</Button>
         </Link>
       </div>
     </>

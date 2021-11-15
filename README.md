@@ -40,12 +40,12 @@ Example
 return the JSON list of all products. Example
 
 	[
-	{"ID":1,
-	"Name":"Apple",
-	"Category_Id":2,
-	"Price":1.99,
-	"Qty":2,
-	"Farmer_ID":3},
+	{"id":1,
+	"name":"Apple",
+	"category":2,
+	"price":1.99,
+	"qty":2,
+	"farmer_email":3},
 	...]
 
 #### POST /api/bookings
@@ -74,11 +74,15 @@ Receive a JSON object:
 Retrieve the list of all bookings, return a JSON Vector
 
 	[{
-		"ID_Booking":1,
-		"Client_id":2,
-		"State":"PENDING"
-	},...]
-	
+		"id": 1, 
+        "state": "PENDING",
+        "email": "client@gmail.com",
+        "name": "client1",
+        "surname": "clientSurname",
+        "qty": 3,
+        "product": "pro1"
+    },...]
+ 	
 #### POST /api/bookingproduct
 
 Create a new record of a product for a certain booking.
@@ -117,7 +121,7 @@ Return the client ID
 
 	{"idClient":3}
 
-#### GET /api/client
+#### POST /api/client
 
 Get a client by mail. Receives a JSON object with the email
   
@@ -127,7 +131,7 @@ Return the client id if exists, -1 if not exists
 
   	{"id_client":-1}
 
-#### GET /api/wallet
+#### POST /api/wallet
 
 Get the balance of a client.
 
@@ -147,7 +151,7 @@ Edit the wallet balance for a certain client
 	
 Receive a JSON Object with client ID and new balance
   
-	{"Client_id":1,
-	"New_Balance":19.99}
+	{"id":1,
+	"amount":19.99}
 	
 

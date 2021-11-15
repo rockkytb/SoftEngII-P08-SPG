@@ -150,6 +150,20 @@ describe("Test suite DAO", () => {
     );
   }, 10000);
 
+  //TEST DAO FUNCTION GET CLIENTS
+
+  test("get client return success", async () => {
+    const email = "marco.bianchi@mail.it";
+    return expect(dao.getClients()).resolves.toEqual([
+      {
+        id: "C1",
+        username: "marco.bianchi@mail.it",
+        name: "Marco",
+        surname: "Bianchi",
+      },
+    ]);
+  }, 10000);
+
   //TEST GET CLIENT BY ID
   test("get client by id return false because no user with that id exists", () => {
     const id = 12;
@@ -238,4 +252,100 @@ describe("Test suite DAO", () => {
       "S1"
     );
   }, 10000);
+});
+
+//TEST GET ALL PRODUCTS
+test("get all products success", async () => {
+  return expect(dao.getAllProducts()).resolves.toEqual([
+    {
+      id: 1,
+      name: "Mele",
+      category: "Froit",
+      price: 14,
+      qty: 5,
+      farmer_email: "antonio.bianchi@mail.it",
+    },
+  ]);
+}, 10000);
+
+//TEST GET ALL BOOKINGS
+test("get all bookings success", async () => {
+  //the booking table was cleared before running this test so I had to add a record into it manually.
+  const booking = {
+  idClient: 1,
+  state: "PENDING",
+  };
+  dao.createBooking(booking);
+
+  const received = {  
+    id: 1,
+    state: "PENDING",
+    email: "marco.bianchi@mail.it",
+    name: "Marco",
+    surname: "Bianchi",
+    qty: 3,
+    product: "Mele"
+  }
+
+  return expect(dao.getAllBookings()).resolves.toEqual([received]);
+}, 10000);
+
+//TEST UPDATE WALLET BALANCE
+test("updating the wallet failed bacause client was not found", () => {
+  const wallet = {
+    id: 200,
+    amount: 120.99,
+  };
+  return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
+    "err",
+    "CLIENT NOT FOUND"
+  );
+});
+
+test("updating the wallet failed bacause client id was not provided", () => {
+  const wallet = {
+    amount: 120.99,
+  };
+  return expect(dao.updateWallet(wallet)).rejects.toHaveProperty(
+    "err",
+    "CLIENT ID NOT PROVIDED"
+  );
+});
+
+test("update of wallet balance was successfull", () => {
+  const wallet = {
+    id: 1,
+    amount: 120.99,
+  };
+  return expect(dao.updateWallet(wallet)).resolves.toEqual({
+    id: 1,
+    amount: 120.99,
+  });
+});
+
+//TEST CREATE WALLET
+test("Creation of wallet with balance= 0.0 was successfull", () => {
+  return expect(dao.createWallet(2)).resolves.toEqual(true);
+});
+
+test("Creation of wallet fails,id 1 already exists", () => {
+  return expect(dao.createWallet(2)).rejects.toEqual(false);
+});
+
+//TEST EDIT STATE OF BOOKING
+/*
+test("Edit the state of a booking with non-existent id", ()=>{
+  const booking = {
+    ID_Booking: 2,
+    New_State: "COMPLETED",
+  };
+  return expect(dao.editStateBooking(booking).rejects.toEqual(false));
+});
+*/
+test("Edit the state of a booking with non-existent id", ()=>{
+  const booking = {
+    ID_Booking: 1,
+    New_State: "BOOKED",
+  };
+  return expect(dao.editStateBooking(booking)).resolves.toEqual(true);
 });

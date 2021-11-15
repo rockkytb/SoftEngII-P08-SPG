@@ -1,14 +1,15 @@
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavbarCustom from "./NavbarCustom.js";
 import CarouselCustom from "./CarouselCustom.js";
 import { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
 import {
   Switch,
   Route,
   Redirect,
   BrowserRouter as Router,
+  useHistory,
 } from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
@@ -17,67 +18,112 @@ import NewClientForm from "./NewClientForm";
 import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
+import Customer from "./Customer";
+import ClientData from "./ClientData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import BookingAcceptance from "./BookingAcceptance";
 
 function App() {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Culo",
-      category: 42,
-      price: 69.42,
-      quantity: 5,
-      farmerId: 1,
-    },
-    {
-      id: 2,
-      name: "Culone",
-      category: 43,
-      price: 69.42,
-      quantity: 10,
-      farmerId: 1,
-    },
-    {
-      id: 3,
-      name: "Culetto",
-      category: 42,
-      price: 79.42,
-      quantity: 1,
-      farmerId: 2,
-    },
-    {
-      id: 4,
-      name: "Culissimo",
-      category: 44,
-      price: 69.42,
-      quantity: 3,
-      farmerId: 3,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
-
   const [dirty, setDirty] = useState(false);
-
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [user_name, setUserName] = useState("");
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userdata, setUserData] = useState({});
   const [cart, setCart] = useState([]);
+  const [update, setUpdate] = useState(false);
+  const [booking, setBooking] = useState();
+  const history = useHistory();
+  //const [usedMail, setUsedMail] = useState();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const user = await API.getUserInfo();
+        setLoggedIn(true);
+        setUserData(user);
+        setUpdate(true);
+      } catch (err) {
+        
+        setUpdate(true);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const doLogIn = async (credentials, type) => {
+    try {
+
+      const user = await API.logIn(credentials, type);
+      toast.success(`Welcome ${user.username}!`, { position: "top-center" });
+      setUserData(user);
+      setLoggedIn(true);
+    } catch (err) {
+      toast.error("Wrong email or/and password, try again", {
+        position: "top-center",
+      });
+   
+    }
+  };
+
+  const doLogOut = async () => {
+    await API.logOut()
+      .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
+      .catch(() =>
+        toast.error("Error during logout, try again", {
+          position: "top-center",
+        })
+      );
+    setLoggedIn(false);
+    setUserData();
+    setUpdate(true);
+  };
 
   const addUser = (newUser) => {
     const add = async () => {
       const res = await API.addUser(newUser);
-      if (res && res.lastID) {
+      if (res && res.idClient) {
         newUser.id = res.idClient;
         setDirty(true);
       }
     };
-    add().catch((err) => console.log(err));
-    {
-      /* .then(() => setMessage({ msg: 'Successfully added.', type: 'success' })) */
-    }
-    {
-      /*.catch(err => handleErrors(err)) */
-    }
+    add()
+      .then(() => {
+        toast.success("Registration completed", { position: "top-center" });
+      })
+      .catch((err) => {
+        if (err.errors && err.errors[0]) {
+          toast.error(err.errors, { position: "top-center" });
+        } else {
+          toast.error(err.error, { position: "top-center" });
+        }
+      });
+  };
+
+  const newBooking = async (clientID) => {
+    // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
+    // sì però stai calmo
+    const book = async () => {
+      const res = await API.newBooking(clientID);
+      if (res && res.idBooking) {
+        setBooking({ id: res.idBooking });
+        return booking.id;
+      }
+    };
+    book()
+      .then(() =>
+        toast.success("Booking completed", { position: "top-center" })
+      )
+      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+  };
+
+  const newProductBooking = (bid, pid, qty) => {
+    //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
+    const bookingProduct = async () => {
+      const res = await API.newBookingProduct(bid, pid, qty);
+    };
+    bookingProduct();
   };
 
   useEffect(() => {
@@ -113,163 +159,361 @@ function App() {
       }
     };
     getClients();
-  }, []);
+  }, [loggedIn, dirty]);
 
-  const doLogIn = async (credentials, type) => {
+  const getSingleClientByEmail = (email) => {
+    let client;
+    if (clients) {
+      client = clients.find((c) => c.username == email);
+    }
+    return client;
+  };
+
+  const getWalletById = async (id) => {
+    let tmp = 0;
+    const wallet = await API.getWalletById(id.substring(1))
+      .then((wallet) => {
+        tmp = wallet.balance;
+      })
+      .catch((err) => console.log(err));
+    return tmp;
+  };
+
+  const setNewWallet = async (id, amount) => {
     try {
-      console.log("inside doLogin");
-      console.log(credentials);
-      const user = await API.logIn(credentials, type);
-      setUserName(user.name);
-      console.log(user);
-      console.log("loggggin");
-      setLoggedIn(true);
+      const response = await API.setNewWallet(id.substring(1), amount);
+      toast.success("Wallet modified successfully", { position: "top-center" });
+      return response;
     } catch (err) {
-      //toast.error("Wrong email or/and password, try again");
+      toast.error("Error updating the wallet", { position: "top-center" });
       console.log(err);
     }
   };
 
-  const doLogOut = async () => {
-    await API.logOut();
-    setLoggedIn(false);
-    setUserName("");
+  const setCompletedBooking = async (id) => {
+    try {
+      const response = await API.confirmBooking(id);
+      toast.success("Booking completed successfully", {
+        position: "top-center",
+      });
+      //getBookings();
+    } catch (err) {
+      toast.error("Error updating the booking", { position: "top-center" });
+      console.log(err);
+    }
   };
 
   return (
     <div className="page">
-    <Router >
-      
-      <NavbarCustom
-        className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
-        logged={loggedIn}
-        logout={doLogOut}
-      />
-      
-      <Switch>
-        <Route
-          exact
-          path="/login"
-          render={() => (
-            /** LOGIN  */
-            <>
-              {loggedIn ? (
-                <Redirect to="/" />
-              ) : (
-                <Login handleSubmit={doLogIn} />
-              )}{" "}
-            </>
-          )}
+      <Router>
+        <ToastContainer />
+        <NavbarCustom
+          className="width100 navbar navbar-dark navbar-expand-sm bg-success fixed-top"
+          logged={loggedIn}
+          logout={doLogOut}
+          user={userdata}
         />
 
-        <Route
-          path="/products"
-          exact
-          render={() => (
-            /**  */
-            <ProductsList
-              products={products}
-              cart={cart}
-              //farmers = {farmers}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              /** LOGIN  */
+              <>
+                {loggedIn ? (
+                  <>
+                    {userdata.id.charAt(0) === "C" ? (
+                      <Redirect to="/cust" />
+                    ) : (
+                      <>
+                        {userdata.id.charAt(0) === "S" ? (
+                          <Redirect to="/emp" />
+                        ) : (
+                          <Redirect to="/" />
+                        )}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <Login handleSubmit={doLogIn} />
+                )}{" "}
+              </>
+            )}
+          />
 
-        <Route
-          path="/register"
-          exact
-          render={() => (
-            /** REGISTER */
-            <Container>
-              <NewClientForm addUser={addUser} />
-            </Container>
-          )}
-        />
-
-        <Route
-          path="/cust/:id"
-          exact
-          render={({ match }) => (
-            /** Customer page */
-
-            <></>
-          )}
-        />
-
-        <Route
-          path="/cust/:id/cart"
-          exact
-          render={({ match }) => (
-            /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-            <></>
-          )}
-        />
-
-        <Route
-          path="/cust/:id/newOrder"
-          exact
-          render={({ match }) => (
-            /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-            <></>
-          )}
-        />
-
-        <Route
-          path="/emp/:id"
-          exact
-          render={({ match }) => (
-            /** Employee page */
-            <>
-              {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
-              <Employee
-                className="below-nav main-content"
-                cart={cart}
-                clients={clients}
-              />
-            </>
-          )}
-        />
-
-        <Route
-          path="/emp/:id/newOrder"
-          exact
-          render={({ match }) => (
-            /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-            <>
-            {loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}
-              <BookingReview
+          <Route
+            path="/products"
+            exact
+            render={() => (
+              /**  */
+              <ProductsList className="below-nav main-content"
                 products={products}
                 cart={cart}
-                setCart={setCart}
-                clients={clients}
-                className="below-nav main-content"
+                setCart={(val) => setCart(val)}
+                //farmers = {farmers} //???
               />
-            </>
-          )}
-        />
+            )}
+          />
 
-        <Route
-          path="/emp/:id/pagah"
-          exact
-          render={({ match }) => (
-            /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-            <>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/"/>}</>
-          )}
-        />
+          <Route
+            path="/register"
+            exact
+            render={() => (
+              /** REGISTER */
+              <NewClientForm className="below-nav main-content"
+                addUser={addUser}
+                getClientbyEmail={getSingleClientByEmail}
+                /*usedMail={usedMail}
+                setUsedMail={setUsedMail}*/
+              />
+            )}
+          />
 
-        <Route
-          exact
-          path="/home"
-          render={() => (
-            <div className="width100">
-              <CarouselCustom className="customCarousel" />
-            </div>
-          )}
-        />
+          <Route
+            path="/cust"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                          <>
+                            <SidebarCustom />
+                            <Customer className="below-nav main-content"/>
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
 
-        <Route path="/*" render={() => <Redirect to="/home" />} />
-      </Switch>
-    </Router>
+          <Route
+            path="/cust/cart"
+            exact
+            render={() => (
+              /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
+              <>
+                <BookingReview className="below-nav main-content"
+                  cart={cart}
+                  clients={clients}
+                  products={products}
+                  setCart={(val) => setCart(val)}
+                  newBooking={newBooking}
+                  newProductBooking={(bid, pid, qty) =>
+                    newProductBooking(bid, pid, qty)
+                  }
+                  getWallet={(id) => getWalletById(id)}
+                  className="below-nav main-content"
+                />
+              </>
+            )}
+          />
+
+          <Route
+            path="/cust/newOrder"
+            exact
+            render={() => (
+              /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
+              <></>
+            )}
+          />
+
+          <Route
+            path="/emp"
+            exact
+            render={() => (
+              /** Employee page */
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <Employee
+                              className="below-nav main-content"
+                              cart={cart}
+                              clients={clients}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/clientData"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <ClientData className="below-nav main-content"
+                              clients={clients}
+                              //getClient={getSingleClientByEmail}
+                              getWallet={(id) => getWalletById(id)}
+                              changeWallet={setNewWallet}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/newOrder"
+            exact
+            render={() => (
+              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <BookingReview className="below-nav main-content"
+                              cart={cart}
+                              clients={clients}
+                              products={products}
+                              setCart={setCart}
+                              newProductBooking={newProductBooking}
+                              getWallet={getWalletById}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/confirmOrder"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom />
+                            <BookingAcceptance className="below-nav main-content"
+                              bookings={bookings}
+                              confirmBooking={setCompletedBooking}
+                              products={products}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/emp/pagah"
+            exact
+            render={() => (
+              /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
+              //<>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <SidebarCustom className="below-nav" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            exact
+            path="/home"
+            render={() => (
+              <div className="width100">
+                <CarouselCustom className="customCarousel" />
+              </div>
+            )}
+          />
+
+          <Route path="/*" render={() => <Redirect to="/home" />} />
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -45,7 +45,7 @@ async function logIn(credentials, type) {
                 body: JSON.stringify(credentials),
             });
             break;
-        case 'E':
+        case 'S':
             response = await fetch(url + '/shopEmployeeSessions', {
                 method: 'POST',
                 headers: {
@@ -76,8 +76,157 @@ async function logIn(credentials, type) {
 }
 
 async function logOut() {
-    await fetch(url+'/sessions/current', { method: 'DELETE' });
-  }
+    await fetch(url + '/logout', { method: 'DELETE' });
+}
 
-const API = { addUser, logIn, logOut };
+async function getUserInfo() {
+    const response = await fetch(url + '/userinfo');
+    const userInfo = await response.json();
+    if (response.ok) {
+        return userInfo;
+    } else {
+        throw userInfo;  // an object with the error coming from the server
+    }
+}
+
+async function getClientByEmail(email){
+    //Not very secure, should send also employee data to verify identity
+    const response = await fetch(url+"/client", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            { email: email }
+        ),
+    });
+    if(response.ok){
+        return await response.json();
+    }
+    else{
+        throw await response.json();
+    }
+}
+
+async function getWalletById(id){
+    //Not very secure, should send also employee data to verify identity
+    const response = await fetch(url+"/wallet", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            { id: id }
+        ),
+    });
+    const wallet = await response.json();
+    if(response.ok){
+        return wallet;
+    }
+    else{
+        throw wallet;
+    }
+}
+
+async function newBooking(clientId) {
+    //call: POST /api/bookings
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                { idClient: clientId }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+
+}
+
+
+async function newBookingProduct(ID_Booking, ID_Product, Qty) {
+    //call: POST /api/bookingproduct
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookingproduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {ID_Booking: ID_Booking,
+                   ID_Product: ID_Product,
+                 Qty: Qty}
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+async function setNewWallet(id, amount){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/walletbalance', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    amount:amount
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+async function confirmBooking(id){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookingstate', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    state:"COMPLETED"
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
 export default API;

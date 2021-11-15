@@ -21,7 +21,7 @@ function Login(props) {
 
   return (
     <div className="Login">
-      <ToastContainer />
+
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -45,7 +45,7 @@ function Login(props) {
           <Form.Control as="select" defaultValue="C" onChange={e => setType(e.target.value)}>
             <option value="C">Customer</option>
             <option value="F">Farmer</option>
-            <option value="E">Employeet</option>
+            <option value="S">Employeet</option>
           </Form.Control>
         </Form.Group>
         <Button block size="lg" type="submit" disabled={!validateForm()}>

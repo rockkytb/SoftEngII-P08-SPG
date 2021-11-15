@@ -9,21 +9,17 @@ const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
 //Per validazione aggiuntiva
 const validator = require("validator");
+let testmode = false;
+
+//DO NOT DELETE, NEEDED ONLY FOR INTEGRATION TESTS
+const switchTestMode = () => {
+  testmode = true;
+}
+
 
 // init express
 const app = new express();
 const port = 3001;
-
-// set-up the middlewares
-app.use(morgan("dev"));
-app.use(express.json());
-
-// custom middleware: check if a given request is coming from an authenticated user
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-
-  return res.status(401).json({ error: "not authenticated" });
-};
 
 // enable sessions in Express
 app.use(
@@ -135,6 +131,22 @@ passport.deserializeUser((id, done) => {
   }
 });
 
+// set-up the middlewares
+app.use(morgan("dev"));
+app.use(express.json());
+
+// custom middleware: check if a given request is coming from an authenticated user
+const isLoggedIn = (req, res, next) => {
+  if(testmode)
+  {
+    return next();
+  }
+  else{
+  if (req.isAuthenticated()) return next();
+  return res.status(401).json({ error: "not authenticated" });
+  }
+};
+
 //WRITE API HERE
 
 //POST /api/clientSessions FOR LOGIN OF CLIENT
@@ -194,8 +206,8 @@ app.post("/api/shopEmployeeSessions", function (req, res, next) {
   })(req, res, next);
 });
 
-//POST /api/logout
-app.post("/api/logout", (req, res) => {
+//DELETE /api/logout
+app.delete("/api/logout", isLoggedIn, (req, res) => {
   req.logout();
   res.end();
 });
@@ -206,7 +218,7 @@ app.get("/api/userinfo", isLoggedIn, (req, res) => {
 });
 
 //GET /api/clients/
-app.get("/api/clients", isLoggedIn, (req, res) => {
+app.get("/api/clients", isLoggedIn ,(req, res) => {
   dao
     .getClients()
     .then((clients) => {
@@ -219,23 +231,30 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
     });
 });
 
-//GET /api/client/
-app.get("/api/client", isLoggedIn, (req, res) => {
-  dao
-    .getClientByEmail(req.body.email)
-    .then((client) => {
-      res.status(200).json(client);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        errors: `Database errors: ${err}.`,
+//POST /api/client/
+app.post(
+  "/api/client",
+  /*isLoggedIn,*/ (req, res) => {
+    dao
+      .getClientByEmail(req.body.email)
+      .then((client) => {
+        if (client.id === -1) {
+          res.status(200).json(client);
+        } else {
+          res.status(200).json(client);
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: `Database errors: ${err}.`,
+        });
       });
-    });
-});
+  }
+);
 
 //POST /api/bookings
 app.post(
-  "/api/bookings", //isLoggedIn,
+  "/api/bookings", isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
       return res
@@ -290,18 +309,31 @@ app.post(
       password: req.body.password,
     };
 
+    dao.getClientByEmail(client.email).then(
+        (c) => {
+          if(c.id != -1){
+            return res.status(503).json({
+              error: `Error: ${client.email} already used.`,
+            });
+          }
+        }
+    ).catch((err) => {
+      return res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });
+
     let clientId;
 
     try {
       clientId = await dao.createClient(client);
+      await dao.createWallet (clientId);
+      res.status(201).json({ idClient: clientId });
     } catch (err) {
       res.status(503).json({
         error: `Database error during the creation of client: ${client.email}.`,
       });
     }
-
-    //All went fine
-    res.status(201).json({ idClient: clientId });
   }
 );
 
@@ -320,7 +352,7 @@ app.post(
         .status(422)
         .json({ error: `Invalid product id, it must be positive` });
     }
-    
+
     if (!validator.isInt(`${req.body.Qty}`, { min: 1 })) {
       return res
         .status(422)
@@ -328,10 +360,10 @@ app.post(
     }
 
     const bookingProduct = {
-      ID_Booking : req.body.ID_Booking,
-      ID_Product : req.body.ID_Product,
-      Qty : req.body.Qty
-    }
+      ID_Booking: req.body.ID_Booking,
+      ID_Product: req.body.ID_Product,
+      Qty: req.body.Qty,
+    };
 
     let result;
 
@@ -344,13 +376,13 @@ app.post(
     }
 
     //All went fine
-    res.status(201).json( bookingProduct );
+    res.status(201).json(bookingProduct);
   }
-)
+);
 
 //PUT /api/productqty
 app.put(
-  "/api/productqty",  //isLoggedIn,
+  "/api/productqty", //isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.New_Qty}`, { min: 1 })) {
       return res
@@ -364,9 +396,9 @@ app.put(
     }
 
     const product = {
-      ID_Product : req.body.ID_Product,
-      New_Qty : req.body.New_Qty
-    }
+      ID_Product: req.body.ID_Product,
+      New_Qty: req.body.New_Qty,
+    };
 
     let result;
 
@@ -379,13 +411,13 @@ app.put(
     }
 
     //All went fine
-    res.status(201).json( product );
+    res.status(201).json(product);
   }
-)
+);
 
 //PUT /api/bookingstate
 app.put(
-  "/api/bookingstate",  //isLoggedIn,
+  "/api/bookingstate", //isLoggedIn,
   async (req, res) => {
     if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
       return res
@@ -394,9 +426,9 @@ app.put(
     }
 
     const booking = {
-      ID_Booking : req.body.ID_Booking,
-      New_State : req.body.New_State
-    }
+      ID_Booking: req.body.ID_Booking,
+      New_State: req.body.New_State,
+    };
 
     let result;
 
@@ -404,45 +436,92 @@ app.put(
       result = await dao.editStateBooking(booking);
     } catch (err) {
       res.status(503).json({
-        error: `Database error during the put of booking state: ${booking}.`,
+        error: `Database error during the put of booking state: ${result}.`,
       });
     }
 
     //All went fine
-    res.status(201).json( booking );
+    res.status(201).json(result);
   }
-)
+);
 
-//GET /api/wallet
-app.get(
+//POST /api/wallet
+app.post(
   "/api/wallet", //isLoggedIn,
-   async(req, res) => {
-    if (!validator.isInt(`${req.body.Client_id}`, { min: 1 })) {
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
       return res
         .status(422)
         .json({ error: `Invalid booking id, it must be positive` });
     }
-    
+
     let result;
 
     try {
-      result = await dao.getWallet(req.body.Client_id);
+      result = await dao.getWallet(req.body.id);
     } catch (err) {
       res.status(503).json({
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
       });
     }
-
-    const wallet = {Balance: result}
+  
     //All went fine
-    res.status(201).json( wallet );
+    res.status(201).json(result);
+  }
+);
+
+//GET /api/products to get a list of all products
+app.get("/api/products", (req, res) => {
+  dao
+    .getAllProducts()
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+//GET /api/bookings to get a list of all bookings
+app.get("/api/bookings", (req, res) => {
+  dao
+    .getAllBookings()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+//PUT /api/walletbalance to update wallet balance 
+app.put(
+  "/api/walletbalance", /*isLoggedIn,*/
+  async (req, res) => {
+    if (!validator.isFloat(`${req.body.amount}`, { min: 0 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid Balance Amount, it must be positive` });
+    }
+    const wallet = {
+      id: req.body.id,
+      amount: req.body.amount
+    }
+
+    dao
+      .updateWallet(wallet)
+      .then(() => {
+        res.status(200).json(wallet);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
   });
-
-
+  
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
-
-module.exports = server;
+exports.server = server;
+exports.switchTestMode = switchTestMode;

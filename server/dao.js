@@ -126,7 +126,6 @@ exports.getFarmer = (email, password) => {
 exports.getShopEmployee = (email, password) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM SHOP_EMPLOYEE WHERE EMAIL = ?";
-    console.log(email + " " + password);
     db.get(sql, [email], (err, row) => {
       if (err) {
         reject(err);
@@ -194,7 +193,6 @@ exports.createBooking = (booking) => {
 
 // add a new bookingProduct
 exports.createBookingProduct = (bookingProduct) => {
-  console.log(bookingProduct);
   return new Promise((resolve, reject) => {
     const sql =
       "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
@@ -218,38 +216,34 @@ exports.createBookingProduct = (bookingProduct) => {
 
 // edit qty of a product_week
 exports.editQtyProductWeek = (product) => {
-  return new Promise((resolve, reject) =>{
+  return new Promise((resolve, reject) => {
     const sql = "UPDATE PRODUCT_WEEK SET QTY = ? WHERE ID = ?";
-    db.run(sql, [product.New_Qty,product.ID_Product], function (err, row) {
-      if(err){
+    db.run(sql, [product.New_Qty, product.ID_Product], function (err, row) {
+      if (err) {
         reject(err);
         return;
       }
-     else if (row === undefined) {
-      resolve(false);
-     }
-     else {
-       resolve(true);
-     }
+      else if (row === undefined) {
+        resolve(false);
+      }
+      else {
+        resolve(true);
+      }
     });
   });
 };
 
 // edit state of a booking
 exports.editStateBooking = (booking) => {
-  return new Promise((resolve, reject) =>{
+  return new Promise((resolve, reject) => {
     const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
-    db.run(sql, [booking.New_State,booking.ID_Booking], function (err, row) {
-      if(err){
+    db.run(sql, [booking.New_State, booking.ID_Booking], function (err) {
+      if (err) {
         reject(err);
-        return;
       }
-     else if (row === undefined) {
-      resolve(false);
-     }
-     else {
-       resolve(true);
-     }
+      else {
+        resolve(true);
+      }
     });
   });
 };
@@ -281,7 +275,8 @@ exports.getWallet = (id) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        resolve(row.AMOUNT);
+        const amount = { balance: row.AMOUNT }
+        resolve(amount);
       }
     });
   });
@@ -302,6 +297,95 @@ exports.createClient = (client) => {
         resolve(this.lastID);
       }
     );
+  });
+};
+
+
+//get all products
+exports.getAllProducts = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const products = rows.map((e) => ({
+        id: e.ID,
+        name: e.NAME,
+        category: e.categoryName,
+        price: e.PRICE,
+        qty: e.QTY,
+        farmer_email: e.EMAIL
+      }));
+      resolve(products);
+    });
+  });
+};
+
+//get all bookings
+exports.getAllBookings = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM booking b join client c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        email: e.EMAIL,
+        name: e.NAME,
+        surname: e.SURNAME,
+        qty: e.QTY,
+        product: e.productName,
+
+      }));
+      resolve(bookings);
+    });
+  });
+};
+
+// Edit the wallet balance for a certain client
+exports.updateWallet = (wallet) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";
+    db.run(
+      sql, [wallet.amount, wallet.id],
+      function (err) {
+        if (err) {
+          reject(err.message);
+          return;
+        }
+        if(wallet.id === undefined){
+          reject({err:"CLIENT ID NOT PROVIDED"});
+          return;
+        }
+        if (this.changes === 0) {
+          reject({err:"CLIENT NOT FOUND"});
+          return;
+        }
+        else
+          resolve(wallet);
+
+      }
+
+    );
+  });
+};
+
+// Create a new wallet
+exports.createWallet = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)';
+    db.run(sql, [id, 0.00], function (err) {
+      if (err) {
+        reject(false);
+        return;
+      }
+      resolve(true);
+    });
   });
 };
 
@@ -326,6 +410,12 @@ exports.cleanDb = async () => {
       }
     );
 
+    await db.run("DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?", [1], (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       if (err) {
         throw err;
@@ -343,3 +433,4 @@ exports.cleanDb = async () => {
     );
   }
 };
+
