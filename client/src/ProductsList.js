@@ -56,11 +56,13 @@ export default function ProductsList(props) {
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>
-              Price: {product.price}
+              Unit Price: {product.price} €
               <br />
               Category: {product.category}
               <br />
               Available quantity: {product.qty}
+              <br />
+              Farmer : {product.farmer_email}
             </Card.Text>
             <Button
               variant="primary"
@@ -96,7 +98,7 @@ export default function ProductsList(props) {
               <Form>
                 <Form.Group>
                   <Form.Label>{name}</Form.Label>
-                  <Form.Label>Quantity</Form.Label>
+                  <Form.Label>: Quantity</Form.Label>
                   <Form.Control
                     type="number"
                     defaultValue="1"

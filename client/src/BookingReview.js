@@ -95,7 +95,8 @@ function BookingReview(props) {
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
-            <Card.Text>Price: {product.price}</Card.Text>
+            <Card.Text>Unit Price: {product.price} €</Card.Text>
+            <Card.Text>Total Price: {product.price*product.quantity} €</Card.Text>
             <Card.Text>Quantity: {product.quantity}</Card.Text>
             <Button
               variant="primary"
