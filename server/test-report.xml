@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="41"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="19"/>
     <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="12"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="21"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="103"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="95"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="112"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="27"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="156"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="14"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="12"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="238"/>
-    <testCase name="Test suite DAO get client return success" duration="109"/>
-    <testCase name="Test suite DAO get client return -1 because no email provided" duration="21"/>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="22"/>
-    <testCase name="Test suite DAO get client return success" duration="12"/>
-    <testCase name="Test suite DAO get client return success" duration="13"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="35"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="89"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="89"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="89"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="12"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="105"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="22"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="13"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="197"/>
+    <testCase name="Test suite DAO get client return success" duration="93"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="13"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="13"/>
+    <testCase name="Test suite DAO get client return success" duration="11"/>
+    <testCase name="Test suite DAO get client return success" duration="16"/>
     <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="12"/>
     <testCase name="Test suite DAO get client by id return success" duration="11"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="12"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="11"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="110"/>
-    <testCase name="Test suite DAO get farmer return success" duration="128"/>
-    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="14"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="36"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="11"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="12"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="92"/>
+    <testCase name="Test suite DAO get farmer return success" duration="86"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="12"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="11"/>
     <testCase name="Test suite DAO get shop employee return false because no email provided" duration="14"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="12"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="129"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="90"/>
-    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="12"/>
-    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="20"/>
-    <testCase name="get all products success" duration="2"/>
-    <testCase name="get all bookings success" duration="13"/>
-    <testCase name="updating the wallet failed bacause client was not found" duration="3"/>
-    <testCase name="updating the wallet failed bacause client id was not provided" duration="2"/>
-    <testCase name="update of wallet balance was successfull" duration="9"/>
-    <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="10"/>
-    <testCase name="Creation of wallet fails,id 1 already exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="20"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="109"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="99"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="33"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="12"/>
+    <testCase name="get all products success" duration="3"/>
+    <testCase name="get all bookings success" duration="58"/>
+    <testCase name="updating the wallet failed bacause client was not found" duration="2"/>
+    <testCase name="updating the wallet failed bacause client id was not provided" duration="49"/>
+    <testCase name="update of wallet balance was successfull" duration="17"/>
+    <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="12"/>
+    <testCase name="Creation of wallet fails,id 1 already exists" duration="1"/>
   </file>
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="151"/>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="13"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="129"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="11"/>
     <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="30"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="12"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="47"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="17"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="13"/>
-    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="125"/>
-    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="16"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="52"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="6"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="22"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="18"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="18"/>
-    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="105"/>
-    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="95"/>
-    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="19"/>
-    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="16"/>
-    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="18"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="16"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="25"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="13"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="82"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="139"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="8"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="36"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="35"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="13"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="17"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="13"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="103"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="90"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="15"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="21"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="15"/>
     <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="18"/>
-    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="94"/>
-    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="92"/>
-    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="111"/>
-    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="94"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="91"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="93"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="90"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="99"/>
     <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="18"/>
-    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="19"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="8"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="21"/>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="17"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="16"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="15"/>
     <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="15"/>
-    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="24"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="42"/>
   </file>
 </testExecutions>
