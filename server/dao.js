@@ -393,7 +393,7 @@ exports.cleanDb = async () => {
   if (testmode) {
     //Clean the db
 
-    await db.run("DELETE FROM BOOKING_PRODUCTS", (err) => {
+    await db.run("DELETE FROM BOOKING_PRODUCTS WHERE ID_BOOKING != ?",[1], (err) => {
       if (err) {
         throw err;
       }

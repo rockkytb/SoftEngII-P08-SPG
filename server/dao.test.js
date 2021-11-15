@@ -353,7 +353,7 @@ test("Edit the state of a booking with a valid request", ()=>{
 //TEST CREATE BOOKING-PRODUCT
 test("create a row in the booking product table", ()=>{
   const bookingProduct = {
-    ID_Booking: 1,
+    ID_Booking: 2,
     ID_Product: 2,
     Qty: 3
   };

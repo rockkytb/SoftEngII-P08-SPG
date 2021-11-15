@@ -361,8 +361,16 @@ describe("Test suite Integration Server", () => {
   describe("get all bookings success", () => {
     it("test get api/bookings endpoint", async () => {
       const response = await request(app).get("/api/bookings");
-      expect(response.body).toEqual([]);
-      expect(response.body).toHaveLength(0);
+      expect(response.body).toEqual([{  
+        id: 1,
+        state: "PENDING",
+        email: "marco.bianchi@mail.it",
+        name: "Marco",
+        surname: "Bianchi",
+        qty: 3,
+        product: "Mele"
+      }]);
+      expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
     });
   });
