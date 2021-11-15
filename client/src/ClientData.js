@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, Col, Form, Button } from "react-bootstrap";
 
 function ClientData(props) {
-  const [id, setId] = useState();
+  const [id, setId] = useState(props.clients[0].id);
   const [client, setClient] = useState();
   const [wallet, setWallet] = useState();
   const [newWallet, setNewWallet] = useState();
@@ -55,7 +55,7 @@ function ClientData(props) {
               </Col>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="primary" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id == id)) }}>
+              <Button variant="primary" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id === id)) }}>
                 Submit
               </Button>
             </Modal.Footer>
