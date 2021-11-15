@@ -76,6 +76,7 @@ export default function ProductsList(props) {
 
   return (
     <>
+    <div className="below-nav">
       <Link to="/emp/newOrder">
           <Button className="mr-2 md-2 ">Go to cart</Button>
       </Link>
@@ -121,6 +122,7 @@ export default function ProductsList(props) {
       <CardColumns xs={1} md={5}>
         <>{props.products.length ? productsActions() : <></>}</>
       </CardColumns>
+      </div>
     </>
   );
 }
