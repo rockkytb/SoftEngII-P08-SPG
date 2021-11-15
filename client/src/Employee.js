@@ -8,7 +8,7 @@ function Employee(props) {
 
   return (
     <>
-      <h1 className="below-nav main-content">Sono un impiegato lmao</h1>
+      <h1 className="below-nav main-content">I'm an Employee</h1>
 
       <div className="main-content">
         <Link to="/register">

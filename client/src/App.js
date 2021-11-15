@@ -294,7 +294,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
-                            <SidebarCustom />
+                            {/*<SidebarCustom /> */}
                             <Customer className="below-nav main-content"/>
                           </>
                         ) : (
@@ -355,7 +355,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            <SidebarCustom />
+                            {/*<SidebarCustom /> */}
                             <Employee
                               className="below-nav main-content"
                               cart={cart}
@@ -388,7 +388,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            <SidebarCustom />
+                           {/* <SidebarCustom /> */}
                             <ClientData className="below-nav main-content"
                               clients={clients}
                               //getClient={getSingleClientByEmail}
@@ -424,7 +424,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            <SidebarCustom />
+                            {/*<SidebarCustom />*/}
                             <BookingReview className="below-nav main-content"
                               cart={cart}
                               clients={clients}
@@ -461,7 +461,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            <SidebarCustom />
+                            {/*<SidebarCustom />*/}
                             <BookingAcceptance className="below-nav main-content"
                               bookings={bookings}
                               confirmBooking={setCompletedBooking}

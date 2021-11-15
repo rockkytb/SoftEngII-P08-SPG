@@ -7,16 +7,16 @@ function Customer(props) {
 
   return (
     <>
-          <h1 className="below-nav main-content">I'm a customer lul</h1>
+          <h1 className="below-nav main-content">I'm a customer</h1>
 
           <div className="main-content">
-            <Link to="/cust/cart">
+            {/*<Link to="/cust/cart">
               <Button>Go to you cart</Button>
             </Link>
 
             <Link to="/cust/newOrder">
               <Button>Make a new order</Button>
-            </Link>
+            </Link>*/}
           </div>
 
     </>

@@ -390,50 +390,37 @@ exports.createWallet = (id) => {
 
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
+
+  const errTest = (err) =>{
+    if (err) {
+      throw err;
+    }
+  }
   if (testmode) {
     //Clean the db
 
     await db.run("DELETE FROM BOOKING_PRODUCTS WHERE ID_BOOKING != ?",[1], (err) => {
-      if (err) {
-        throw err;
-      }
+      errTest(err);
     });
 
     await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?",[1], (err) => {
-      if (err) {
-        throw err;
-      }
+      errTest(err);
     });
 
-    await db.run(
-      "UPDATE sqlite_sequence SET seq = ? WHERE name = ?",
-      [1, "BOOKING"],
-      (err) => {
-        if (err) {
-          throw err;
-        }
-      }
-    );
 
     await db.run("DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?", [1], (err) => {
-      if (err) {
-        throw err;
-      }
+      errTest(err);
     });
 
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
-      if (err) {
-        throw err;
-      }
+      errTest(err);
     });
 
     await db.run(
-      "UPDATE sqlite_sequence SET seq = ? WHERE name = ?",
-      [1, "CLIENT"],
+      "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ?",
+      [1, "CLIENT","BOOKING"],
       (err) => {
-        if (err) {
-          throw err;
-        }
+        errTest(err);
       }
     );
   }
