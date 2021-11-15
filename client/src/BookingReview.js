@@ -15,10 +15,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function BookingReview(props) {
-  const [clientID, setClientID] = useState();
+  const [clientID, setClientID] = useState(props.clients[0].id);
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
-  const [newBookingID, setNewBooking] = useState(0);
   const [soldy, setSoldy] = useState(0);
 
   async function newBooking(clientID) {
