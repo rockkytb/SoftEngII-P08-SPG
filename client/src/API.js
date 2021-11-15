@@ -178,6 +178,31 @@ async function newBookingProduct(ID_Booking, ID_Product, Qty) {
     });
 }
 
+async function editProductQty(ID_Product, Qty) {
+    //call: PUT /api/productqty
+    return new Promise((resolve, reject) => {
+        fetch(url + '/productqty', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                   ID_Product: ID_Product,
+                 Dec_Qty: Qty}
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
 async function setNewWallet(id, amount){
     return new Promise((resolve, reject) => {
         fetch(url + '/walletbalance', {
@@ -228,5 +253,5 @@ async function confirmBooking(id){
     });
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
 export default API;

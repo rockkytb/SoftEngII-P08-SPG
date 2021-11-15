@@ -122,6 +122,7 @@ function App() {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
       const res = await API.newBookingProduct(bid, pid, qty);
+      const res1 = await API.editProductQty (pid,qty);
     };
     bookingProduct();
   };
