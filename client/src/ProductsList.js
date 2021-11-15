@@ -106,10 +106,10 @@ export default function ProductsList(props) {
                     min="1"
                     max={quantity}
                     onChange={(e) => {
-                      if (e.target.value > 0 && e.target.value <= quantity)
-                        setOrderQuantity(e.target.value);
-                      if (e.target.value < 0) setOrderQuantity(1);
-                      if (e.target.value > quantity) setOrderQuantity(quantity);
+                      if (e.target.value > 0 && e.target.value <= quantity){
+                        setOrderQuantity(e.target.value);}
+                      if (e.target.value < 0) {setOrderQuantity(1);}
+                      if (e.target.value > quantity) {setOrderQuantity(quantity);}
                     }}
                   />
                 </Form.Group>
