@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { act } from "react-dom/test-utils";
+import {
+  Modal,
+  Form,
+  Col,
+  Alert,
+  Card,
+  Button,
+  CardColumns,
+} from "react-bootstrap";
 
 import Enzyme, { shallow, render, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -14,6 +23,7 @@ import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
 import CarouselCustom from './CarouselCustom.js';
 import { Login, LogButton } from './Login.js';
+import { JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
 //IF SOMETHING IS WRONG, TEST WILL FAIL
@@ -32,7 +42,7 @@ test('renders Employee', () => {
 });
 
 test('renders Customer', () => {
-  shallow(<Customer/>);
+  shallow(<Customer />);
 });
 
 test('renders Sidebar', () => {
@@ -48,9 +58,26 @@ test('renders BookingReview', () => {
   { id: "C2", name: "prodi", surname: "Ciccio" }]
   const cart = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
   { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
-  shallow(<BookingReview clients={clients} cart={cart} />);
 
-  let container;
+  const mockOk = jest.fn((id) => { return 20.30 });
+
+  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} />);
+  //console.log(br.debug());
+
+  br.find('#butConf').simulate('click');
+  expect(br.find(Modal).prop('show')).toBe(true);
+
+  br.find('#closeModal').simulate('click');
+  expect(br.find(Modal).prop('show')).toBe(false);
+
+
+  //const mockNot = jest.fn((id) => {return -1})
+
+  /*br.find('#butConf').simulate('click');
+  br.find('#submitModal').simulate('click');*/
+
+
+  /*let container;
 
   beforeEach(() => {
     container = document.createElement('div');
@@ -64,11 +91,7 @@ test('renders BookingReview', () => {
 
   /*act(() => {
     ReactDOM.render(<BookingReview />, container);
-  });
-  BookingReview.call()
-  BookingReview.setShow(true)
-  BookingReview.handleClose()
-  expect(BookingReview.show).toBe(false)*/
+  });*/
 });
 
 test('renders Carousel', () => {
