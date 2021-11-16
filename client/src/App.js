@@ -124,6 +124,7 @@ function App() {
     const bookingProduct = async () => {
       await API.newBookingProduct(bid, pid, qty);
       await API.editProductQty (pid,qty);
+      setBookingsState(true);
     };
     bookingProduct();
     
