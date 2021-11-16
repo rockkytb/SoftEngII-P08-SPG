@@ -34,8 +34,8 @@ function App() {
   const [userdata, setUserData] = useState({});
   const [cart, setCart] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [booking, setBooking] = useState();
-  const history = useHistory();
+  //const [booking, setBooking] = useState();
+  //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
 
   useEffect(() => {
@@ -108,7 +108,7 @@ function App() {
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
-        setBooking({ id: res.idBooking });
+        //setBooking({ id: res.idBooking });
         return res.idBooking;
       }
     };
@@ -122,8 +122,8 @@ function App() {
   const newProductBooking = (bid, pid, qty) => {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
-      const res = await API.newBookingProduct(bid, pid, qty);
-      const res1 = await API.editProductQty (pid,qty);
+      await API.newBookingProduct(bid, pid, qty);
+      await API.editProductQty (pid,qty);
     };
     bookingProduct();
     
@@ -178,7 +178,7 @@ function App() {
 
   const getWalletById = async (id) => {
     let tmp = 0;
-    const wallet = await API.getWalletById(id.substring(1))
+    await API.getWalletById(id.substring(1))
       .then((wallet) => {
         tmp = wallet.balance;
       })
@@ -199,11 +199,11 @@ function App() {
 
   const setCompletedBooking = async (id) => {
     try {
-      const response = await API.confirmBooking(id);
+      await API.confirmBooking(id);
       toast.success("Booking completed successfully", {
         position: "top-center",
       });
-      //getBookings();
+      
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
       console.log(err);
@@ -279,8 +279,7 @@ function App() {
                       <NewClientForm className="below-nav main-content"
                         addUser={addUser}
                         getClientbyEmail={getSingleClientByEmail}
-                        /*usedMail={usedMail}
-                        setUsedMail={setUsedMail}*/
+                        
                         />
                         )}
                     </>)
