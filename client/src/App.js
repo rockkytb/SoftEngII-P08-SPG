@@ -148,12 +148,12 @@ function App() {
         const bookingList = await response.json();
         if (response.ok) {
           setBookings(bookingList);
-          setBookingsState(false);
         }
       };
 
       getProducts();
       getBookings();
+      setBookingsState(false);
     }
   }, [bookingsState]);
 
