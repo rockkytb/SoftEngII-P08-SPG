@@ -365,10 +365,10 @@ app.post(
       Qty: req.body.Qty,
     };
 
-    let result;
+
 
     try {
-      result = await dao.createBookingProduct(bookingProduct);
+      await dao.createBookingProduct(bookingProduct);
     } catch (err) {
       res.status(503).json({
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
@@ -400,10 +400,9 @@ app.put(
       Dec_Qty: req.body.Dec_Qty,
     };
 
-    let result;
 
     try {
-      result = await dao.editQtyProductWeek(product);
+      await dao.editQtyProductWeek(product);
     } catch (err) {
       res.status(503).json({
         error: `Database error during the put of bookingProduct: ${product}.`,
