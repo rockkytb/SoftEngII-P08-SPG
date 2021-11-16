@@ -21,23 +21,12 @@ export default function ProductsList(props) {
       quantity: orderQuantity,
       price: price,
     };
-    let tmp = props.cart.slice(0);
     
-    /*tmp.map((p) => {
-      if (p.id === product.id) p.quantity += product.quantity;
-      update=1;
-    });
-
-    if(update===0)
-      tmp.push(product);
-    */
     props.setCart((oldList) => {
 
         const list = oldList.map((item)=>{
           if (item.id === product.id)
             {
-              console.log("vecchia quantità" + product.quantity);
-              console.log("nuova quantità" + item.quantity);
               update = 1;
               return {
                 id: productId,

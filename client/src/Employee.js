@@ -28,6 +28,9 @@ function Employee(props) {
             <Link to="/emp/confirmOrder">
               <Button className="mr-2 ml-2 md-1 ">Set bookings as completed</Button>
             </Link>
+            <Link to="/products"> 
+                <Button className="mr-2 ml-2 md-1 "> Browse Available products </Button> 
+            </Link>
           </Col>
         </Row>
         
