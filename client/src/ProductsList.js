@@ -21,22 +21,35 @@ export default function ProductsList(props) {
       quantity: orderQuantity,
       price: price,
     };
-    let tmp = props.cart.slice(0);
     
-    tmp.map((p) => {
-      if (p.id === product.id) p.quantity += product.quantity;
-      update=1;
+    props.setCart((oldList) => {
+
+        const list = oldList.map((item)=>{
+          if (item.id === product.id)
+            {
+              update = 1;
+              return {
+                id: productId,
+                name: name,
+                quantity: (product.quantity*1) + (item.quantity *1),
+                price: price,
+              };
+            }
+          else
+          {
+            return item;
+          }
+        });
+        return list;
     });
-
-    if(update===0)
-      tmp.push(product);
-
-    props.setCart(tmp);
-    props.products.forEach((p) => {
+    /*props.products.forEach((p) => {
       if (p.id === product.id) p.qty -= orderQuantity;
-    });
+    });*/
+    if (update === 0){
+      props.setCart(oldList =>{ return [product, ...oldList];});
+    }
     //edit quantity live so that the product is reserved
-
+    
     handleViewClose();
   }
 

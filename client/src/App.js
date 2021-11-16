@@ -124,6 +124,7 @@ function App() {
     const bookingProduct = async () => {
       await API.newBookingProduct(bid, pid, qty);
       await API.editProductQty (pid,qty);
+      setBookingsState(true);
     };
     bookingProduct();
     
@@ -147,12 +148,12 @@ function App() {
         const bookingList = await response.json();
         if (response.ok) {
           setBookings(bookingList);
-          setBookingsState(false);
         }
       };
 
       getProducts();
       getBookings();
+      setBookingsState(false);
     }
   }, [bookingsState]);
 
