@@ -95,7 +95,7 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT
   test("get client return false because no email provided", () => {
-    const email = "marco.bianchi@mail.it";
+    
     return expect(dao.getClient()).resolves.toBe(false);
   });
 
@@ -130,7 +130,7 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT BY EMAIL
   test("get client return -1 because no email provided", () => {
-    const email = "marco.bianchi@mail.it";
+    
     return expect(dao.getClientByEmail()).resolves.toHaveProperty("id", -1);
   });
 
@@ -153,7 +153,7 @@ describe("Test suite DAO", () => {
   //TEST DAO FUNCTION GET CLIENTS
 
   test("get client return success", async () => {
-    const email = "marco.bianchi@mail.it";
+    
     return expect(dao.getClients()).resolves.toEqual([
       {
         id: "C1",
@@ -179,7 +179,7 @@ describe("Test suite DAO", () => {
 
   //TEST GET FARMER
   test("get farmer return false because no email provided", () => {
-    const email = "marco.bianchi@mail.it";
+    
     return expect(dao.getFarmer()).resolves.toBe(false);
   });
 
@@ -215,7 +215,7 @@ describe("Test suite DAO", () => {
 
   //TEST GET SHOP EMPLOYEE
   test("get shop employee return false because no email provided", () => {
-    const email = "marco.bianchi@mail.it";
+    
     return expect(dao.getShopEmployee()).resolves.toBe(false);
   });
 
@@ -271,11 +271,7 @@ test("get all products success", async () => {
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.
-  /*const booking = {
-  idClient: 1,
-  state: "PENDING",
-  };
-  await dao.createBooking(booking);*/
+  
 
   const received = {  
     id: 1,
@@ -333,19 +329,11 @@ test("Creation of wallet fails,id 1 already exists", () => {
 });
 
 //TEST EDIT STATE OF BOOKING
-/*
-test("Edit the state of a booking with non-existent id", ()=>{
-  const booking = {
-    ID_Booking: 2,
-    New_State: "COMPLETED",
-  };
-  return expect(dao.editStateBooking(booking).rejects.toEqual(false));
-});
-*/
+
 test("Edit the state of a booking with a valid request", ()=>{
   const booking = {
     id: 1,
-    state: "BOOKED",
+    state: "COMPLETED",
   };
   return expect(dao.editStateBooking(booking)).resolves.toEqual(true);
 });

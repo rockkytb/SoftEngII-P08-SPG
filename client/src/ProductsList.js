@@ -40,7 +40,7 @@ export default function ProductsList(props) {
     handleViewClose();
   }
 
-  //const handleViewShow = () => setShowView(true);
+  
   const handleViewClose = () => {
     setShowView(false);
     setProductId();

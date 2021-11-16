@@ -12,7 +12,7 @@ function ClientData(props) {
       const getWallet = async () => {
         // call: GET /api/clients
         const response = await props.getWallet(client.id);
-        //const clientList = await response.json();
+        
         setWallet(response);
         setNewWallet(response);
         console.log(wallet);

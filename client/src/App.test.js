@@ -62,7 +62,7 @@ test('renders BookingReview', () => {
   const mockOk = jest.fn((id) => { return 20.30 });
 
   const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} />);
-  //console.log(br.debug());
+  
 
   br.find('#butConf').simulate('click');
   expect(br.find(Modal).prop('show')).toBe(true);
@@ -70,28 +70,6 @@ test('renders BookingReview', () => {
   br.find('#closeModal').simulate('click');
   expect(br.find(Modal).prop('show')).toBe(false);
 
-
-  //const mockNot = jest.fn((id) => {return -1})
-
-  /*br.find('#butConf').simulate('click');
-  br.find('#submitModal').simulate('click');*/
-
-
-  /*let container;
-
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-  });
-
-  /*act(() => {
-    ReactDOM.render(<BookingReview />, container);
-  });*/
 });
 
 test('renders Carousel', () => {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 function Employee(props) {
-  //const [show, setShow] = useState(false);
+  
 
   return (
     <>

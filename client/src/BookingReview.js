@@ -21,13 +21,13 @@ function BookingReview(props) {
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
-  async function newBooking(clientID) {
+  async function newBooking(IDclient) {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
     let tmp = 0;
 
     const book = async () => {
-      const res = await API.newBooking(clientID);
+      const res = await API.newBooking(IDclient);
       if (res && res.idBooking) {
         tmp = res.idBooking;
       }
