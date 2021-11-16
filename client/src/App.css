@@ -1,0 +1,32 @@
+.page {
+  min-height: 100vh;
+  margin: 0%;
+  margin-right: 0px;
+  padding: 0%;
+  background-image: url("./immagini/sfondo_cibo.jpg");
+  color: white;
+  
+}
+
+.width100 {
+  width: 100%;
+}
+
+.navbar {
+  background-color: transparent;
+  z-index: 10;
+}
+
+.below-nav {
+  padding-top: 5rem;
+  z-index: 10;
+}
+
+
+.main-content{
+  
+    padding: 60px 0;
+    margin: 0 auto;
+    max-width: 320px;
+  
+}
