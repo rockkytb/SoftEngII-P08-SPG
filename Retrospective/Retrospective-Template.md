@@ -1,4 +1,4 @@
-TEMPLATE FOR RETROSPECTIVE (Team ##)
+TEMPLATE FOR RETROSPECTIVE (Team P08)
 =====================================
 
 The retrospective should include _at least_ the following
@@ -12,9 +12,9 @@ sections:
 
 ### Macro statistics
 
-- Number of stories committed vs done 
-- Total points committed vs done 
-- Nr of hours planned vs spent (as a team)
+- Number of stories committed vs done : 6 stories commited, 6 done
+- Total points committed vs done : 55 points commited, 55 done
+- Nr of hours planned vs spent (as a team): 
 
 **Remember**  a story is done ONLY if it fits the Definition of Done:
  
@@ -24,6 +24,8 @@ sections:
 - End-to-End tests performed
 
 > Please refine your DoD 
+
+- Usable on the system
 
 ### Detailed statistics
 
