@@ -55,8 +55,8 @@ Frontend -> code is working in a consistent way, integration with backend produc
 - Unit Testing:
   - Total hours estimated (frontend n/a)
   - Total hours spent (frontend n/a)
-  - Nr of automated unit test cases 
-  - Coverage (if available)
+  - Nr of automated unit test cases 71 (to be validate)
+  - Coverage (if available) 80% (to be validate)
 - E2E testing:
   - Total hours estimated (frontend) 10h
   - Total hours spent (frontend) 6h
@@ -78,19 +78,22 @@ Frontend -> code is working in a consistent way, integration with backend produc
 
 - What caused your errors in estimation (if any)?
 (Frontend) We considered only the time estimation for development, not taking into account fixes for unexpected behavior from async calls.
+(Backend) We estimate too low the effort to testing .
 
 - What lessons did you learn (both positive and negative) in this sprint?
 (Frontend) We managed to fix most server calls in a consistent way and we produced useful templates for further development sprints
+(Backend) We know better how to manage the testing and the estimation of the tasks.
 
 - Which improvement goals set in the previous retrospective were you able to achieve? 
 We managed to better organize the sprint and commit a larger number of stories
-(Frontend) Better understanding of git and other tools used during development and testing
+Better understanding of git and other tools used during development and testing
 
 - Which ones you were not able to achieve? Why?
 
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
 (Frontend) Better handling of async server calls, produce a tidier code with comment and help to navigate throgh
+(Backend) Better managing in the team coordination.
 
 > Propose one or two
 Add comments
@@ -98,4 +101,4 @@ Divide functions in logical blocks
 
 
 - One thing you are proud of as a Team!!
-Frontend team is well coordinated both in developing new code and testing, in case of issues/errors help is always offered and it is often useful to speed up fixing.
+The team is well coordinated both in developing new code and testing, in case of issues/errors help is always offered and it is often useful to speed up fixing.
