@@ -53,13 +53,13 @@ Frontend -> code is working in a consistent way, integration with backend produc
 ## QUALITY MEASURES 
 
 - Unit Testing:
-  - Total hours estimated (frontend n/a)
-  - Total hours spent (frontend n/a)
+  - Total hours estimated 15h
+  - Total hours spent 14h
   - Nr of automated unit test cases 71 (to be validate)
-  - Coverage (if available) 80% (to be validate)
+  - Coverage (if available) 73.5%(backend)
 - E2E testing:
-  - Total hours estimated (frontend) 10h
-  - Total hours spent (frontend) 6h
+  - Total hours estimated 10h
+  - Total hours spent  6h
 - Code review 
   - Total hours estimated (frontend) 8h
   - Total hours spent (frontend) 8h
@@ -70,7 +70,7 @@ Frontend -> code is working in a consistent way, integration with backend produc
   - Hours estimated for remediation by SonarQube only for the selected and planned issues n/a
   - Hours spent on remediation n/a
   - debt ratio (as reported by SonarQube under "Measures-Maintainability")
-  - rating for each quality characteristic reported in SonarQube under "Measures" (namely reliability: A, security: A, maintainability: A )
+  - rating for each quality characteristic reported in SonarQube under "Measures" ( reliability: A, security: A, maintainability: A )
   
 
 
@@ -89,7 +89,7 @@ We managed to better organize the sprint and commit a larger number of stories
 Better understanding of git and other tools used during development and testing
 
 - Which ones you were not able to achieve? Why?
-
+estimate the tasks correctly.
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
 (Frontend) Better handling of async server calls, produce a tidier code with comment and help to navigate throgh
