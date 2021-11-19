@@ -1,4 +1,4 @@
-TEMPLATE FOR RETROSPECTIVE (Team ##)
+TEMPLATE FOR RETROSPECTIVE (Team P08)
 =====================================
 
 The retrospective should include _at least_ the following
@@ -66,11 +66,14 @@ Frontend -> code is working in a consistent way, integration with backend produc
 - Technical Debt management:
   - Total hours estimated (frontend) 10h
   - Total hours spent (frontend) 8h
-  - Hours estimated for remediation by SonarQube n/a
-  - Hours estimated for remediation by SonarQube only for the selected and planned issues n/a
-  - Hours spent on remediation n/a
-  - debt ratio (as reported by SonarQube under "Measures-Maintainability")
-  - rating for each quality characteristic reported in SonarQube under "Measures" ( reliability: A, security: A, maintainability: A )
+  - Hours estimated for remediation by SonarQube 9h 21 min
+  - Hours estimated for remediation by SonarQube only for the selected and planned issues 3h 4min
+  - Hours spent on remediation 5h
+  - debt ratio (as reported by SonarQube under "Measures-Maintainability"): 0.4%
+  - rating for each quality characteristic reported in SonarQube under "Measures" ( reliability: A, security: A, maintainability: A ):
+     RELIABILITY A, MAINTAINABILITY A, SECURITY A, SECURITY REVIEW A, COVERAGE 42.5%, DUPLICATIONS 7.2%.
+     
+   N.B. See sonar Readme for major informations
   
 
 
