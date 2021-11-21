@@ -19,7 +19,6 @@ Planned: 49h30m
 Done: 102h40m
 
 
-
 **Remember**  a story is done ONLY if it fits the Definition of Done:
  
 - Unit Tests passing
@@ -30,6 +29,8 @@ Done: 102h40m
 > Please refine your DoD: 
 Backend -> db calls respond in a coherent way, requests and responses to frontend are as expected
 Frontend -> code is working in a consistent way, integration with backend produces expected results, requests and responses are coherent
+
+- Usable on the system
 
 ### Detailed statistics
 
@@ -104,4 +105,6 @@ Divide functions in logical blocks
 
 
 - One thing you are proud of as a Team!!
+
 The team is well coordinated both in developing new code and testing, in case of issues/errors help is always offered and it is often useful to speed up fixing.
+
