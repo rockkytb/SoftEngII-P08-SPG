@@ -35,14 +35,32 @@ function App() {
   const [cart, setCart] = useState([]);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(new Date());
+  const [virtualTime, setVirtualTime] = useState (false);
+  const [timers, setTimers] = useState(); 
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
-
-  //Update date every minute
+  
   useEffect(() => {
-    setInterval(() => setDate(new Date()), 60000);
-  }, []);
+    clearInterval(timers);
+    if(virtualTime){
+      //Adds 40 minutes every 3 seconds
+      setTimers( setInterval(() => setDate ( (oldDate) =>
+        {
+          let d = new Date(oldDate);
+          d.setMinutes (oldDate.getMinutes() +40);
+          return d;
+        }
+      ),3000));
+
+    }
+    else{
+       //Update date every minute if real time enabled
+       setDate(new Date());
+       setTimers(  setInterval(() => setDate(new Date()), 60000));
+    }
+    
+  }, [virtualTime]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -227,6 +245,8 @@ function App() {
           logout={doLogOut}
           user={userdata}
           date={date}
+          virtualTime={virtualTime}
+          setVirtualTime={setVirtualTime}
         />
 
         <Switch>

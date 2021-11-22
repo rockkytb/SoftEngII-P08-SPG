@@ -56,7 +56,7 @@ function NavbarCustom(props) {
       
       
       <Col md = {2} className="d-flex  justify-content-left">
-        <Clock date={props.date}></Clock>
+        <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
 
       <Col md = {6}className="d-flex  justify-content-center">
