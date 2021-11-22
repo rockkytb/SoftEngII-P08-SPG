@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, Navbar, Button, Col } from "react-bootstrap";
 import { PersonCircle, DoorOpenFill, HouseDoorFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
+import Clock from "./Clock.js"
 
 function NavbarCustom(props) {
 
@@ -38,7 +39,7 @@ function NavbarCustom(props) {
   return (
     <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top">
 
-      <Col >
+      <Col md={1}>
         <Button
           className="navbar-toggler"
           type="button"
@@ -52,7 +53,13 @@ function NavbarCustom(props) {
         </Button>
       </Col>
 
-      <Col className="d-flex  justify-content-center">
+      
+      
+      <Col md = {2} className="d-flex  justify-content-left">
+        <Clock date={props.date}></Clock>
+      </Col>
+
+      <Col md = {6}className="d-flex  justify-content-center">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white'}}>
             <h1>Le_Cose SPG s.p.a.</h1>
@@ -60,7 +67,7 @@ function NavbarCustom(props) {
         </NavLink>
       </Col>
 
-      <Col className="navbar-nav ml-md-auto justify-content-end">
+      <Col md ={3} className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link">
           <Link to="/home" style={{color: 'white'}}>
                   <HouseDoorFill size={30}/>

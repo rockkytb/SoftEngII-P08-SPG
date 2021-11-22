@@ -34,9 +34,15 @@ function App() {
   const [userdata, setUserData] = useState({});
   const [cart, setCart] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [date, setDate] = useState(new Date());
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
+
+  //Update date every minute
+  useEffect(() => {
+    setInterval(() => setDate(new Date()), 60000);
+  }, []);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -220,6 +226,7 @@ function App() {
           logged={loggedIn}
           logout={doLogOut}
           user={userdata}
+          date={date}
         />
 
         <Switch>
