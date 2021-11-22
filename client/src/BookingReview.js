@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function BookingReview(props) {
-  const [clientID, setClientID] = useState(props.clients[0].id);
+  const [clientID, setClientID] = useState(props.userdata.id.charAt(0) === "S" ? (props.clients[0].id):(props.userdata.id));
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
@@ -225,7 +225,14 @@ function BookingReview(props) {
               </Button>
             </Col>
             <Col className="md-2 text-left">
-                <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
+                <Button variant="primary" id="butConf" onClick={() => {
+                    if(props.userdata.id.charAt(0) === "S"){
+                      setShow(true);
+                    }
+                    else{
+                      handleCreateBooking();
+                    }
+                    }}>
                   Confirm Booking
                 </Button>
             </Col>
