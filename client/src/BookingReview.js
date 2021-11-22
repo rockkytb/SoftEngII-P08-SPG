@@ -138,7 +138,7 @@ function BookingReview(props) {
           <Button className="mr-2 md-2 ">Back to products</Button>
         </Link>
       </div>
-      <Alert show={showAlert} variant="success">
+      <Alert show={showAlert} variant="danger">
         <Alert.Heading>Are you sure?!</Alert.Heading>
         <p>
           You are going to erase the cart, win32 and possibly destroy the
@@ -146,21 +146,33 @@ function BookingReview(props) {
         </p>
         <hr />
         <div className="d-flex justify-content-end">
-          <Link to="/home">
             <Button
               onClick={() => {
                 props.cart.forEach(product => {
-                  props.products.map((x) => {
-                    if (x.id === product.id) x.qty += product.quantity * 1;
+                  props.setProducts(oldList => {
+                    const list = oldList.map((p) => {
+                      if(product.id === p.id){
+                        return {id: p.id, name: p.name, category: p.category, 
+                          qty: p.qty + product.quantity *(1),
+                          price:p.price, farmer_email:p.farmer_email};
+                      }
+                      else{
+                        return p;
+                      }
+                    });
+                    return list;
                   });
+                  
+                  
                 });
                 
                 props.setCart([]);
+                setShowAlert(false);
               }}
             >
               You may fire when ready.
             </Button>
-          </Link>
+          
         </div>
       </Alert>
       <Modal show={show} onHide={handleClose}>
