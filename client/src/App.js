@@ -44,11 +44,11 @@ function App() {
   useEffect(() => {
     clearInterval(timers);
     if(virtualTime){
-      //Adds 40 minutes every 3 seconds
+      //Adds 3 hours every 3 seconds
       setTimers( setInterval(() => setDate ( (oldDate) =>
         {
           let d = new Date(oldDate);
-          d.setMinutes (oldDate.getMinutes() +40);
+          d.setHours (oldDate.getHours() +3);
           return d;
         }
       ),3000));
