@@ -283,12 +283,32 @@ function App() {
             render={() => (
               /**  */
               <>
-                <ProductsList className="below-nav main-content"
-                  products={products}
-                  cart={cart}
-                  setCart={(val) => setCart(val)}
-                  //farmers = {farmers} //???
-                />
+
+
+                {update ? (
+                    <>
+                        {loggedIn ? (
+                          <>
+                            {userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S") ? (
+                              <>
+                                  <ProductsList className="below-nav main-content"
+                                    products={products}
+                                    cart={cart}
+                                    setCart={(val) => setCart(val)}
+                                    //farmers = {farmers} //???
+                                  />
+                              </>
+                              ) : (
+                                <Redirect to="/home" />
+                              )}
+                          </>
+                        ) : (
+                          <Redirect to="/login" />
+                        )}
+                    </>)
+                    :(<></>)}
+
+              
               </>
             )}
           />
