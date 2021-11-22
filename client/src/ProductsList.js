@@ -43,8 +43,18 @@ export default function ProductsList(props) {
         return list;
     });
 
-    props.products.forEach((p) => {
-      if (p.id === product.id) p.qty -= orderQuantity;
+    props.setProducts(oldList => {
+      const list = oldList.map((p) => {
+        if(product.id === p.id){
+          return {id: p.id, name: p.name, category: p.category, 
+            qty: p.qty - orderQuantity *(1),
+            price:p.price, farmer_email:p.farmer_email};
+        }
+        else{
+          return p;
+        }
+      });
+      return list;
     });
 
     if (update === 0){

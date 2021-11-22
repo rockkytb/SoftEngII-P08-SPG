@@ -292,6 +292,7 @@ function App() {
                               <>
                                   <ProductsList className="below-nav main-content"
                                     products={products}
+                                    setProducts={setProducts}
                                     cart={cart}
                                     setCart={(val) => setCart(val)}
                                     //farmers = {farmers} //???
@@ -452,6 +453,7 @@ function App() {
                               setCart={setCart}
                               clients={clients}
                               products={products}
+                              setProducts={setProducts}
                               newProductBooking={newProductBooking}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}

@@ -105,9 +105,21 @@ function BookingReview(props) {
             <Button
               variant="primary"
               onClick={() => {
-                props.products.map((x) => {
-                  if (x.id === product.id) x.qty += product.quantity * 1;
+
+                props.setProducts(oldList => {
+                  const list = oldList.map((p) => {
+                    if(product.id === p.id){
+                      return {id: p.id, name: p.name, category: p.category, 
+                        qty: p.qty + product.quantity *(1),
+                        price:p.price, farmer_email:p.farmer_email};
+                    }
+                    else{
+                      return p;
+                    }
+                  });
+                  return list;
                 });
+
                 let array = props.cart.filter((p) => p.id !== product.id);
                 props.setCart(array);
               }}
@@ -137,6 +149,12 @@ function BookingReview(props) {
           <Link to="/home">
             <Button
               onClick={() => {
+                props.cart.forEach(product => {
+                  props.products.map((x) => {
+                    if (x.id === product.id) x.qty += product.quantity * 1;
+                  });
+                });
+                
                 props.setCart([]);
               }}
             >
@@ -190,14 +208,14 @@ function BookingReview(props) {
           <Row>
             <Col md={5} />
             <Col classname="md-1">
-            <Button variant="secondary" onClick={() => setShowAlert(true)}>
-              Cancel
-            </Button>
+              <Button variant="secondary" onClick={() => setShowAlert(true)}>
+                Empty Cart
+              </Button>
             </Col>
             <Col classname="md-1">
-                    <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
-                      Confirm
-                    </Button>
+                <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
+                  Confirm Booking
+                </Button>
             </Col>
             <Col md={5} />
           </Row>
