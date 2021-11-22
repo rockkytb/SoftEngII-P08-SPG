@@ -218,18 +218,18 @@ function BookingReview(props) {
       {props.cart.length ? (
 
           <Row>
-            <Col md={5} />
-            <Col classname="md-1">
+            <Col md={4} />
+            <Col className="md-2 text-right">
               <Button variant="secondary" onClick={() => setShowAlert(true)}>
                 Empty Cart
               </Button>
             </Col>
-            <Col classname="md-1">
+            <Col className="md-2 text-left">
                 <Button variant="primary" id="butConf" onClick={() => setShow(true)}>
                   Confirm Booking
                 </Button>
             </Col>
-            <Col md={5} />
+            <Col md={4} />
           </Row>
 
       ):(<><h3 className = "text-center">Your cart is empty</h3></>)}
