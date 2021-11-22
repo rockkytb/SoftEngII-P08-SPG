@@ -42,9 +42,11 @@ export default function ProductsList(props) {
         });
         return list;
     });
-    /*props.products.forEach((p) => {
+
+    props.products.forEach((p) => {
       if (p.id === product.id) p.qty -= orderQuantity;
-    });*/
+    });
+
     if (update === 0){
       props.setCart(oldList =>{ return [product, ...oldList];});
     }
@@ -99,7 +101,7 @@ export default function ProductsList(props) {
     <>
       <div className="below-nav">
       <div class="col-md-12 text-center">
-        <Link to="/emp/newOrder">
+        <Link to={"/newOrder"}>
           <Button className="mr-2 md-2 ">Go to cart</Button>
         </Link>
       </div>

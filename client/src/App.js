@@ -103,6 +103,8 @@ function App() {
     setLoggedIn(false);
     setUserData();
     setUpdate(true);
+    setCart([]);
+    setBookingsState(true);
   };
 
   const addUser = (newUser) => {
@@ -281,10 +283,7 @@ function App() {
             path="/products"
             exact
             render={() => (
-              /**  */
               <>
-
-
                 {update ? (
                     <>
                         {loggedIn ? (
@@ -365,38 +364,6 @@ function App() {
             )}
           />
 
-          <Route
-            path="/cust/cart"
-            exact
-            render={() => (
-              /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
-              <>
-                <BookingReview className="below-nav main-content"
-                  cart={cart}
-                  setCart={setCart}
-                  clients={clients}
-                  products={products}
-                  setCart={(val) => setCart(val)}
-                  newBooking={newBooking}
-                  newProductBooking={(bid, pid, qty) =>
-                    newProductBooking(bid, pid, qty)
-                  }
-                  setBookingsState={setBookingsState}
-                  getWallet={(id) => getWalletById(id)}
-                  className="below-nav main-content"
-                />
-              </>
-            )}
-          />
-
-          <Route
-            path="/cust/newOrder"
-            exact
-            render={() => (
-              /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-              <></>
-            )}
-          />
 
           <Route
             path="/emp"
@@ -468,7 +435,7 @@ function App() {
           />
 
           <Route
-            path="/emp/newOrder"
+            path="/newOrder"
             exact
             render={() => (
               /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
@@ -477,7 +444,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                        {userdata.id && (userdata.id.charAt(0) === "S" || userdata.id.charAt(0) === "C" ) ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview className="below-nav main-content"
@@ -485,7 +452,6 @@ function App() {
                               setCart={setCart}
                               clients={clients}
                               products={products}
-                              setCart={setCart}
                               newProductBooking={newProductBooking}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}

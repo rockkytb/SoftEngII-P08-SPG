@@ -121,6 +121,11 @@ function BookingReview(props) {
   }
   return (
     <div className="below-nav">
+      <div class="col-md-12 text-center">
+        <Link to={"/products"}>
+          <Button className="mr-2 md-2 ">Back to products</Button>
+        </Link>
+      </div>
       <Alert show={showAlert} variant="success">
         <Alert.Heading>Are you sure?!</Alert.Heading>
         <p>
@@ -197,7 +202,7 @@ function BookingReview(props) {
             <Col md={5} />
           </Row>
 
-      ):(<><p className = "text-center">Your cart is empty</p></>)}
+      ):(<><h3 className = "text-center">Your cart is empty</h3></>)}
       
     </div>
   );
