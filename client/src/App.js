@@ -26,6 +26,8 @@ import BookingAcceptance from "./BookingAcceptance";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [futureProducts, setFutureProducts] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [bookingsState, setBookingsState] = useState(true);
@@ -40,7 +42,8 @@ function App() {
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
-  
+
+  //fake clock manager
   useEffect(() => {
     clearInterval(timers);
     if(virtualTime){
@@ -62,6 +65,7 @@ function App() {
     
   }, [virtualTime]);
 
+  //authenticator
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -77,6 +81,7 @@ function App() {
     checkAuth();
   }, []);
 
+  //login
   const doLogIn = async (credentials, type) => {
     try {
 
@@ -92,6 +97,7 @@ function App() {
     }
   };
 
+  //logout
   const doLogOut = async () => {
     await API.logOut()
       .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
@@ -107,6 +113,7 @@ function App() {
     setBookingsState(true);
   };
 
+  //add user to system db
   const addUser = (newUser) => {
     const add = async () => {
       const res = await API.addUser(newUser);
@@ -128,6 +135,7 @@ function App() {
       });
   };
 
+  //deprecated, add booking to system db
   const newBooking = async (clientID) => {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
@@ -145,6 +153,7 @@ function App() {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   };
 
+  //add product of booking to system db
   const newProductBooking = (bid, pid, qty) => {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
@@ -156,6 +165,8 @@ function App() {
     
   };
 
+  //TODO: update function for new products when api is ready
+  //update products, bookings and next week products
   useEffect(() => {
     if(bookingsState){
     const getProducts = async () => {
@@ -164,6 +175,24 @@ function App() {
       const productList = await response.json();
       if (response.ok) {
         setProducts(productList);
+      }
+    };
+
+    const getFutureProducts = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/futureproducts");
+      const productList = await response.json();
+      if (response.ok) {
+        setFutureProducts(productList);
+      }
+    };
+
+    const getDeliveries = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/deliveries");
+      const productList = await response.json();
+      if (response.ok) {
+        setDeliveries(productList);
       }
     };
 
@@ -177,12 +206,15 @@ function App() {
         }
       };
 
+      getFutureProducts();
       getProducts();
       getBookings();
+      getDeliveries()
       setBookingsState(false);
     }
   }, [bookingsState]);
 
+  //get clients
   useEffect(() => {
     const getClients = async () => {
       // call: GET /api/clients
@@ -313,6 +345,70 @@ function App() {
             )}
           />
 
+          <Route
+            path="/trunksproducts"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                    <>
+                        {loggedIn ? (
+                          <>
+                            {userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S") ? (
+                              <>
+                                  <ProductsList className="below-nav main-content"
+                                    products={futureProducts}
+                                    cart={cart}
+                                    //farmers = {farmers} //??? //eh metti mai che serve
+                                  />
+                              </>
+                              ) : (
+                                <Redirect to="/home" />
+                              )}
+                          </>
+                        ) : (
+                          <Redirect to="/login" />
+                        )}
+                    </>)
+                    :(<></>)}
+
+              
+              </>
+            )}
+          />
+
+
+<Route
+            path="/fattorinosimulator"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                    <>
+                        {loggedIn ? (
+                          <>
+                            {userdata.id && (userdata.id.charAt(0) === "S") ? (
+                              <>
+                                  <ProductsList className="below-nav main-content"
+                                    products={deliveries}
+                                    //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                                  />
+                              </>
+                              ) : (
+                                <Redirect to="/home" />
+                              )}
+                          </>
+                        ) : (
+                          <Redirect to="/login" />
+                        )}
+                    </>)
+                    :(<></>)}
+
+              
+              </>
+            )}
+          />
+
           {/* When logged as farmer or customer we shouldn't get here */}
           <Route
             path="/register"
@@ -335,6 +431,8 @@ function App() {
               </>
             )}
           />
+
+          
 
           <Route
             path="/cust"
