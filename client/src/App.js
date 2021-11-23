@@ -37,8 +37,8 @@ function App() {
   const [cart, setCart] = useState([]);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [virtualTime, setVirtualTime] = useState (false);
-  const [timers, setTimers] = useState(); 
+  const [virtualTime, setVirtualTime] = useState(false);
+  const [timers, setTimers] = useState();
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -46,23 +46,24 @@ function App() {
   //fake clock manager
   useEffect(() => {
     clearInterval(timers);
-    if(virtualTime){
+    if (virtualTime) {
       //Adds 3 hours every 3 seconds
-      setTimers( setInterval(() => setDate ( (oldDate) =>
-        {
-          let d = new Date(oldDate);
-          d.setHours (oldDate.getHours() +3);
-          return d;
-        }
-      ),3000));
-
+      setTimers(
+        setInterval(
+          () =>
+            setDate((oldDate) => {
+              let d = new Date(oldDate);
+              d.setHours(oldDate.getHours() + 3);
+              return d;
+            }),
+          3000
+        )
+      );
+    } else {
+      //Update date every minute if real time enabled
+      setDate(new Date());
+      setTimers(setInterval(() => setDate(new Date()), 60000));
     }
-    else{
-       //Update date every minute if real time enabled
-       setDate(new Date());
-       setTimers(  setInterval(() => setDate(new Date()), 60000));
-    }
-    
   }, [virtualTime]);
 
   //authenticator
@@ -74,7 +75,6 @@ function App() {
         setUserData(user);
         setUpdate(true);
       } catch (err) {
-        
         setUpdate(true);
       }
     };
@@ -84,7 +84,6 @@ function App() {
   //login
   const doLogIn = async (credentials, type) => {
     try {
-
       const user = await API.logIn(credentials, type);
       toast.success(`Welcome ${user.username}!`, { position: "top-center" });
       setUserData(user);
@@ -93,7 +92,6 @@ function App() {
       toast.error("Wrong email or/and password, try again", {
         position: "top-center",
       });
-   
     }
   };
 
@@ -158,46 +156,44 @@ function App() {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
       await API.newBookingProduct(bid, pid, qty);
-      await API.editProductQty (pid,qty);
+      await API.editProductQty(pid, qty);
       setBookingsState(true);
     };
     bookingProduct();
-    
   };
 
   //TODO: update function for new products when api is ready
   //update products, bookings and next week products
   useEffect(() => {
-    if(bookingsState){
-    const getProducts = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        setProducts(productList);
-      }
-    };
+    if (bookingsState) {
+      const getProducts = async () => {
+        // call: GET /api/products
+        const response = await fetch("/api/products");
+        const productList = await response.json();
+        if (response.ok) {
+          setProducts(productList);
+        }
+      };
 
-    const getFutureProducts = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/futureproducts");
-      const productList = await response.json();
-      if (response.ok) {
-        setFutureProducts(productList);
-      }
-    };
+      const getFutureProducts = async () => {
+        // call: GET /api/products
+        const response = await fetch("/api/futureproducts");
+        const productList = await response.json();
+        if (response.ok) {
+          setFutureProducts(productList);
+        }
+      };
 
-    const getDeliveries = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/deliveries");
-      const productList = await response.json();
-      if (response.ok) {
-        setDeliveries(productList);
-      }
-    };
+      const getDeliveries = async () => {
+        // call: GET /api/products
+        const response = await fetch("/api/deliveries");
+        const productList = await response.json();
+        if (response.ok) {
+          setDeliveries(productList);
+        }
+      };
 
-    const getBookings = async () => {
-      
+      const getBookings = async () => {
         // call: GET /api/bookings
         const response = await fetch("/api/bookings");
         const bookingList = await response.json();
@@ -209,7 +205,7 @@ function App() {
       getFutureProducts();
       getProducts();
       getBookings();
-      getDeliveries()
+      getDeliveries();
       setBookingsState(false);
     }
   }, [bookingsState]);
@@ -262,7 +258,6 @@ function App() {
       toast.success("Booking completed successfully", {
         position: "top-center",
       });
-      
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
       console.log(err);
@@ -317,30 +312,33 @@ function App() {
             render={() => (
               <>
                 {update ? (
-                    <>
-                        {loggedIn ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
-                            {userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S") ? (
-                              <>
-                                  <ProductsList className="below-nav main-content"
-                                    products={products}
-                                    setProducts={setProducts}
-                                    cart={cart}
-                                    setCart={(val) => setCart(val)}
-                                    //farmers = {farmers} //???
-                                  />
-                              </>
-                              ) : (
-                                <Redirect to="/home" />
-                              )}
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={products}
+                              setProducts={setProducts}
+                              cart={cart}
+                              setCart={(val) => setCart(val)}
+                              //farmers = {farmers} //???
+                            />
                           </>
                         ) : (
-                          <Redirect to="/login" />
+                          <Redirect to="/home" />
                         )}
-                    </>)
-                    :(<></>)}
-
-              
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -351,60 +349,63 @@ function App() {
             render={() => (
               <>
                 {update ? (
-                    <>
-                        {loggedIn ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
-                            {userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S") ? (
-                              <>
-                                  <ProductsList className="below-nav main-content"
-                                    products={futureProducts}
-                                    cart={cart}
-                                    //farmers = {farmers} //??? //eh metti mai che serve
-                                  />
-                              </>
-                              ) : (
-                                <Redirect to="/home" />
-                              )}
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={futureProducts}
+                              cart={cart}
+                              //farmers = {farmers} //??? //eh metti mai che serve
+                            />
                           </>
                         ) : (
-                          <Redirect to="/login" />
+                          <Redirect to="/home" />
                         )}
-                    </>)
-                    :(<></>)}
-
-              
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
 
-
-<Route
+          <Route
             path="/fattorinosimulator"
             exact
             render={() => (
               <>
                 {update ? (
-                    <>
-                        {loggedIn ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            {userdata.id && (userdata.id.charAt(0) === "S") ? (
-                              <>
-                                  <ProductsList className="below-nav main-content"
-                                    products={deliveries}
-                                    //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
-                                  />
-                              </>
-                              ) : (
-                                <Redirect to="/home" />
-                              )}
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={deliveries}
+                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                            />
                           </>
                         ) : (
-                          <Redirect to="/login" />
+                          <Redirect to="/home" />
                         )}
-                    </>)
-                    :(<></>)}
-
-              
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
@@ -416,23 +417,26 @@ function App() {
             render={() => (
               <>
                 {update ? (
-                    <>
-                      { loggedIn && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "F")  ? 
-                        (<Redirect to="/home" />):(
+                  <>
+                    {loggedIn &&
+                    (userdata.id.charAt(0) === "C" ||
+                      userdata.id.charAt(0) === "F") ? (
+                      <Redirect to="/home" />
+                    ) : (
                       /** REGISTER */
-                      <NewClientForm className="below-nav main-content"
+                      <NewClientForm
+                        className="below-nav main-content"
                         addUser={addUser}
                         getClientbyEmail={getSingleClientByEmail}
-                        
-                        />
-                        )}
-                    </>)
-                    :(<></>)}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
-
-          
 
           <Route
             path="/cust"
@@ -446,7 +450,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Customer className="below-nav main-content"/>
+                            <Customer className="below-nav main-content" />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -462,7 +466,6 @@ function App() {
               </>
             )}
           />
-
 
           <Route
             path="/emp"
@@ -509,8 +512,9 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                           {/* <SidebarCustom /> */}
-                            <ClientData className="below-nav main-content"
+                            {/* <SidebarCustom /> */}
+                            <ClientData
+                              className="below-nav main-content"
                               clients={clients}
                               //getClient={getSingleClientByEmail}
                               getWallet={(id) => getWalletById(id)}
@@ -543,10 +547,13 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {userdata.id && (userdata.id.charAt(0) === "S" || userdata.id.charAt(0) === "C" ) ? (
+                        {userdata.id &&
+                        (userdata.id.charAt(0) === "S" ||
+                          userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
-                            <BookingReview className="below-nav main-content"
+                            <BookingReview
+                              className="below-nav main-content"
                               cart={cart}
                               setCart={setCart}
                               userdata={userdata}
@@ -586,7 +593,8 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom />*/}
-                            <BookingAcceptance className="below-nav main-content"
+                            <BookingAcceptance
+                              className="below-nav main-content"
                               bookings={bookings}
                               confirmBooking={setCompletedBooking}
                               products={products}
@@ -643,7 +651,7 @@ function App() {
             path="/home"
             render={() => (
               <div className="width100">
-                <CarouselCustom className="customCarousel" logged = {loggedIn} />
+                <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
           />
