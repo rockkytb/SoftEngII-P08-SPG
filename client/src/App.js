@@ -23,6 +23,7 @@ import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
+import CheckPending from "./CheckPending";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -137,6 +138,7 @@ function App() {
   const newBooking = async (clientID) => {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
+    // ora sono sordo
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
@@ -316,8 +318,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
@@ -325,7 +327,7 @@ function App() {
                               setProducts={setProducts}
                               cart={cart}
                               setCart={(val) => setCart(val)}
-                              //farmers = {farmers} //???
+                            //farmers = {farmers} //???
                             />
                           </>
                         ) : (
@@ -353,14 +355,14 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
                               products={futureProducts}
                               cart={cart}
-                              //farmers = {farmers} //??? //eh metti mai che serve
+                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
                             />
                           </>
                         ) : (
@@ -392,7 +394,7 @@ function App() {
                             <ProductsList
                               className="below-nav main-content"
                               products={deliveries}
-                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
                             />
                           </>
                         ) : (
@@ -419,8 +421,8 @@ function App() {
                 {update ? (
                   <>
                     {loggedIn &&
-                    (userdata.id.charAt(0) === "C" ||
-                      userdata.id.charAt(0) === "F") ? (
+                      (userdata.id.charAt(0) === "C" ||
+                        userdata.id.charAt(0) === "F") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
@@ -538,6 +540,40 @@ function App() {
           />
 
           <Route
+            path="/emp/pending"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            {/* <SidebarCustom /> */}
+                            <CheckPending
+                              className="below-nav main-content"
+                              bookings={bookings}
+                              products={products}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
             path="/newOrder"
             exact
             render={() => (
@@ -548,8 +584,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "S" ||
-                          userdata.id.charAt(0) === "C") ? (
+                          (userdata.id.charAt(0) === "S" ||
+                            userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview
