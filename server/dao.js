@@ -200,6 +200,49 @@ exports.getShopEmployeeById = (id) => {
   });
 };
 
+//get Manager
+exports.getManager = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM MANAGER WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = {
+          id: `M${row.ID}`,
+          username: row.EMAIL,
+          name: row.NAME,
+          surname: row.SURNAME,
+        };
+
+        bcrypt.compare(password, row.PASSWORD).then((result) => {
+          if (result) resolve(user);
+          else resolve(false);
+        });
+      }
+    });
+  });
+};
+
+//get Manager by Id
+exports.getManagerById = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM MANAGER WHERE ID = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `M${row.ID}`, username: row.EMAIL };
+        resolve(user);
+      }
+    });
+  });
+};
+
 // add a new booking
 exports.createBooking = (booking) => {
   return new Promise((resolve, reject) => {
