@@ -271,7 +271,7 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  //TEST GET /api/client
+  //TEST GET /api/clients
   describe("Get clients success", () => {
     it("ask the list of clients", async () => {
       const res = await request(app).get("/api/clients");
@@ -282,6 +282,28 @@ describe("Test suite Integration Server", () => {
           username: "marco.bianchi@mail.it",
           name: "Marco",
           surname: "Bianchi",
+        },
+      ]);
+    });
+  });
+
+  //TEST GET /api/categories
+  describe("Get categories success", () => {
+    it("ask the list of categories", async () => {
+      const res = await request(app).get("/api/categories");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual([
+        {
+          id: "1",
+          name: "Fruit",
+        },
+        {
+          id: "2",
+          name: "spezie",
+        },
+        {
+          id: "3",
+          name: "posions",
         },
       ]);
     });
