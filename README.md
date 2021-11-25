@@ -110,7 +110,7 @@ get all categories
 retrieves all the bookings with state = PENDINGCANCELATION, return a JSON Vector
 
     [{
-    	"id": 1,
+    	"id": 2,
         "state": "PENDINGCANCELATION",
         "email": "client@gmail.com",
         "name": "client1",

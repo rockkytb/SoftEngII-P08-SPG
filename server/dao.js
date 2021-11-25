@@ -391,7 +391,7 @@ exports.createWallet = (id) => {
 // Get all bookings with PendingCancelation state
 exports.getBookingsStatePendingCancelation = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT b.ID_BOOKING, b.CLIENT_ID, b.STATE FROM BOOKING b WHERE STATE = 'PENDINGCANCELATION'";
+    const sql = "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE STATE = 'PENDINGCANCELATION'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -399,9 +399,13 @@ exports.getBookingsStatePendingCancelation = () => {
       }
       
       const bookings = rows.map((e) => ({
-        ID_BOOKING: e.ID_BOOKING,
-        CLIENT_ID: e.CLIENT_ID,
-        STATE: e.STATE,
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        email: e.EMAIL,
+        name: e.nameClient,
+        surname: e.SURNAME,
+        qty: e.QTY,
+        product: e.nameProduct
       }));
 
       resolve(bookings);
