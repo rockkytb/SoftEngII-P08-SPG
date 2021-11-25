@@ -13,6 +13,10 @@
 
 Login of clients
 
+#### POST /api/managerSessions
+
+Login of managers
+
 #### POST /api/famerSessions
 
 Login of farmers

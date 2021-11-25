@@ -54,6 +54,24 @@ passport.use(
 );
 
 passport.use(
+  "manager-local",
+  new LocalStrategy(function (username, password, done) {
+    dao
+      .getManager(username, password)
+      .then((user) => {
+        if (!user)
+          return done(null, false, {
+            message: "Incorrect username and/or password",
+          });
+        return done(null, user);
+      })
+      .catch((err) => {
+        return done(err);
+      });
+  })
+);
+
+passport.use(
   "farmer-local",
   new LocalStrategy(function (username, password, done) {
     dao
@@ -118,6 +136,16 @@ passport.deserializeUser((id, done) => {
         done(err, null);
       });
   }
+  if (type === "M") {
+    dao
+      .getManagerById(identifier)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err, null);
+      });
+  }
   if (type === "S") {
     dao
       .getShopEmployeeById(identifier)
@@ -149,6 +177,25 @@ const isLoggedIn = (req, res, next) => {
 //POST /api/clientSessions FOR LOGIN OF CLIENT
 app.post("/api/clientSessions", function (req, res, next) {
   passport.authenticate("client-local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).json(info);
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+//POST /api/managerSessions FOR LOGIN OF CLIENT
+app.post("/api/managerSessions", function (req, res, next) {
+  passport.authenticate("manager-local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
       // display wrong login messages
