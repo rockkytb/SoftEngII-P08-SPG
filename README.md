@@ -162,7 +162,7 @@ return the JSON list of all products from PRODUCT EXPECTED according to the id o
 
 ### POST /api/farmers/:farmerid/products/
 
-INSERT into Product_WEEK by receiving a product confirmed by farmer
+INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 reciving a json object
 {
 {"id":1,
@@ -171,11 +171,11 @@ reciving a json object
 "price":1.99,
 "qty":2,
 "farmer_id":3
-"state":}
+"state": "CONFIRMED"}
 
 #### GET /api/farmers/:farmerid/products
 
-return the JSON list of all products of a particular farmer from PRODUCT_WEEK table. Example
+return the JSON list of all products of a particular farmer in state= CONFIRMED from PRODUCT_WEEK table. Example
 
     [
     {"id":1,
