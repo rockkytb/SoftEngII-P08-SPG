@@ -516,6 +516,22 @@ app.put(
         res.status(500).json(error);
       });
   });
+
+  
+// GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
+ app.get(
+  "/api/bookingsPendingCancelation", /*isLoggedIn,*/
+  async (req, res) => {
+
+    dao
+      .getBookingsStatePendingCancelation()
+      .then((bookings) => {
+        res.status(200).json(bookings);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  });
   
 // activate the server
 const server = app.listen(port, () => {

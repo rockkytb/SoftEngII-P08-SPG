@@ -388,6 +388,27 @@ exports.createWallet = (id) => {
   });
 };
 
+// Get all bookings with PendingCancelation state
+exports.getBookingsStatePendingCancelation = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT b.ID_BOOKING, b.CLIENT_ID, b.STATE FROM BOOKING b WHERE STATE = 'PENDINGCANCELATION'";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      
+      const bookings = rows.map((e) => ({
+        ID_BOOKING: e.ID_BOOKING,
+        CLIENT_ID: e.CLIENT_ID,
+        STATE: e.STATE,
+      }));
+
+      resolve(bookings);
+    });
+  });
+};
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
 

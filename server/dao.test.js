@@ -347,3 +347,19 @@ test("create a row in the booking product table", ()=>{
   };
   return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(true);
 });
+
+
+
+
+//TEST GET ALL BOOKINGS WITH PENDINGCANCELATION STATE
+test("get all bookings with pendingcancelation state", async () => {
+  
+  const received = [{  
+    ID_BOOKING: 1,
+    CLIENT_ID: 1,
+    STATE: "PENDINGCANCELATION"
+  }
+]
+
+  return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual([received]);
+});

@@ -443,4 +443,21 @@ describe("Test suite Integration Server", () => {
     });
   });  
 
+  
+//TEST NON FUNZIONANTE
+describe("get all bookings with PENDINGCANCELATION state", () =>{
+  it("test /api/bookingsPendingCancelation endpoint", async () => {
+    const res = await request(app).get("/api/bookingsPendingCancelation");
+    expect(res.body).toEqual([
+      {
+        ID_BOOKING: 1,
+        CLIENT_ID: 1,
+        STATE: "PENDINGCANCELATION"
+      }
+    ]);
+    expect(res.body).toHaveLength(1);
+    expect(res.statusCode).toBe(200);
+  })
+})
+
 });
