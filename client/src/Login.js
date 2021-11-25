@@ -46,6 +46,7 @@ function Login(props) {
             <option value="C">Customer</option>
             <option value="F">Farmer</option>
             <option value="S">Employee</option>
+            <option value="M">Manager</option>
           </Form.Control>
         </Form.Group>
         <Button block size="lg" type="submit" disabled={!validateForm()}>
