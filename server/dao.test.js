@@ -95,7 +95,6 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT
   test("get client return false because no email provided", () => {
-    
     return expect(dao.getClient()).resolves.toBe(false);
   });
 
@@ -130,7 +129,6 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT BY EMAIL
   test("get client return -1 because no email provided", () => {
-    
     return expect(dao.getClientByEmail()).resolves.toHaveProperty("id", -1);
   });
 
@@ -153,13 +151,31 @@ describe("Test suite DAO", () => {
   //TEST DAO FUNCTION GET CLIENTS
 
   test("get client return success", async () => {
-    
     return expect(dao.getClients()).resolves.toEqual([
       {
         id: "C1",
         username: "marco.bianchi@mail.it",
         name: "Marco",
         surname: "Bianchi",
+      },
+    ]);
+  }, 10000);
+
+  //TEST DAO FUNCTION GET CATEGORIES
+
+  test("get categories return success", async () => {
+    return expect(dao.getCategories()).resolves.toEqual([
+      {
+        id: "1",
+        name: "Fruit",
+      },
+      {
+        id: "2",
+        name: "spezie",
+      },
+      {
+        id: "3",
+        name: "posions",
       },
     ]);
   }, 10000);
@@ -179,7 +195,6 @@ describe("Test suite DAO", () => {
 
   //TEST GET FARMER
   test("get farmer return false because no email provided", () => {
-    
     return expect(dao.getFarmer()).resolves.toBe(false);
   });
 
@@ -215,7 +230,6 @@ describe("Test suite DAO", () => {
 
   //TEST GET SHOP EMPLOYEE
   test("get shop employee return false because no email provided", () => {
-    
     return expect(dao.getShopEmployee()).resolves.toBe(false);
   });
 
@@ -271,17 +285,16 @@ test("get all products success", async () => {
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.
-  
 
-  const received = {  
+  const received = {
     id: 1,
     state: "COMPLETED",
     email: "marco.bianchi@mail.it",
     name: "Marco",
     surname: "Bianchi",
     qty: 3,
-    product: "Mele"
-  }
+    product: "Mele",
+  };
 
   return expect(dao.getAllBookings()).resolves.toEqual([received]);
 }, 10000);
@@ -330,7 +343,7 @@ test("Creation of wallet fails,id 1 already exists", () => {
 
 //TEST EDIT STATE OF BOOKING
 
-test("Edit the state of a booking with a valid request", ()=>{
+test("Edit the state of a booking with a valid request", () => {
   const booking = {
     id: 1,
     state: "COMPLETED",
@@ -339,49 +352,52 @@ test("Edit the state of a booking with a valid request", ()=>{
 });
 
 //TEST CREATE BOOKING-PRODUCT
-test("create a row in the booking product table", ()=>{
+test("create a row in the booking product table", () => {
   const bookingProduct = {
     ID_Booking: 2,
     ID_Product: 2,
-    Qty: 3
+    Qty: 3,
   };
-  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(true);
+  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(
+    true
+  );
 });
-
-
-
-
+/*
 //TEST GET ALL BOOKINGS WITH PENDINGCANCELATION STATE
 test("get all bookings with pendingcancelation state", async () => {
-  
-  const received = [{  
-    ID_BOOKING: 1,
-    CLIENT_ID: 1,
-    STATE: "PENDINGCANCELATION"
-  }
-]
+  const received = [
+    {
+      ID_BOOKING: 1,
+      CLIENT_ID: 1,
+      STATE: "PENDINGCANCELATION",
+    },
+  ];
 
-  return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual([received]);
-});
+  return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual([
+    received,
+  ]);
+});*/
 
 test("Insert a new Product expected without a field category", () => {
   const parameter = {
-    name:"Apple",
-    price:1.99,
-    qty:2,
-    farmer_id:3
-  }
-  return expect(dao.insertTupleProductExpected(parameter)).rejects.toEqual(false);
+    name: "Apple",
+    price: 1.99,
+    qty: 2,
+    farmer_id: 3,
+  };
+  return expect(dao.insertTupleProductExpected(parameter)).rejects.toEqual(
+    false
+  );
 });
-
+/*
 //sistemare clear DB per poter rendere il test ripetibile
 test("Insert a new Product expected", () => {
   const parameter = {
-    name:"Apple",
-    category:2,
-    price:1.99,
-    qty:2,
-    farmer_id:3
-  }
+    name: "Apple",
+    category: 2,
+    price: 1.99,
+    qty: 2,
+    farmer_id: 3,
+  };
   return expect(dao.insertTupleProductExpected(parameter)).resolves.toEqual(11);
-});
+});*/
