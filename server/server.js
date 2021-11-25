@@ -535,6 +535,19 @@ app.get("/api/products", (req, res) => {
     });
 });
 
+//GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
+app.get("/api/products/farmers/:id", (req, res) => {
+  const id = req.params.id;
+  dao
+    .getAllConfirmedProductsForFarmer(id)
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //GET /api/bookings to get a list of all bookings
 app.get("/api/bookings", (req, res) => {
   dao
