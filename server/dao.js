@@ -385,6 +385,30 @@ exports.getAllProducts = () => {
   });
 };
 
+//get all products in state = CONFIRMED of a particular farmer from PRODUCT_WEEK table
+exports.getAllConfirmedProductsForFarmer = (farmerId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=\"CONFIRMED\"";
+    db.all(sql,[farmerId], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const products = rows.map((e) => ({
+        id: e.ID,
+        name: e.NAME,
+        category: e.categoryName,
+        price: e.PRICE,
+        qty: e.QTY,
+        farmer_email: e.EMAIL,
+      }));
+      resolve(products);
+    });
+  });
+};
+
+
 //get all bookings
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
