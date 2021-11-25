@@ -547,6 +547,19 @@ app.get("/api/bookings", (req, res) => {
     });
 });
 
+//GET /api/bookings/clients/{id} to get a list of all bookings for a particular cllient
+app.get("/api/bookings/clients/:id", (req, res) => {
+  const id = req.params.id;
+  dao
+    .getAllBookingsForClient(id)
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //PUT /api/walletbalance to update wallet balance
 app.put("/api/walletbalance" /*isLoggedIn,*/, async (req, res) => {
   if (!validator.isFloat(`${req.body.amount}`, { min: 0 })) {
