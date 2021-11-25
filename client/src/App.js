@@ -21,6 +21,7 @@ import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
 import Farmer from "./Farmer";
+import Manager from "./Manager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -303,7 +304,14 @@ function App() {
                                 <Redirect to="/farmer" />
                               ) : (
       
-                                    <Redirect to="/" />
+                                <>
+                                  {userdata.id.charAt(0) === "M" ? (
+                                    <Redirect to="/manager" />
+                                  ) : (
+          
+                                        <Redirect to="/" />
+                                  )}
+                                </>
                               )}
                               </>
                         )}
@@ -441,6 +449,35 @@ function App() {
                         getClientbyEmail={getSingleClientByEmail}
                       />
                     )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+        <Route
+            path="/manager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Manager className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
                   </>
                 ) : (
                   <></>
