@@ -124,7 +124,7 @@ retrieves all the bookings with state = PENDINGCANCELATION, return a JSON Vector
         "product": "pro1"
     },...]
 
-#### POST /api/bookings_mod
+#### POST /api/bookings_mode
 
 Create a new booking mode
 
