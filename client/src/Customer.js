@@ -7,7 +7,7 @@ function Customer(props) {
 
   return (
     <>
-          <h1 className="below-nav main-content">I'm a customer</h1>
+          <h1 className="below-nav main-content text-center">I'm a customer</h1>
 
           <Container fluid className = "text-center">
             <Row md={12}>
