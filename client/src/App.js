@@ -15,6 +15,7 @@ import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
 import NewClientForm from "./NewClientForm";
+import DeliveryForm from "./DeliveryForm";
 import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
@@ -40,6 +41,7 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
   const [timers, setTimers] = useState();
+  const [deliveryMode,setDeliveryMode] = useState(false);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -557,6 +559,60 @@ function App() {
                               products={products}
                               className="below-nav main-content"
                             />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/deliveryMode"
+            exact
+            render={() => (
+              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "S" ||
+                            userdata.id.charAt(0) === "C") ? (
+                          <>
+                              {deliveryMode ? (<>{/*FORM CRISTIAN*/}</>)
+                              
+                              :
+                              
+                              (<>
+                                <DeliveryForm
+                                deliveryMode = {deliveryMode}
+                                setDeliveryMode = {setDeliveryMode} />
+                              
+                              </>)}
+                            {/*<SidebarCustom />
+                            <BookingReview
+                              className="below-nav main-content"
+                              cart={cart}
+                              setCart={setCart}
+                              userdata={userdata}
+                              clients={clients}
+                              products={products}
+                              setProducts={setProducts}
+                              newProductBooking={newProductBooking}
+                              setBookingsState={setBookingsState}
+                              getWallet={getWalletById}
+                              className="below-nav main-content"
+                            />*/}
                           </>
                         ) : (
                           <Redirect to="/home" />
