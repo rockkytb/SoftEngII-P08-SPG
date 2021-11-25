@@ -21,51 +21,52 @@ export default function ProductsList(props) {
       quantity: orderQuantity,
       price: price,
     };
-    
-    props.setCart((oldList) => {
 
-        const list = oldList.map((item)=>{
-          if (item.id === product.id)
-            {
-              update = 1;
-              return {
-                id: productId,
-                name: name,
-                quantity: (product.quantity*1) + (item.quantity *1),
-                price: price,
-              };
-            }
-          else
-          {
-            return item;
-          }
-        });
-        return list;
+    props.setCart((oldList) => {
+      const list = oldList.map((item) => {
+        if (item.id === product.id) {
+          update = 1;
+          return {
+            id: productId,
+            name: name,
+            quantity: product.quantity * 1 + item.quantity * 1,
+            price: price,
+          };
+        } else {
+          return item;
+        }
+      });
+      return list;
     });
 
-    props.setProducts(oldList => {
+    props.setProducts((oldList) => {
       const list = oldList.map((p) => {
-        if(product.id === p.id){
-          return {id: p.id, name: p.name, category: p.category, 
-            qty: p.qty - orderQuantity *(1),
-            price:p.price, farmer_email:p.farmer_email};
-        }
-        else{
+        if (product.id === p.id) {
+          return {
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            qty: p.qty - orderQuantity * 1,
+            price: p.price,
+            farmer_email: p.farmer_email,
+          };
+        } else {
           return p;
         }
       });
       return list;
     });
 
-    if (update === 0){
-      props.setCart(oldList =>{ return [product, ...oldList];});
+    if (update === 0) {
+      props.setCart((oldList) => {
+        return [product, ...oldList];
+      });
     }
     //edit quantity live so that the product is reserved
-    
+
     handleViewClose();
   }
 
-  
   const handleViewClose = () => {
     setShowView(false);
     setProductId();
@@ -74,6 +75,10 @@ export default function ProductsList(props) {
   };
 
   function productsActions() {
+    let tempoDiBoom = "";
+
+    //@kricar gioca a europa universalis anziché a tempo di boom :c
+
     return props.products.map((product) => (
       <Col>
         <Card className="text-dark">
@@ -83,7 +88,14 @@ export default function ProductsList(props) {
             <Card.Text>
               Unit Price: {product.price} €
               <br />
-              Category: {product.category}
+              Category:
+              {() => {
+                props.categories.map((p) => {
+                  if (p.id === product.category) tempoDiBoom = p.name;
+                });
+
+                return tempoDiBoom;
+              }} 
               <br />
               Available quantity: {product.qty}
               <br />
@@ -110,11 +122,11 @@ export default function ProductsList(props) {
   return (
     <>
       <div className="below-nav">
-      <div class="col-md-12 text-center">
-        <Link to={"/newOrder"}>
-          <Button className="mr-2 md-2 ">Go to cart</Button>
-        </Link>
-      </div>
+        <div class="col-md-12 text-center">
+          <Link to={"/newOrder"}>
+            <Button className="mr-2 md-2 ">Go to cart</Button>
+          </Link>
+        </div>
         <Modal show={showView} onHide={handleViewClose}>
           <Modal.Header>
             <Modal.Title>Add to cart</Modal.Title>
@@ -132,10 +144,15 @@ export default function ProductsList(props) {
                     min="1"
                     max={quantity}
                     onChange={(e) => {
-                      if (e.target.value > 0 && e.target.value <= quantity){
-                        setOrderQuantity(e.target.value);}
-                      if (e.target.value < 0) {setOrderQuantity(1);}
-                      if (e.target.value > quantity) {setOrderQuantity(quantity);}
+                      if (e.target.value > 0 && e.target.value <= quantity) {
+                        setOrderQuantity(e.target.value);
+                      }
+                      if (e.target.value < 0) {
+                        setOrderQuantity(1);
+                      }
+                      if (e.target.value > quantity) {
+                        setOrderQuantity(quantity);
+                      }
                     }}
                   />
                 </Form.Group>

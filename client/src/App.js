@@ -35,7 +35,7 @@ function App() {
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [bookingsState, setBookingsState] = useState(true);
-  const [dirty, setDirty] = useState(false);
+  const [attaccoDDOS, setAttaccoDDOS] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userdata, setUserData] = useState({});
   const [cart, setCart] = useState([]);
@@ -43,7 +43,8 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
   const [timers, setTimers] = useState();
-  const [deliveryMode,setDeliveryMode] = useState(false);
+  const [deliveryMode, setDeliveryMode] = useState(false);
+  const [categories, setCategories] = useState([]);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -122,7 +123,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setDirty(true);
+        setAttaccoDDOS(true);
       }
     };
     add()
@@ -168,7 +169,6 @@ function App() {
     bookingProduct();
   };
 
-  //TODO: update function for new products when api is ready
   //update products, bookings and next week products
   useEffect(() => {
     if (bookingsState) {
@@ -182,8 +182,8 @@ function App() {
       };
 
       const getFutureProducts = async () => {
-        // call: GET /api/products
-        const response = await fetch("/api/futureproducts");
+        // call: GET /api/products_expected
+        const response = await fetch("/api/products_expected");
         const productList = await response.json();
         if (response.ok) {
           setFutureProducts(productList);
@@ -191,20 +191,32 @@ function App() {
       };
 
       const getDeliveries = async () => {
-        // call: GET /api/products
-        const response = await fetch("/api/deliveries");
-        const productList = await response.json();
-        if (response.ok) {
-          setDeliveries(productList);
+        // call: GET /api/deliveries
+        if (loggedIn && userdata.id.charAt(0) === "S") {
+          const response = await fetch("/api/deliveries");
+          const productList = await response.json();
+          if (response.ok) {
+            setDeliveries(productList);
+          }
         }
       };
 
       const getBookings = async () => {
         // call: GET /api/bookings
-        const response = await fetch("/api/bookings");
-        const bookingList = await response.json();
-        if (response.ok) {
-          setBookings(bookingList);
+        if (loggedIn && userdata.id.charAt(0) === "S") {
+          const response = await fetch("/api/bookings");
+          const bookingList = await response.json();
+          if (response.ok) {
+            setBookings(bookingList);
+          }
+        } else if (loggedIn && userdata.id.charAt(0) === "C") {
+          const response = await fetch(
+            "/api/bookings/clients/" + userdata.id.substring(1)
+          );
+          const bookingList = await response.json();
+          if (response.ok) {
+            setBookings(bookingList);
+          }
         }
       };
 
@@ -214,7 +226,7 @@ function App() {
       getDeliveries();
       setBookingsState(false);
     }
-  }, [bookingsState]);
+  }, [bookingsState, attaccoDDOS]);
 
   //get clients
   useEffect(() => {
@@ -227,7 +239,7 @@ function App() {
       }
     };
     getClients();
-  }, [loggedIn, dirty]);
+  }, [loggedIn, attaccoDDOS]);
 
   const getSingleClientByEmail = (email) => {
     let client;
@@ -270,6 +282,19 @@ function App() {
     }
   };
 
+  //get categories
+  useEffect(() => {
+    const getClients = async () => {
+      // call: GET /api/categories
+      const response = await fetch("/api/categories");
+      const clientList = await response.json();
+      if (response.ok) {
+        setCategories(clientList);
+      }
+    };
+    getClients();
+  }, []);
+
   return (
     <div className="page">
       <Router>
@@ -299,21 +324,20 @@ function App() {
                       <>
                         {userdata.id.charAt(0) === "S" ? (
                           <Redirect to="/emp" />
-                        ) : ( <>
-                              {userdata.id.charAt(0) === "F" ? (
-                                <Redirect to="/farmer" />
-                              ) : (
-      
-                                <>
-                                  {userdata.id.charAt(0) === "M" ? (
-                                    <Redirect to="/manager" />
-                                  ) : (
-          
-                                        <Redirect to="/" />
-                                  )}
-                                </>
-                              )}
+                        ) : (
+                          <>
+                            {userdata.id.charAt(0) === "F" ? (
+                              <Redirect to="/farmer" />
+                            ) : (
+                              <>
+                                {userdata.id.charAt(0) === "M" ? (
+                                  <Redirect to="/manager" />
+                                ) : (
+                                  <Redirect to="/" />
+                                )}
                               </>
+                            )}
+                          </>
                         )}
                       </>
                     )}
@@ -335,8 +359,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
@@ -344,7 +368,8 @@ function App() {
                               setProducts={setProducts}
                               cart={cart}
                               setCart={(val) => setCart(val)}
-                            //farmers = {farmers} //???
+                              categories={categories}
+                              //farmers = {farmers} //???
                             />
                           </>
                         ) : (
@@ -372,14 +397,15 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
                               products={futureProducts}
                               cart={cart}
-                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                              categories={categories}
+                              //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
                             />
                           </>
                         ) : (
@@ -411,7 +437,8 @@ function App() {
                             <ProductsList
                               className="below-nav main-content"
                               products={deliveries}
-                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                              categories={categories}
+                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
                             />
                           </>
                         ) : (
@@ -438,8 +465,8 @@ function App() {
                 {update ? (
                   <>
                     {loggedIn &&
-                      (userdata.id.charAt(0) === "C" ||
-                        userdata.id.charAt(0) === "F") ? (
+                    (userdata.id.charAt(0) === "C" ||
+                      userdata.id.charAt(0) === "F") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
@@ -457,7 +484,7 @@ function App() {
             )}
           />
 
-        <Route
+          <Route
             path="/manager"
             exact
             render={() => (
@@ -659,19 +686,19 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "S" ||
-                            userdata.id.charAt(0) === "C") ? (
+                        (userdata.id.charAt(0) === "S" ||
+                          userdata.id.charAt(0) === "C") ? (
                           <>
-                              {deliveryMode ? (<>{/*FORM CRISTIAN*/}</>)
-                              
-                              :
-                              
-                              (<>
+                            {deliveryMode ? (
+                              <>{/*FORM CRISTIAN*/}</>
+                            ) : (
+                              <>
                                 <DeliveryForm
-                                deliveryMode = {deliveryMode}
-                                setDeliveryMode = {setDeliveryMode} />
-                              
-                              </>)}
+                                  deliveryMode={deliveryMode}
+                                  setDeliveryMode={setDeliveryMode}
+                                />
+                              </>
+                            )}
                             {/*<SidebarCustom />
                             <BookingReview
                               className="below-nav main-content"
@@ -713,8 +740,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "S" ||
-                            userdata.id.charAt(0) === "C") ? (
+                        (userdata.id.charAt(0) === "S" ||
+                          userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview
