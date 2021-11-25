@@ -518,6 +518,32 @@ exports.insertTupleProductExpected = (pdtExp) => {
     );
   });
 };
+// Create a new booking mode
+exports.createBookingMode = (bookingMode) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "INSERT INTO BOOKING_MODE (delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(
+      sql,
+      [bookingMode.delivery, 
+        bookingMode.street, 
+        bookingMode.city,  
+        bookingMode.province, 
+        bookingMode.postal_code,
+        bookingMode.country, 
+        bookingMode.date, 
+        bookingMode.time, 
+        bookingMode.extra_fee],
+      function (err) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(this.lastID);
+      }
+    );
+  });
+};
 
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {

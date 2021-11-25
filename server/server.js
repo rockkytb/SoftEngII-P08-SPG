@@ -626,6 +626,41 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
   }
 });
 
+//POST /api/bookings_mode
+app.post("/api/bookings_mode"/*, isLoggedIn*/, async (req, res) => {
+  if (!validator.isInt(`${req.body.idBooking}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking id, it must be positive` });
+  }
+
+  const booking_mode = {
+    idBooking: req.body.idBooking,
+    delivery: req.body.delivery,
+    street: req.body.street,
+    city: req.body.city,
+    province: req.body.province,
+    postal_code: req.body.postal_code,
+    country: req.body.country,
+    date: req.body.date,
+    time: req.body.time,
+    extra_fee: req.body.extra_fee
+  }
+
+  let bookingModeId;
+
+  try {
+    bookingModeId = await dao.createBookingMode(booking_mode);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of booking mode for booking: ${booking_mode.idBooking}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idBookingMode: bookingModeId });
+});
+
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
