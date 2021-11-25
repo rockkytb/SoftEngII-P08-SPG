@@ -60,7 +60,7 @@ function DeliveryForm(props) {
                     <h2> Delivery Options </h2>
                 </Row>
 
-                <Row className="justify-content-center">
+                <Row className="text-center">
                     <Col xs={2} />
                     <Col xs={8}>
                         <Form.Group id="DeliveryMode">
