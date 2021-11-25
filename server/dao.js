@@ -40,6 +40,29 @@ exports.getClients = () => {
   });
 };
 
+//get Categories
+exports.getCategories = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM CATEGORY";
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else if (rows === undefined) {
+        resolve(false);
+      } else {
+        resolve(
+          rows.map((x) => {
+            return {
+              id: `${x.ID}`,
+              name: x.NAME,
+            };
+          })
+        );
+      }
+    });
+  });
+};
+
 //get Client
 exports.getClient = (email, password) => {
   return new Promise((resolve, reject) => {
@@ -221,11 +244,9 @@ exports.editQtyProductWeek = (product) => {
       if (err) {
         reject(err);
         return;
-      }
-      else if (row === undefined) {
+      } else if (row === undefined) {
         resolve(false);
-      }
-      else {
+      } else {
         resolve(true);
       }
     });
@@ -239,8 +260,7 @@ exports.editStateBooking = (booking) => {
     db.run(sql, [booking.state, booking.id], function (err) {
       if (err) {
         reject(err);
-      }
-      else {
+      } else {
         resolve(true);
       }
     });
@@ -274,7 +294,7 @@ exports.getWallet = (id) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        const amount = { balance: row.AMOUNT }
+        const amount = { balance: row.AMOUNT };
         resolve(amount);
       }
     });
@@ -299,11 +319,11 @@ exports.createClient = (client) => {
   });
 };
 
-
 //get all products
 exports.getAllProducts = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
+    const sql =
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -315,7 +335,7 @@ exports.getAllProducts = () => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
-        farmer_email: e.EMAIL
+        farmer_email: e.EMAIL,
       }));
       resolve(products);
     });
@@ -325,7 +345,8 @@ exports.getAllProducts = () => {
 //get all bookings
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    const sql =
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -339,7 +360,6 @@ exports.getAllBookings = () => {
         surname: e.SURNAME,
         qty: e.QTY,
         product: e.productName,
-
       }));
       resolve(bookings);
     });
@@ -350,35 +370,28 @@ exports.getAllBookings = () => {
 exports.updateWallet = (wallet) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";
-    db.run(
-      sql, [wallet.amount, wallet.id],
-      function (err) {
-        if (err) {
-          reject(err.message);
-          return;
-        }
-        if(wallet.id === undefined){
-          reject({err:"CLIENT ID NOT PROVIDED"});
-          return;
-        }
-        if (this.changes === 0) {
-          reject({err:"CLIENT NOT FOUND"});
-          return;
-        }
-        else
-          resolve(wallet);
-
+    db.run(sql, [wallet.amount, wallet.id], function (err) {
+      if (err) {
+        reject(err.message);
+        return;
       }
-
-    );
+      if (wallet.id === undefined) {
+        reject({ err: "CLIENT ID NOT PROVIDED" });
+        return;
+      }
+      if (this.changes === 0) {
+        reject({ err: "CLIENT NOT FOUND" });
+        return;
+      } else resolve(wallet);
+    });
   });
 };
 
 // Create a new wallet
 exports.createWallet = (id) => {
   return new Promise((resolve, reject) => {
-    const sql = 'INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)';
-    db.run(sql, [id, 0.00], function (err) {
+    const sql = "INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)";
+    db.run(sql, [id, 0.0], function (err) {
       if (err) {
         reject(false);
         return;
@@ -391,13 +404,14 @@ exports.createWallet = (id) => {
 // Get all bookings with PendingCancelation state
 exports.getBookingsStatePendingCancelation = () => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE STATE = 'PENDINGCANCELATION'";
+    const sql =
+      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE STATE = 'PENDINGCANCELATION'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
-      
+
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
@@ -405,7 +419,7 @@ exports.getBookingsStatePendingCancelation = () => {
         name: e.nameClient,
         surname: e.SURNAME,
         qty: e.QTY,
-        product: e.nameProduct
+        product: e.nameProduct,
       }));
 
       resolve(bookings);
@@ -414,42 +428,59 @@ exports.getBookingsStatePendingCancelation = () => {
 };
 
 // INSERT a new tuple into PRODUCT_EXPECTED
-exports.insertTupleProductExpected = (pdtExp) =>{
-  return new Promise((resolve, reject) =>{
-    const sql= "INSERT INTO PRODUCT_EXPECTED (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID) VALUES (?,?,?,?,?)";
-    db.run(sql, [pdtExp.name, pdtExp.category, pdtExp.price, pdtExp.qty, pdtExp.farmer_id], function (err) {
-      if (err) {
-        reject(false);
-        return;
+exports.insertTupleProductExpected = (pdtExp) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "INSERT INTO PRODUCT_EXPECTED (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID) VALUES (?,?,?,?,?)";
+    db.run(
+      sql,
+      [
+        pdtExp.name,
+        pdtExp.category,
+        pdtExp.price,
+        pdtExp.qty,
+        pdtExp.farmer_id,
+      ],
+      function (err) {
+        if (err) {
+          reject(false);
+          return;
+        }
+        resolve(this.lastID);
       }
-      resolve(this.lastID);
-    });
-  })
-}
+    );
+  });
+};
 
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
-
-  const errTest = (err) =>{
+  const errTest = (err) => {
     if (err) {
       throw err;
     }
-  }
+  };
   if (testmode) {
     //Clean the db
 
-    await db.run("DELETE FROM BOOKING_PRODUCTS WHERE ID_BOOKING != ?",[1], (err) => {
+    await db.run(
+      "DELETE FROM BOOKING_PRODUCTS WHERE ID_BOOKING != ?",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
+
+    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?", [1], (err) => {
       errTest(err);
     });
 
-    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?",[1], (err) => {
-      errTest(err);
-    });
-
-
-    await db.run("DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?", [1], (err) => {
-      errTest(err);
-    });
+    await db.run(
+      "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
 
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       errTest(err);
@@ -457,11 +488,10 @@ exports.cleanDb = async () => {
 
     await db.run(
       "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ?",
-      [1, "CLIENT","BOOKING"],
+      [1, "CLIENT", "BOOKING"],
       (err) => {
         errTest(err);
       }
     );
   }
 };
-
