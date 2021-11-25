@@ -19,24 +19,15 @@ function DeliveryForm(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        /*const form = event.currentTarget;
-        console.log("valore setUsedMail " + usedMail);
-        let val = props.getClientbyEmail(email);
-        if(val){
-            setUsedMail(val.id);
-        }
-        else{
-            setUsedMail(-1);
-        }
-        console.log("valore setUsedMail " + usedMail);
-        if (form.checkValidity() === false || usedMail == -1 ) {
-            event.stopPropagation();
-            if (usedMail == -1) {
-                setUsedMail("");
-                toast.error("Email already used", { position: "top-center" })
-            }
 
-        } else {
+        const form = event.currentTarget;
+        
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+            setValidated(true);
+
+        } /*
+        else {
             const newUser = {
                 email: email,
                 name: name,
@@ -83,8 +74,12 @@ function DeliveryForm(props) {
                             <Form.Label>Date: </Form.Label>
                             <Form.Control 
                                     type="date" 
-                                    value={date} 
+                                    value={date}
+                                    required 
                                     onChange={ev => setDate(ev.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Please insert a valid Date.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Col>
                     <Col xs={2} />
@@ -98,7 +93,11 @@ function DeliveryForm(props) {
                             <Form.Control 
                                     type="time" 
                                     value={time} 
+                                    required
                                     onChange={ev => setTime(ev.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Please insert a valid Time.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Col>
                     <Col xs={2} />
