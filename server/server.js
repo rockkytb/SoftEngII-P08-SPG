@@ -532,7 +532,43 @@ app.put(
         res.status(500).json(error);
       });
   });
-  
+
+// POST /api/products_expected receive a vector of tuples of products expected
+
+app.post(
+  "/api/products_expected",/*isLoggedIn,*/
+  async (req, res) => {
+
+    var idProduct;
+    var results = [];
+    var problem=0;
+    for(var key in req.body) {
+      if(req.body.hasOwnProperty(key)){
+        //do something with e.g. req.body[key]
+        try{
+        idProduct = await dao.insertTupleProductExpected(req.body[key]);
+        }catch(err){
+          problem =1;
+          break;
+        }
+        const product = {
+          id: idProduct,
+          nameProduct: req.body[key].name
+        }
+        results.push(product);
+      }
+    }
+    if(problem == 0){
+      //All went fine
+      res.status(201).json(results);
+    }
+    else{
+      res.status(503).json({
+        error: `Database error during the post of ProductExpected`,
+      });
+    }
+  });
+
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

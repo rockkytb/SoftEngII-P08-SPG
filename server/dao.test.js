@@ -363,3 +363,25 @@ test("get all bookings with pendingcancelation state", async () => {
 
   return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual([received]);
 });
+
+test("Insert a new Product expected without a field category", () => {
+  const parameter = {
+    name:"Apple",
+    price:1.99,
+    qty:2,
+    farmer_id:3
+  }
+  return expect(dao.insertTupleProductExpected(parameter)).rejects.toEqual(false);
+});
+
+//sistemare clear DB per poter rendere il test ripetibile
+test("Insert a new Product expected", () => {
+  const parameter = {
+    name:"Apple",
+    category:2,
+    price:1.99,
+    qty:2,
+    farmer_id:3
+  }
+  return expect(dao.insertTupleProductExpected(parameter)).resolves.toEqual(11);
+});

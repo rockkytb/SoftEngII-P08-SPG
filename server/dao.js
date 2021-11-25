@@ -413,6 +413,20 @@ exports.getBookingsStatePendingCancelation = () => {
   });
 };
 
+// INSERT a new tuple into PRODUCT_EXPECTED
+exports.insertTupleProductExpected = (pdtExp) =>{
+  return new Promise((resolve, reject) =>{
+    const sql= "INSERT INTO PRODUCT_EXPECTED (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID) VALUES (?,?,?,?,?)";
+    db.run(sql, [pdtExp.name, pdtExp.category, pdtExp.price, pdtExp.qty, pdtExp.farmer_id], function (err) {
+      if (err) {
+        reject(false);
+        return;
+      }
+      resolve(this.lastID);
+    });
+  })
+}
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
 

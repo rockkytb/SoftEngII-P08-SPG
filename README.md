@@ -85,15 +85,16 @@ Get ALL the bookings of a particular client, return a JSON Vector
 
 #### POST /api/products_expected
 
-This API receives an array of products advertised by farmer and insert one by one in the db
+This API receives an array of products advertised by farmer and insert one by one in the db and return a vector with all id created
 
     [
-    {"id":1,
-    "name":"Apple",
+    {
+	"name":"Apple",
     "category":2,
     "price":1.99,
     "qty":2,
-    "farmer_id":3},
+    "farmer_id":3
+	},
     ...]
 
 #### GET /api/categories
