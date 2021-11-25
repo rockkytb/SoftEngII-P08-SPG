@@ -73,7 +73,7 @@ Receive a JSON object:
 {"id":1,
 "state":"COMPLETED"}
 
-#### GET /api/bookings/client=:id
+#### GET /api/bookings/clients/:id
 
 Get ALL the bookings of a particular client, return a JSON Vector
 
