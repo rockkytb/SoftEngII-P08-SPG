@@ -390,7 +390,7 @@ exports.getAllProducts = (idFarmer) => {
   return new Promise((resolve, reject) => {
     const sql =
       //  "SELECT * FROM PRODUCT_EXPECTED p WHERE p.FARMER_ID=? ";
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM PRODUCT_EXPECTED p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=?";
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_EXPECTED p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=?";
 
     db.all(sql, [idFarmer], (err, rows) => {
       if (err) {
