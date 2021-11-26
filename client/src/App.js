@@ -228,7 +228,7 @@ function App() {
     }
   }, [bookingsState, attaccoDDOS]);
 
-  //get clients
+  //clients server calls
   useEffect(() => {
     const getClients = async () => {
       // call: GET /api/clients
@@ -249,6 +249,7 @@ function App() {
     return client;
   };
 
+  //wallet server calls
   const getWalletById = async (id) => {
     let tmp = 0;
     await API.getWalletById(id.substring(1))
@@ -270,6 +271,7 @@ function App() {
     }
   };
 
+  //complete booking
   const setCompletedBooking = async (id) => {
     try {
       await API.confirmBooking(id);
@@ -293,7 +295,7 @@ function App() {
       }
     };
     getClients();
-  }, []);
+  }, [attaccoDDOS]);
 
   return (
     <div className="page">
@@ -310,7 +312,7 @@ function App() {
         />
 
         <Switch>
-          <Route
+          <Route //login
             exact
             path="/login"
             render={() => (
@@ -349,7 +351,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //display current products
             path="/products"
             exact
             render={() => (
@@ -387,7 +389,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //display next week products
             path="/trunksproducts"
             exact
             render={() => (
@@ -423,7 +425,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //display delivered products (only for employeet)
             path="/fattorinosimulator"
             exact
             render={() => (
@@ -457,7 +459,7 @@ function App() {
           />
 
           {/* When logged as farmer or customer we shouldn't get here */}
-          <Route
+          <Route //registration
             path="/register"
             exact
             render={() => (
@@ -484,7 +486,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //manager homepage
             path="/manager"
             exact
             render={() => (
@@ -513,7 +515,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //farmer homepage
             path="/farmer"
             exact
             render={() => (
@@ -542,7 +544,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //customer homepage
             path="/cust"
             exact
             render={() => (
@@ -571,7 +573,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //employeet homepage
             path="/emp"
             exact
             render={() => (
@@ -605,7 +607,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //update client data (only for employeet)
             path="/emp/clientData"
             exact
             render={() => (
@@ -641,7 +643,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //verify pending cancelation bookings (only for employeet)
             path="/emp/pending"
             exact
             render={() => (
@@ -675,7 +677,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //select delivery mode and address
             path="/deliveryMode"
             exact
             render={() => (
@@ -729,7 +731,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //confirm booking
             path="/newOrder"
             exact
             render={() => (
@@ -773,7 +775,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //set booking as completed (only for employeet)
             path="/emp/confirmOrder"
             exact
             render={() => (
@@ -808,7 +810,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //TODO: payment page
             path="/emp/pagah"
             exact
             render={() => (
@@ -838,7 +840,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //homepage
             exact
             path="/home"
             render={() => (
