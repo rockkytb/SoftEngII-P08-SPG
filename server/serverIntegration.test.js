@@ -299,11 +299,11 @@ describe("Test suite Integration Server", () => {
         },
         {
           id: "2",
-          name: "spezie",
+          name: "Spices",
         },
         {
           id: "3",
-          name: "posions",
+          name: "Vegetables",
         },
       ]);
     });
