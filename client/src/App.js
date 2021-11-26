@@ -43,7 +43,8 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
   const [timers, setTimers] = useState();
-  const [deliveryMode, setDeliveryMode] = useState(false);
+  const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
+  const [deliveryState, setDeliveryState] = useState (true);
   const [categories, setCategories] = useState([]);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
@@ -234,6 +235,24 @@ function App() {
       setBookingsState(false);
     }
   }, [bookingsState, attaccoDDOS]);
+
+  //update confirmed product from farmer
+  useEffect(() => {
+    if (loggedIn && deliveryState && userdata.id.charAt(0) === "F") {
+      const getConfirmedProductsFarmer = async () => {
+        // call: GET /api/products/farmers/:id
+        const response = await fetch("/api/products/farmers/" + 
+                      userdata.id.substring(1));
+        const confirmedProductList = await response.json();
+        if (response.ok) {
+          setConfirmedProductsFarmer(confirmedProductList);
+        }
+      };
+
+      getConfirmedProductsFarmer();      
+      setDeliveryState(false);
+    }
+  }, [deliveryState, loggedIn]);
 
   //get clients
   useEffect(() => {
@@ -563,13 +582,8 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingDeliveryFarmer 
                             className="below-nav main-content" 
-                            confirmedProducts= {[{
-                              name: "paperino",
-                              qty: 3
-                              },{
-                              name: "pluto",
-                              qty: 6
-                            }]}/>
+                            confirmedProducts= {confirmedProductsFarmer}
+                            />
                           </>
                         ) : (
                           <Redirect to="/home" />
