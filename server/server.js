@@ -344,7 +344,7 @@ app.post("/api/acknowledge", /*isLoggedIn*/ async (req, res) => {
 
   //All went fine
   res.status(201).json({ idAck: ackId });
-  
+
 });
 
 //POST /api/bookings
@@ -526,6 +526,37 @@ app.put(
     } catch (err) {
       res.status(503).json({
         error: `Database error during the put of booking state: ${result}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json(result);
+  }
+);
+
+
+//PUT /api/ackstate
+app.put(
+  "/api/ackstate", //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid ack id, it must be positive` });
+    }
+
+    const ack = {
+      id: req.body.id,
+      state: req.body.state,
+    };
+
+    let result;
+
+    try {
+      result = await dao.editStateAck(ack);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of ack state: ${result}.`,
       });
     }
 
