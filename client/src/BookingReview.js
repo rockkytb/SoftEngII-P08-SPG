@@ -229,7 +229,8 @@ function BookingReview(props) {
                 </Row>
 
                 <Form.Label>
-                    <h6> Pick-Up in Shop </h6>
+                    {deliveryMode ? (<h6> Delivery at home </h6>):(<h6> Pick-Up in Shop </h6>)}
+                    
                 </Form.Label>
                 
                 <Row>

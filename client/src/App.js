@@ -15,7 +15,6 @@ import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
 import NewClientForm from "./NewClientForm";
-import DeliveryForm from "./DeliveryForm";
 import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
