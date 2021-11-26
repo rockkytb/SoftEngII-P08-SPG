@@ -102,6 +102,7 @@ export default function ProductsList(props) {
               Farmer : {product.farmer_email}
             </Card.Text>
             <Button
+            color="black"
               variant="primary"
               onClick={() => {
                 setProductId(product.id);
@@ -124,7 +125,7 @@ export default function ProductsList(props) {
       <div className="below-nav">
         <div class="col-md-12 text-center">
           <Link to={"/newOrder"}>
-            <Button className="mr-2 md-2 ">Go to cart</Button>
+            <Button color="black" className="mr-2 md-2 ">Go to cart</Button>
           </Link>
         </div>
         <Modal show={showView} onHide={handleViewClose}>
@@ -163,7 +164,7 @@ export default function ProductsList(props) {
             <Button variant="secondary" onClick={handleViewClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => handleAddToCart()}>
+            <Button color="black" variant="primary" onClick={() => handleAddToCart()}>
               Submit
             </Button>
           </Modal.Footer>

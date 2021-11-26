@@ -55,7 +55,7 @@ function ClientData(props) {
               </Col>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="primary" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id === id)) }}>
+              <Button color="black" variant="primary" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id === id)) }}>
                 Submit
               </Button>
             </Modal.Footer>
@@ -76,7 +76,7 @@ function ClientData(props) {
                   <Col md={5} />
                 </Row>
               </Form.Group>
-              <Button variant="primary" onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
+              <Button variant="primary" color="black" onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
                 Submit
               </Button>
             </Form>

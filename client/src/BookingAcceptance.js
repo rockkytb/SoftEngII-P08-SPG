@@ -42,6 +42,7 @@ export default function BookingAcceptance(props) {
                                 booking.state="COMPLETED"
                                 
                             }}
+                            color="black"
                         >
                             Set as completed
                         </Button>

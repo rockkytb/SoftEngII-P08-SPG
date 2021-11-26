@@ -13,7 +13,7 @@ function Customer(props) {
             <Row md={12}>
                 <Col className="md-4 pr-0 pl-0 ">
                 <Link to="/products"> 
-                    <Button className="mr-2 ml-2 md-1 "> Reserve products </Button> 
+                    <Button color="black" className="mr-2 ml-2 md-1 "> Reserve products </Button> 
                 </Link>
               </Col>
             </Row>

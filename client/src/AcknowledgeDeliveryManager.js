@@ -27,6 +27,7 @@ export default function AcknowledgeDeliveryFarmer(props) {
                                 
                                 props.confirmAck(ack.id);
                             }}
+                            color="black"
                         >
                             Set as read
                         </Button>

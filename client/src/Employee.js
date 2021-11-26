@@ -14,24 +14,24 @@ function Employee(props) {
           <Col className="md-4 pr-0 pl-0 ">
 
             <Link to="/register">
-              <Button className="mr-2 ml-2 md-1 ">New Client</Button>
+              <Button color="black" className="mr-2 ml-2 md-1 ">New Client</Button>
             </Link>
             <Link to="/emp/clientData">
-              <Button className="mr-2 ml-2 md-1 ">Manage clients wallet</Button>
+              <Button color="black" className="mr-2 ml-2 md-1 ">Manage clients wallet</Button>
             </Link>
 
             <Link to="/products">
-              <Button className="mr-2 ml-2 md-1 ">New Booking</Button>
+              <Button color="black" className="mr-2 ml-2 md-1 ">New Booking</Button>
             </Link>
 
             <Link to="/emp/confirmOrder">
-              <Button className="mr-2 ml-2 md-1 ">Set bookings as completed</Button>
+              <Button color="black" className="mr-2 ml-2 md-1 ">Set bookings as completed</Button>
             </Link>
             <Link to="/products">
-              <Button className="mr-2 ml-2 md-1 "> Browse Available products </Button>
+              <Button color="black" className="mr-2 ml-2 md-1 "> Browse Available products </Button>
             </Link>
             <Link to="/emp/pending">
-              <Button className="mr-2 ml-2 md-1 "> Check Pending Cancellation </Button>
+              <Button color="black" className="mr-2 ml-2 md-1 "> Check Pending Cancellation </Button>
             </Link>
 
           </Col>

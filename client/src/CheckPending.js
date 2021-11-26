@@ -26,7 +26,7 @@ export default function CheckPending(props) {
                             Product quantity: {booking.qty}<br />
                         </Card.Text>
                         <Link to="/emp/clientData">
-                            <Button className="mr-2 ml-2 md-1 "> Check client data </Button>
+                            <Button color="black" className="mr-2 ml-2 md-1 "> Check client data </Button>
                         </Link>
                     </Card.Body>
                 </Card>

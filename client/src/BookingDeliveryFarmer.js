@@ -34,6 +34,7 @@ export default function BookingDeliveryFarmer(props) {
                                 
                                 
                             }}
+                            color="black"
                         >
                             Set as delivered
                         </Button>

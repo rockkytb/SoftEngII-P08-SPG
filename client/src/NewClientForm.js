@@ -147,7 +147,7 @@ function NewClientForm(props) {
                         <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
                     <Col xs={1} className="pl-5">
-                        <Button type="submit" variant="primary" className="float-right ">Save</Button>
+                        <Button color="black" type="submit" variant="primary" className="float-right ">Save</Button>
                     </Col>
                     <Col xs={2} />
                 </Row>

@@ -129,6 +129,7 @@ function BookingReview(props) {
             <Card.Text>Quantity: {product.quantity}</Card.Text>
             <Button
               variant="primary"
+              color="black"
               onClick={() => {
 
                 props.setProducts(oldList => {
@@ -160,7 +161,7 @@ function BookingReview(props) {
     <div className="below-nav">
       <div class="col-md-12 text-center">
         <Link to={"/products"}>
-          <Button className="mr-2 md-2 ">Back to products</Button>
+          <Button color="black" className="mr-2 md-2 ">Back to products</Button>
         </Link>
       </div>
       <Alert show={showAlert} variant="danger">
@@ -172,6 +173,7 @@ function BookingReview(props) {
         <hr />
         <div className="d-flex justify-content-end">
             <Button
+            color="black"
               onClick={() => {
                 props.cart.forEach(product => {
                   props.setProducts(oldList => {
@@ -284,7 +286,7 @@ function BookingReview(props) {
           <Button variant="secondary" id="closeModal" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" id="submitModal" onClick={() => {handleCreateBooking()}}>
+          <Button variant="primary" color="black" id="submitModal" onClick={() => {handleCreateBooking()}}>
             Submit
           </Button>
         </Modal.Footer>
@@ -305,7 +307,7 @@ function BookingReview(props) {
               </Button>
             </Col>
             <Col className="md-2 text-left">
-                <Button variant="primary" id="butConf" onClick={() => {
+                <Button variant="primary" color="black" id="butConf" onClick={() => {
                     
                       setShow(true);
                     
