@@ -544,3 +544,16 @@ describe("Test suite Integration Server", () => {
     });
   });
 });
+
+
+describe("Post ack success", () => {
+  it("should create a new ack", async () => {
+    const res = await request(app).post("/api/acknowledge").send({
+      idFarmer: 1,
+      email: "antonio.bianchiio@mail.it",
+      state: "NEW"
+    });
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty("idAck");
+  });
+});
