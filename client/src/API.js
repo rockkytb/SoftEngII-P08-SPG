@@ -262,6 +262,34 @@ async function confirmBooking(id){
     });
 }
 
+async function confirmDeliveryProducts(productList){
+    return new Promise((resolve, reject) => {
+        const deliveryList = productList.map((product)=>{
+            return {
+                id: product.id,
+                state:"DELIVERED"
+            }
+        });
+        fetch(url + '/products', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                deliveryList
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
 async function newBookingMode(booking) {
     //call: POST /api/bookings_mode
     return new Promise((resolve, reject) => {

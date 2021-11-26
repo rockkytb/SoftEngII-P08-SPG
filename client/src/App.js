@@ -116,6 +116,7 @@ function App() {
     setUpdate(true);
     setCart([]);
     setBookingsState(true);
+    setDeliveryState(true);
   };
 
   //add user to system db
@@ -304,6 +305,20 @@ function App() {
       });
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
+  const setCompletedDeliveryFarmer = async (productList) => {
+    try {
+      await API.confirmDeliveryProducts(productList);
+      setDeliveryState(true);
+      toast.success("Delivery completed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error updating the delivery", { position: "top-center" });
       console.log(err);
     }
   };
@@ -583,6 +598,7 @@ function App() {
                             <BookingDeliveryFarmer 
                             className="below-nav main-content" 
                             confirmedProducts= {confirmedProductsFarmer}
+                            confirmDelivery={setCompletedDeliveryFarmer}
                             />
                           </>
                         ) : (

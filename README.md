@@ -192,7 +192,7 @@ put (edit) the state of all product in PRODUCT_WEEK by receiving an array of pro
 
     [
     {"id":1,
-    "state":"ADVERTISED"},
+    "state":"DELIVERED"},
     ...]
 
 #### GET /api/bookings
