@@ -21,6 +21,17 @@ function BookingReview(props) {
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
+    
+  const [deliveryMode, setDeliveryMode] = useState(false);
+  const [street, setStreet] = useState (null);
+  const [city, setCity] = useState (null);
+  const [province, setProvince] = useState (null);
+  const [postalCode, setPostalCode] = useState (null);
+  const [country, setCountry] = useState (null);
+  const [date, setDate] = useState ("");
+  const [time, setTime] = useState ("");
+  const [extraFee, setExtraFee] = useState (0);
+
   async function newBooking(IDclient) {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
@@ -34,12 +45,24 @@ function BookingReview(props) {
     };
     book()
       .then(() => {
-        toast.success("Booking completed", { position: "top-center" });
         props.cart.map((p) => {
           props.newProductBooking(tmp, p.id, p.quantity);
         });
+        props.newProductMode({
+          idBooking: tmp,
+          delivery:deliveryMode ? (1):(0),
+          street:street,
+          city:city,
+          province:province,
+          postal_code:postalCode,
+          country:country,
+          date:date,
+          time:time,
+          extra_fee:extraFee
+        });
         props.setBookingsState(true);
         props.setCart([]);
+        toast.success("Booking completed", { position: "top-center" });
         handleClose();
       }
       )
@@ -66,6 +89,8 @@ function BookingReview(props) {
   }
 
   const handleClose = () => {
+    setDate("");
+    setTime("");
     setShow(false);
   };
 
@@ -182,8 +207,9 @@ function BookingReview(props) {
         <Modal.Body>
           <Col>
             <Form>
+              { props.userdata.id.charAt(0) === "S" &&
               <Form.Group>
-                <Form.Label>Select Client</Form.Label>
+                <Form.Label><h3>Select Client</h3></Form.Label>
                 <Form.Control
                   as="select"
                   onChange={(e) => setClientID(e.target.value)}
@@ -199,6 +225,58 @@ function BookingReview(props) {
                   )}
                 </Form.Control>
               </Form.Group>
+              }
+              <Form.Label><h3>Delivery Options</h3></Form.Label>
+
+                <Row className="text-center">
+                    <Col xs={2} />
+                    <Col xs={8}>
+                        <Form.Group id="DeliveryMode">
+                            <Form.Check type="checkbox" label="Delivery at home?" 
+                            checked={deliveryMode} 
+                            onChange={() => setDeliveryMode(!deliveryMode)} />
+                         </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                </Row>
+
+                <Form.Label>
+                    {deliveryMode ? (<h6> Delivery at home </h6>):(<h6> Pick-Up in Shop </h6>)}
+                    
+                </Form.Label>
+                
+                <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                        <Form.Group size="lg" controlId="date">
+                            <Form.Label>Date: </Form.Label>
+                            <Form.Control 
+                                    type="date" 
+                                    value={date}
+                                    required 
+                                    onChange={ev => setDate(ev.target.value)} />
+                        </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                </Row>
+
+                <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                        <Form.Group size="lg" controlId="time">
+                            <Form.Label>Time: </Form.Label>
+                            <Form.Control 
+                                    type="time" 
+                                    value={time} 
+                                    required
+                                    onChange={ev => setTime(ev.target.value)} />
+                        </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                </Row>
+              
+
+
             </Form>
           </Col>
         </Modal.Body>
@@ -206,11 +284,13 @@ function BookingReview(props) {
           <Button variant="secondary" id="closeModal" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" id="submitModal" onClick={() => handleCreateBooking()}>
+          <Button variant="primary" id="submitModal" onClick={() => {handleCreateBooking()}}>
             Submit
           </Button>
         </Modal.Footer>
       </Modal>
+
+      
 
       <CardColumns xs={1} md={5}>
         <>{props.cart.length ? productsActions() : <></>}</>
@@ -226,12 +306,9 @@ function BookingReview(props) {
             </Col>
             <Col className="md-2 text-left">
                 <Button variant="primary" id="butConf" onClick={() => {
-                    if(props.userdata.id.charAt(0) === "S"){
+                    
                       setShow(true);
-                    }
-                    else{
-                      handleCreateBooking();
-                    }
+                    
                     }}>
                   Confirm Booking
                 </Button>

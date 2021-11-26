@@ -45,10 +45,10 @@ return the JSON list of all products. Example
     [
     {"id":1,
     "name":"Apple",
-    "category":2,
+    "category":"spices",
     "price":1.99,
     "qty":2,
-    "farmer_email":3},
+    "farmer_email":"farmer@email.it"},
     ...]
 
 #### POST /api/bookings
@@ -73,6 +73,15 @@ Receive a JSON object:
 {"id":1,
 "state":"COMPLETED"}
 
+#### PUT /api/ackstate
+
+Edit the state of an existing ack.
+
+Receive a JSON object:
+
+{"id":1,
+"state":"READ"}
+
 #### GET /api/bookings/clients/:id
 
 Get ALL the bookings of a particular client, return a JSON Vector
@@ -93,12 +102,12 @@ This API receives an array of products advertised by farmer and insert one by on
 
     [
     {
-	"name":"Apple",
+    "name":"Apple",
     "category":2,
     "price":1.99,
     "qty":2,
     "farmer_id":3
-	},
+    },
     ...]
 
 #### GET /api/categories
@@ -124,6 +133,17 @@ retrieves all the bookings with state = PENDINGCANCELATION, return a JSON Vector
         "product": "pro1"
     },...]
 
+#### GET /api/acksNew
+
+retrieves all the acks with state = NEW, return a JSON Vector
+
+    [    {
+        "id": 2,
+        "state": "NEW",
+        "farmer": "antonio.bianchi@mail.it",
+        "farmerId": 1
+    },...]
+
 #### POST /api/bookings_mode
 
 Create a new booking mode
@@ -146,18 +166,18 @@ Receive a JSON object
 
 delete a product by receiving its id
 
-#### GET /api/products_expected
+#### GET /api/farmers/:farmerid/products_expected
 
 return the JSON list of all products from PRODUCT EXPECTED according to the id of a farmer. Example
 
     [
     {"id":1,
     "name":"Apple",
-    "category":2,
+    "category":"fruit",
     "price":1.99,
     "qty":2,
-    "farmer_email":3
-    "state":},
+    "farmer_email":"farmer@email.it"
+    "state":"EXPECTED"},
     ...]
 
 ### POST /api/farmers/:farmerid/products/
@@ -192,8 +212,16 @@ put (edit) the state of all product in PRODUCT_WEEK by receiving an array of pro
 
     [
     {"id":1,
-    "state":"ADVERTISED"},
+    "state":"DELIVERED"},
     ...]
+
+#### POST /api/acknowledge
+Add new acknowledge for manager. Example:
+    {
+    "idFarmer": 1, 
+    "email": "antonio.bianchi@mail.it",
+    "state": "NEW"
+    }
 
 #### GET /api/bookings
 

@@ -15,7 +15,6 @@ import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
 import API from "./API";
 import NewClientForm from "./NewClientForm";
-import DeliveryForm from "./DeliveryForm";
 import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
@@ -26,6 +25,8 @@ import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
+import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
+import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
 
 function App() {
@@ -43,8 +44,11 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
   const [timers, setTimers] = useState();
-  const [deliveryMode, setDeliveryMode] = useState(false);
+  const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
+  const [deliveryState, setDeliveryState] = useState (true);
   const [categories, setCategories] = useState([]);
+  const [acknowledges, setAcknowledges] = useState([]);
+  const [ackState, setAckState] = useState (true);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -115,6 +119,7 @@ function App() {
     setUpdate(true);
     setCart([]);
     setBookingsState(true);
+    setDeliveryState(true);
   };
 
   //add user to system db
@@ -168,6 +173,13 @@ function App() {
     };
     bookingProduct();
   };
+
+  const newProductMode = (booking) => {
+    const bookingMode = async () => {
+      await API.newBookingMode(booking);
+    }
+    bookingMode();
+  }
 
   //update products, bookings and next week products
   useEffect(() => {
@@ -228,6 +240,41 @@ function App() {
     }
   }, [bookingsState, attaccoDDOS]);
 
+  //update confirmed product from farmer
+  useEffect(() => {
+    if (loggedIn && deliveryState && userdata.id &&userdata.id.charAt(0) === "F") {
+      const getConfirmedProductsFarmer = async () => {
+        // call: GET /api/products/farmers/:id
+        const response = await fetch("/api/products/farmers/" + 
+                      userdata.id.substring(1));
+        const confirmedProductList = await response.json();
+        if (response.ok) {
+          setConfirmedProductsFarmer(confirmedProductList);
+        }
+      };
+
+      getConfirmedProductsFarmer();      
+      setDeliveryState(false);
+    }
+  }, [deliveryState, loggedIn]);
+
+  //update acks manager
+  useEffect(() => {
+    if (loggedIn && ackState && userdata.id && userdata.id.charAt(0) === "M") {
+      const getAcksManager = async () => {
+        // call: GET /api/acksNew
+        const response = await fetch("/api/acksNew");
+        const ackList = await response.json();
+        if (response.ok) {
+          setAcknowledges(ackList);
+        }
+      };
+
+      getAcksManager();      
+      setAckState(false);
+    }
+  }, [ackState, loggedIn]);
+
   //clients server calls
   useEffect(() => {
     const getClients = async () => {
@@ -280,6 +327,34 @@ function App() {
       });
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const setReadAck = async (id) => {
+    try {
+      await API.confirmAck(id);
+      setAckState(true);
+      toast.success("Delivery acknowledge", {
+        position: "top-center",
+      });
+    } catch (err) {
+      setAckState(true);
+      toast.error("Error updating the delivery", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
+  const setCompletedDeliveryFarmer = async (productList) => {
+    try {
+      await API.confirmDeliveryProducts(productList);
+      setDeliveryState(true);
+      toast.success("Delivery completed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error updating the delivery", { position: "top-center" });
       console.log(err);
     }
   };
@@ -486,7 +561,39 @@ function App() {
             )}
           />
 
-          <Route //manager homepage
+          <Route
+            path="/acksManager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <AcknowledgeDeliveryManager
+                            className="below-nav main-content" 
+                            confirmAck = {setReadAck}
+                            acknowledges ={acknowledges}/>
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
             path="/manager"
             exact
             render={() => (
@@ -544,7 +651,40 @@ function App() {
             )}
           />
 
-          <Route //customer homepage
+          <Route
+            path="/confirmDeliveryFarmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <BookingDeliveryFarmer 
+                            className="below-nav main-content" 
+                            confirmedProducts= {confirmedProductsFarmer}
+                            confirmDelivery={setCompletedDeliveryFarmer}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
             path="/cust"
             exact
             render={() => (
@@ -573,7 +713,7 @@ function App() {
             )}
           />
 
-          <Route //employeet homepage
+          <Route
             path="/emp"
             exact
             render={() => (
@@ -607,7 +747,7 @@ function App() {
             )}
           />
 
-          <Route //update client data (only for employeet)
+          <Route
             path="/emp/clientData"
             exact
             render={() => (
@@ -643,7 +783,7 @@ function App() {
             )}
           />
 
-          <Route //verify pending cancelation bookings (only for employeet)
+          <Route
             path="/emp/pending"
             exact
             render={() => (
@@ -661,60 +801,6 @@ function App() {
                               products={products}
                               className="below-nav main-content"
                             />
-                          </>
-                        ) : (
-                          <Redirect to="/home" />
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}{" "}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-          />
-
-          <Route //select delivery mode and address
-            path="/deliveryMode"
-            exact
-            render={() => (
-              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-              <>
-                {update ? (
-                  <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id &&
-                        (userdata.id.charAt(0) === "S" ||
-                          userdata.id.charAt(0) === "C") ? (
-                          <>
-                            {deliveryMode ? (
-                              <>{/*FORM CRISTIAN*/}</>
-                            ) : (
-                              <>
-                                <DeliveryForm
-                                  deliveryMode={deliveryMode}
-                                  setDeliveryMode={setDeliveryMode}
-                                />
-                              </>
-                            )}
-                            {/*<SidebarCustom />
-                            <BookingReview
-                              className="below-nav main-content"
-                              cart={cart}
-                              setCart={setCart}
-                              userdata={userdata}
-                              clients={clients}
-                              products={products}
-                              setProducts={setProducts}
-                              newProductBooking={newProductBooking}
-                              setBookingsState={setBookingsState}
-                              getWallet={getWalletById}
-                              className="below-nav main-content"
-                            />*/}
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -755,6 +841,7 @@ function App() {
                               products={products}
                               setProducts={setProducts}
                               newProductBooking={newProductBooking}
+                              newProductMode={newProductMode}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}
                               className="below-nav main-content"

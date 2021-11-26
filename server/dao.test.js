@@ -171,11 +171,11 @@ describe("Test suite DAO", () => {
       },
       {
         id: "2",
-        name: "spezie",
+        name: "Spices",
       },
       {
         id: "3",
-        name: "posions",
+        name: "Vegetables",
       },
     ]);
   }, 10000);

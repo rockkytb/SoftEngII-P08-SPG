@@ -311,6 +311,42 @@ app.get("/api/categories", isLoggedIn, (req, res) => {
     });
 });
 
+
+//POST /api/acknowledge
+app.post("/api/acknowledge", /*isLoggedIn*/ async (req, res) => {
+  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer email` });
+  }
+
+  const ack = {
+    idFarmer: req.body.idFarmer,
+    email: req.body.email,
+    state: "NEW",
+  };
+
+  let ackId;
+
+  try {
+    ackId = await dao.createAcknowledge(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idAck: ackId });
+
+});
+
 //POST /api/bookings
 app.post("/api/bookings", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
@@ -498,6 +534,49 @@ app.put(
   }
 );
 
+
+//PUT /api/ackstate
+app.put(
+  "/api/ackstate", //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid ack id, it must be positive` });
+    }
+
+    const ack = {
+      id: req.body.id,
+      state: req.body.state,
+    };
+
+    let result;
+
+    try {
+      result = await dao.editStateAck(ack);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of ack state: ${result}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json(result);
+  }
+);
+
+// GET /api/acksNew to get all acks with NEW state
+app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
+  dao
+    .getAcksStateNew()
+    .then((acks) => {
+      res.status(200).json(acks);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //POST /api/wallet
 app.post(
   "/api/wallet", //isLoggedIn,
@@ -522,6 +601,18 @@ app.post(
     res.status(201).json(result);
   }
 );
+
+//GET /api/farmers/:farmerid/products_expected to get a list of all products
+app.get("/api/farmers/:farmerid/products_expected", (req, res) => {
+  dao
+    .getAllProductsExpectedForFarmer(req.params.farmerid)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 //GET /api/products to get a list of all products
 app.get("/api/products", (req, res) => {
@@ -640,7 +731,7 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
 });
 
 //POST /api/bookings_mode
-app.post("/api/bookings_mode"/*, isLoggedIn*/, async (req, res) => {
+app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   if (!validator.isInt(`${req.body.idBooking}`, { min: 1 })) {
     return res
       .status(422)
@@ -657,8 +748,8 @@ app.post("/api/bookings_mode"/*, isLoggedIn*/, async (req, res) => {
     country: req.body.country,
     date: req.body.date,
     time: req.body.time,
-    extra_fee: req.body.extra_fee
-  }
+    extra_fee: req.body.extra_fee,
+  };
 
   let bookingModeId;
 
