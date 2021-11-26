@@ -242,7 +242,7 @@ function App() {
 
   //update confirmed product from farmer
   useEffect(() => {
-    if (loggedIn && deliveryState && userdata.id.charAt(0) === "F") {
+    if (loggedIn && deliveryState && userdata.id &&userdata.id.charAt(0) === "F") {
       const getConfirmedProductsFarmer = async () => {
         // call: GET /api/products/farmers/:id
         const response = await fetch("/api/products/farmers/" + 
@@ -260,7 +260,7 @@ function App() {
 
   //update acks manager
   useEffect(() => {
-    if (loggedIn && ackState && userdata.id.charAt(0) === "M") {
+    if (loggedIn && ackState && userdata.id && userdata.id.charAt(0) === "M") {
       const getAcksManager = async () => {
         // call: GET /api/acksNew
         const response = await fetch("/api/acksNew");
