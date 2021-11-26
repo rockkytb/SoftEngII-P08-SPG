@@ -549,6 +549,35 @@ function App() {
           />
 
           <Route
+            path="/confirmDeliveryFarmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Farmer className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
             path="/cust"
             exact
             render={() => (

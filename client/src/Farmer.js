@@ -10,7 +10,13 @@ function Farmer(props) {
           <h1 className="below-nav main-content text-center">I'm a farmer</h1>
 
           <Container fluid className = "text-center">
-            
+          <Row md={12}>
+                <Col className="md-4 pr-0 pl-0 ">
+                <Link to="/confirmDeliveryFarmer"> 
+                    <Button className="mr-2 ml-2 md-1 "> Confirm Delivery </Button> 
+                </Link>
+              </Col>
+            </Row>
         
           </Container>
 
