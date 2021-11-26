@@ -523,6 +523,18 @@ app.post(
   }
 );
 
+//GET /api/farmers/:farmerid/products_expected to get a list of all products
+app.get("/api/farmers/:farmerid/products_expected", (req, res) => {
+  dao
+    .getAllProductsExpectedForFarmer(req.params.farmerid)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //GET /api/products to get a list of all products
 app.get("/api/products", (req, res) => {
   dao
@@ -640,7 +652,7 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
 });
 
 //POST /api/bookings_mode
-app.post("/api/bookings_mode"/*, isLoggedIn*/, async (req, res) => {
+app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   if (!validator.isInt(`${req.body.idBooking}`, { min: 1 })) {
     return res
       .status(422)
@@ -657,8 +669,8 @@ app.post("/api/bookings_mode"/*, isLoggedIn*/, async (req, res) => {
     country: req.body.country,
     date: req.body.date,
     time: req.body.time,
-    extra_fee: req.body.extra_fee
-  }
+    extra_fee: req.body.extra_fee,
+  };
 
   let bookingModeId;
 
