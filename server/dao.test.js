@@ -401,3 +401,16 @@ test("Insert a new Product expected", () => {
   };
   return expect(dao.insertTupleProductExpected(parameter)).resolves.toEqual(11);
 });*/
+
+
+//Test create Acknowledge
+test("the creation of ack success", () => {
+  const ack = {
+    idFarmer: 1,
+    email: "antonio.bianchii@mail.it",
+    state: "NEW"
+  };
+  return expect(dao.createAcknowledge(ack)).resolves.toEqual(3
+  
+  );
+});

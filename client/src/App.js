@@ -350,6 +350,8 @@ function App() {
     try {
       await API.confirmDeliveryProducts(productList);
       setDeliveryState(true);
+      //AWAIT POST NEW acknowledge
+      setAckState(true);
       toast.success("Delivery completed successfully", {
         position: "top-center",
       });
