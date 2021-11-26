@@ -676,60 +676,6 @@ function App() {
           />
 
           <Route
-            path="/deliveryMode"
-            exact
-            render={() => (
-              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
-              <>
-                {update ? (
-                  <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id &&
-                        (userdata.id.charAt(0) === "S" ||
-                          userdata.id.charAt(0) === "C") ? (
-                          <>
-                            {deliveryMode ? (
-                              <>{/*FORM CRISTIAN*/}</>
-                            ) : (
-                              <>
-                                <DeliveryForm
-                                  deliveryMode={deliveryMode}
-                                  setDeliveryMode={setDeliveryMode}
-                                />
-                              </>
-                            )}
-                            {/*<SidebarCustom />
-                            <BookingReview
-                              className="below-nav main-content"
-                              cart={cart}
-                              setCart={setCart}
-                              userdata={userdata}
-                              clients={clients}
-                              products={products}
-                              setProducts={setProducts}
-                              newProductBooking={newProductBooking}
-                              setBookingsState={setBookingsState}
-                              getWallet={getWalletById}
-                              className="below-nav main-content"
-                            />*/}
-                          </>
-                        ) : (
-                          <Redirect to="/home" />
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}{" "}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-          />
-
-          <Route
             path="/newOrder"
             exact
             render={() => (
