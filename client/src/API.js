@@ -315,6 +315,31 @@ async function confirmDeliveryProducts(productList){
     });
 }
 
+async function newAck(idFarmer,email) {
+    //call: POST /api/acknowledge
+    return new Promise((resolve, reject) => {
+        fetch(url + '/acknowledge', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                { idFarmer: idFarmer,
+                  email: email }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+
+}
+
 async function newBookingMode(booking) {
     //call: POST /api/bookings_mode
     return new Promise((resolve, reject) => {
@@ -338,5 +363,8 @@ async function newBookingMode(booking) {
     });
 }
 
-const API = { addUser, confirmAck, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking, newBookingMode};
+const API = { addUser,newAck, confirmAck, logIn, logOut, getUserInfo,
+     newBooking, newBookingProduct, editProductQty, getClientByEmail, 
+    getWalletById, setNewWallet, confirmBooking, newBookingMode,
+    confirmDeliveryProducts};
 export default API;

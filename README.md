@@ -216,11 +216,10 @@ put (edit) the state of all product in PRODUCT_WEEK by receiving an array of pro
     ...]
 
 #### POST /api/acknowledge
-Add new acknowledge for manager. Example:
+Add new acknowledge for manager with state = NEW. Example:
     {
     "idFarmer": 1, 
-    "email": "antonio.bianchi@mail.it",
-    "state": "NEW"
+    "email": "antonio.bianchi@mail.it"
     }
 
 #### GET /api/bookings

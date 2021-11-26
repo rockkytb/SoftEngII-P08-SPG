@@ -348,9 +348,9 @@ function App() {
   //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
   const setCompletedDeliveryFarmer = async (productList) => {
     try {
-      await API.confirmDeliveryProducts(productList);
+      //await API.confirmDeliveryProducts(productList);
       setDeliveryState(true);
-      //AWAIT POST NEW acknowledge
+      await API.newAck(userdata.id.substring(1),userdata.username);
       setAckState(true);
       toast.success("Delivery completed successfully", {
         position: "top-center",
