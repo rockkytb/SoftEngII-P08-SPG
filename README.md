@@ -80,7 +80,7 @@ Edit the state of an existing ack.
 Receive a JSON object:
 
 {"id":1,
-"state":"COMPLETED"}
+"state":"READ"}
 
 #### GET /api/bookings/clients/:id
 

@@ -26,6 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
 import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
+import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
   const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
   const [deliveryState, setDeliveryState] = useState (true);
   const [categories, setCategories] = useState([]);
+  const [acknowledges, setAcknowledges] = useState([]);
+  const [ackState, setAckState] = useState (true);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -255,6 +258,23 @@ function App() {
     }
   }, [deliveryState, loggedIn]);
 
+  //update acks manager
+  useEffect(() => {
+    if (loggedIn && ackState && userdata.id.charAt(0) === "M") {
+      const getAcksManager = async () => {
+        // call: GET /api/acksNew
+        const response = await fetch("/api/acksNew");
+        const ackList = await response.json();
+        if (response.ok) {
+          setAcknowledges(ackList);
+        }
+      };
+
+      getAcksManager();      
+      setAckState(false);
+    }
+  }, [ackState, loggedIn]);
+
   //get clients
   useEffect(() => {
     const getClients = async () => {
@@ -305,6 +325,20 @@ function App() {
       });
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const setReadAck = async (id) => {
+    try {
+      await API.confirmAck(id);
+      setAckState(true);
+      toast.success("Delivery acknowledge", {
+        position: "top-center",
+      });
+    } catch (err) {
+      setAckState(true);
+      toast.error("Error updating the delivery", { position: "top-center" });
       console.log(err);
     }
   };
@@ -517,6 +551,38 @@ function App() {
                         getClientbyEmail={getSingleClientByEmail}
                       />
                     )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/acksManager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <AcknowledgeDeliveryManager
+                            className="below-nav main-content" 
+                            confirmAck = {setReadAck}
+                            acknowledges ={acknowledges}/>
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
                   </>
                 ) : (
                   <></>

@@ -11,7 +11,14 @@ function Manager(props) {
 
           <Container fluid className = "text-center">
             
-        
+            <Row md={12}>
+                <Col className="md-4 pr-0 pl-0 ">
+                <Link to="/acksManager"> 
+                    <Button className="mr-2 ml-2 md-1 "> Acknowledge deliveries </Button> 
+                </Link>
+              </Col>
+            </Row>
+
           </Container>
 
     </>
