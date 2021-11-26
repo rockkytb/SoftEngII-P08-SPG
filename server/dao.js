@@ -399,12 +399,38 @@ exports.getAllProducts = () => {
   });
 };
 
+// get products from PRODUCT EXPECTED according to the id of a farmer
+exports.getAllProducts = (idFarmer) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      //  "SELECT * FROM PRODUCT_EXPECTED p WHERE p.FARMER_ID=? ";
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_EXPECTED p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=?";
+
+    db.all(sql, [idFarmer], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const products = rows.map((e) => ({
+        id: e.ID,
+        name: e.NAME,
+        category: e.categoryName,
+        price: e.PRICE,
+        qty: e.QTY,
+        farmer_email: e.EMAIL,
+        state: e.STATE,
+      }));
+      resolve(products);
+    });
+  });
+};
+
 //get all products in state = CONFIRMED of a particular farmer from PRODUCT_WEEK table
 exports.getAllConfirmedProductsForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=\"CONFIRMED\"";
-    db.all(sql,[farmerId], (err, rows) => {
+      'SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE="CONFIRMED"';
+    db.all(sql, [farmerId], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -421,7 +447,6 @@ exports.getAllConfirmedProductsForFarmer = (farmerId) => {
     });
   });
 };
-
 
 //get all bookings
 exports.getAllBookings = () => {
@@ -452,7 +477,7 @@ exports.getAllBookingsForClient = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql =
       "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
-    db.all(sql,[clientId], (err, rows) => {
+    db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -563,16 +588,18 @@ exports.createBookingMode = (bookingMode) => {
       "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
-        [bookingMode.idBooking,
-        bookingMode.delivery, 
-        bookingMode.street, 
-        bookingMode.city,  
-        bookingMode.province, 
+      [
+        bookingMode.idBooking,
+        bookingMode.delivery,
+        bookingMode.street,
+        bookingMode.city,
+        bookingMode.province,
         bookingMode.postal_code,
-        bookingMode.country, 
-        bookingMode.date, 
-        bookingMode.time, 
-        bookingMode.extra_fee],
+        bookingMode.country,
+        bookingMode.date,
+        bookingMode.time,
+        bookingMode.extra_fee,
+      ],
       function (err) {
         if (err) {
           reject(err);
