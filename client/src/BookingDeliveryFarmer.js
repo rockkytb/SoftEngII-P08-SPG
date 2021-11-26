@@ -30,7 +30,7 @@ export default function BookingDeliveryFarmer(props) {
                             variant="primary"
                             onClick={() => {
                                 //TODO, confirm delivery
-                                props.confirmDelivery(confirmedProducts);
+                                props.confirmDelivery(props.confirmedProducts);
                                 
                                 
                             }}
