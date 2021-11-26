@@ -25,6 +25,7 @@ import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
+import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
 import CheckPending from "./CheckPending";
 
 function App() {
@@ -560,7 +561,15 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Farmer className="below-nav main-content" />
+                            <BookingDeliveryFarmer 
+                            className="below-nav main-content" 
+                            confirmedProducts= {[{
+                              name: "paperino",
+                              qty: 3
+                              },{
+                              name: "pluto",
+                              qty: 6
+                            }]}/>
                           </>
                         ) : (
                           <Redirect to="/home" />
