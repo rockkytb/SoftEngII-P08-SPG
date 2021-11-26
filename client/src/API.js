@@ -338,5 +338,5 @@ async function newBookingMode(booking) {
     });
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking, newBookingMode};
+const API = { addUser, confirmAck, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking, newBookingMode};
 export default API;
