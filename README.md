@@ -1,5 +1,13 @@
 # SoftEngII-P08-SPG
 
+## HOW TO RUN DOCKER?
+
+1. install docker
+2. open a powershell 
+3. docker-compose up
+4. connect localhost 3000
+
+
 ## HOW TO TEST? SERVER SIDE
 
 1. cd server
