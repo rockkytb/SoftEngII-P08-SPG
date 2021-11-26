@@ -323,6 +323,21 @@ exports.editStateBooking = (booking) => {
     });
   });
 };
+
+// edit state of an ack
+exports.editStateAck = (ack) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE MANAGER_ACKNOWLEDGE SET STATUS = ? WHERE ID = ?";
+    db.run(sql, [ack.state, ack.id], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 // get a booking
 exports.getBooking = (id) => {
   return new Promise((resolve, reject) => {

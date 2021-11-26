@@ -73,6 +73,15 @@ Receive a JSON object:
 {"id":1,
 "state":"COMPLETED"}
 
+#### PUT /api/ackstate
+
+Edit the state of an existing ack.
+
+Receive a JSON object:
+
+{"id":1,
+"state":"COMPLETED"}
+
 #### GET /api/bookings/clients/:id
 
 Get ALL the bookings of a particular client, return a JSON Vector
