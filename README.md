@@ -45,10 +45,10 @@ return the JSON list of all products. Example
     [
     {"id":1,
     "name":"Apple",
-    "category":2,
+    "category":"spices",
     "price":1.99,
     "qty":2,
-    "farmer_email":3},
+    "farmer_email":"farmer@email.it"},
     ...]
 
 #### POST /api/bookings
@@ -93,12 +93,12 @@ This API receives an array of products advertised by farmer and insert one by on
 
     [
     {
-	"name":"Apple",
+    "name":"Apple",
     "category":2,
     "price":1.99,
     "qty":2,
     "farmer_id":3
-	},
+    },
     ...]
 
 #### GET /api/categories
@@ -146,18 +146,18 @@ Receive a JSON object
 
 delete a product by receiving its id
 
-#### GET /api/products_expected
+#### GET /api/farmers/:farmerid/products_expected
 
 return the JSON list of all products from PRODUCT EXPECTED according to the id of a farmer. Example
 
     [
     {"id":1,
     "name":"Apple",
-    "category":2,
+    "category":"fruit",
     "price":1.99,
     "qty":2,
-    "farmer_email":3
-    "state":},
+    "farmer_email":"farmer@email.it"
+    "state":"EXPECTED"},
     ...]
 
 ### POST /api/farmers/:farmerid/products/
