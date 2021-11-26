@@ -73,7 +73,7 @@ Receive a JSON object:
 {"id":1,
 "state":"COMPLETED"}
 
-#### PUT /api/ackgstate
+#### PUT /api/ackstate
 
 Edit the state of an existing ack.
 
