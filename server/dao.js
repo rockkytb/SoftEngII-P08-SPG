@@ -243,6 +243,20 @@ exports.getManagerById = (id) => {
   });
 };
 
+// add a new acknowledge
+exports.createAcknowledge = (ack) => {
+  return new Promise((resolve, reject) => {
+    const sql = "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATE) VALUES(?, ?, ?)";
+    db.run(sql, [ack.idFarmer,ack.email, ack.state], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(this.lastID);
+    });
+  });
+};
+
 // add a new booking
 exports.createBooking = (booking) => {
   return new Promise((resolve, reject) => {

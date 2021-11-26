@@ -311,6 +311,42 @@ app.get("/api/categories", isLoggedIn, (req, res) => {
     });
 });
 
+
+//POST /api/acknowledge
+app.post("/api/acknowledge", /*isLoggedIn*/ async (req, res) => {
+  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer email` });
+  }
+
+  const ack = {
+    idFarmer: req.body.idFarmer,
+    email: req.body.email,
+    state: "NEW",
+  };
+
+  let ackId;
+
+  try {
+    ackId = await dao.createAcknowledge(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idAck: ackId });
+  
+});
+
 //POST /api/bookings
 app.post("/api/bookings", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {

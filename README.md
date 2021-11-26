@@ -195,6 +195,14 @@ put (edit) the state of all product in PRODUCT_WEEK by receiving an array of pro
     "state":"DELIVERED"},
     ...]
 
+#### POST /api/acknowledge
+Add new acknowledge for manager. Example:
+    {
+    "idFarmer": 1, 
+    "email": "antonio.bianchi@mail.it",
+    "state": "NEW"
+    }
+
 #### GET /api/bookings
 
 Retrieve the list of all bookings, return a JSON Vector
