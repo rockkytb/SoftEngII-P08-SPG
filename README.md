@@ -133,6 +133,17 @@ retrieves all the bookings with state = PENDINGCANCELATION, return a JSON Vector
         "product": "pro1"
     },...]
 
+#### GET /api/acksNew
+
+retrieves all the acks with state = NEW, return a JSON Vector
+
+    [    {
+        "id": 2,
+        "state": "NEW",
+        "farmer": "antonio.bianchi@mail.it",
+        "farmerId": 1
+    },...]
+
 #### POST /api/bookings_mode
 
 Create a new booking mode

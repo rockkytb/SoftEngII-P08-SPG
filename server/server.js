@@ -565,6 +565,18 @@ app.put(
   }
 );
 
+// GET /api/acksNew to get all acks with NEW state
+app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
+  dao
+    .getAcksStateNew()
+    .then((acks) => {
+      res.status(200).json(acks);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //POST /api/wallet
 app.post(
   "/api/wallet", //isLoggedIn,

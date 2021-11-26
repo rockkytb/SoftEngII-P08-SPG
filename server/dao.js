@@ -546,6 +546,29 @@ exports.createWallet = (id) => {
   });
 };
 
+// Get all ACK with new state
+exports.getAcksStateNew = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT ID,FARMER_ID,FARMER,STATUS FROM MANAGER_ACKNOWLEDGE WHERE STATUS = 'NEW'";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const acks = rows.map((e) => ({
+        id: e.ID,
+        state: e.STATUS,
+        farmer: e.FARMER,
+        farmerId: e.FARMER_ID
+      }));
+
+      resolve(acks);
+    });
+  });
+};
+
 // Get all bookings with PendingCancelation state
 exports.getBookingsStatePendingCancelation = () => {
   return new Promise((resolve, reject) => {
