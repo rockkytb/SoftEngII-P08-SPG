@@ -546,10 +546,11 @@ exports.insertTupleProductExpected = (pdtExp) => {
 exports.createBookingMode = (bookingMode) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO BOOKING_MODE (delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
-      [bookingMode.delivery, 
+        [bookingMode.idBooking,
+        bookingMode.delivery, 
         bookingMode.street, 
         bookingMode.city,  
         bookingMode.province, 

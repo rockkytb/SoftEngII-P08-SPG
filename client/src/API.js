@@ -262,5 +262,28 @@ async function confirmBooking(id){
     });
 }
 
-const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking};
+async function newBookingMode(booking) {
+    //call: POST /api/bookings_mode
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookings_mode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                booking
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+const API = { addUser, logIn, logOut, getUserInfo, newBooking, newBookingProduct, editProductQty, getClientByEmail, getWalletById, setNewWallet, confirmBooking, newBookingMode};
 export default API;

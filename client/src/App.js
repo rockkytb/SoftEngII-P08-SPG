@@ -168,6 +168,13 @@ function App() {
     bookingProduct();
   };
 
+  const newProductMode = (booking) => {
+    const bookingMode = async () => {
+      await API.newBookingMode(booking);
+    }
+    bookingMode();
+  }
+
   //update products, bookings and next week products
   useEffect(() => {
     if (bookingsState) {
@@ -698,6 +705,7 @@ function App() {
                               products={products}
                               setProducts={setProducts}
                               newProductBooking={newProductBooking}
+                              newProductMode={newProductMode}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}
                               className="below-nav main-content"

@@ -45,12 +45,24 @@ function BookingReview(props) {
     };
     book()
       .then(() => {
-        toast.success("Booking completed", { position: "top-center" });
         props.cart.map((p) => {
           props.newProductBooking(tmp, p.id, p.quantity);
         });
+        props.newProductMode({
+          idBooking: tmp,
+          delivery:deliveryMode ? (1):(0),
+          street:street,
+          city:city,
+          province:province,
+          postal_code:postalCode,
+          country:country,
+          date:date,
+          time:time,
+          extra_fee:extraFee
+        });
         props.setBookingsState(true);
         props.setCart([]);
+        toast.success("Booking completed", { position: "top-center" });
         handleClose();
       }
       )
