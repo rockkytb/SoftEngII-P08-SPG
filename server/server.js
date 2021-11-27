@@ -584,6 +584,7 @@ app.post("/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/, async (req,
     res.status(503).json({
       error: `Database error during insertion into product_week table.`,
     });
+    return;
   }
 
   //All went fine

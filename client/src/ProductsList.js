@@ -79,6 +79,7 @@ export default function ProductsList(props) {
 
     //@kricar gioca a europa universalis anziché a tempo di boom :c
 
+    //the product must be one from next week so it must be not already confirmed
     return props.products.map((product) => (
       <Col>
         <Card className="text-dark">
