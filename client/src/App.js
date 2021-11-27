@@ -915,6 +915,7 @@ function App() {
                               newProductMode={newProductMode}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}
+                              calendarday = {date}
                               className="below-nav main-content"
                             />
                           </>

@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 function BookingReview(props) {
   const [clientID, setClientID] = useState(props.userdata.id.charAt(0) === "S" ? (props.clients[0].id):(props.userdata.id));
   const [showAlert, setShowAlert] = useState(false);
+  const [showAlertTime, setShowAlertTime] = useState(false);
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
@@ -171,6 +172,7 @@ function BookingReview(props) {
           Universe. Do you really want to?
         </p>
         <hr />
+
         <div className="d-flex justify-content-end">
             <Button
             color="black"
@@ -198,6 +200,26 @@ function BookingReview(props) {
               }}
             >
               You may fire when ready.
+            </Button>
+          
+        </div>
+      </Alert>
+
+      <Alert show={showAlertTime} variant="danger">
+        <Alert.Heading>You cannot confirm booking now</Alert.Heading>
+        <p>
+          Bookings must happen only from 10 am of Saturday until 23 pm of Sunday
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+            <Button
+            color="black"
+              onClick={() => {
+              
+                setShowAlertTime(false);
+              }}
+            >
+              Close.
             </Button>
           
         </div>
@@ -308,8 +330,14 @@ function BookingReview(props) {
             </Col>
             <Col className="md-2 text-left">
                 <Button variant="primary" color="black" id="butConf" onClick={() => {
-                    
-                      setShow(true);
+                      //BOOKINGS may happen only between saturday 10 am until sunday 23
+                      if((props.calendarday.getDay() === 6 && props.calendarday.getHours() >= 10) ||
+                      (props.calendarday.getDay() === 0 && props.calendarday.getHours() < 23)){
+                        setShow(true);
+                      }
+                      else{
+                        setShowAlertTime(true);
+                      }
                     
                     }}>
                   Confirm Booking
