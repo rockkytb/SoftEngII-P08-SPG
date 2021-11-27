@@ -280,6 +280,14 @@ Receive a JSON object
     {"ID_Product":3,
     "Dec_Qty":6}
 
+#### PUT /api/productstate
+
+Changes the state of a product in product_week table
+
+Receive a JSON object
+
+    {"id":3,
+    "state":"EXPECTED"}
 #### POST /api/newclient
 
 Add a new client in the table Client

@@ -504,6 +504,39 @@ app.put(
   }
 );
 
+//PUT /api/productstate
+app.put(
+  "/api/productstate", //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid state lenght` });
+    }
+    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product id, it must be positive` });
+    }
+
+    const product = {
+      id: req.body.id,
+      state: req.body.state,
+    };
+
+    try {
+      await dao.editStateProductWeek(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of bookingProduct: ${product}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json(product);
+  }
+);
+
 // POST /api/farmers/:farmerid/products receive a vector of tuples of products expected
 app.post("/api/farmers/:farmerid/products" /*, isLoggedIn*/, async (req, res) => {
 

@@ -310,6 +310,23 @@ exports.editQtyProductWeek = (product) => {
   });
 };
 
+// edit state of a product_week
+exports.editStateProductWeek = (product) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE PRODUCT_WEEK SET STATE = ? WHERE ID = ?";
+    db.run(sql, [product.state, product.id], function (err, row) {
+      if (err) {
+        reject(err);
+        return;
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED 
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
