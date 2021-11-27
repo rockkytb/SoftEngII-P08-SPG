@@ -5,9 +5,12 @@ import {
     Card,
     Col,
     Button,
+    Alert
 } from "react-bootstrap";
 
 export default function BookingConfirmFarmer(props) {
+
+    const [showAlertTime, setShowAlertTime] = useState(false);
 
     function confirmActions() {
         if(props.expectedProducts.length == 0){
@@ -29,8 +32,11 @@ export default function BookingConfirmFarmer(props) {
                         <Button
                             variant="primary"
                             onClick={() => {
-                                //TODO, confirm delivery
-                                props.confirmProducts(props.expectedProducts);
+                                if(props.calendarday.getDay() === 0 && props.calendarday.getHours() <= 23){
+                                props.confirmProducts(props.expectedProducts);}
+                                else{
+                                    setShowAlertTime(true);
+                                }
                                 
                                 
                             }}
@@ -46,6 +52,26 @@ export default function BookingConfirmFarmer(props) {
 
     return (
         <div className= "below-nav">
+
+            <Alert show={showAlertTime} variant="danger">
+                <Alert.Heading>You cannot confirm delivery now</Alert.Heading>
+                <p>
+                Deliveries must happen only from 00 am to 23 pm of Tuesday
+                </p>
+                <hr />
+                <div className="d-flex justify-content-end">
+                    <Button
+                    color="black"
+                    onClick={() => {
+                    
+                        setShowAlertTime(false);
+                    }}
+                    >
+                    Close.
+                    </Button>
+                
+                </div>
+            </Alert>
 
             <CardColumns xs={1} md={5}>
                 <>{props.expectedProducts && props.expectedProducts.length > 0 ? confirmActions() : <>No products to confirm</>}</>

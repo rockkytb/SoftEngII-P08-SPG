@@ -705,6 +705,7 @@ function App() {
                             className="below-nav main-content" 
                             expectedProducts= {productsExpectedFarmer}
                             confirmProducts={confirmProductsFarmer}
+                            calendarday = {date}
                             />
                           </>
                         ) : (
