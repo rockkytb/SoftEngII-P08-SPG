@@ -423,7 +423,7 @@ exports.createClient = (client) => {
 exports.getAllProducts = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID";
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);

@@ -530,6 +530,33 @@ app.post("/api/farmers/:farmerid/products" /*, isLoggedIn*/, async (req, res) =>
   res.status(201).json({ productId: productId });
 });
 
+
+// POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
+app.post("/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/, async (req, res) => {
+
+  const product = {
+    name: req.body.name,
+    category_id: req.body.category,
+    price: req.body.price,
+    qty: req.body.qty,
+    farmer_id: req.params.farmerid,
+    state: "EXPECTED",
+  };
+
+  let productId;
+
+  try {
+    productId = await dao.insertTupleProductWEEK(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during insertion into product_week table.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ productId: productId });
+});
+
 //PUT /api/bookingstate
 app.put(
   "/api/bookingstate", //isLoggedIn,
