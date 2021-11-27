@@ -459,13 +459,13 @@ exports.getAllProducts = () => {
   });
 };
 
-// get products from PRODUCT EXPECTED according to the id of a farmer
+// get products from PRODUCT_WEEK with EXPECTED STATE according to the id of a farmer
 exports.getAllProductsExpectedForFarmer = (idFarmer) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_EXPECTED p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=?";
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 
-    db.all(sql, [idFarmer], (err, rows) => {
+    db.all(sql, [idFarmer,"EXPECTED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -488,8 +488,8 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 exports.getAllConfirmedProductsForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      'SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE="CONFIRMED"';
-    db.all(sql, [farmerId], (err, rows) => {
+      'SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=?';
+    db.all(sql, [farmerId,"CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;

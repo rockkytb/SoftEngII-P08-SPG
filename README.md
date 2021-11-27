@@ -182,7 +182,7 @@ delete a product by receiving its id
 
 #### GET /api/farmers/:farmerid/products_expected
 
-return the JSON list of all products from PRODUCT EXPECTED according to the id of a farmer. Example
+return the JSON list of all products from PRODUCT_WEEK with state = EXPECTED according to the id of a farmer. Example
 
     [
     {"id":1,
