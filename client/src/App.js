@@ -738,6 +738,7 @@ function App() {
                             className="below-nav main-content" 
                             confirmedProducts= {confirmedProductsFarmer}
                             confirmDelivery={setCompletedDeliveryFarmer}
+                            calendarday = {date}
                             />
                           </>
                         ) : (
