@@ -654,6 +654,39 @@ function App() {
           />
 
           <Route
+            path="/confirmBookingFarmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> 
+                            <BookingDeliveryFarmer 
+                            className="below-nav main-content" 
+                            confirmedProducts= {confirmedProductsFarmer}
+                            confirmDelivery={setCompletedDeliveryFarmer}
+                            />*/}
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
             path="/confirmDeliveryFarmer"
             exact
             render={() => (

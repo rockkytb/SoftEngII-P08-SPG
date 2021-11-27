@@ -12,9 +12,13 @@ function Farmer(props) {
           <Container fluid className = "text-center">
           <Row md={12}>
                 <Col className="md-4 pr-0 pl-0 ">
-                <Link to="/confirmDeliveryFarmer"> 
-                    <Button color="black" className="mr-2 ml-2 md-1 "> Confirm Delivery </Button> 
-                </Link>
+                  <Link to="/confirmBookingFarmer"> 
+                      <Button color="black" className="mr-2 ml-2 md-1 "> Confirm Booking </Button> 
+                  </Link>
+
+                  <Link to="/confirmDeliveryFarmer"> 
+                      <Button color="black" className="mr-2 ml-2 md-1 "> Confirm Delivery </Button> 
+                  </Link>
               </Col>
             </Row>
         
