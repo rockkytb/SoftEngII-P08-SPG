@@ -13,6 +13,12 @@
 1. cd server
 2. npm run test
 
+## LIST OF STATUS PRODUCT WEEK
+
+1. EXPECTED = advertised by farmer on saturday morning
+2. CONFIRMED = confirmed by farmer on monday
+3. DELIVERED = delivered by farmer on tuesday evening
+
 ## LIST OF API SPRINT 1
 
 ### http://localhost:3000 is the default path
