@@ -48,7 +48,7 @@ Example
 
 #### GET /api/products
 
-return the JSON list of all products. Example
+return the JSON list of all products in state = EXPECTED. Example
 
     [
     {"id":1,
