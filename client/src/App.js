@@ -26,6 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
 import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
+import BookingConfirmFarmer from "./BookingConfirmFarmer";
 import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
 
@@ -49,6 +50,7 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [acknowledges, setAcknowledges] = useState([]);
   const [ackState, setAckState] = useState (true);
+  const [productsExpectedFarmer, setProductsExpectedFarmer] = useState ([]);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -253,6 +255,18 @@ function App() {
         }
       };
 
+      const getExpectedProductsFarmer = async () => {
+        // call: GET /api/farmers/:farmerid/products_expected
+        const response = await fetch("/api/farmers/" + 
+                      userdata.id.substring(1) +
+                      "/products_expected");
+        const expectedProductList = await response.json();
+        if (response.ok) {
+          setProductsExpectedFarmer(expectedProductList);
+        }
+      };
+
+      getExpectedProductsFarmer();
       getConfirmedProductsFarmer();      
       setDeliveryState(false);
     }
@@ -357,6 +371,28 @@ function App() {
       });
     } catch (err) {
       toast.error("Error updating the delivery", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const confirmProductsFarmer = async (productList) => {
+    try {
+      const confirmList = productList.map((product)=>{
+        return {
+            id: product.id,
+            state:"CONFIRMED"
+        }
+    });
+      for (const product of productList) {
+          await API.confirmProductsFarmer(product);
+      };
+      
+      setDeliveryState(true);
+      toast.success("Products confirmed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error with the confirmation", { position: "top-center" });
       console.log(err);
     }
   };
@@ -664,12 +700,12 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                            {/*<SidebarCustom /> 
-                            <BookingDeliveryFarmer 
+                            {/*<SidebarCustom /> */}
+                            <BookingConfirmFarmer 
                             className="below-nav main-content" 
-                            confirmedProducts= {confirmedProductsFarmer}
-                            confirmDelivery={setCompletedDeliveryFarmer}
-                            />*/}
+                            expectedProducts= {productsExpectedFarmer}
+                            confirmProducts={confirmProductsFarmer}
+                            />
                           </>
                         ) : (
                           <Redirect to="/home" />

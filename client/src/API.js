@@ -315,6 +315,32 @@ async function confirmDeliveryProducts(productList){
     });
 }
 
+async function confirmProductsFarmer(product){
+    return new Promise((resolve, reject) => {
+        
+        
+            fetch(url + '/productstate', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    product
+                ),
+            }).then((response) => {
+                if (response.ok) {
+                    resolve(response.json());
+                } else {
+                    response.json()
+                        .then((obj) => { reject(obj); }) // error msg in the response body
+                        .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+                }
+            }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+        
+    
+    });
+}
+
 async function newAck(idFarmer,email) {
     //call: POST /api/acknowledge
     return new Promise((resolve, reject) => {
@@ -366,5 +392,5 @@ async function newBookingMode(booking) {
 const API = { addUser,newAck, confirmAck, logIn, logOut, getUserInfo,
      newBooking, newBookingProduct, editProductQty, getClientByEmail, 
     getWalletById, setNewWallet, confirmBooking, newBookingMode,
-    confirmDeliveryProducts};
+    confirmDeliveryProducts,confirmProductsFarmer};
 export default API;
