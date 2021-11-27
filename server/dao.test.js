@@ -299,6 +299,27 @@ test("get all bookings success", async () => {
   return expect(dao.getAllBookings()).resolves.toEqual([received]);
 }, 10000);
 
+// TEST GET BOOKINGS FOR A PARTICULAR CLIENT
+test("get all bookings for a client success", async () => {
+
+  const received = {
+    "id": 1,
+    "state": "COMPLETED",
+    "email": "marco.bianchi@mail.it",
+    "name": "Marco",
+    "surname": "Bianchi",
+    "qty": 3,
+    "product": "Mele"
+  }
+
+  return expect(dao.getAllBookingsForClient(1)).resolves.toEqual([received]);
+}, 10000);
+
+test("get all bookings for a non-existing client success", () => {
+
+  return expect(dao.getAllBookingsForClient(100)).resolves.toEqual([]);
+});
+
 //TEST UPDATE WALLET BALANCE
 test("updating the wallet failed bacause client was not found", () => {
   const wallet = {

@@ -398,6 +398,34 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  describe("get all bookings for a client success", () => {
+    it("test get api/bookings/clients/1 endpoint", async () => {
+      const response = await request(app).get("/api/bookings/clients/1");
+      expect(response.body).toEqual([
+        {
+          "id": 1,
+          "state": "COMPLETED",
+          "email": "marco.bianchi@mail.it",
+          "name": "Marco",
+          "surname": "Bianchi",
+          "qty": 3,
+          "product": "Mele"
+      }
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe("get all bookings for a non-existing client success", () => {
+    it("test get api/bookings/clients/100 endpoint", async () => {
+      const response = await request(app).get("/api/bookings/clients/100");
+      expect(response.body).toEqual([]);
+      expect(response.body).toHaveLength(0);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
   describe("update wallet balance fails", () => {
     it("send a negative balance amount", async () => {
       const res = await request(app).put("/api/walletbalance").send({
