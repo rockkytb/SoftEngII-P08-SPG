@@ -1,6 +1,6 @@
 version: '3'
 services:
-  server_dev:
+  server:
     build:
       context: ./server/
     command: node server.js
@@ -14,15 +14,17 @@ services:
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: "true"
 
-  client_dev:
+  client:
     build:
       context: ./client/
     command: npm start
     volumes:
       - ./client/:/usr/app
       - /usr/app/node_modules
+    links:
+      - server
     depends_on:
-      - server_dev
+      - server
     ports:
       - "3000:3000"
     # env_file: ./client/.env # TODO - uncomment this to auto-load your .env file!
