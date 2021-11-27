@@ -383,7 +383,7 @@ function App() {
             state:"CONFIRMED"
         }
     });
-      for (const product of productList) {
+      for (const product of confirmList) {
           await API.confirmProductsFarmer(product);
       };
       
