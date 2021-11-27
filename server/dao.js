@@ -310,6 +310,34 @@ exports.editQtyProductWeek = (product) => {
   });
 };
 
+// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED 
+exports.insertTupleProductWEEK = (product) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE) VALUES(?, ?, ?, ?, ?, ?)";
+    db.run(
+      sql,
+      [
+        product.name,
+        product.category_id,
+        product.price,
+        product.qty,
+        product.farmer_id,
+        product.state,
+      ],
+      function (err) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(this.lastID);
+      }
+    );
+  });
+};
+
+
+
 // edit state of a booking
 exports.editStateBooking = (booking) => {
   return new Promise((resolve, reject) => {
