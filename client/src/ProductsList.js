@@ -75,8 +75,6 @@ export default function ProductsList(props) {
   };
 
   function productsActions() {
-    let tempoDiBoom = "";
-
     //@kricar gioca a europa universalis anziché a tempo di boom :c
 
     //the product must be one from next week so it must be not already confirmed
@@ -89,14 +87,7 @@ export default function ProductsList(props) {
             <Card.Text>
               Unit Price: {product.price} €
               <br />
-              Category:
-              {() => {
-                props.categories.map((p) => {
-                  if (p.id === product.category) tempoDiBoom = p.name;
-                });
-
-                return tempoDiBoom;
-              }} 
+              Category: {product.category}
               <br />
               Available quantity: {product.qty}
               <br />
@@ -171,7 +162,7 @@ export default function ProductsList(props) {
           </Modal.Footer>
         </Modal>
         <CardColumns xs={1} md={5}>
-          <>{props.products.length ? productsActions() : <></>}</>
+          <>{props.products.length && props.categories.length > 0 ? productsActions() : <></>}</>
         </CardColumns>
       </div>
     </>
