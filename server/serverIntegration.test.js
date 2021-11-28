@@ -382,6 +382,25 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST GET ALL all CONFIRMED products for a particular farmer
+  describe("get all CONFIRMED products for a particular farmer success", () => {
+    it("test //GET /api/products/farmers/:id success", async () => {
+      const response = await request(app).get("/api/products/farmers/1");
+      expect(response.body).toEqual([
+        {
+          id: 2,
+          name: "Lamponi",
+          category: "Fruit",
+          price: 1.78,
+          qty: 1,
+          farmer_email: "antonio.bianchi@mail.it",
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
   describe("get all products expected by farmer id success", () => {
     it("test get /api/farmers/:farmerid/products_expected endpoint", async () => {
       const response = await request(app).get(

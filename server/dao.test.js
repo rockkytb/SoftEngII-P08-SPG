@@ -308,6 +308,24 @@ test("get all products success", async () => {
   return expect(dao.getAllProducts()).resolves.toEqual(result);
 }, 10000);
 
+//TEST GET ALL all CONFIRMED products for a particular farmer
+test("get all all CONFIRMED products for a particular farmer success", async () => {
+  const result = [
+    {
+      id: 2,
+      name: "Lamponi",
+      category: "Fruit",
+      price: 1.78,
+      qty: 1,
+      farmer_email: "antonio.bianchi@mail.it",
+    },
+  ];
+
+  return expect(dao.getAllConfirmedProductsForFarmer(1)).resolves.toEqual(
+    result
+  );
+}, 10000);
+
 //TEST GET ALL BOOKINGS
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.

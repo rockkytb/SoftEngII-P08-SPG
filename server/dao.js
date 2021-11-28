@@ -721,9 +721,13 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run("DELETE FROM PRODUCT_WEEK WHERE ID != ?", [1], (err) => {
-      errTest(err);
-    });
+    await db.run(
+      "DELETE FROM PRODUCT_WEEK WHERE ID != ? AND STATE!=?",
+      [1, "CONFIRMED"],
+      (err) => {
+        errTest(err);
+      }
+    );
 
     await db.run(
       "DELETE FROM MANAGER_ACKNOWLEDGE WHERE ID != ?",
