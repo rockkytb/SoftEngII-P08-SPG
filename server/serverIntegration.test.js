@@ -296,14 +296,17 @@ describe("Test suite Integration Server", () => {
         {
           id: "1",
           name: "Fruit",
+          measure: "Kg",
         },
         {
           id: "2",
           name: "Spices",
+          measure: "Box",
         },
         {
           id: "3",
           name: "Vegetables",
+          measure: "Kg",
         },
       ]);
     });
@@ -335,8 +338,6 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-
-  
   //TEST POST /api/shopEmployeeSessions
   describe("Shop Employee Session success", () => {
     it("send a valid user", async () => {
@@ -383,16 +384,18 @@ describe("Test suite Integration Server", () => {
 
   describe("get all products expected by farmer id success", () => {
     it("test get /api/farmers/:farmerid/products_expected endpoint", async () => {
-      const response = await request(app).get("/api/farmers/1/products_expected");
+      const response = await request(app).get(
+        "/api/farmers/1/products_expected"
+      );
       expect(response.body).toEqual([
         {
           id: 1,
-        name: "Mele",
-        category: "Fruit",
-        price: 14,
-        qty: 5,
-        farmer_email: "antonio.bianchi@mail.it",
-        state: "EXPECTED",
+          name: "Mele",
+          category: "Fruit",
+          price: 14,
+          qty: 5,
+          farmer_email: "antonio.bianchi@mail.it",
+          state: "EXPECTED",
         },
       ]);
 
@@ -425,14 +428,14 @@ describe("Test suite Integration Server", () => {
       const response = await request(app).get("/api/bookings/clients/1");
       expect(response.body).toEqual([
         {
-          "id": 1,
-          "state": "PENDINGCANCELATION",
-          "email": "marco.bianchi@mail.it",
-          "name": "Marco",
-          "surname": "Bianchi",
-          "qty": 3,
-          "product": "Mele"
-      }
+          id: 1,
+          state: "PENDINGCANCELATION",
+          email: "marco.bianchi@mail.it",
+          name: "Marco",
+          surname: "Bianchi",
+          qty: 3,
+          product: "Mele",
+        },
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
@@ -519,21 +522,20 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  
   describe("get all bookings with PENDINGCANCELATION state", () => {
     it("test /api/bookingsPendingCancelation endpoint", async () => {
       const res = await request(app).get("/api/bookingsPendingCancelation");
-       expect(res.body).toEqual([
-      {
-        id: 1,
-        state: "PENDINGCANCELATION",
-        email: "marco.bianchi@mail.it",
-        name: "Marco",
-        surname: "Bianchi",
-        qty: 3,
-        product: "Mele"
-      }
-    ]);
+      expect(res.body).toEqual([
+        {
+          id: 1,
+          state: "PENDINGCANCELATION",
+          email: "marco.bianchi@mail.it",
+          name: "Marco",
+          surname: "Bianchi",
+          qty: 3,
+          product: "Mele",
+        },
+      ]);
       expect(res.body).toHaveLength(1);
       expect(res.statusCode).toBe(200);
     });
@@ -600,55 +602,58 @@ describe("Test suite Integration Server", () => {
 });
 */
 
-describe("Post ack success", () => {
-  it("should create a new ack", async () => {
-    const res = await request(app).post("/api/acknowledge").send({
-      idFarmer: 1,
-      email: "antonio.bianchiio@mail.it",
-      state: "NEW"
+  describe("Post ack success", () => {
+    it("should create a new ack", async () => {
+      const res = await request(app).post("/api/acknowledge").send({
+        idFarmer: 1,
+        email: "antonio.bianchiio@mail.it",
+        state: "NEW",
+      });
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toHaveProperty("idAck");
     });
-    expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty("idAck");
   });
-})
 
-describe("Put products with new state", ()=>{
-  it("right put with all right fields", async () =>{
-    const parameter = [
-      {
-        id: 1,
-        state: "EXPECTED"
-      },
-      {
-        id: 2,
-        state: "CONFIRMED"
-      }
-    ];
+  describe("Put products with new state", () => {
+    it("right put with all right fields", async () => {
+      const parameter = [
+        {
+          id: 1,
+          state: "EXPECTED",
+        },
+        {
+          id: 2,
+          state: "CONFIRMED",
+        },
+      ];
 
-    const res = await request(app).put("/api/products").send(parameter);
-    expect(res.statusCode).toEqual(201);
-    expect(res.body).toEqual(true);
-  })
-})
+      const res = await request(app).put("/api/products").send(parameter);
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toEqual(true);
+    });
+  });
 
-describe("Put products with new state", ()=>{
-  it("wrong put with a element without id field", async () =>{
-    const parameter = [
-      {
-        state: "EXPECTED"
-      },
-      {
-        id: 2,
-        state: "CONFIRMED"
-      }
-    ];
+  describe("Put products with new state", () => {
+    it("wrong put with a element without id field", async () => {
+      const parameter = [
+        {
+          state: "EXPECTED",
+        },
+        {
+          id: 2,
+          state: "CONFIRMED",
+        },
+      ];
 
-    const res = await request(app).put("/api/products").send(parameter);
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty("error", "Invalid product id of a element on the array, it must be positive");
-  })
-})
-/* TEST NON FUNZIONANTE, NON RIESCE A VEDERE CHE MANCA IL CAMPO STATE E LA PRENDE PER BUONA
+      const res = await request(app).put("/api/products").send(parameter);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
+  });
+  /* TEST NON FUNZIONANTE, NON RIESCE A VEDERE CHE MANCA IL CAMPO STATE E LA PRENDE PER BUONA
 describe("Put products with new state", ()=>{
   it("wrong put with a element without state field", async () =>{
     const parameter = [
@@ -665,21 +670,24 @@ describe("Put products with new state", ()=>{
     expect(res.body).toHaveProperty("error", "Invalid state lenght of a element on the array");
   })*/
 
-  describe("Put products with new state", ()=>{
-    it("wrong put with a invalid id", async () =>{
+  describe("Put products with new state", () => {
+    it("wrong put with a invalid id", async () => {
       const parameter = [
         {
           id: -1,
-          state: "EXPECTED"
+          state: "EXPECTED",
         },
         {
           id: 2,
-        }
+        },
       ];
-  
+
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Invalid product id of a element on the array, it must be positive");
-    })
-})
-})
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
+  });
+});

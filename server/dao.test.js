@@ -169,14 +169,17 @@ describe("Test suite DAO", () => {
       {
         id: "1",
         name: "Fruit",
+        measure: "Kg",
       },
       {
         id: "2",
         name: "Spices",
+        measure: "Box",
       },
       {
         id: "3",
         name: "Vegetables",
+        measure: "Kg",
       },
     ]);
   }, 10000);

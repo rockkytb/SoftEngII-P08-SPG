@@ -55,6 +55,7 @@ exports.getCategories = () => {
             return {
               id: `${x.ID}`,
               name: x.NAME,
+              measure: x.MEASURE,
             };
           })
         );
@@ -724,9 +725,13 @@ exports.cleanDb = async () => {
       errTest(err);
     });
 
-    await db.run("DELETE FROM MANAGER_ACKNOWLEDGE WHERE ID != ?", [1], (err) => {
-      errTest(err);
-    });
+    await db.run(
+      "DELETE FROM MANAGER_ACKNOWLEDGE WHERE ID != ?",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
 
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       errTest(err);
