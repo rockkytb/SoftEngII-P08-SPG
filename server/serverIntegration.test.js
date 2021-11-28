@@ -683,5 +683,3 @@ describe("Put products with new state", ()=>{
     })
 })
 })
-
-})

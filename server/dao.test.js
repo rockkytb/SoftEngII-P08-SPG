@@ -463,5 +463,5 @@ test("the creation of ack success", () => {
     email: "antonio.bianchii@mail.it",
     state: "NEW",
   };
-  return expect(dao.createAcknowledge(ack)).resolves.toEqual(3);
+  return expect(dao.createAcknowledge(ack)).resolves.toEqual(2);
 });

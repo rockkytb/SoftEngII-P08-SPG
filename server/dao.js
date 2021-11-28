@@ -724,13 +724,17 @@ exports.cleanDb = async () => {
       errTest(err);
     });
 
+    await db.run("DELETE FROM MANAGER_ACKNOWLEDGE WHERE ID != ?", [1], (err) => {
+      errTest(err);
+    });
+
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       errTest(err);
     });
 
     await db.run(
-      "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ?",
-      [1, "CLIENT", "BOOKING"],
+      "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ? OR name = ?",
+      [1, "CLIENT", "BOOKING", "MANAGER_ACKNOWLEDGE"],
       (err) => {
         errTest(err);
       }
