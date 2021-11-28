@@ -133,6 +133,8 @@ function App() {
         newUser.id = res.idClient;
         setAttaccoDDOS(true);
       }
+      const credentials = {username:newUser.email,password:newUser.clearpsw}
+      doLogIn(credentials,"C");
     };
     add()
       .then(() => {
@@ -370,7 +372,6 @@ function App() {
     }
   };
 
-  //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
   const setCompletedDeliveryFarmer = async (productList) => {
     try {
       await API.confirmDeliveryProducts(productList);
@@ -628,7 +629,8 @@ function App() {
                   <>
                     {loggedIn &&
                       (userdata.id.charAt(0) === "C" ||
-                        userdata.id.charAt(0) === "F") ? (
+                        userdata.id.charAt(0) === "F" ||userdata.id.charAt(0) === "S" ||
+                        userdata.id.charAt(0) === "M") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
