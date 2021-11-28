@@ -417,5 +417,5 @@ async function newFutureProduct(id, products){
 const API = { addUser,newAck, confirmAck, logIn, logOut, getUserInfo,
      newBooking, newBookingProduct, editProductQty, getClientByEmail, 
     getWalletById, setNewWallet, confirmBooking, newBookingMode,
-    confirmDeliveryProducts, newFutureProduct};
+    confirmDeliveryProducts, newFutureProduct, confirmProductsFarmer};
 export default API;

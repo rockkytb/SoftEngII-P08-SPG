@@ -373,7 +373,7 @@ function App() {
   //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
   const setCompletedDeliveryFarmer = async (productList) => {
     try {
-      //await API.confirmDeliveryProducts(productList);
+      await API.confirmDeliveryProducts(productList);
       setDeliveryState(true);
       await API.newAck(userdata.id.substring(1), userdata.username);
       setAckState(true);
