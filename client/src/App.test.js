@@ -23,7 +23,7 @@ import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
 import CarouselCustom from './CarouselCustom.js';
 import { Login, LogButton } from './Login.js';
-import { JustifyLeft } from 'react-bootstrap-icons';
+import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
 //IF SOMETHING IS WRONG, TEST WILL FAIL
@@ -61,7 +61,10 @@ test('renders BookingReview', () => {
 
   const mockOk = jest.fn((id) => { return 20.30 });
 
-  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} />);
+  const userdata = {id:"C1",name:"Antonio"}
+
+  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} userdata={userdata}
+                      calendarday={new Date()} />);
   
 
   br.find('#butConf').simulate('click');
@@ -84,5 +87,6 @@ test('renders Login and log button', () => {
 test('renders ProductList', () => {
   const products = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
   { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
-  shallow(<ProductsList products={products} />);
+  const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
+  shallow(<ProductsList products={products} categories={categories}/>);
 });
