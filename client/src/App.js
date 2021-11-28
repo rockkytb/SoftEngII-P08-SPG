@@ -26,8 +26,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
 import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
+import BookingConfirmFarmer from "./BookingConfirmFarmer";
 import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
+import ReportAvailability from "./ReportAvailability";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -45,10 +47,11 @@ function App() {
   const [virtualTime, setVirtualTime] = useState(false);
   const [timers, setTimers] = useState();
   const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
-  const [deliveryState, setDeliveryState] = useState (true);
+  const [deliveryState, setDeliveryState] = useState(true);
   const [categories, setCategories] = useState([]);
   const [acknowledges, setAcknowledges] = useState([]);
   const [ackState, setAckState] = useState (true);
+  const [productsExpectedFarmer, setProductsExpectedFarmer] = useState ([]);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -130,6 +133,8 @@ function App() {
         newUser.id = res.idClient;
         setAttaccoDDOS(true);
       }
+      const credentials = {username:newUser.email,password:newUser.clearpsw}
+      doLogIn(credentials,"C");
     };
     add()
       .then(() => {
@@ -193,15 +198,6 @@ function App() {
         }
       };
 
-      const getFutureProducts = async () => {
-        // call: GET /api/products_expected
-        const response = await fetch("/api/products_expected");
-        const productList = await response.json();
-        if (response.ok) {
-          setFutureProducts(productList);
-        }
-      };
-
       const getDeliveries = async () => {
         // call: GET /api/deliveries
         if (loggedIn && userdata.id.charAt(0) === "S") {
@@ -232,7 +228,7 @@ function App() {
         }
       };
 
-      getFutureProducts();
+      //getFutureProducts();
       getProducts();
       getBookings();
       getDeliveries();
@@ -240,19 +236,50 @@ function App() {
     }
   }, [bookingsState, attaccoDDOS]);
 
+  const getFutureProducts = async (farmerId) => {
+    // call: GET /api/products_expected
+    const response = await fetch("/api/farmers/" + farmerId + "/products_expected");
+    const productList = await response.json();
+    if (response.ok) {
+      setFutureProducts(productList);
+    }
+  };
+
+  const addFutureProducts = async (id, products) =>{
+    let tmp = 0;
+    await API.newFutureProduct(id.substring(1), products)
+      .then((response) => {
+        console.log("Tutto ok: "+response);
+      })
+      .catch((err) => console.log(err));
+    return tmp;
+  }
+
   //update confirmed product from farmer
   useEffect(() => {
-    if (loggedIn && deliveryState && userdata.id &&userdata.id.charAt(0) === "F") {
+    if (loggedIn && deliveryState && userdata.id && userdata.id.charAt(0) === "F") {
       const getConfirmedProductsFarmer = async () => {
         // call: GET /api/products/farmers/:id
-        const response = await fetch("/api/products/farmers/" + 
-                      userdata.id.substring(1));
+        const response = await fetch("/api/products/farmers/" +
+          userdata.id.substring(1));
         const confirmedProductList = await response.json();
         if (response.ok) {
           setConfirmedProductsFarmer(confirmedProductList);
         }
       };
 
+      const getExpectedProductsFarmer = async () => {
+        // call: GET /api/farmers/:farmerid/products_expected
+        const response = await fetch("/api/farmers/" + 
+                      userdata.id.substring(1) +
+                      "/products_expected");
+        const expectedProductList = await response.json();
+        if (response.ok) {
+          setProductsExpectedFarmer(expectedProductList);
+        }
+      };
+
+      getExpectedProductsFarmer();
       getConfirmedProductsFarmer();      
       setDeliveryState(false);
     }
@@ -270,7 +297,7 @@ function App() {
         }
       };
 
-      getAcksManager();      
+      getAcksManager();
       setAckState(false);
     }
   }, [ackState, loggedIn]);
@@ -345,18 +372,39 @@ function App() {
     }
   };
 
-  //ROCCO, TO BE INSERTED IN BOOKING DELIVERY FARMER
   const setCompletedDeliveryFarmer = async (productList) => {
     try {
-      //await API.confirmDeliveryProducts(productList);
+      await API.confirmDeliveryProducts(productList);
       setDeliveryState(true);
-      await API.newAck(userdata.id.substring(1),userdata.username);
+      await API.newAck(userdata.id.substring(1), userdata.username);
       setAckState(true);
       toast.success("Delivery completed successfully", {
         position: "top-center",
       });
     } catch (err) {
       toast.error("Error updating the delivery", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const confirmProductsFarmer = async (productList) => {
+    try {
+      const confirmList = productList.map((product)=>{
+        return {
+            id: product.id,
+            state:"CONFIRMED"
+        }
+    });
+      for (const product of confirmList) {
+          await API.confirmProductsFarmer(product);
+      };
+      
+      setDeliveryState(true);
+      toast.success("Products confirmed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error with the confirmation", { position: "top-center" });
       console.log(err);
     }
   };
@@ -438,8 +486,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
@@ -448,7 +496,7 @@ function App() {
                               cart={cart}
                               setCart={(val) => setCart(val)}
                               categories={categories}
-                              //farmers = {farmers} //???
+                            //farmers = {farmers} //???
                             />
                           </>
                         ) : (
@@ -476,15 +524,51 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
                               products={futureProducts}
+                              getProducts={getFutureProducts}
                               cart={cart}
                               categories={categories}
-                              //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //add next week products
+            path="/addFutureproducts"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "F") ? (
+                          <>
+                            <ReportAvailability
+                              className="below-nav main-content"
+                              addFutureProducts={addFutureProducts}
+                              categories={categories}
+                              setDirty={setAttaccoDDOS}
+                              id = {userdata.id ? userdata.id : ""} 
                             />
                           </>
                         ) : (
@@ -517,7 +601,7 @@ function App() {
                               className="below-nav main-content"
                               products={deliveries}
                               categories={categories}
-                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
                             />
                           </>
                         ) : (
@@ -544,8 +628,9 @@ function App() {
                 {update ? (
                   <>
                     {loggedIn &&
-                    (userdata.id.charAt(0) === "C" ||
-                      userdata.id.charAt(0) === "F") ? (
+                      (userdata.id.charAt(0) === "C" ||
+                        userdata.id.charAt(0) === "F" ||userdata.id.charAt(0) === "S" ||
+                        userdata.id.charAt(0) === "M") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
@@ -576,9 +661,9 @@ function App() {
                           <>
                             {/*<SidebarCustom /> */}
                             <AcknowledgeDeliveryManager
-                            className="below-nav main-content" 
-                            confirmAck = {setReadAck}
-                            acknowledges ={acknowledges}/>
+                              className="below-nav main-content"
+                              confirmAck={setReadAck}
+                              acknowledges={acknowledges} />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -664,12 +749,13 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                            {/*<SidebarCustom /> 
-                            <BookingDeliveryFarmer 
+                            {/*<SidebarCustom /> */}
+                            <BookingConfirmFarmer 
                             className="below-nav main-content" 
-                            confirmedProducts= {confirmedProductsFarmer}
-                            confirmDelivery={setCompletedDeliveryFarmer}
-                            />*/}
+                            expectedProducts= {productsExpectedFarmer}
+                            confirmProducts={confirmProductsFarmer}
+                            calendarday = {date}
+                            />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -702,6 +788,7 @@ function App() {
                             className="below-nav main-content" 
                             confirmedProducts= {confirmedProductsFarmer}
                             confirmDelivery={setCompletedDeliveryFarmer}
+                            calendarday = {date}
                             />
                           </>
                         ) : (
@@ -833,7 +920,7 @@ function App() {
                             <CheckPending
                               className="below-nav main-content"
                               bookings={bookings}
-                              products={products}
+                              products={futureProducts}
                               className="below-nav main-content"
                             />
                           </>
@@ -863,8 +950,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "S" ||
-                          userdata.id.charAt(0) === "C") ? (
+                          (userdata.id.charAt(0) === "S" ||
+                            userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview
@@ -879,6 +966,7 @@ function App() {
                               newProductMode={newProductMode}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}
+                              calendarday = {date}
                               className="below-nav main-content"
                             />
                           </>

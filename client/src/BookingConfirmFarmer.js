@@ -4,24 +4,24 @@ import {
     CardColumns,
     Card,
     Col,
-    Alert,
     Button,
+    Alert
 } from "react-bootstrap";
 
-export default function BookingDeliveryFarmer(props) {
+export default function BookingConfirmFarmer(props) {
 
     const [showAlertTime, setShowAlertTime] = useState(false);
 
-    function deliveryActions() {
-        if(props.confirmedProducts.length == 0){
-            return (<>No confirmed products to deliver</>);
+    function confirmActions() {
+        if(props.expectedProducts.length == 0){
+            return (<>No expected products to confirm</>);
         }
         return (
             <Col>
                 <Card>
                     <Card.Body>
                         <Card.Text className="text-dark">
-                            {props.confirmedProducts.map((product) => {
+                            {props.expectedProducts.map((product) => {
                                 return (
                                 <>
                                 Product:<b> {product.name+ "  "}</b><br />
@@ -32,9 +32,9 @@ export default function BookingDeliveryFarmer(props) {
                         <Button
                             variant="primary"
                             onClick={() => {
-                                if(props.calendarday.getDay() === 2){
-                                //TODO, confirm delivery
-                                props.confirmDelivery(props.confirmedProducts);}
+                                if(props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9)
+                                {
+                                props.confirmProducts(props.expectedProducts);}
                                 else{
                                     setShowAlertTime(true);
                                 }
@@ -43,7 +43,7 @@ export default function BookingDeliveryFarmer(props) {
                             }}
                             color="black"
                         >
-                            Set as delivered
+                            Confirm products
                         </Button>
                     </Card.Body>
                 </Card>
@@ -53,10 +53,11 @@ export default function BookingDeliveryFarmer(props) {
 
     return (
         <div className= "below-nav">
+
             <Alert show={showAlertTime} variant="danger">
-                <Alert.Heading>You cannot confirm delivery now</Alert.Heading>
+                <Alert.Heading>You cannot confirm products now</Alert.Heading>
                 <p>
-                Deliveries must happen only from 00:00 am to 23:59 pm of Tuesday
+                Product must be confirmed only from 09:00 am to 23:59 pm of Monday
                 </p>
                 <hr />
                 <div className="d-flex justify-content-end">
@@ -74,7 +75,7 @@ export default function BookingDeliveryFarmer(props) {
             </Alert>
 
             <CardColumns xs={1} md={5}>
-                <>{props.confirmedProducts && props.confirmedProducts.length > 0 ? deliveryActions() : <>No products to deliver</>}</>
+                <>{props.expectedProducts && props.expectedProducts.length > 0 ? confirmActions() : <>No products to confirm</>}</>
             </CardColumns>
         </div>
     );

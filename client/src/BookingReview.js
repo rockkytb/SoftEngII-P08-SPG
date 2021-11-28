@@ -18,6 +18,8 @@ import "react-toastify/dist/ReactToastify.css";
 function BookingReview(props) {
   const [clientID, setClientID] = useState(props.userdata.id.charAt(0) === "S" ? (props.clients[0].id):(props.userdata.id));
   const [showAlert, setShowAlert] = useState(false);
+  const [showAlertTime, setShowAlertTime] = useState(false);
+  const [showAlertPickUp, setShowAlertPickUp] = useState(false);
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
@@ -70,21 +72,27 @@ function BookingReview(props) {
   };
 
   async function handleCreateBooking() {
-    let tmpSoldy = await props.getWallet(clientID);
-    let total = 0;
-    let id;
-    if (clientID)
-      id = clientID.substring(1);
+    const pickupdate = new Date(date);
+    if(pickupdate.getDay()===3 || pickupdate.getDay()===4 || pickupdate.getDay()===5 ){
+        let tmpSoldy = await props.getWallet(clientID);
+        let total = 0;
+        let id;
+        if (clientID)
+          id = clientID.substring(1);
 
 
-    setSoldy(tmpSoldy);
+        setSoldy(tmpSoldy);
 
-    props.cart.map((p) => {
-      total += p.price;
-    });
+        props.cart.map((p) => {
+          total += p.price;
+        });
 
-    if (total <= soldy) {
-      newBooking(id)
+        if (total <= soldy) {
+          newBooking(id)
+        }
+      }
+    else{
+      setShowAlertPickUp(true);
     }
   }
 
@@ -171,6 +179,7 @@ function BookingReview(props) {
           Universe. Do you really want to?
         </p>
         <hr />
+
         <div className="d-flex justify-content-end">
             <Button
             color="black"
@@ -202,7 +211,47 @@ function BookingReview(props) {
           
         </div>
       </Alert>
+
+      <Alert show={showAlertTime} variant="danger">
+        <Alert.Heading>You cannot confirm booking now</Alert.Heading>
+        <p>
+          Bookings must happen only from 10 am of Saturday until 23 pm of Sunday
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+            <Button
+            color="black"
+              onClick={() => {
+              
+                setShowAlertTime(false);
+              }}
+            >
+              Close
+            </Button>
+          
+        </div>
+      </Alert>
+      
       <Modal show={show} onHide={handleClose}>
+      <Alert show={showAlertPickUp} variant="danger">
+        <Alert.Heading>You cannot choose this date</Alert.Heading>
+        <p>
+          Pick up or deliveries must happen only from Wednesday to Friday
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+            <Button
+            color="black"
+              onClick={() => {
+              
+                setShowAlertPickUp(false);
+              }}
+            >
+              Close
+            </Button>
+          
+        </div>
+      </Alert>
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
         </Modal.Header>
@@ -308,8 +357,14 @@ function BookingReview(props) {
             </Col>
             <Col className="md-2 text-left">
                 <Button variant="primary" color="black" id="butConf" onClick={() => {
-                    
-                      setShow(true);
+                      //BOOKINGS may happen only between saturday 10 am until sunday 23
+                      if((props.calendarday.getDay() === 6 && props.calendarday.getHours() >= 10) ||
+                      (props.calendarday.getDay() === 0 && props.calendarday.getHours() < 23)){
+                        setShow(true);
+                      }
+                      else{
+                        setShowAlertTime(true);
+                      }
                     
                     }}>
                   Confirm Booking

@@ -3,10 +3,9 @@
 ## HOW TO RUN DOCKER?
 
 1. install docker
-2. open a powershell 
+2. open a powershell
 3. docker-compose up
 4. connect localhost 3000
-
 
 ## HOW TO TEST? SERVER SIDE
 
@@ -130,7 +129,8 @@ get all categories
 
     [{
     	"id": 1,
-        "name": "fruit"
+        "name": "fruit",
+        "measure":"kg",
     },...]
 
 #### GET /api/bookingsPendingCancelation
@@ -182,7 +182,7 @@ delete a product by receiving its id
 
 #### GET /api/farmers/:farmerid/products_expected
 
-return the JSON list of all products from PRODUCT EXPECTED according to the id of a farmer. Example
+return the JSON list of all products from PRODUCT_WEEK with state = EXPECTED according to the id of a farmer. Example
 
     [
     {"id":1,
@@ -200,10 +200,10 @@ INSERT into Product_WEEK by receiving a product confirmed by farmer with state =
 reciving a json object
 
 {
-    "name": "Apple",
-    "category": 2,
-    "price": 1.99,
-    "qty": 2
+"name": "Apple",
+"category": 2,
+"price": 1.99,
+"qty": 2
 }
 
 ### POST /api/farmers/:farmerid/productsExpected
@@ -212,10 +212,10 @@ INSERT into Product_WEEK by receiving a product confirmed by farmer with state =
 reciving a json object
 
 {
-    "name": "Apple",
-    "category": 2,
-    "price": 1.99,
-    "qty": 2
+"name": "Apple",
+"category": 2,
+"price": 1.99,
+"qty": 2
 }
 
 #### GET /api/farmers/:farmerid/products
@@ -241,11 +241,12 @@ put (edit) the state of all product in PRODUCT_WEEK by receiving an array of pro
     ...]
 
 #### POST /api/acknowledge
+
 Add new acknowledge for manager with state = NEW. Example:
-    {
-    "idFarmer": 1, 
-    "email": "antonio.bianchi@mail.it"
-    }
+{
+"idFarmer": 1,
+"email": "antonio.bianchi@mail.it"
+}
 
 #### GET /api/bookings
 
@@ -279,6 +280,15 @@ Receive a JSON object
 
     {"ID_Product":3,
     "Dec_Qty":6}
+
+#### PUT /api/productstate
+
+Changes the state of a product in product_week table
+
+Receive a JSON object
+
+    {"id":3,
+    "state":"EXPECTED"}
 
 #### POST /api/newclient
 

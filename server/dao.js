@@ -55,6 +55,7 @@ exports.getCategories = () => {
             return {
               id: `${x.ID}`,
               name: x.NAME,
+              measure: x.MEASURE,
             };
           })
         );
@@ -246,8 +247,9 @@ exports.getManagerById = (id) => {
 // add a new acknowledge
 exports.createAcknowledge = (ack) => {
   return new Promise((resolve, reject) => {
-    const sql = "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";
-    db.run(sql, [ack.idFarmer,ack.email, ack.state], function (err) {
+    const sql =
+      "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";
+    db.run(sql, [ack.idFarmer, ack.email, ack.state], function (err) {
       if (err) {
         reject(err);
         return;
@@ -310,7 +312,22 @@ exports.editQtyProductWeek = (product) => {
   });
 };
 
-// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED 
+// edit state of a product_week
+exports.editStateProductWeek = (product) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE PRODUCT_WEEK SET STATE = ? WHERE ID = ?";
+    db.run(sql, [product.state, product.id], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -335,8 +352,6 @@ exports.insertTupleProductWEEK = (product) => {
     );
   });
 };
-
-
 
 // edit state of a booking
 exports.editStateBooking = (booking) => {
@@ -442,13 +457,13 @@ exports.getAllProducts = () => {
   });
 };
 
-// get products from PRODUCT EXPECTED according to the id of a farmer
+// get products from PRODUCT_WEEK with EXPECTED STATE according to the id of a farmer
 exports.getAllProductsExpectedForFarmer = (idFarmer) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_EXPECTED p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=?";
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 
-    db.all(sql, [idFarmer], (err, rows) => {
+    db.all(sql, [idFarmer, "EXPECTED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -471,8 +486,8 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 exports.getAllConfirmedProductsForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      'SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE="CONFIRMED"';
-    db.all(sql, [farmerId], (err, rows) => {
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=?";
+    db.all(sql, [farmerId, "CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -588,7 +603,7 @@ exports.getAcksStateNew = () => {
         id: e.ID,
         state: e.STATUS,
         farmer: e.FARMER,
-        farmerId: e.FARMER_ID
+        farmerId: e.FARMER_ID,
       }));
 
       resolve(acks);
@@ -600,7 +615,7 @@ exports.getAcksStateNew = () => {
 exports.getBookingsStatePendingCancelation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE STATE = 'PENDINGCANCELATION'";
+      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE b.STATE = 'PENDINGCANCELATION'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -709,13 +724,29 @@ exports.cleanDb = async () => {
       }
     );
 
+    await db.run(
+      "DELETE FROM PRODUCT_WEEK WHERE ID != ? AND STATE!=?",
+      [1, "CONFIRMED"],
+      (err) => {
+        errTest(err);
+      }
+    );
+
+    await db.run(
+      "DELETE FROM MANAGER_ACKNOWLEDGE WHERE ID != ?",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
+
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       errTest(err);
     });
 
     await db.run(
-      "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ?",
-      [1, "CLIENT", "BOOKING"],
+      "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ? OR name = ?",
+      [1, "CLIENT", "BOOKING", "MANAGER_ACKNOWLEDGE"],
       (err) => {
         errTest(err);
       }

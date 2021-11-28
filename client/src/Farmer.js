@@ -19,6 +19,10 @@ function Farmer(props) {
                   <Link to="/confirmDeliveryFarmer"> 
                       <Button color="black" className="mr-2 ml-2 md-1 "> Confirm Delivery </Button> 
                   </Link>
+
+                  <Link to="/addFutureproducts"> 
+                      <Button color="black" className="mr-2 ml-2 md-1 "> Add products </Button> 
+                  </Link>
               </Col>
             </Row>
         
