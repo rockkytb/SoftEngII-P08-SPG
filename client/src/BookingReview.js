@@ -219,7 +219,7 @@ function BookingReview(props) {
                 setShowAlertTime(false);
               }}
             >
-              Close.
+              Close
             </Button>
           
         </div>

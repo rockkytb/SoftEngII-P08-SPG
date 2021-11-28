@@ -32,7 +32,7 @@ export default function BookingDeliveryFarmer(props) {
                         <Button
                             variant="primary"
                             onClick={() => {
-                                if(props.calendarday.getDay() === 2 && props.calendarday.getHours() <= 23){
+                                if(props.calendarday.getDay() === 2){
                                 //TODO, confirm delivery
                                 props.confirmDelivery(props.confirmedProducts);}
                                 else{
@@ -56,7 +56,7 @@ export default function BookingDeliveryFarmer(props) {
             <Alert show={showAlertTime} variant="danger">
                 <Alert.Heading>You cannot confirm delivery now</Alert.Heading>
                 <p>
-                Deliveries must happen only from 00 am to 23 pm of Tuesday
+                Deliveries must happen only from 00:00 am to 23:59 pm of Tuesday
                 </p>
                 <hr />
                 <div className="d-flex justify-content-end">
@@ -67,7 +67,7 @@ export default function BookingDeliveryFarmer(props) {
                         setShowAlertTime(false);
                     }}
                     >
-                    Close.
+                    Close
                     </Button>
                 
                 </div>

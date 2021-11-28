@@ -25,6 +25,24 @@ function NavbarCustom(props) {
         </>
       )
     }
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'M') {
+      return (
+        <>
+          <Link to="/manager" style={{color: 'white'}}>
+            <PersonCircle size={30}/>
+          </Link>
+        </>
+      )
+    }
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'F') {
+      return (
+        <>
+          <Link to="/farmer" style={{color: 'white'}}>
+            <PersonCircle size={30}/>
+          </Link>
+        </>
+      )
+    }
     else {
       return (
         <>
