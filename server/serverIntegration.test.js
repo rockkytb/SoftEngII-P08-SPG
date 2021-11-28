@@ -60,6 +60,26 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST CREATE BOOKING MODE API
+  describe("Post booking mode success", () => {
+    it("should create a new booking mode", async () => {
+      const res = await request(app).post("/api/bookings_mode").send({
+        "idBooking": 100,
+        "delivery": 1,
+        "street": "via giovanni ribet",
+        "city": "turin",
+        "province": "TO",
+        "postal_code": "12345",
+        "country": "italy",
+        "date": "22/11/2021",
+        "time": "13:20",
+        "extra_fee": 24.5
+    });
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toHaveProperty("idBookingMode");
+    });
+  });
+
   //TEST API POST NEW CLIENT
   describe("Post new client fail", () => {
     it("create a new client fails due to invalid email", async () => {
@@ -364,15 +384,17 @@ describe("Test suite Integration Server", () => {
   describe("get all products success", () => {
     it("test get api/products endpoint", async () => {
       const response = await request(app).get("/api/products");
-      expect(response.body).toEqual([
-        {
-          id: 1,
-          name: "Mele",
-          category: "Fruit",
-          price: 14,
-          qty: 5,
-          farmer_email: "antonio.bianchi@mail.it",
-        },
+      expect(response.body).toEqual(
+        [
+          {
+              "id": 3,
+              "name": "Apple",
+              "category": "Spices",
+              "price": 1.99,
+              "qty": 2,
+              "farmer_email": "antonio.bianchi@mail.it"
+          }
+      
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);

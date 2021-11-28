@@ -697,6 +697,9 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?", [1], (err) => {
       errTest(err);
     });
+    await db.run("DELETE FROM BOOKING_MODE ", (err) => {
+      errTest(err);
+    });
 
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",

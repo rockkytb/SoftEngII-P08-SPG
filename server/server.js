@@ -785,12 +785,6 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
 
 //POST /api/bookings_mode
 app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
-  if (!validator.isInt(`${req.body.idBooking}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid booking id, it must be positive` });
-  }
-
   const booking_mode = {
     idBooking: req.body.idBooking,
     delivery: req.body.delivery,
@@ -810,7 +804,7 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
     bookingModeId = await dao.createBookingMode(booking_mode);
   } catch (err) {
     res.status(503).json({
-      error: `Database error during the creation of booking mode for booking: ${booking_mode.idBooking}.`,
+      error: `Database error during the creation of booking mode.`,
     });
   }
 

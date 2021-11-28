@@ -1,142 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="5"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="2"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="14"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="3"/>
     <testCase name="Test suite DAO the creation of a new booking is done" duration="4"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="84"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="113"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="87"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="98"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="6"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="7"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="201"/>
-    <testCase name="Test suite DAO get client return success" duration="90"/>
-    <testCase name="Test suite DAO get client return -1 because no email provided" duration="3"/>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get client return success" duration="1"/>
-    <testCase name="Test suite DAO get client return success" duration="1"/>
-    <testCase name="Test suite DAO get categories return success" duration="1"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="2"/>
-    <testCase name="Test suite DAO get client by id return success" duration="1"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="6"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="100"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="106"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="99"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="3"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="99"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="16"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="21"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="202"/>
+    <testCase name="Test suite DAO get client return success" duration="83"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get client return success" duration="3"/>
+    <testCase name="Test suite DAO get client return success" duration="5"/>
+    <testCase name="Test suite DAO get categories return success" duration="3"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="5"/>
+    <testCase name="Test suite DAO get client by id return success" duration="5"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="7"/>
     <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="93"/>
-    <testCase name="Test suite DAO get farmer return success" duration="86"/>
-    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="2"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="2"/>
-    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="93"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="91"/>
-    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="1"/>
-    <testCase name="get all products success" duration="12">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 0
-+ Received  + 8
-
-@@ -5,6 +5,14 @@
-      "id": 1,
-      "name": "Mele",
-      "price": 14,
-      "qty": 5,
-    },
-+   Object {
-+     "category": "Spices",
-+     "farmer_email": "antonio.bianchi@mail.it",
-+     "id": 2,
-+     "name": "Apple",
-+     "price": 1.99,
-+     "qty": 2,
-+   },
-  ]
-    at Object.toEqual (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js:273:48)
-    at Promise.then.completed (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at run (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)
-    at runAndTransformResultsToJestFormat (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:167:21)]]></failure>
-    </testCase>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="100"/>
+    <testCase name="Test suite DAO get farmer return success" duration="146"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="3"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="3"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="3"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="86"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="101"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="3"/>
+    <testCase name="get all products success" duration="1"/>
     <testCase name="get all bookings success" duration="1"/>
-    <testCase name="get all bookings for a client success" duration="3"/>
-    <testCase name="get all bookings for a non-existing client success" duration="1"/>
-    <testCase name="updating the wallet failed bacause client was not found" duration="1"/>
+    <testCase name="get all bookings for a client success" duration="1"/>
+    <testCase name="get all bookings for a non-existing client success" duration="0"/>
+    <testCase name="the creation of a new booking mode success" duration="4"/>
+    <testCase name="updating the wallet failed bacause client was not found" duration="2"/>
     <testCase name="updating the wallet failed bacause client id was not provided" duration="0"/>
-    <testCase name="update of wallet balance was successfull" duration="2"/>
-    <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="3"/>
+    <testCase name="update of wallet balance was successfull" duration="1"/>
+    <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="2"/>
     <testCase name="Creation of wallet fails,id 1 already exists" duration="0"/>
     <testCase name="Edit the state of a booking with a valid request" duration="1"/>
-    <testCase name="create a row in the booking product table" duration="2"/>
-    <testCase name="Insert a new Product expected without a field category" duration="1"/>
+    <testCase name="create a row in the booking product table" duration="1"/>
+    <testCase name="Insert a new Product expected without a field category" duration="0"/>
     <testCase name="the creation of ack success" duration="2"/>
   </file>
   <file path="/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="87"/>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="7"/>
-    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="7"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="6"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="9"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="6"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="9"/>
-    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="110"/>
-    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="17"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="14"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="84"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="10"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="24"/>
+    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="9"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="9"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="10"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="8"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="21"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="170"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="9"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="5"/>
     <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="6"/>
     <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="6"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="16"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="20"/>
-    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="95"/>
-    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="86"/>
-    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="5"/>
-    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="4"/>
-    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="4"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="4"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="6"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="92"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="124"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="16"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="17"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="9"/>
     <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="7"/>
-    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="8"/>
-    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="90"/>
-    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="89"/>
-    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="82"/>
-    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="84"/>
-    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="9">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 0
-+ Received  + 8
-
-@@ -5,6 +5,14 @@
-      "id": 1,
-      "name": "Mele",
-      "price": 14,
-      "qty": 5,
-    },
-+   Object {
-+     "category": "Spices",
-+     "farmer_email": "antonio.bianchi@mail.it",
-+     "id": 2,
-+     "name": "Apple",
-+     "price": 1.99,
-+     "qty": 2,
-+   },
-  ]
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:367:29)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
-    </testCase>
+    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="6"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="93"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="83"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="89"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="86"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="6"/>
     <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="5"/>
-    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="4"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="3"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="4"/>
-    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="3"/>
-    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="5"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="3"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="4"/>
-    <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="4"/>
-    <testCase name="Test suite Integration Server post a vector of product expected test with a valid body" duration="6"/>
-    <testCase name="Post ack success should create a new ack" duration="5"/>
+    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="6"/>
+    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="6"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="4"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="17"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="5"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="15"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="8"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="5"/>
+    <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="7"/>
+    <testCase name="Test suite Integration Server post a vector of product expected test with a valid body" duration="7"/>
+    <testCase name="Post ack success should create a new ack" duration="7"/>
   </file>
 </testExecutions>

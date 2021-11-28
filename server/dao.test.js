@@ -272,13 +272,13 @@ describe("Test suite DAO", () => {
 test("get all products success", async () => {
   return expect(dao.getAllProducts()).resolves.toEqual([
     {
-      id: 1,
-      name: "Mele",
-      category: "Fruit",
-      price: 14,
-      qty: 5,
-      farmer_email: "antonio.bianchi@mail.it",
-    },
+      "id": 3,
+      "name": "Apple",
+      "category": "Spices",
+      "price": 1.99,
+      "qty": 2,
+      "farmer_email": "antonio.bianchi@mail.it"
+  }
   ]);
 }, 10000);
 
@@ -319,6 +319,25 @@ test("get all bookings for a non-existing client success", () => {
 
   return expect(dao.getAllBookingsForClient(100)).resolves.toEqual([]);
 });
+
+//TEST CREATING NEW BOOKING MODE
+test("the creation of a new booking mode success", () => {
+  const booking = {
+    "idBooking":2,
+    "delivery": 1,
+    "street": "via giovanni ribet",
+    "city": "turin",
+    "province": "TO",
+    "postal_code": "12345",
+    "country": "italy",
+    "date": "22/11/2021",
+    "time": "13:20",
+    "extra_fee": 24.5
+}
+  return expect(dao.createBookingMode(booking)).resolves.toBeGreaterThanOrEqual(1);
+
+});
+
 
 //TEST UPDATE WALLET BALANCE
 test("updating the wallet failed bacause client was not found", () => {
