@@ -246,8 +246,9 @@ exports.getManagerById = (id) => {
 // add a new acknowledge
 exports.createAcknowledge = (ack) => {
   return new Promise((resolve, reject) => {
-    const sql = "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";
-    db.run(sql, [ack.idFarmer,ack.email, ack.state], function (err) {
+    const sql =
+      "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";
+    db.run(sql, [ack.idFarmer, ack.email, ack.state], function (err) {
       if (err) {
         reject(err);
         return;
@@ -325,7 +326,7 @@ exports.editStateProductWeek = (product) => {
   });
 };
 
-// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED 
+// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -350,8 +351,6 @@ exports.insertTupleProductWEEK = (product) => {
     );
   });
 };
-
-
 
 // edit state of a booking
 exports.editStateBooking = (booking) => {
@@ -463,7 +462,7 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
     const sql =
       "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 
-    db.all(sql, [idFarmer,"EXPECTED"], (err, rows) => {
+    db.all(sql, [idFarmer, "EXPECTED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -486,8 +485,8 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 exports.getAllConfirmedProductsForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      'SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=?';
-    db.all(sql, [farmerId,"CONFIRMED"], (err, rows) => {
+      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=?";
+    db.all(sql, [farmerId, "CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -603,7 +602,7 @@ exports.getAcksStateNew = () => {
         id: e.ID,
         state: e.STATUS,
         farmer: e.FARMER,
-        farmerId: e.FARMER_ID
+        farmerId: e.FARMER_ID,
       }));
 
       resolve(acks);
@@ -721,13 +720,9 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run(
-      "DELETE FROM PRODUCT_WEEK WHERE ID != ?",
-      [1],
-      (err) => {
-        errTest(err);
-      }
-    );
+    await db.run("DELETE FROM PRODUCT_WEEK WHERE ID != ?", [1], (err) => {
+      errTest(err);
+    });
 
     await db.run("DELETE FROM CLIENT WHERE ID != ?", [1], (err) => {
       errTest(err);

@@ -194,6 +194,26 @@ describe("Test suite DAO", () => {
     );
   }, 10000);
 
+  //TEST GET products expected by farmer id
+  test("get products expected by farmer id return empty array because no farmer with that id exists", () => {
+    const id = 12;
+    return expect(dao.getAllProductsExpectedForFarmer(id)).resolves.toEqual([]);
+  });
+
+  test("get products expected by farmer return success", async () => {
+    return expect(dao.getAllProductsExpectedForFarmer(1)).resolves.toEqual([
+      {
+        id: 1,
+        name: "Mele",
+        category: "Fruit",
+        price: 14,
+        qty: 5,
+        farmer_email: "antonio.bianchi@mail.it",
+        state: "EXPECTED",
+      },
+    ]);
+  }, 10000);
+
   //TEST GET FARMER
   test("get farmer return false because no email provided", () => {
     return expect(dao.getFarmer()).resolves.toBe(false);
@@ -273,14 +293,14 @@ describe("Test suite DAO", () => {
 test("get all products success", async () => {
   const result = [
     {
-    id: 1,
-    name: "Mele",
-    category: "Fruit",
-    price: 14,
-    qty: 5,
-    farmer_email: "antonio.bianchi@mail.it",
-  }
-];
+      id: 1,
+      name: "Mele",
+      category: "Fruit",
+      price: 14,
+      qty: 5,
+      farmer_email: "antonio.bianchi@mail.it",
+    },
+  ];
 
   return expect(dao.getAllProducts()).resolves.toEqual(result);
 }, 10000);
@@ -304,22 +324,20 @@ test("get all bookings success", async () => {
 
 // TEST GET BOOKINGS FOR A PARTICULAR CLIENT
 test("get all bookings for a client success", async () => {
-
   const received = {
-    "id": 1,
-    "state": "PENDINGCANCELATION",
-    "email": "marco.bianchi@mail.it",
-    "name": "Marco",
-    "surname": "Bianchi",
-    "qty": 3,
-    "product": "Mele"
-  }
+    id: 1,
+    state: "PENDINGCANCELATION",
+    email: "marco.bianchi@mail.it",
+    name: "Marco",
+    surname: "Bianchi",
+    qty: 3,
+    product: "Mele",
+  };
 
   return expect(dao.getAllBookingsForClient(1)).resolves.toEqual([received]);
 }, 10000);
 
 test("get all bookings for a non-existing client success", () => {
-
   return expect(dao.getAllBookingsForClient(100)).resolves.toEqual([]);
 });
 
@@ -391,16 +409,19 @@ test("create a row in the booking product table", () => {
 test("get all bookings with pendingcancelation state", async () => {
   const received = [
     {
-      "id": 1,
-      "state": "PENDINGCANCELATION",
-      "email": "marco.bianchi@mail.it",
-      "name": "Marco",
-      "surname": "Bianchi",
-      "qty": 3,
-      "product": "Mele"
-    }];
+      id: 1,
+      state: "PENDINGCANCELATION",
+      email: "marco.bianchi@mail.it",
+      name: "Marco",
+      surname: "Bianchi",
+      qty: 3,
+      product: "Mele",
+    },
+  ];
 
-  return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual(received);
+  return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual(
+    received
+  );
 }, 10000);
 
 test("Insert a new Product expected without a field category", () => {
@@ -430,8 +451,8 @@ test("Insert a new Product expected", () => {
 test("edit state of a product receiving an array with id-state", () => {
   const parameter = {
     id: 1,
-    state : "EXPECTED"
-  }
+    state: "EXPECTED",
+  };
   return expect(dao.editStateProductWeek(parameter)).resolves.toEqual(true);
 });
 
@@ -440,7 +461,7 @@ test("the creation of ack success", () => {
   const ack = {
     idFarmer: 1,
     email: "antonio.bianchii@mail.it",
-    state: "NEW"
+    state: "NEW",
   };
   return expect(dao.createAcknowledge(ack)).resolves.toEqual(3);
 });

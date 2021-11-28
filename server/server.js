@@ -311,41 +311,40 @@ app.get("/api/categories", isLoggedIn, (req, res) => {
     });
 });
 
-
 //POST /api/acknowledge
-app.post("/api/acknowledge", /*isLoggedIn*/ async (req, res) => {
-  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid farmer id, it must be positive` });
+app.post(
+  "/api/acknowledge",
+  /*isLoggedIn*/ async (req, res) => {
+    if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid farmer id, it must be positive` });
+    }
+
+    if (!validator.isEmail(`${req.body.email}`)) {
+      return res.status(422).json({ error: `Invalid farmer email` });
+    }
+
+    const ack = {
+      idFarmer: req.body.idFarmer,
+      email: req.body.email,
+      state: "NEW",
+    };
+
+    let ackId;
+
+    try {
+      ackId = await dao.createAcknowledge(ack);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json({ idAck: ackId });
   }
-
-  if (!validator.isEmail(`${req.body.email}`)) {
-    return res
-      .status(422)
-      .json({ error: `Invalid farmer email` });
-  }
-
-  const ack = {
-    idFarmer: req.body.idFarmer,
-    email: req.body.email,
-    state: "NEW",
-  };
-
-  let ackId;
-
-  try {
-    ackId = await dao.createAcknowledge(ack);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json({ idAck: ackId });
-
-});
+);
 
 //POST /api/bookings
 app.post("/api/bookings", isLoggedIn, async (req, res) => {
@@ -509,9 +508,7 @@ app.put(
   "/api/productstate", //isLoggedIn,
   async (req, res) => {
     if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid state lenght` });
+      return res.status(422).json({ error: `Invalid state lenght` });
     }
     if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
       return res
@@ -538,58 +535,61 @@ app.put(
 );
 
 // POST /api/farmers/:farmerid/products receive a vector of tuples of products expected
-app.post("/api/farmers/:farmerid/products" /*, isLoggedIn*/, async (req, res) => {
+app.post(
+  "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
+  async (req, res) => {
+    const product = {
+      name: req.body.name,
+      category_id: req.body.category,
+      price: req.body.price,
+      qty: req.body.qty,
+      farmer_id: req.params.farmerid,
+      state: "CONFIRMED",
+    };
 
-  const product = {
-    name: req.body.name,
-    category_id: req.body.category,
-    price: req.body.price,
-    qty: req.body.qty,
-    farmer_id: req.params.farmerid,
-    state: "CONFIRMED",
-  };
+    let productId;
 
-  let productId;
+    try {
+      productId = await dao.insertTupleProductWEEK(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during insertion into product_week table.`,
+      });
+    }
 
-  try {
-    productId = await dao.insertTupleProductWEEK(product);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during insertion into product_week table.`,
-    });
+    //All went fine
+    res.status(201).json({ productId: productId });
   }
-
-  //All went fine
-  res.status(201).json({ productId: productId });
-});
-
+);
 
 // POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
-app.post("/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/, async (req, res) => {
+app.post(
+  "/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/,
+  async (req, res) => {
+    const product = {
+      name: req.body.name,
+      category_id: req.body.category,
+      price: req.body.price,
+      qty: req.body.qty,
+      farmer_id: req.params.farmerid,
+      state: "EXPECTED",
+    };
 
-  const product = {
-    name: req.body.name,
-    category_id: req.body.category,
-    price: req.body.price,
-    qty: req.body.qty,
-    farmer_id: req.params.farmerid,
-    state: "EXPECTED",
-  };
+    let productId;
 
-  let productId;
+    try {
+      productId = await dao.insertTupleProductWEEK(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during insertion into product_week table.`,
+      });
+      return;
+    }
 
-  try {
-    productId = await dao.insertTupleProductWEEK(product);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during insertion into product_week table.`,
-    });
-    return;
+    //All went fine
+    res.status(201).json({ productId: productId });
   }
-
-  //All went fine
-  res.status(201).json({ productId: productId });
-});
+);
 
 //PUT /api/bookingstate
 app.put(
@@ -620,7 +620,6 @@ app.put(
     res.status(201).json(result);
   }
 );
-
 
 //PUT /api/ackstate
 app.put(
@@ -854,16 +853,17 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
 
 //PUT  /api/products
 app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
-  
   var result;
   var problem = 0;
 
   for (var key in req.body) {
     if (req.body.hasOwnProperty(key)) {
       //do something with e.g. req.body[key]
-      
+
       if (!validator.isLength(`${req.body[key].state}`, { min: 4 })) {
-        console.log("sssssssssssssssssssssssshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+        console.log(
+          "sssssssssssssssssssssssshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+        );
         return res
           .status(422)
           .json({ error: `Invalid state lenght of a element on the array` });
@@ -871,7 +871,9 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
       if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
         return res
           .status(422)
-          .json({ error: `Invalid product id of a element on the array, it must be positive` });
+          .json({
+            error: `Invalid product id of a element on the array, it must be positive`,
+          });
       }
     }
   }
@@ -900,7 +902,7 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
       error: `Database error or undefined product during the put of the state of array product`,
     });
   }
-})
+});
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
