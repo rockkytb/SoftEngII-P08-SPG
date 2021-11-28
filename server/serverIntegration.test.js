@@ -335,6 +335,8 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+
+  
   //TEST POST /api/shopEmployeeSessions
   describe("Shop Employee Session success", () => {
     it("send a valid user", async () => {
@@ -374,6 +376,26 @@ describe("Test suite Integration Server", () => {
           farmer_email: "antonio.bianchi@mail.it",
         },
       ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe("get all products expected by farmer id success", () => {
+    it("test get /api/farmers/:farmerid/products_expected endpoint", async () => {
+      const response = await request(app).get("/api/farmers/1/products_expected");
+      expect(response.body).toEqual([
+        {
+          id: 1,
+        name: "Mele",
+        category: "Fruit",
+        price: 14,
+        qty: 5,
+        farmer_email: "antonio.bianchi@mail.it",
+        state: "EXPECTED",
+        },
+      ]);
+
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
     });

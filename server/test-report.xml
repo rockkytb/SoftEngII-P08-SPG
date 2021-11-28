@@ -3,58 +3,58 @@
   <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js">
   </file>
   <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="5"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="57"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="54"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="57"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="6"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="1"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="3"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="58"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="53"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="55"/>
     <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="1"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="59"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="56"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="3"/>
     <testCase name="Test suite DAO get client return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="114"/>
-    <testCase name="Test suite DAO get client return success" duration="56"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="113"/>
+    <testCase name="Test suite DAO get client return success" duration="73"/>
     <testCase name="Test suite DAO get client return -1 because no email provided" duration="1"/>
     <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="1"/>
     <testCase name="Test suite DAO get client return success" duration="1"/>
-    <testCase name="Test suite DAO get client return success" duration="1"/>
+    <testCase name="Test suite DAO get client return success" duration="2"/>
     <testCase name="Test suite DAO get categories return success" duration="1"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get client by id return success" duration="0"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="0"/>
+    <testCase name="Test suite DAO get client by id return success" duration="1"/>
     <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="1"/>
     <testCase name="Test suite DAO get products expected by farmer return success" duration="0"/>
     <testCase name="Test suite DAO get farmer return false because no email provided" duration="1"/>
     <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="0"/>
     <testCase name="Test suite DAO get farmer return false because wrong psw" duration="56"/>
-    <testCase name="Test suite DAO get farmer return success" duration="54"/>
+    <testCase name="Test suite DAO get farmer return success" duration="55"/>
     <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="1"/>
     <testCase name="Test suite DAO get farmer by id return a farmer" duration="1"/>
     <testCase name="Test suite DAO get shop employee return false because no email provided" duration="1"/>
     <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="56"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="54"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="57"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="55"/>
     <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="1"/>
     <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="1"/>
-    <testCase name="get all products success" duration="1"/>
-    <testCase name="get all bookings success" duration="0"/>
-    <testCase name="get all bookings for a client success" duration="1"/>
+    <testCase name="get all products success" duration="0"/>
+    <testCase name="get all bookings success" duration="1"/>
+    <testCase name="get all bookings for a client success" duration="0"/>
     <testCase name="get all bookings for a non-existing client success" duration="0"/>
-    <testCase name="updating the wallet failed bacause client was not found" duration="1"/>
-    <testCase name="updating the wallet failed bacause client id was not provided" duration="0"/>
-    <testCase name="update of wallet balance was successfull" duration="1"/>
+    <testCase name="updating the wallet failed bacause client was not found" duration="0"/>
+    <testCase name="updating the wallet failed bacause client id was not provided" duration="1"/>
+    <testCase name="update of wallet balance was successfull" duration="0"/>
     <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="1"/>
-    <testCase name="Creation of wallet fails,id 1 already exists" duration="0"/>
-    <testCase name="Edit the state of a booking with a valid request" duration="3"/>
+    <testCase name="Creation of wallet fails,id 1 already exists" duration="1"/>
+    <testCase name="Edit the state of a booking with a valid request" duration="0"/>
     <testCase name="create a row in the booking product table" duration="1"/>
-    <testCase name="get all bookings with pendingcancelation state" duration="0"/>
+    <testCase name="get all bookings with pendingcancelation state" duration="1"/>
     <testCase name="Insert a new Product expected without a field category" duration="0"/>
     <testCase name="edit state of a product receiving an array with id-state" duration="0"/>
     <testCase name="the creation of ack success" duration="2">
       <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
 
 Expected: 3
-Received: 8
+Received: 9
     at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
     at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:466:54)
     at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
