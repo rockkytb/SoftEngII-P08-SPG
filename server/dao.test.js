@@ -459,6 +459,13 @@ test("edit state of a product receiving an array with id-state", () => {
   return expect(dao.editStateProductWeek(parameter)).resolves.toEqual(true);
 });
 
+//Test get all acks with NEW state
+test("get all acks with NEW state success", () => {
+  return expect(dao.getAcksStateNew()).resolves.toEqual([
+    { id: 1, state: "NEW", farmer: "antonio.bianchi@mail.it", farmerId: 1 },
+  ]);
+});
+
 //Test create Acknowledge
 test("the creation of ack success", () => {
   const ack = {

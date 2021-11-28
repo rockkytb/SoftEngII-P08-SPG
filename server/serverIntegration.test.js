@@ -614,6 +614,16 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  describe("get acks with state NEW success", () => {
+    it("should retrieve a list of acks with state NEW", async () => {
+      const res = await request(app).get("/api/acksNew");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual([
+        { id: 1, state: "NEW", farmer: "antonio.bianchi@mail.it", farmerId: 1 },
+      ]);
+    });
+  });
+
   describe("Put products with new state", () => {
     it("right put with all right fields", async () => {
       const parameter = [
