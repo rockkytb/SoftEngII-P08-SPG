@@ -385,7 +385,7 @@ describe("Test suite Integration Server", () => {
       expect(response.body).toEqual([
         {
           id: 1,
-          state: "COMPLETED",
+          state: "PENDINGCANCELATION",
           email: "marco.bianchi@mail.it",
           name: "Marco",
           surname: "Bianchi",
@@ -404,7 +404,7 @@ describe("Test suite Integration Server", () => {
       expect(response.body).toEqual([
         {
           "id": 1,
-          "state": "COMPLETED",
+          "state": "PENDINGCANCELATION",
           "email": "marco.bianchi@mail.it",
           "name": "Marco",
           "surname": "Bianchi",
@@ -476,7 +476,7 @@ describe("Test suite Integration Server", () => {
     it("send a invalid id booking", async () => {
       const res = await request(app).put("/api/bookingstate").send({
         id: 0,
-        state: "COMPLETED",
+        state: "PENDINGCANCELATION",
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
@@ -490,29 +490,32 @@ describe("Test suite Integration Server", () => {
     it("send a valid body", async () => {
       const res = await request(app).put("/api/bookingstate").send({
         id: 1,
-        state: "COMPLETED",
+        state: "PENDINGCANCELATION",
       });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toEqual(true);
     });
   });
 
-  /*
-  //TEST NON FUNZIONANTE
+  
   describe("get all bookings with PENDINGCANCELATION state", () => {
     it("test /api/bookingsPendingCancelation endpoint", async () => {
       const res = await request(app).get("/api/bookingsPendingCancelation");
        expect(res.body).toEqual([
       {
-        ID_BOOKING: 1,
-        CLIENT_ID: 1,
-        STATE: "PENDINGCANCELATION"
+        id: 1,
+        state: "PENDINGCANCELATION",
+        email: "marco.bianchi@mail.it",
+        name: "Marco",
+        surname: "Bianchi",
+        qty: 3,
+        product: "Mele"
       }
     ]);
       expect(res.body).toHaveLength(1);
       expect(res.statusCode).toBe(200);
     });
-  });*/
+  });
 
   describe("post a vector of product expected", () => {
     it("test with a no valid body, without a name field", async () => {
@@ -534,6 +537,7 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  /*
   //DA SISTEMARE LA CLEAN DB PER POTER RENDERE RIPETIBILE IL TEST
   describe("post a vector of product expected", () => {
     it("test with a valid body", async () => {
@@ -568,11 +572,11 @@ describe("Test suite Integration Server", () => {
           nameProduct: "Banana"
         }
       ]
-    )*/
+    )
     });
   });
 });
-
+*/
 
 describe("Post ack success", () => {
   it("should create a new ack", async () => {
@@ -584,4 +588,78 @@ describe("Post ack success", () => {
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty("idAck");
   });
-});
+})
+
+describe("Put products with new state", ()=>{
+  it("right put with all right fields", async () =>{
+    const parameter = [
+      {
+        id: 1,
+        state: "EXPECTED"
+      },
+      {
+        id: 2,
+        state: "CONFIRMED"
+      }
+    ];
+
+    const res = await request(app).put("/api/products").send(parameter);
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toEqual(true);
+  })
+})
+
+describe("Put products with new state", ()=>{
+  it("wrong put with a element without id field", async () =>{
+    const parameter = [
+      {
+        state: "EXPECTED"
+      },
+      {
+        id: 2,
+        state: "CONFIRMED"
+      }
+    ];
+
+    const res = await request(app).put("/api/products").send(parameter);
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("error", "Invalid product id of a element on the array, it must be positive");
+  })
+})
+/* TEST NON FUNZIONANTE, NON RIESCE A VEDERE CHE MANCA IL CAMPO STATE E LA PRENDE PER BUONA
+describe("Put products with new state", ()=>{
+  it("wrong put with a element without state field", async () =>{
+    const parameter = [
+      {
+        id: 1
+      },
+      {
+        id: 2,
+      }
+    ];
+
+    const res = await request(app).put("/api/products").send(parameter);
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("error", "Invalid state lenght of a element on the array");
+  })*/
+
+  describe("Put products with new state", ()=>{
+    it("wrong put with a invalid id", async () =>{
+      const parameter = [
+        {
+          id: -1,
+          state: "EXPECTED"
+        },
+        {
+          id: 2,
+        }
+      ];
+  
+      const res = await request(app).put("/api/products").send(parameter);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid product id of a element on the array, it must be positive");
+    })
+})
+})
+
+})

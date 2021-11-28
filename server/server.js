@@ -862,7 +862,8 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
     if (req.body.hasOwnProperty(key)) {
       //do something with e.g. req.body[key]
       
-      if (!validator.isLength(`${req.body[key].state}`, { min: 1 })) {
+      if (!validator.isLength(`${req.body[key].state}`, { min: 4 })) {
+        console.log("sssssssssssssssssssssssshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
         return res
           .status(422)
           .json({ error: `Invalid state lenght of a element on the array` });
