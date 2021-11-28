@@ -584,6 +584,7 @@ app.post("/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/, async (req,
     res.status(503).json({
       error: `Database error during insertion into product_week table.`,
     });
+    return;
   }
 
   //All went fine
@@ -851,6 +852,55 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   res.status(201).json({ idBookingMode: bookingModeId });
 });
 
+//PUT  /api/products
+app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
+  
+  var result;
+  var problem = 0;
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      //do something with e.g. req.body[key]
+      
+      if (!validator.isLength(`${req.body[key].state}`, { min: 4 })) {
+        console.log("sssssssssssssssssssssssshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+        return res
+          .status(422)
+          .json({ error: `Invalid state lenght of a element on the array` });
+      }
+      if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
+        return res
+          .status(422)
+          .json({ error: `Invalid product id of a element on the array, it must be positive` });
+      }
+    }
+  }
+  //All the product have valid body
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      const product = {
+        id: req.body[key].id,
+        state: req.body[key].state,
+      };
+
+      try {
+        result = await dao.editStateProductWeek(product);
+      } catch (err) {
+        problem = 1;
+        break;
+      }
+    }
+  }
+  if (problem == 0) {
+    //All went fine
+    res.status(201).json(true);
+  } else {
+    res.status(503).json({
+      error: `Database error or undefined product during the put of the state of array product`,
+    });
+  }
+})
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

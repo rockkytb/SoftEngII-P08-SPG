@@ -314,12 +314,10 @@ exports.editQtyProductWeek = (product) => {
 exports.editStateProductWeek = (product) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE PRODUCT_WEEK SET STATE = ? WHERE ID = ?";
-    db.run(sql, [product.state, product.id], function (err, row) {
+    db.run(sql, [product.state, product.id], function (err) {
       if (err) {
         reject(err);
         return;
-      } else if (row === undefined) {
-        resolve(false);
       } else {
         resolve(true);
       }
@@ -617,7 +615,7 @@ exports.getAcksStateNew = () => {
 exports.getBookingsStatePendingCancelation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE STATE = 'PENDINGCANCELATION'";
+      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE b.STATE = 'PENDINGCANCELATION'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -717,6 +715,14 @@ exports.cleanDb = async () => {
 
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
+
+    await db.run(
+      "DELETE FROM PRODUCT_WEEK WHERE ID != ?",
       [1],
       (err) => {
         errTest(err);
