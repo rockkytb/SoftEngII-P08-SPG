@@ -488,6 +488,20 @@ test("Insert a new Product expected", () => {
   return expect(dao.insertTupleProductExpected(parameter)).resolves.toEqual(11);
 });*/
 
+// INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
+test("INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success", () => {
+  const parameter = {
+    "name": "Apple",
+    "category_id": 2,
+    "price": 1.99,
+    "qty": 2,
+    "farmer_id": "1",
+    "state": "CONFIRMED",
+  };
+  return expect(dao.insertTupleProductWEEK(parameter)).resolves.toBeGreaterThanOrEqual(1);
+});
+
+
 test("edit state of a product receiving an array with id-state", () => {
   const parameter = {
     id: 1,

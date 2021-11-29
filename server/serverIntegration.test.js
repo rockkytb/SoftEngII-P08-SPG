@@ -445,6 +445,29 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //POST /api/products/farmers/:id
+  describe("get all confirmed products expected by farmer id success", () => {
+    it("test get /api/products/farmers/1 endpoint", async () => {
+      const response = await request(app).get(
+        "/api/products/farmers/1"
+      );
+      expect(response.body).toEqual([
+        {
+          "id": 2,
+          "name": "Lamponi",
+          "category": "Fruit",
+          "price": 1.78,
+          "qty": 1,
+          "farmer_email": "antonio.bianchi@mail.it"
+        }
+      ]);
+
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+
   describe("get all bookings success", () => {
     it("test get api/bookings endpoint", async () => {
       const response = await request(app).get("/api/bookings");

@@ -534,7 +534,7 @@ app.put(
   }
 );
 
-// POST /api/farmers/:farmerid/products receive a vector of tuples of products expected
+// POST /api/farmers/:farmerid/products 
 app.post(
   "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
   async (req, res) => {
