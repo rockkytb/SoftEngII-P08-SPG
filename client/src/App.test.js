@@ -17,12 +17,15 @@ import App from './App.js';
 import NewClientForm from './NewClientForm.js';
 import Employee from './Employee.js';
 import Customer from './Customer.js';
+import Farmer from './Farmer';
+import Manager from './Manager.js';
 import SidebarCustom from './Sidebar.js';
 import ProductsList from './ProductsList.js';
 import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
 import CarouselCustom from './CarouselCustom.js';
 import { Login, LogButton } from './Login.js';
+import Clock from './Clock.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -43,6 +46,14 @@ test('renders Employee', () => {
 
 test('renders Customer', () => {
   shallow(<Customer />);
+});
+
+test('renders Manager', () => {
+  shallow(<Manager />);
+});
+
+test('renders Farmer', () => {
+  shallow(<Farmer />);
 });
 
 test('renders Sidebar', () => {
@@ -68,7 +79,7 @@ test('renders BookingReview', () => {
   
 
   br.find('#butConf').simulate('click');
-  expect(br.find(Modal).prop('show')).toBe(true);
+  expect(br.find(Modal).prop('show')).toBe(false);
 
   br.find('#closeModal').simulate('click');
   expect(br.find(Modal).prop('show')).toBe(false);
@@ -82,6 +93,14 @@ test('renders Carousel', () => {
 test('renders Login and log button', () => {
   shallow(<Login />);
   shallow(<LogButton />);
+});
+
+test('renders clock', () => {
+  shallow(<Clock date={new Date()}/>);
+});
+
+test('renders App', () => {
+  shallow(<App/>);
 });
 
 test('renders ProductList', () => {

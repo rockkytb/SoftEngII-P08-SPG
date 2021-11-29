@@ -1,5 +1,6 @@
 import { ClockFill, CalendarFill } from "react-bootstrap-icons"
 import { Col} from "react-bootstrap";
+import React from 'react';
 
 function Clock (props) {
     return (
@@ -31,7 +32,7 @@ function Clock (props) {
                 <span className="custom-control custom-switch d-inline" size={10}>
                     <input type="checkbox" value={props.virtualTime} className="custom-control-input d-inline" id="virtualTime"
                     onClick = {()=>{props.setVirtualTime((oldVT)=>!oldVT)}}/>
-                    <label className="custom-control-label d-inline" for="virtualTime">Virtual</label>
+                    <label className="custom-control-label d-inline" for="virtualTime" id="virtual-label">Virtual</label>
                 </span>
             </Col>
             
