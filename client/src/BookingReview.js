@@ -16,23 +16,24 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function BookingReview(props) {
-  const [clientID, setClientID] = useState(props.userdata.id.charAt(0) === "S" ? (props.clients[0].id):(props.userdata.id));
+  const [clientID, setClientID] = useState(props.userdata.id.charAt(0) === "S" ? (props.clients[0].id) : (props.userdata.id));
   const [showAlert, setShowAlert] = useState(false);
   const [showAlertTime, setShowAlertTime] = useState(false);
   const [showAlertPickUp, setShowAlertPickUp] = useState(false);
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
-    
+
   const [deliveryMode, setDeliveryMode] = useState(false);
-  const [street, setStreet] = useState (null);
-  const [city, setCity] = useState (null);
-  const [province, setProvince] = useState (null);
-  const [postalCode, setPostalCode] = useState (null);
-  const [country, setCountry] = useState (null);
-  const [date, setDate] = useState ("");
-  const [time, setTime] = useState ("");
-  const [extraFee, setExtraFee] = useState (0);
+  const [street, setStreet] = useState(null);
+  const [city, setCity] = useState(null);
+  const [province, setProvince] = useState(null);
+  const [postalCode, setPostalCode] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [extraFee, setExtraFee] = useState(0);
+  const [validated, setValidated] = useState(false);
 
   async function newBooking(IDclient) {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
@@ -52,15 +53,15 @@ function BookingReview(props) {
         });
         props.newProductMode({
           idBooking: tmp,
-          delivery:deliveryMode ? (1):(0),
-          street:street,
-          city:city,
-          province:province,
-          postal_code:postalCode,
-          country:country,
-          date:date,
-          time:time,
-          extra_fee:extraFee
+          delivery: deliveryMode ? (1) : (0),
+          street: street,
+          city: city,
+          province: province,
+          postal_code: postalCode,
+          country: country,
+          date: date,
+          time: time,
+          extra_fee: deliveryMode ? 5 : 0
         });
         props.setBookingsState(true);
         props.setCart([]);
@@ -73,25 +74,25 @@ function BookingReview(props) {
 
   async function handleCreateBooking() {
     const pickupdate = new Date(date);
-    if(pickupdate.getDay()===3 || pickupdate.getDay()===4 || pickupdate.getDay()===5 ){
-        let tmpSoldy = await props.getWallet(clientID);
-        let total = 0;
-        let id;
-        if (clientID)
-          id = clientID.substring(1);
+    if (pickupdate.getDay() === 3 || pickupdate.getDay() === 4 || pickupdate.getDay() === 5) {
+      let tmpSoldy = await props.getWallet(clientID);
+      let total = 0;
+      let id;
+      if (clientID)
+        id = clientID.substring(1);
 
 
-        setSoldy(tmpSoldy);
+      setSoldy(tmpSoldy);
 
-        props.cart.map((p) => {
-          total += p.price;
-        });
+      props.cart.map((p) => {
+        total += p.price;
+      });
 
-        if (total <= soldy) {
-          newBooking(id)
-        }
+      if (total <= soldy) {
+        newBooking(id)
       }
-    else{
+    }
+    else {
       setShowAlertPickUp(true);
     }
   }
@@ -99,7 +100,14 @@ function BookingReview(props) {
   const handleClose = () => {
     setDate("");
     setTime("");
+    setCountry("");
+    setProvince("");
+    setCity("");
+    setStreet("");
+    setPostalCode("");
+    setValidated(false);
     setShow(false);
+
   };
 
   useEffect(() => {
@@ -125,6 +133,54 @@ function BookingReview(props) {
       getSoldy();
   }, [clientID]);
 
+  const handleSubmit = (event) => {
+
+    event.preventDefault();
+    const form = event.currentTarget;
+
+    const handleCreateBooking = async () => {
+      const pickupdate = new Date(date);
+      if (!deliveryMode) {
+        if (pickupdate.getDay() === 3 || pickupdate.getDay() === 4 || pickupdate.getDay() === 5) {
+          let tmpSoldy = await props.getWallet(clientID);
+          let total = 0;
+          let id;
+          if (clientID)
+            id = clientID.substring(1);
+
+
+          setSoldy(tmpSoldy);
+
+          props.cart.map((p) => {
+            total += p.price;
+          });
+
+          if (total <= soldy) {
+            newBooking(id)
+          }
+        }
+        else {
+          setShowAlertPickUp(true);
+        }
+      } else {
+        let id;
+        if (clientID)
+          id = clientID.substring(1);
+
+        newBooking(id);
+      }
+    }
+
+
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      handleCreateBooking();
+      setValidated(true);
+    };
+  };
+
+
   function productsActions() {
     return props.cart.map((product) => (
       <Col>
@@ -141,12 +197,14 @@ function BookingReview(props) {
 
                 props.setProducts(oldList => {
                   const list = oldList.map((p) => {
-                    if(product.id === p.id){
-                      return {id: p.id, name: p.name, category: p.category, 
-                        qty: p.qty + product.quantity *(1),
-                        price:p.price, farmer_email:p.farmer_email};
+                    if (product.id === p.id) {
+                      return {
+                        id: p.id, name: p.name, category: p.category,
+                        qty: p.qty + product.quantity * (1),
+                        price: p.price, farmer_email: p.farmer_email
+                      };
                     }
-                    else{
+                    else {
                       return p;
                     }
                   });
@@ -180,34 +238,35 @@ function BookingReview(props) {
         <hr />
 
         <div className="d-flex justify-content-end">
-            <Button
+          <Button
             variant="warning"
-              onClick={() => {
-                props.cart.forEach(product => {
-                  props.setProducts(oldList => {
-                    const list = oldList.map((p) => {
-                      if(product.id === p.id){
-                        return {id: p.id, name: p.name, category: p.category, 
-                          qty: p.qty + product.quantity *(1),
-                          price:p.price, farmer_email:p.farmer_email};
-                      }
-                      else{
-                        return p;
-                      }
-                    });
-                    return list;
+            onClick={() => {
+              props.cart.forEach(product => {
+                props.setProducts(oldList => {
+                  const list = oldList.map((p) => {
+                    if (product.id === p.id) {
+                      return {
+                        id: p.id, name: p.name, category: p.category,
+                        qty: p.qty + product.quantity * (1),
+                        price: p.price, farmer_email: p.farmer_email
+                      };
+                    }
+                    else {
+                      return p;
+                    }
                   });
-                  
-                  
+                  return list;
                 });
-                
-                props.setCart([]);
-                setShowAlert(false);
-              }}
-            >
-              You may fire when ready.
-            </Button>
-          
+
+
+              });
+
+              props.setCart([]);
+              setShowAlert(false);
+            }}
+          >
+            You may fire when ready.
+          </Button>
         </div>
       </Alert>
 
@@ -218,162 +277,276 @@ function BookingReview(props) {
         </p>
         <hr />
         <div className="d-flex justify-content-end">
-            <Button
+          <Button
             variant="warning"
-              onClick={() => {
-              
-                setShowAlertTime(false);
-              }}
-            >
-              Close
-            </Button>
-          
+            onClick={() => {
+
+              setShowAlertTime(false);
+            }}
+          >
+            Close
+          </Button>
+
         </div>
       </Alert>
-      
+
       <Modal show={show} onHide={handleClose}>
-      <Alert show={showAlertPickUp} variant="danger">
-        <Alert.Heading>You cannot choose this date</Alert.Heading>
-        <p>
-          Pick up or deliveries must happen only from Wednesday to Friday
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
+        <Alert show={showAlertPickUp} variant="danger">
+          <Alert.Heading>You cannot choose this date</Alert.Heading>
+          <p>
+            Pick up or deliveries must happen only from Wednesday to Friday
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
             <Button
-            variant="warning"
+              variant="warning"
               onClick={() => {
-              
+
                 setShowAlertPickUp(false);
               }}
             >
               Close
             </Button>
-          
-        </div>
-      </Alert>
+
+          </div>
+        </Alert>
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Col>
-            <Form>
-              { props.userdata.id.charAt(0) === "S" &&
-              <Form.Group>
-                <Form.Label><h3>Select Client</h3></Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => setClientID(e.target.value)}
-                >
-                  {props.clients.length > 0 ? (
-                    props.clients.map((c) => (
-                      <option value={c.id}>
-                        {c.name} {c.surname}
-                      </option>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                </Form.Control>
-              </Form.Group>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              {props.userdata.id.charAt(0) === "S" &&
+                <Form.Group>
+                  <Form.Label><h3>Select Client</h3></Form.Label>
+                  <Form.Control
+                    as="select"
+                    onChange={(e) => setClientID(e.target.value)}
+                  >
+                    {props.clients.length > 0 ? (
+                      props.clients.map((c) => (
+                        <option value={c.id}>
+                          {c.name} {c.surname}
+                        </option>
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </Form.Control>
+                </Form.Group>
               }
               <Form.Label><h3>Delivery Options</h3></Form.Label>
 
-                <Row className="text-center">
+              <Row className="text-center">
+                <Col xs={2} />
+                <Col xs={8}>
+                  <Form.Group id="DeliveryMode">
+                    <Form.Check type="checkbox" label="Delivery at home?"
+                      checked={deliveryMode}
+                      onChange={() => setDeliveryMode(!deliveryMode)} />
+                  </Form.Group>
+                </Col>
+                <Col xs={2} />
+              </Row>
+
+              <Row>
+                <Col xs={2} />
+                <Col xs={8}>
+                  <Form.Label>
+                    {deliveryMode ? (<h5> Delivery at home </h5>) : (<h5> Pick-Up in Shop </h5>)}
+
+                  </Form.Label>
+                </Col>
+                <Col xs={2} />
+              </Row>
+
+              {deliveryMode ?
+                <>
+                  <Row>
                     <Col xs={2} />
                     <Col xs={8}>
-                        <Form.Group id="DeliveryMode">
-                            <Form.Check type="checkbox" label="Delivery at home?" 
-                            checked={deliveryMode} 
-                            onChange={() => setDeliveryMode(!deliveryMode)} />
-                         </Form.Group>
+                      <Form.Group size="lg" controlId="country">
+                        <Form.Label>Country: </Form.Label>
+                        <Form.Control
+                          autoFocus
+                          type='text'
+                          value={country}
+                          required
+                          onChange={ev => setCountry(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a country.
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </Col>
                     <Col xs={2} />
-                </Row>
+                  </Row>
 
-                <Form.Label>
-                    {deliveryMode ? (<h6> Delivery at home </h6>):(<h6> Pick-Up in Shop </h6>)}
-                    
-                </Form.Label>
-                
-                <Row>
+                  <Row>
                     <Col xs={2} />
                     <Col xs={8}>
-                        <Form.Group size="lg" controlId="date">
-                            <Form.Label>Date: </Form.Label>
-                            <Form.Control 
-                                    type="date" 
-                                    value={date}
-                                    required 
-                                    onChange={ev => setDate(ev.target.value)} />
-                        </Form.Group>
+                      <Form.Group size="lg" controlId="country">
+                        <Form.Label>Province: </Form.Label>
+                        <Form.Control
+                          type='text'
+                          value={province}
+                          required
+                          onChange={ev => setProvince(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a province.
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </Col>
                     <Col xs={2} />
-                </Row>
+                  </Row>
 
-                <Row>
+                  <Row>
                     <Col xs={2} />
                     <Col xs={8}>
-                        <Form.Group size="lg" controlId="time">
-                            <Form.Label>Time: </Form.Label>
-                            <Form.Control 
-                                    type="time" 
-                                    value={time} 
-                                    required
-                                    onChange={ev => setTime(ev.target.value)} />
-                        </Form.Group>
+                      <Form.Group size="lg" controlId="country">
+                        <Form.Label>City: </Form.Label>
+                        <Form.Control
+                          type='text'
+                          value={city}
+                          required
+                          onChange={ev => setCity(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a city.
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </Col>
                     <Col xs={2} />
-                </Row>
-              
+                  </Row>
+
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                      <Form.Group size="lg" controlId="country">
+                        <Form.Label>Address: </Form.Label>
+                        <Form.Control
+                          type='text'
+                          value={street}
+                          required
+                          onChange={ev => setStreet(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a address.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
+
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                      <Form.Group size="lg" controlId="country">
+                        <Form.Label>Postal Code: </Form.Label>
+                        <Form.Control
+                          type='text'
+                          value={postalCode}
+                          required
+                          onChange={ev => setPostalCode(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a postal code.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
 
 
+                </>
+                :
+                <>
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                      <Form.Group size="lg" controlId="date">
+                        <Form.Label>Date: </Form.Label>
+                        <Form.Control
+                          type="date"
+                          value={date}
+                          required
+                          onChange={ev => setDate(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a date.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
+
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                      <Form.Group size="lg" controlId="time">
+                        <Form.Label>Time: </Form.Label>
+                        <Form.Control
+                          type="time"
+                          value={time}
+                          required
+                          onChange={ev => setTime(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a time.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
+                </>
+
+
+              }
+              <Row className="justify-content-center">
+
+                <Button className="mr-1" variant="secondary" id="closeModal" onClick={handleClose}>
+                  Close
+                </Button>
+
+                <Button className="ml-1" type="submit" variant="warning" color="black" id="submitModal" onClick={handleSubmit} >
+                  Submit
+                </Button>
+
+              </Row>
             </Form>
           </Col>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" id="closeModal" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="warning" color="black" id="submitModal" onClick={() => {handleCreateBooking()}}>
-            Submit
-          </Button>
-        </Modal.Footer>
+
       </Modal>
 
-      
+
 
       <CardColumns xs={1} md={5}>
         <>{props.cart.length ? productsActions() : <></>}</>
       </CardColumns>
       {props.cart.length ? (
 
-          <Row>
-            <Col md={4} />
-            <Col className="md-2 text-right">
-              <Button variant="secondary" onClick={() => setShowAlert(true)}>
-                Empty Cart
-              </Button>
-            </Col>
-            <Col className="md-2 text-left">
-                <Button variant="warning" color="black" id="butConf" onClick={() => {
-                      //BOOKINGS may happen only between saturday 10 am until sunday 23
-                      if((props.calendarday.getDay() === 6 && props.calendarday.getHours() >= 10) ||
-                      (props.calendarday.getDay() === 0 && props.calendarday.getHours() < 23)){
-                        setShow(true);
-                      }
-                      else{
-                        setShowAlertTime(true);
-                      }
-                    
-                    }}>
-                  Confirm Booking
-                </Button>
-            </Col>
-            <Col md={4} />
-          </Row>
+        <Row>
+          <Col md={4} />
+          <Col className="md-2 text-right">
+            <Button variant="secondary" onClick={() => setShowAlert(true)}>
+              Empty Cart
+            </Button>
+          </Col>
+          <Col className="md-2 text-left">
+            <Button variant="warning" color="black" id="butConf" onClick={() => {
+              //BOOKINGS may happen only between saturday 10 am until sunday 23
+              if ((props.calendarday.getDay() === 6 && props.calendarday.getHours() >= 10) ||
+                (props.calendarday.getDay() === 0 && props.calendarday.getHours() < 23)) {
+                setShow(true);
+              }
+              else {
+                setShowAlertTime(true);
+              }
 
-      ):(<><h3 className = "text-center">Your cart is empty</h3></>)}
-      
+            }}>
+              Confirm Booking
+            </Button>
+          </Col>
+          <Col md={4} />
+        </Row>
+
+      ) : (<><h3 className="text-center">Your cart is empty</h3></>)}
+
     </div>
   );
 }

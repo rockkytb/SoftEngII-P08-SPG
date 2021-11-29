@@ -36,3 +36,22 @@
   bottom: 0;
   top: 50%;
 }
+
+.notificationIcon {
+position: relative;
+}
+
+.notificationCounter {
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  right: 15px;
+}
