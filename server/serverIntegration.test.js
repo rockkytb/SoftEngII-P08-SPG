@@ -390,11 +390,11 @@ describe("Test suite Integration Server", () => {
       expect(response.body).toEqual(
         [
           {
-              "id": 3,
-              "name": "Apple",
-              "category": "Spices",
-              "price": 1.99,
-              "qty": 2,
+              "id": 1,
+              "name": "Mele",
+              "category": "Fruit",
+              "price": 14.0,
+              "qty": 5,
               "farmer_email": "antonio.bianchi@mail.it"
           }
       
