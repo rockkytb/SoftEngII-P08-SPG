@@ -29,7 +29,7 @@ function CarouselCustom(props) {
           {props.logged ? (<>{/*<Link to="/products">
             <Button> Show the catalogue </Button></Link>*/}</>):(
             <>  
-            <Link to="/login"> <Button color="black"> Login </Button> </Link>
+            <Link to="/login"> <Button variant="warning"> Login </Button> </Link>
             </>
           )}
           
@@ -49,7 +49,7 @@ function CarouselCustom(props) {
           <Link to="/products"> <Button> Show the catalogue </Button> </Link>*/}</>):(
             <>  
             <h3>Join us!</h3>
-           <Link to="/register"> <Button color="black"> Sign up </Button> </Link>
+           <Link to="/register"> <Button variant="warning"> Sign up </Button> </Link>
             </>
           )}
           
@@ -66,7 +66,7 @@ function CarouselCustom(props) {
 
         <Carousel.Caption className="caption-middle">
           <h3>Browse products!</h3>
-          {<Link to="/products"> <Button color="black"> Show the catalogue </Button> </Link>}
+          {<Link to="/products"> <Button variant="warning"> Show the catalogue </Button> </Link>}
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

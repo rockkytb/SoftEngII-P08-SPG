@@ -49,7 +49,7 @@ function Login(props) {
             <option value="M">Manager</option>
           </Form.Control>
         </Form.Group>
-        <Button color="black" block size="lg" type="submit" disabled={!validateForm()}>
+        <Button variant="warning" block size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>
       </Form>

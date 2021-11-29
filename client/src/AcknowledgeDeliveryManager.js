@@ -22,12 +22,12 @@ export default function AcknowledgeDeliveryFarmer(props) {
                                 has delivered products
                         </Card.Text>
                         <Button
-                            variant="primary"
+                            variant="warning"
                             onClick={() => {
                                 
                                 props.confirmAck(ack.id);
                             }}
-                            color="black"
+                            
                         >
                             Set as read
                         </Button>

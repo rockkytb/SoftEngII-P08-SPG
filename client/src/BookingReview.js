@@ -136,8 +136,7 @@ function BookingReview(props) {
             <Card.Text>Total Price: {product.price * product.quantity} €</Card.Text>
             <Card.Text>Quantity: {product.quantity}</Card.Text>
             <Button
-              variant="primary"
-              color="black"
+              variant="warning"
               onClick={() => {
 
                 props.setProducts(oldList => {
@@ -169,7 +168,7 @@ function BookingReview(props) {
     <div className="below-nav">
       <div class="col-md-12 text-center">
         <Link to={"/products"}>
-          <Button color="black" className="mr-2 md-2 ">Back to products</Button>
+          <Button variant="warning" className="mr-2 md-2 ">Back to products</Button>
         </Link>
       </div>
       <Alert show={showAlert} variant="danger">
@@ -182,7 +181,7 @@ function BookingReview(props) {
 
         <div className="d-flex justify-content-end">
             <Button
-            color="black"
+            variant="warning"
               onClick={() => {
                 props.cart.forEach(product => {
                   props.setProducts(oldList => {
@@ -220,7 +219,7 @@ function BookingReview(props) {
         <hr />
         <div className="d-flex justify-content-end">
             <Button
-            color="black"
+            variant="warning"
               onClick={() => {
               
                 setShowAlertTime(false);
@@ -241,7 +240,7 @@ function BookingReview(props) {
         <hr />
         <div className="d-flex justify-content-end">
             <Button
-            color="black"
+            variant="warning"
               onClick={() => {
               
                 setShowAlertPickUp(false);
@@ -335,7 +334,7 @@ function BookingReview(props) {
           <Button variant="secondary" id="closeModal" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" color="black" id="submitModal" onClick={() => {handleCreateBooking()}}>
+          <Button variant="warning" color="black" id="submitModal" onClick={() => {handleCreateBooking()}}>
             Submit
           </Button>
         </Modal.Footer>
@@ -356,7 +355,7 @@ function BookingReview(props) {
               </Button>
             </Col>
             <Col className="md-2 text-left">
-                <Button variant="primary" color="black" id="butConf" onClick={() => {
+                <Button variant="warning" color="black" id="butConf" onClick={() => {
                       //BOOKINGS may happen only between saturday 10 am until sunday 23
                       if((props.calendarday.getDay() === 6 && props.calendarday.getHours() >= 10) ||
                       (props.calendarday.getDay() === 0 && props.calendarday.getHours() < 23)){

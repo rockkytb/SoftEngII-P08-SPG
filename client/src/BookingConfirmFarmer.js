@@ -30,7 +30,7 @@ export default function BookingConfirmFarmer(props) {
                             })}
                         </Card.Text>
                         <Button
-                            variant="primary"
+                            variant="warning"
                             onClick={() => {
                                 if(props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9)
                                 {
@@ -41,7 +41,7 @@ export default function BookingConfirmFarmer(props) {
                                 
                                 
                             }}
-                            color="black"
+                            
                         >
                             Confirm products
                         </Button>
@@ -62,7 +62,7 @@ export default function BookingConfirmFarmer(props) {
                 <hr />
                 <div className="d-flex justify-content-end">
                     <Button
-                    color="black"
+                    variant="warning"
                     onClick={() => {
                     
                         setShowAlertTime(false);

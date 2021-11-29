@@ -14,7 +14,7 @@ function Manager(props) {
             <Row md={12}>
                 <Col className="md-4 pr-0 pl-0 ">
                 <Link to="/acksManager"> 
-                    <Button color="black" className="mr-2 ml-2 md-1 "> Acknowledge deliveries </Button> 
+                    <Button variant="warning" className="mr-2 ml-2 md-1 "> Acknowledge deliveries </Button> 
                 </Link>
               </Col>
             </Row>
