@@ -24,6 +24,12 @@ jobs:
       - name: Run Server Tests
         working-directory: ./server
         run: npm run test --runInBand
+      - name: Launch server
+        working-directory: ./server
+        run: node server.js
+      - name: Launch client
+        working-directory: ./client
+        run: npm start
       - name: Run Client Tests
         working-directory: ./client
         run: npm run test --runInBand
