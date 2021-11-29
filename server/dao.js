@@ -761,3 +761,29 @@ exports.cleanDb = async () => {
     );
   }
 };
+
+
+//SHORT-TERM:
+exports.getTotal = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
+      FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        client: e.CLIENT_ID,
+        total: e.TOTAL,
+      }));
+
+      resolve(bookings);
+    });
+  });
+};
