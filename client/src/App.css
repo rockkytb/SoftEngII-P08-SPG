@@ -30,3 +30,9 @@
     max-width: 99vh;
   
 }
+
+.caption-middle{
+  transform: translateY(-50%);
+  bottom: 0;
+  top: 50%;
+}

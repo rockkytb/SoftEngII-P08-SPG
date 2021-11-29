@@ -24,7 +24,7 @@ function CarouselCustom(props) {
           src={cibo3}
           alt="First slide"
         />
-        <Carousel.Caption>
+        <Carousel.Caption className="caption-middle">
           <h3>Start shopping with us!</h3>
           {props.logged ? (<>{/*<Link to="/products">
             <Button> Show the catalogue </Button></Link>*/}</>):(
@@ -44,7 +44,7 @@ function CarouselCustom(props) {
           alt="Second slide"
         />
 
-        <Carousel.Caption>
+        <Carousel.Caption className="caption-middle">
         {props.logged ? (<>{/*<h3>Browse products!</h3>
           <Link to="/products"> <Button> Show the catalogue </Button> </Link>*/}</>):(
             <>  
@@ -64,7 +64,7 @@ function CarouselCustom(props) {
           alt="Third slide"
         />
 
-        <Carousel.Caption>
+        <Carousel.Caption className="caption-middle">
           <h3>Browse products!</h3>
           {<Link to="/products"> <Button color="black"> Show the catalogue </Button> </Link>}
         </Carousel.Caption>

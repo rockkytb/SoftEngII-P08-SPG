@@ -1,5 +1,7 @@
 import puppeteer from "puppeteer";
 
+//BEFORE RUNNING THESE TESTS, YOU NEED TO LAUNCH SERVER (nodemon server.js) AND CLIENT (npm start)
+
 describe("App.js", () => {
   let browser;
   let page;
