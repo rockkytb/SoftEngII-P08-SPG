@@ -76,39 +76,65 @@ export default function ProductsList(props) {
 
   function productsActions() {
     //@kricar gioca a europa universalis anziché a tempo di boom :c
-
+    /*console.log(props.products.sort((a, b) => {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return a.id - b.id;
+    }));*/
+    //TOCHECK: problems into modifying a prop?
     //the product must be one from next week so it must be not already confirmed
-    return props.products.map((product) => (
-      <Col>
-        <Card className="text-dark">
-          {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
-          <Card.Body>
-            <Card.Title>{product.name}</Card.Title>
-            <Card.Text>
-              Unit Price: {product.price} €
-              <br />
-              Category: {product.category}
-              <br />
-              Available quantity: {product.qty}
-              <br />
-              Farmer : {product.farmer_email}
-            </Card.Text>
-            <Button
-            variant="warning"
-              onClick={() => {
-                setProductId(product.id);
-                setName(product.name);
-                setQuantity(product.qty);
-                setPrice(product.price);
-                setShowView(true);
-              }}
-            >
-              Add to Cart
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-    ));
+    return props.products.sort((a, b) => {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return a.id - b.id;
+    }).map((product) => {
+      console.log(product);
+      return (
+        <Col>
+          <Card className="text-dark">
+            {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
+            <Card.Body>
+              <Card.Title>{product.name}</Card.Title>
+              <Card.Text>
+                Unit Price: {product.price} €
+                <br />
+                Category: {product.category}
+                <br />
+                Available quantity: {product.qty}
+                <br />
+                Farmer : {product.farmer_email}
+              </Card.Text>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  setProductId(product.id);
+                  setName(product.name);
+                  setQuantity(product.qty);
+                  setPrice(product.price);
+                  setShowView(true);
+                }}
+              >
+                Add to Cart
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      )
+    });
   }
 
   return (

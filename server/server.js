@@ -11,6 +11,9 @@ const dao = require("./dao"); // module for accessing the DB
 const validator = require("validator");
 let testmode = false;
 
+//SHORT-TERM
+let date = 0;
+
 //DO NOT DELETE, NEEDED ONLY FOR INTEGRATION TESTS
 const switchTestMode = () => {
   testmode = true;
@@ -278,7 +281,7 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 //POST /api/client/
 app.post(
   "/api/client",
-  /*isLoggedIn,*/ (req, res) => {
+  /*isLoggedIn,*/(req, res) => {
     dao
       .getClientByEmail(req.body.email)
       .then((client) => {
@@ -897,6 +900,50 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
     });
   }
 });
+
+//////TODO: move clock to backend 
+//////SHORT-TERM: receive the day of the week we put 
+app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
+  date = req.body.date;
+
+  if (!date || date < 1 || date > 7)
+    res.status(503).json({
+      error: `Database error during the creation of booking mode.`,
+    });
+  if (date == 2) {
+    dao
+      .getTotal()
+      .then((booking) => {
+        booking.map((c) => {
+          let wallet = dao
+            .getWallet(c.client)
+            .then((res) => res.balance);
+          if(wallet >= c.total){
+            dao
+            .updateWallet({amount: wallet-c.total, id: c.client })
+            .then((res) => res);
+          }
+          else{
+            dao
+            .editStateBooking({id: c.id, state: 'PENDINGCANCELATION'})
+            .then((res) => res);
+          }
+        })
+        //res.status(200).json(clients);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: `Database errors: ${err}.`,
+        });
+      });
+  }
+
+  //All went fine
+  res.status(201).json({ date: date });
+});
+
+
+
 // activate the server
 const server = app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

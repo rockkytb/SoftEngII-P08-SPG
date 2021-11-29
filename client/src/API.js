@@ -414,8 +414,34 @@ async function newFutureProduct(id, products){
     )
 }
 
+//TODO: move clock to backend
+//SHORT-TERM: post to server to receive date-time 
+async function setDate(date){
+    return new Promise((resolve, reject) =>
+        fetch(url+'/clock', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                date
+            ),
+        }).then((response) =>
+            {
+                if (response.ok) {
+                    resolve(response.json());
+                } else {
+                    response.json()
+                        .then((obj) => { reject(obj); }) // error msg in the response body
+                        .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+                }
+            }
+        ).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] })}) // connection errors
+    )
+}
+
 const API = { addUser,newAck, confirmAck, logIn, logOut, getUserInfo,
      newBooking, newBookingProduct, editProductQty, getClientByEmail, 
     getWalletById, setNewWallet, confirmBooking, newBookingMode,
-    confirmDeliveryProducts, newFutureProduct, confirmProductsFarmer};
+    confirmDeliveryProducts, newFutureProduct, confirmProductsFarmer, setDate};
 export default API;
