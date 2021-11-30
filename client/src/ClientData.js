@@ -64,6 +64,7 @@ function ClientData(props) {
           <div className="text-center below-nav">
             <p>Client id: {client.id}</p><br />
             <p>Client name: {client.name + " " + client.surname}</p>
+            <p>Client email: {client.username}</p>
             <p>Client wallet: {wallet}€</p><br />
             <Form>
               <Form.Group>
