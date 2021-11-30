@@ -481,8 +481,17 @@ describe("Test suite Integration Server", () => {
           qty: 3,
           product: "Mele",
         },
+        {
+          email: "marco.bianchi@mail.it",
+          id: 1,
+          name: "Marco",
+          product: "Lamponi",
+          qty: 1,
+          state: "PENDINGCANCELATION",
+          surname: "Bianchi",
+        }
       ]);
-      expect(response.body).toHaveLength(1);
+      expect(response.body).toHaveLength(2);
       expect(response.statusCode).toBe(200);
     });
   });
@@ -500,8 +509,17 @@ describe("Test suite Integration Server", () => {
           qty: 3,
           product: "Mele",
         },
+       { 
+        email: "marco.bianchi@mail.it",
+        id: 1,
+        name: "Marco",
+        product: "Lamponi",
+        qty: 1,
+        state: "PENDINGCANCELATION",
+        surname: "Bianchi",
+      }
       ]);
-      expect(response.body).toHaveLength(1);
+      expect(response.body).toHaveLength(2);
       expect(response.statusCode).toBe(200);
     });
   });
@@ -599,8 +617,17 @@ describe("Test suite Integration Server", () => {
           qty: 3,
           product: "Mele",
         },
+        {
+         email: "marco.bianchi@mail.it",
+          id: 1,
+          name: "Marco",
+          product: "Lamponi",
+          qty: 1,
+          state: "PENDINGCANCELATION",
+          surname: "Bianchi",
+        }
       ]);
-      expect(res.body).toHaveLength(1);
+      expect(res.body).toHaveLength(2);
       expect(res.statusCode).toBe(200);
     });
   });
@@ -764,4 +791,23 @@ describe("Put products with new state", ()=>{
       );
     });
   });
+/*
+  describe("Put products with expected state", () => {
+    it("valid put", async () => {
+      const parameter = 
+        {
+          name: "Apple",
+          category: 2,
+          price: 1.99,
+          qty: 2
+          };
+
+      const res = await request(app).post("/api/farmers/1/productsExpected").send(parameter);
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toEqual("productId", 13);
+    });
+  });
+*/
 });
+
+

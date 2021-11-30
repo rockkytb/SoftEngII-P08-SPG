@@ -330,7 +330,7 @@ test("get all all CONFIRMED products for a particular farmer success", async () 
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.
 
-  const received = {
+  const received = [{
     id: 1,
     state: "PENDINGCANCELATION",
     email: "marco.bianchi@mail.it",
@@ -338,14 +338,24 @@ test("get all bookings success", async () => {
     surname: "Bianchi",
     qty: 3,
     product: "Mele",
-  };
+  },
+  { 
+    email: "marco.bianchi@mail.it",
+    id: 1,
+    name: "Marco",
+    product: "Lamponi",
+    qty: 1,
+    state: "PENDINGCANCELATION",
+    surname: "Bianchi",
+  }
+];
 
-  return expect(dao.getAllBookings()).resolves.toEqual([received]);
+  return expect(dao.getAllBookings()).resolves.toEqual(received);
 }, 10000);
 
 // TEST GET BOOKINGS FOR A PARTICULAR CLIENT
 test("get all bookings for a client success", async () => {
-  const received = {
+  const received = [{
     id: 1,
     state: "PENDINGCANCELATION",
     email: "marco.bianchi@mail.it",
@@ -353,9 +363,19 @@ test("get all bookings for a client success", async () => {
     surname: "Bianchi",
     qty: 3,
     product: "Mele",
-  };
+  },
+  { 
+    email: "marco.bianchi@mail.it",
+    id: 1,
+    name: "Marco",
+    product: "Lamponi",
+    qty: 1,
+    state: "PENDINGCANCELATION",
+    surname: "Bianchi",
+  }
+];
 
-  return expect(dao.getAllBookingsForClient(1)).resolves.toEqual([received]);
+  return expect(dao.getAllBookingsForClient(1)).resolves.toEqual(received);
 }, 10000);
 
 test("get all bookings for a non-existing client success", () => {
@@ -457,6 +477,15 @@ test("get all bookings with pendingcancelation state", async () => {
       qty: 3,
       product: "Mele",
     },
+    { 
+      email: "marco.bianchi@mail.it",
+      id: 1,
+      name: "Marco",
+      product: "Lamponi",
+      qty: 1,
+      state: "PENDINGCANCELATION",
+      surname: "Bianchi",
+    }
   ];
 
   return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual(
