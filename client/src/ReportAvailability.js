@@ -130,7 +130,7 @@ function ReportAvailability(props) {
                             <Button onClick={() => { setName(""); setCategory(props.categories[0].id); setPrice(0.0); setQty(0); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                         </Col>
                         <Col xs={1} className="pl-5">
-                            <Button type="submit" variant="warning" className="float-right ">Add product</Button>
+                            <Button type="submit" variant="warning" className="float-right ">Add</Button>
                         </Col>
                         <Col xs={2} />
                     </Row>
