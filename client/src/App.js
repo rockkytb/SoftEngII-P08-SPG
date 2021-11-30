@@ -192,7 +192,8 @@ function App() {
 
   //update products, bookings and next week products
   useEffect(() => {
-    if (bookingsState) {
+    console.log(userdata);
+    //if (bookingsState) {
       const getProducts = async () => {
         // call: GET /api/products
         const response = await fetch("/api/products");
@@ -205,7 +206,7 @@ function App() {
 
       const getDeliveries = async () => {
         // call: GET /api/deliveries
-        if (loggedIn && userdata.id.charAt(0) === "S") {
+        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
           const response = await fetch("/api/deliveries");
           const productList = await response.json();
           if (response.ok) {
@@ -216,13 +217,13 @@ function App() {
 
       const getBookings = async () => {
         // call: GET /api/bookings
-        if (loggedIn && userdata.id.charAt(0) === "S") {
+        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === 'S') {
           const response = await fetch("/api/bookings");
           const bookingList = await response.json();
           if (response.ok) {
             setBookings(bookingList);
           }
-        } else if (loggedIn && userdata.id.charAt(0) === "C") {
+        } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
           const response = await fetch(
             "/api/bookings/clients/" + userdata.id.substring(1)
           );
@@ -237,9 +238,9 @@ function App() {
       getProducts();
       getBookings();
       getDeliveries();
-      setBookingsState(false);
-    }
-  }, [bookingsState, attaccoDDOS, loggedIn]);
+      //setBookingsState(false);
+    //}
+  }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
   const getFutureProducts = async (farmerId) => {
     // call: GET /api/products_expected
