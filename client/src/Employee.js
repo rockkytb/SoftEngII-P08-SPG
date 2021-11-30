@@ -7,7 +7,7 @@ function Employee(props) {
 
   return (
     <>
-      <h1 className="below-nav main-content">I'm an Employee</h1>
+      <h1 className="below-nav main-content text-center">I'm an Employee</h1>
 
       <Container fluid className="text-center">
         <Row md={12}>
