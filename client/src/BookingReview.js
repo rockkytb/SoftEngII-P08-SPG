@@ -365,6 +365,42 @@ function BookingReview(props) {
                   <Row>
                     <Col xs={2} />
                     <Col xs={8}>
+                      <Form.Group size="lg" controlId="date">
+                        <Form.Label>Date: </Form.Label>
+                        <Form.Control
+                          type="date"
+                          value={date}
+                          required
+                          onChange={ev => setDate(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a date.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
+
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                      <Form.Group size="lg" controlId="time">
+                        <Form.Label>Time: </Form.Label>
+                        <Form.Control
+                          type="time"
+                          value={time}
+                          required
+                          onChange={ev => setTime(ev.target.value)} />
+                        <Form.Control.Feedback type="invalid">
+                          Please insert a time.
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                  </Row>
+
+                  <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
                       <Form.Group size="lg" controlId="country">
                         <Form.Label>Country: </Form.Label>
                         <Form.Control
