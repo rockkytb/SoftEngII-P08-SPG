@@ -41,6 +41,7 @@ function NewClientForm(props) {
                 name: name,
                 surname: surname,
                 password: bcrypt.hashSync(password, 10),
+                clearpsw: password
 
             };
 
@@ -142,12 +143,12 @@ function NewClientForm(props) {
                 </Row>
 
                 <Row>
-                    <Col xs={8} />
+                    <Col xs={7} />
                     <Col xs={1}>
                         <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
-                    <Col xs={1} className="pl-5">
-                        <Button type="submit" variant="primary" className="float-right ">Save</Button>
+                    <Col xs={2} className="pl-5">
+                        <Button variant="warning" color="black" type="submit" className="float-right ">Register</Button>
                     </Col>
                     <Col xs={2} />
                 </Row>

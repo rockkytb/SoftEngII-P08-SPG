@@ -21,39 +21,52 @@ export default function ProductsList(props) {
       quantity: orderQuantity,
       price: price,
     };
-    
-    props.setCart((oldList) => {
 
-        const list = oldList.map((item)=>{
-          if (item.id === product.id)
-            {
-              update = 1;
-              return {
-                id: productId,
-                name: name,
-                quantity: (product.quantity*1) + (item.quantity *1),
-                price: price,
-              };
-            }
-          else
-          {
-            return item;
-          }
-        });
-        return list;
+    props.setCart((oldList) => {
+      const list = oldList.map((item) => {
+        if (item.id === product.id) {
+          update = 1;
+          return {
+            id: productId,
+            name: name,
+            quantity: product.quantity * 1 + item.quantity * 1,
+            price: price,
+          };
+        } else {
+          return item;
+        }
+      });
+      return list;
     });
-    /*props.products.forEach((p) => {
-      if (p.id === product.id) p.qty -= orderQuantity;
-    });*/
-    if (update === 0){
-      props.setCart(oldList =>{ return [product, ...oldList];});
+
+    props.setProducts((oldList) => {
+      const list = oldList.map((p) => {
+        if (product.id === p.id) {
+          return {
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            qty: p.qty - orderQuantity * 1,
+            price: p.price,
+            farmer_email: p.farmer_email,
+          };
+        } else {
+          return p;
+        }
+      });
+      return list;
+    });
+
+    if (update === 0) {
+      props.setCart((oldList) => {
+        return [product, ...oldList];
+      });
     }
     //edit quantity live so that the product is reserved
-    
+
     handleViewClose();
   }
 
-  
   const handleViewClose = () => {
     setShowView(false);
     setProductId();
@@ -62,47 +75,76 @@ export default function ProductsList(props) {
   };
 
   function productsActions() {
-    return props.products.map((product) => (
-      <Col>
-        <Card className="text-dark">
-          {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
-          <Card.Body>
-            <Card.Title>{product.name}</Card.Title>
-            <Card.Text>
-              Unit Price: {product.price} €
-              <br />
-              Category: {product.category}
-              <br />
-              Available quantity: {product.qty}
-              <br />
-              Farmer : {product.farmer_email}
-            </Card.Text>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setProductId(product.id);
-                setName(product.name);
-                setQuantity(product.qty);
-                setPrice(product.price);
-                setShowView(true);
-              }}
-            >
-              Add to Cart
-            </Button>
-          </Card.Body>
-        </Card>
-      </Col>
-    ));
+    //@kricar gioca a europa universalis anziché a tempo di boom :c
+    /*console.log(props.products.sort((a, b) => {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return a.id - b.id;
+    }));*/
+    //TOCHECK: problems into modifying a prop?
+    //the product must be one from next week so it must be not already confirmed
+    return props.products.sort((a, b) => {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      // names must be equal
+      return a.id - b.id;
+    }).map((product) => {
+      console.log(product);
+      return (
+        <Col>
+          <Card className="text-dark">
+            {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
+            <Card.Body>
+              <Card.Title>{product.name}</Card.Title>
+              <Card.Text>
+                Unit Price: {product.price} €
+                <br />
+                Category: {product.category}
+                <br />
+                Available quantity: {product.qty}
+                <br />
+                Farmer : {product.farmer_email}
+              </Card.Text>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  setProductId(product.id);
+                  setName(product.name);
+                  setQuantity(product.qty);
+                  setPrice(product.price);
+                  setShowView(true);
+                }}
+              >
+                Add to Cart
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      )
+    });
   }
 
   return (
     <>
       <div className="below-nav">
-      <div class="col-md-12 text-center">
-        <Link to="/emp/newOrder">
-          <Button className="mr-2 md-2 ">Go to cart</Button>
-        </Link>
-      </div>
+        <div class="col-md-12 text-center">
+          <Link to={"/newOrder"}>
+            <Button variant="warning" className="mr-2 md-2 ">Go to cart</Button>
+          </Link>
+        </div>
         <Modal show={showView} onHide={handleViewClose}>
           <Modal.Header>
             <Modal.Title>Add to cart</Modal.Title>
@@ -120,10 +162,15 @@ export default function ProductsList(props) {
                     min="1"
                     max={quantity}
                     onChange={(e) => {
-                      if (e.target.value > 0 && e.target.value <= quantity){
-                        setOrderQuantity(e.target.value);}
-                      if (e.target.value < 0) {setOrderQuantity(1);}
-                      if (e.target.value > quantity) {setOrderQuantity(quantity);}
+                      if (e.target.value > 0 && e.target.value <= quantity) {
+                        setOrderQuantity(e.target.value);
+                      }
+                      if (e.target.value < 0) {
+                        setOrderQuantity(1);
+                      }
+                      if (e.target.value > quantity) {
+                        setOrderQuantity(quantity);
+                      }
                     }}
                   />
                 </Form.Group>
@@ -134,13 +181,13 @@ export default function ProductsList(props) {
             <Button variant="secondary" onClick={handleViewClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => handleAddToCart()}>
+            <Button variant="warning" onClick={() => handleAddToCart()}>
               Submit
             </Button>
           </Modal.Footer>
         </Modal>
         <CardColumns xs={1} md={5}>
-          <>{props.products.length ? productsActions() : <></>}</>
+          <>{props.products.length && props.categories.length > 0 ? productsActions() : <></>}</>
         </CardColumns>
       </div>
     </>

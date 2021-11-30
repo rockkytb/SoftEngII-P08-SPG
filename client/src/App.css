@@ -25,8 +25,33 @@
 
 .main-content{
   
-    padding: 60px 0;
+    padding: 10vh 0;
     margin: 0 auto;
-    max-width: 320px;
+    max-width: 99vh;
   
+}
+
+.caption-middle{
+  transform: translateY(-50%);
+  bottom: 0;
+  top: 50%;
+}
+
+.notificationIcon {
+position: relative;
+}
+
+.notificationCounter {
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  right: 15px;
 }

@@ -17,13 +17,16 @@ import App from './App.js';
 import NewClientForm from './NewClientForm.js';
 import Employee from './Employee.js';
 import Customer from './Customer.js';
+import Farmer from './Farmer';
+import Manager from './Manager.js';
 import SidebarCustom from './Sidebar.js';
 import ProductsList from './ProductsList.js';
 import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
 import CarouselCustom from './CarouselCustom.js';
 import { Login, LogButton } from './Login.js';
-import { JustifyLeft } from 'react-bootstrap-icons';
+import Clock from './Clock.js';
+import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
 //IF SOMETHING IS WRONG, TEST WILL FAIL
@@ -45,6 +48,14 @@ test('renders Customer', () => {
   shallow(<Customer />);
 });
 
+test('renders Manager', () => {
+  shallow(<Manager />);
+});
+
+test('renders Farmer', () => {
+  shallow(<Farmer />);
+});
+
 test('renders Sidebar', () => {
   shallow(<SidebarCustom />);
 });
@@ -61,11 +72,14 @@ test('renders BookingReview', () => {
 
   const mockOk = jest.fn((id) => { return 20.30 });
 
-  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} />);
+  const userdata = {id:"C1",name:"Antonio"}
+
+  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} userdata={userdata}
+                      calendarday={new Date()} />);
   
 
   br.find('#butConf').simulate('click');
-  expect(br.find(Modal).prop('show')).toBe(true);
+  expect(br.find(Modal).prop('show')).toBe(false);
 
   br.find('#closeModal').simulate('click');
   expect(br.find(Modal).prop('show')).toBe(false);
@@ -81,8 +95,17 @@ test('renders Login and log button', () => {
   shallow(<LogButton />);
 });
 
+test('renders clock', () => {
+  shallow(<Clock date={new Date()}/>);
+});
+
+test('renders App', () => {
+  shallow(<App/>);
+});
+
 test('renders ProductList', () => {
   const products = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
   { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
-  shallow(<ProductsList products={products} />);
+  const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
+  shallow(<ProductsList products={products} categories={categories}/>);
 });

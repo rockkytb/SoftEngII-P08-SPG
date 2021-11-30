@@ -19,25 +19,71 @@ import { Login } from "./Login";
 import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
+import Farmer from "./Farmer";
+import Manager from "./Manager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingAcceptance from "./BookingAcceptance";
+import BookingDeliveryFarmer from "./BookingDeliveryFarmer";
+import BookingConfirmFarmer from "./BookingConfirmFarmer";
+import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
+import CheckPending from "./CheckPending";
+import ReportAvailability from "./ReportAvailability";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [futureProducts, setFutureProducts] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [bookingsState, setBookingsState] = useState(true);
-  const [dirty, setDirty] = useState(false);
+  const [attaccoDDOS, setAttaccoDDOS] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userdata, setUserData] = useState({});
   const [cart, setCart] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [virtualTime, setVirtualTime] = useState(false);
+  const [timers, setTimers] = useState();
+  const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
+  const [deliveryState, setDeliveryState] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [acknowledges, setAcknowledges] = useState([]);
+  const [ackState, setAckState] = useState(true);
+  const [productsExpectedFarmer, setProductsExpectedFarmer] = useState([]);
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
 
+  //fake clock manager
+  useEffect(() => {
+    clearInterval(timers);
+    if (virtualTime) {
+      //Adds 12 hours every 3 seconds
+      setTimers(
+        setInterval(
+          () =>
+            setDate((oldDate) => {
+              let d = new Date(oldDate);
+              d.setHours(oldDate.getHours() + 12);
+              return d;
+            }),
+          3000
+        )
+      );
+    } else {
+      //Update date every minute if real time enabled
+      setDate(new Date());
+      setTimers(setInterval(() => setDate(new Date()), 60000));
+    }
+
+    //SHORT-TERM: sends date to server
+    //const resp = API.setDate(date.getDay());
+
+  }, [virtualTime]);
+
+  //authenticator
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -46,16 +92,15 @@ function App() {
         setUserData(user);
         setUpdate(true);
       } catch (err) {
-        
         setUpdate(true);
       }
     };
     checkAuth();
   }, []);
 
+  //login
   const doLogIn = async (credentials, type) => {
     try {
-
       const user = await API.logIn(credentials, type);
       toast.success(`Welcome ${user.username}!`, { position: "top-center" });
       setUserData(user);
@@ -64,10 +109,10 @@ function App() {
       toast.error("Wrong email or/and password, try again", {
         position: "top-center",
       });
-   
     }
   };
 
+  //logout
   const doLogOut = async () => {
     await API.logOut()
       .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
@@ -79,14 +124,22 @@ function App() {
     setLoggedIn(false);
     setUserData();
     setUpdate(true);
+    setCart([]);
+    setBookingsState(true);
+    setDeliveryState(true);
   };
 
+  //add user to system db
   const addUser = (newUser) => {
     const add = async () => {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setDirty(true);
+        setAttaccoDDOS(true);
+      }
+      if(!loggedIn){
+        const credentials = { username: newUser.email, password: newUser.clearpsw }
+        doLogIn(credentials, "C");
       }
     };
     add()
@@ -102,9 +155,11 @@ function App() {
       });
   };
 
+  //deprecated, add booking to system db
   const newBooking = async (clientID) => {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
+    // ora sono sordo
     const book = async () => {
       const res = await API.newBooking(clientID);
       if (res && res.idBooking) {
@@ -119,44 +174,145 @@ function App() {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   };
 
+  //add product of booking to system db
   const newProductBooking = (bid, pid, qty) => {
     //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
     const bookingProduct = async () => {
       await API.newBookingProduct(bid, pid, qty);
-      await API.editProductQty (pid,qty);
+      await API.editProductQty(pid, qty);
       setBookingsState(true);
     };
     bookingProduct();
-    
   };
 
-  useEffect(() => {
-    if(bookingsState){
-    const getProducts = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        setProducts(productList);
-      }
-    };
+  const newProductMode = (booking) => {
+    const bookingMode = async () => {
+      await API.newBookingMode(booking);
+    }
+    bookingMode();
+  }
 
-    const getBookings = async () => {
-      
-        // call: GET /api/bookings
-        const response = await fetch("/api/bookings");
-        const bookingList = await response.json();
+  //update products, bookings and next week products
+  useEffect(() => {
+    console.log(userdata);
+    //if (bookingsState) {
+      const getProducts = async () => {
+        // call: GET /api/products
+        const response = await fetch("/api/products");
+        const productList = await response.json();
         if (response.ok) {
-          setBookings(bookingList);
+          setProducts(productList);
         }
       };
 
+      const getDeliveries = async () => {
+        // call: GET /api/deliveries
+        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
+          const response = await fetch("/api/deliveries");
+          const productList = await response.json();
+          if (response.ok) {
+            setDeliveries(productList);
+          }
+        }
+      };
+
+      const getBookings = async () => {
+        // call: GET /api/bookings
+        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === 'S') {
+          const response = await fetch("/api/bookings");
+          const bookingList = await response.json();
+          if (response.ok) {
+            setBookings(bookingList);
+          }
+        } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
+          const response = await fetch(
+            "/api/bookings/clients/" + userdata.id.substring(1)
+          );
+          const bookingList = await response.json();
+          if (response.ok) {
+            console.log(bookingList)
+            setBookings(bookingList);
+          }
+
+        }
+
+      };
+
+      //getFutureProducts();
       getProducts();
       getBookings();
-      setBookingsState(false);
-    }
-  }, [bookingsState]);
+      getDeliveries();
+      //setBookingsState(false);
+    //}
+  }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
+  const getFutureProducts = async (farmerId) => {
+    // call: GET /api/products_expected
+    const response = await fetch("/api/farmers/" + farmerId + "/products_expected");
+    const productList = await response.json();
+    if (response.ok) {
+      setFutureProducts(productList);
+    }
+  };
+
+  const addFutureProducts = async (id, products) => {
+    let tmp = 0;
+    await API.newFutureProduct(id.substring(1), products)
+      .then((response) => {
+        console.log("Tutto ok: " + response);
+      })
+      .catch((err) => console.log(err));
+    return tmp;
+  }
+
+  //update confirmed product from farmer
+  useEffect(() => {
+    if (loggedIn && deliveryState && userdata.id && userdata.id.charAt(0) === "F") {
+      const getConfirmedProductsFarmer = async () => {
+        // call: GET /api/products/farmers/:id
+        const response = await fetch("/api/products/farmers/" +
+          userdata.id.substring(1));
+        const confirmedProductList = await response.json();
+        if (response.ok) {
+          setConfirmedProductsFarmer(confirmedProductList);
+        }
+      };
+
+      const getExpectedProductsFarmer = async () => {
+        // call: GET /api/farmers/:farmerid/products_expected
+        const response = await fetch("/api/farmers/" +
+          userdata.id.substring(1) +
+          "/products_expected");
+        const expectedProductList = await response.json();
+        if (response.ok) {
+          setProductsExpectedFarmer(expectedProductList);
+        }
+      };
+
+      getExpectedProductsFarmer();
+      getConfirmedProductsFarmer();
+      setDeliveryState(false);
+    }
+  }, [deliveryState, loggedIn]);
+
+  //update acks manager
+  useEffect(() => {
+    if (loggedIn && ackState && userdata.id && userdata.id.charAt(0) === "M") {
+      const getAcksManager = async () => {
+        // call: GET /api/acksNew
+        const response = await fetch("/api/acksNew");
+        const ackList = await response.json();
+        if (response.ok) {
+          setAcknowledges(ackList);
+        }
+      };
+
+      getAcksManager();
+      setAckState(false);
+    }
+  }, [ackState, loggedIn]);
+
+  //clients server calls
   useEffect(() => {
     const getClients = async () => {
       // call: GET /api/clients
@@ -167,7 +323,7 @@ function App() {
       }
     };
     getClients();
-  }, [loggedIn, dirty]);
+  }, [loggedIn, attaccoDDOS]);
 
   const getSingleClientByEmail = (email) => {
     let client;
@@ -177,6 +333,7 @@ function App() {
     return client;
   };
 
+  //wallet server calls
   const getWalletById = async (id) => {
     let tmp = 0;
     await API.getWalletById(id.substring(1))
@@ -198,18 +355,86 @@ function App() {
     }
   };
 
+  //complete booking
   const setCompletedBooking = async (id) => {
     try {
       await API.confirmBooking(id);
       toast.success("Booking completed successfully", {
         position: "top-center",
       });
-      
     } catch (err) {
       toast.error("Error updating the booking", { position: "top-center" });
       console.log(err);
     }
   };
+
+  const setReadAck = async (id) => {
+    try {
+      await API.confirmAck(id);
+      setAckState(true);
+      toast.success("Delivery acknowledge", {
+        position: "top-center",
+      });
+    } catch (err) {
+      setAckState(true);
+      toast.error("Error updating the delivery", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const setCompletedDeliveryFarmer = async (productList) => {
+    try {
+      await API.confirmDeliveryProducts(productList);
+      setDeliveryState(true);
+      await API.newAck(userdata.id.substring(1), userdata.username);
+      setAckState(true);
+      toast.success("Delivery completed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error updating the delivery", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+  const confirmProductsFarmer = async (productList) => {
+    try {
+      const confirmList = productList.map((product) => {
+        return {
+          id: product.id,
+          state: "CONFIRMED"
+        }
+      });
+      for (const product of confirmList) {
+        await API.confirmProductsFarmer(product);
+      };
+
+      setDeliveryState(true);
+      toast.success("Products confirmed successfully", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Error with the confirmation", { position: "top-center" });
+      console.log(err);
+    }
+    /*finally{
+      setAttaccoDDOS(true);
+    }*/
+
+  };
+
+  //get categories
+  useEffect(() => {
+    const getClients = async () => {
+      // call: GET /api/categories
+      const response = await fetch("/api/categories");
+      const clientList = await response.json();
+      if (response.ok) {
+        setCategories(clientList);
+      }
+    };
+    getClients();
+  }, [attaccoDDOS]);
 
   return (
     <div className="page">
@@ -220,10 +445,14 @@ function App() {
           logged={loggedIn}
           logout={doLogOut}
           user={userdata}
+          date={date}
+          virtualTime={virtualTime}
+          setVirtualTime={setVirtualTime}
+          bookings={bookings}
         />
 
         <Switch>
-          <Route
+          <Route //login
             exact
             path="/login"
             render={() => (
@@ -238,7 +467,19 @@ function App() {
                         {userdata.id.charAt(0) === "S" ? (
                           <Redirect to="/emp" />
                         ) : (
-                          <Redirect to="/" />
+                          <>
+                            {userdata.id.charAt(0) === "F" ? (
+                              <Redirect to="/farmer" />
+                            ) : (
+                              <>
+                                {userdata.id.charAt(0) === "M" ? (
+                                  <Redirect to="/manager" />
+                                ) : (
+                                  <Redirect to="/" />
+                                )}
+                              </>
+                            )}
+                          </>
                         )}
                       </>
                     )}
@@ -250,47 +491,8 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //display current products
             path="/products"
-            exact
-            render={() => (
-              /**  */
-              <>
-                <ProductsList className="below-nav main-content"
-                  products={products}
-                  cart={cart}
-                  setCart={(val) => setCart(val)}
-                  //farmers = {farmers} //???
-                />
-              </>
-            )}
-          />
-
-          {/* When logged as farmer or customer we shouldn't get here */}
-          <Route
-            path="/register"
-            exact
-            render={() => (
-              <>
-                {update ? (
-                    <>
-                      { loggedIn && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "F")  ? 
-                        (<Redirect to="/home" />):(
-                      /** REGISTER */
-                      <NewClientForm className="below-nav main-content"
-                        addUser={addUser}
-                        getClientbyEmail={getSingleClientByEmail}
-                        
-                        />
-                        )}
-                    </>)
-                    :(<></>)}
-              </>
-            )}
-          />
-
-          <Route
-            path="/cust"
             exact
             render={() => (
               <>
@@ -298,10 +500,186 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
+                          <>
+                            {setAttaccoDDOS(true)}
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={products}
+                              setProducts={setProducts}
+                              cart={cart}
+                              setCart={(val) => setCart(val)}
+                              categories={categories}
+                            //farmers = {farmers} //???
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //display next week products
+            path="/trunksproducts"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
+                          <>
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={futureProducts}
+                              getProducts={getFutureProducts}
+                              cart={cart}
+                              categories={categories}
+                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //add next week products
+            path="/addFutureproducts"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "F") ? (
+                          <>
+                            <ReportAvailability
+                              className="below-nav main-content"
+                              addFutureProducts={addFutureProducts}
+                              categories={categories}
+                              setDirty={setAttaccoDDOS}
+                              id={userdata.id ? userdata.id : ""}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //display delivered products (only for employeet)
+            path="/fattorinosimulator"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "S" ? (
+                          <>
+                            <ProductsList
+                              className="below-nav main-content"
+                              products={deliveries}
+                              categories={categories}
+                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          {/* When logged as farmer or customer we shouldn't get here */}
+          <Route //registration
+            path="/register"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn &&
+                      (userdata.id.charAt(0) === "C" ||
+                        userdata.id.charAt(0) === "F" ||
+                        userdata.id.charAt(0) === "M") ? (
+                      <Redirect to="/home" />
+                    ) : (
+                      /** REGISTER */
+                      <NewClientForm
+                        className="below-nav main-content"
+                        addUser={addUser}
+                        getClientbyEmail={getSingleClientByEmail}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/acksManager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Customer className="below-nav main-content"/>
+                            <AcknowledgeDeliveryManager
+                              className="below-nav main-content"
+                              confirmAck={setReadAck}
+                              acknowledges={acknowledges} />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -319,35 +697,157 @@ function App() {
           />
 
           <Route
-            path="/cust/cart"
+            path="/manager"
             exact
             render={() => (
-              /** Customer cart  da poter includere nel componente customer con path='{$path}/cart'*/
               <>
-                <BookingReview className="below-nav main-content"
-                  cart={cart}
-                  setCart={setCart}
-                  clients={clients}
-                  products={products}
-                  setCart={(val) => setCart(val)}
-                  newBooking={newBooking}
-                  newProductBooking={(bid, pid, qty) =>
-                    newProductBooking(bid, pid, qty)
-                  }
-                  setBookingsState={setBookingsState}
-                  getWallet={(id) => getWalletById(id)}
-                  className="below-nav main-content"
-                />
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Manager className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //farmer homepage
+            path="/farmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Farmer className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             )}
           />
 
           <Route
-            path="/cust/newOrder"
+            path="/confirmBookingFarmer"
             exact
             render={() => (
-              /** Customer new order page da poter includere nel componente customer con path='{$path}/newOrder*/
-              <></>
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <BookingConfirmFarmer
+                              className="below-nav main-content"
+                              expectedProducts={productsExpectedFarmer}
+                              confirmProducts={confirmProductsFarmer}
+                              calendarday={date}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/confirmDeliveryFarmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <BookingDeliveryFarmer
+                              className="below-nav main-content"
+                              confirmedProducts={confirmedProductsFarmer}
+                              confirmDelivery={setCompletedDeliveryFarmer}
+                              calendarday={date}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/cust"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Customer className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
             )}
           />
 
@@ -396,8 +896,9 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                           {/* <SidebarCustom /> */}
-                            <ClientData className="below-nav main-content"
+                            {/* <SidebarCustom /> */}
+                            <ClientData
+                              className="below-nav main-content"
                               clients={clients}
                               //getClient={getSingleClientByEmail}
                               getWallet={(id) => getWalletById(id)}
@@ -421,10 +922,9 @@ function App() {
           />
 
           <Route
-            path="/emp/newOrder"
+            path="/emp/pending"
             exact
             render={() => (
-              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
               <>
                 {update ? (
                   <>
@@ -432,16 +932,11 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            {/*<SidebarCustom />*/}
-                            <BookingReview className="below-nav main-content"
-                              cart={cart}
-                              setCart={setCart}
-                              clients={clients}
-                              products={products}
-                              setCart={setCart}
-                              newProductBooking={newProductBooking}
-                              setBookingsState={setBookingsState}
-                              getWallet={getWalletById}
+                            {/* <SidebarCustom /> */}
+                            <CheckPending
+                              className="below-nav main-content"
+                              bookings={bookings}
+                              products={futureProducts}
                               className="below-nav main-content"
                             />
                           </>
@@ -460,7 +955,53 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //confirm booking
+            path="/newOrder"
+            exact
+            render={() => (
+              /** Employee new order page da poter includere nel componente employee con path='{$path}/newOrder'*/
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id &&
+                          (userdata.id.charAt(0) === "S" ||
+                            userdata.id.charAt(0) === "C") ? (
+                          <>
+                            {/*<SidebarCustom />*/}
+                            <BookingReview
+                              className="below-nav main-content"
+                              cart={cart}
+                              setCart={setCart}
+                              userdata={userdata}
+                              clients={clients}
+                              products={products}
+                              setProducts={setProducts}
+                              newProductBooking={newProductBooking}
+                              newProductMode={newProductMode}
+                              setBookingsState={setBookingsState}
+                              getWallet={getWalletById}
+                              calendarday={date}
+                              className="below-nav main-content"
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route //set booking as completed (only for employeet)
             path="/emp/confirmOrder"
             exact
             render={() => (
@@ -472,7 +1013,8 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom />*/}
-                            <BookingAcceptance className="below-nav main-content"
+                            <BookingAcceptance
+                              className="below-nav main-content"
                               bookings={bookings}
                               confirmBooking={setCompletedBooking}
                               products={products}
@@ -494,7 +1036,7 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //TODO: payment page
             path="/emp/pagah"
             exact
             render={() => (
@@ -524,12 +1066,12 @@ function App() {
             )}
           />
 
-          <Route
+          <Route //homepage
             exact
             path="/home"
             render={() => (
               <div className="width100">
-                <CarouselCustom className="customCarousel" logged = {loggedIn} />
+                <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
           />

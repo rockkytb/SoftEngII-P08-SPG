@@ -1,23 +1,24 @@
 import React from 'react';
-import { Button, } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Button, Row, Col, Container } from "react-bootstrap";
 
 function Customer(props) {
 
 
   return (
     <>
-          <h1 className="below-nav main-content">I'm a customer</h1>
+          <h1 className="below-nav main-content text-center">I'm a customer</h1>
 
-          <div className="main-content">
-            {/*<Link to="/cust/cart">
-              <Button>Go to you cart</Button>
-            </Link>
-
-            <Link to="/cust/newOrder">
-              <Button>Make a new order</Button>
-            </Link>*/}
-          </div>
+          <Container fluid className = "text-center">
+            <Row md={12}>
+                <Col className="md-4 pr-0 pl-0 ">
+                <Link to="/products"> 
+                    <Button variant="warning" className="mr-2 ml-2 md-1 "> Reserve products </Button> 
+                </Link>
+              </Col>
+            </Row>
+        
+          </Container>
 
     </>
   );
