@@ -137,8 +137,10 @@ function App() {
         newUser.id = res.idClient;
         setAttaccoDDOS(true);
       }
-      const credentials = { username: newUser.email, password: newUser.clearpsw }
-      doLogIn(credentials, "C");
+      if(!loggedIn){
+        const credentials = { username: newUser.email, password: newUser.clearpsw }
+        doLogIn(credentials, "C");
+      }
     };
     add()
       .then(() => {
