@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1638233462253" clover="3.2.0">
-  <project timestamp="1638233462253" name="All files">
-    <metrics statements="669" coveredstatements="449" conditionals="223" coveredconditionals="116" methods="223" coveredmethods="158" elements="1115" coveredelements="723" complexity="0" loc="669" ncloc="669" packages="1" files="2" classes="2"/>
-    <file name="dao.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG2\SoftEngII-P08-SPG\server\dao.js">
-      <metrics statements="349" coveredstatements="249" conditionals="116" coveredconditionals="61" methods="128" coveredmethods="105"/>
+<coverage generated="1638262156123" clover="3.2.0">
+  <project timestamp="1638262156123" name="All files">
+    <metrics statements="669" coveredstatements="448" conditionals="223" coveredconditionals="115" methods="223" coveredmethods="158" elements="1115" coveredelements="721" complexity="0" loc="669" ncloc="669" packages="1" files="2" classes="2"/>
+    <file name="dao.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.js">
+      <metrics statements="349" coveredstatements="248" conditionals="116" coveredconditionals="60" methods="128" coveredmethods="105"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
       <line num="8" count="2" type="stmt"/>
@@ -323,8 +323,8 @@
       <line num="688" count="2" type="stmt"/>
       <line num="695" count="2" type="stmt"/>
       <line num="696" count="79" type="stmt"/>
-      <line num="697" count="710" type="cond" truecount="2" falsecount="0"/>
-      <line num="698" count="1" type="stmt"/>
+      <line num="697" count="710" type="cond" truecount="1" falsecount="1"/>
+      <line num="698" count="0" type="stmt"/>
       <line num="701" count="79" type="cond" truecount="1" falsecount="1"/>
       <line num="704" count="79" type="stmt"/>
       <line num="708" count="79" type="stmt"/>
@@ -354,7 +354,7 @@
       <line num="780" count="0" type="stmt"/>
       <line num="786" count="0" type="stmt"/>
     </file>
-    <file name="server.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG2\SoftEngII-P08-SPG\server\server.js">
+    <file name="server.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\server.js">
       <metrics statements="320" coveredstatements="200" conditionals="107" coveredconditionals="55" methods="95" coveredmethods="53"/>
       <line num="3" count="1" type="stmt"/>
       <line num="4" count="1" type="stmt"/>
