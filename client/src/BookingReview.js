@@ -23,6 +23,7 @@ function BookingReview(props) {
   const [show, setShow] = useState(false);
   const [soldy, setSoldy] = useState(0);
 
+  const [showNoValidation,setShowNoValidation] = useState(false);
 
   const [deliveryMode, setDeliveryMode] = useState(false);
   const [street, setStreet] = useState(null);
@@ -142,10 +143,17 @@ function BookingReview(props) {
       const pickupdate = new Date(date);
       
       if (pickupdate.getDay() === 3 || pickupdate.getDay() === 4 || pickupdate.getDay() === 5) {
-        let id;
-      if (clientID){
-        id = clientID.substring(1);
-        newBooking(id);
+        if(deliveryMode &&((street===null || street === "")||(city===null || city === "")||
+        (province===null || province === "")||(postalCode===null || postalCode === "")||
+        (country===null || country === ""))){
+          setShowNoValidation(true);
+        }
+        else{
+          let id;
+          if (clientID){
+          id = clientID.substring(1);
+          newBooking(id);
+          }
         }
       }
       else 
@@ -294,6 +302,27 @@ function BookingReview(props) {
 
           </div>
         </Alert>
+
+        <Alert show={showNoValidation} variant="danger">
+          <Alert.Heading>Please fill al fields</Alert.Heading>
+          <p>
+            All fields are mandatory
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="warning"
+              onClick={() => {
+
+                setShowNoValidation(false);
+              }}
+            >
+              Close
+            </Button>
+
+          </div>
+        </Alert>
+
         <Modal.Header>
           <Modal.Title>Confirm Booking</Modal.Title>
         </Modal.Header>
