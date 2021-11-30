@@ -1,5 +1,22 @@
 # SoftEngII-P08-SPG
 
+## LIST OF ACCOUNTS
+
+Password is always : <b> testpassword </b>
+
+### Customer
+1. email: antonio.bianchi@mail.it
+
+### Shop Employee
+1. email: susan@employee.spg.com
+
+### Manager
+1. email: john@manager.spg.com
+
+### Farmer
+1. email: mark@farmer.spg.com
+2. email: sue@farmer.spg.com
+
 ## HOW TO RUN DOCKER?
 
 1. install docker
