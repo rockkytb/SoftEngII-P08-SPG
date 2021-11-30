@@ -2,6 +2,7 @@
 
 ## LIST OF ACCOUNTS
 
+Only with testmode disabled
 Password is always : <b> testpassword </b>
 
 ### Customer
@@ -16,13 +17,6 @@ Password is always : <b> testpassword </b>
 ### Farmer
 1. email: mark@farmer.spg.com
 2. email: sue@farmer.spg.com
-
-## HOW TO RUN DOCKER?
-
-1. install docker
-2. open a powershell
-3. docker-compose up
-4. connect localhost 3000
 
 ## HOW TO TEST? SERVER SIDE
 
