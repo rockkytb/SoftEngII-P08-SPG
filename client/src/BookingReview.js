@@ -383,6 +383,7 @@ function BookingReview(props) {
                         <Form.Control
                           type="date"
                           value={date}
+                          min = {new Date().toISOString().split('T')[0]}
                           required
                           onChange={ev => setDate(ev.target.value)} />
                         <Form.Control.Feedback type="invalid">
@@ -514,6 +515,7 @@ function BookingReview(props) {
                         <Form.Control
                           type="date"
                           value={date}
+                          min = {new Date().toISOString().split('T')[0]}
                           required
                           onChange={ev => setDate(ev.target.value)} />
                         <Form.Control.Feedback type="invalid">
