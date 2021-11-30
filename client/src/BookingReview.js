@@ -140,35 +140,19 @@ function BookingReview(props) {
 
     const handleCreateBooking = async () => {
       const pickupdate = new Date(date);
-      if (!deliveryMode) {
-        if (pickupdate.getDay() === 3 || pickupdate.getDay() === 4 || pickupdate.getDay() === 5) {
-          let tmpSoldy = await props.getWallet(clientID);
-          let total = 0;
-          let id;
-          if (clientID)
-            id = clientID.substring(1);
-
-
-          setSoldy(tmpSoldy);
-
-          props.cart.map((p) => {
-            total += p.price;
-          });
-
-          if (total <= soldy) {
-            newBooking(id)
-          }
-        }
-        else {
-          setShowAlertPickUp(true);
-        }
-      } else {
+      
+      if (pickupdate.getDay() === 3 || pickupdate.getDay() === 4 || pickupdate.getDay() === 5) {
         let id;
-        if (clientID)
-          id = clientID.substring(1);
-
+      if (clientID){
+        id = clientID.substring(1);
         newBooking(id);
+        }
       }
+      else 
+      {
+      setShowAlertPickUp(true);
+      }
+     
     }
 
 
@@ -353,8 +337,8 @@ function BookingReview(props) {
                 <Col xs={2} />
                 <Col xs={8}>
                   <Form.Label>
-                    {deliveryMode ? (<h5> Delivery at home </h5>) : (<h5> Pick-Up in Shop </h5>)}
-
+                    {deliveryMode ? (<h5> Delivery at home with extra fee of 5 euros </h5>) : (<h5> Pick-Up in Shop </h5>)}
+                    
                   </Form.Label>
                 </Col>
                 <Col xs={2} />
