@@ -80,7 +80,7 @@ function App() {
 
     //SHORT-TERM: sends date to server
     //const resp = API.setDate(date.getDay());
-    
+
   }, [virtualTime]);
 
   //authenticator
@@ -199,7 +199,6 @@ function App() {
         const response = await fetch("/api/products");
         const productList = await response.json();
         if (response.ok) {
-          console.log(productList);
           setProducts(productList);
         }
       };
@@ -229,9 +228,12 @@ function App() {
           );
           const bookingList = await response.json();
           if (response.ok) {
+            console.log(bookingList)
             setBookings(bookingList);
           }
+
         }
+
       };
 
       //getFutureProducts();
@@ -444,6 +446,7 @@ function App() {
           date={date}
           virtualTime={virtualTime}
           setVirtualTime={setVirtualTime}
+          bookings={bookings}
         />
 
         <Switch>

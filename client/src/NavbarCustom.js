@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Navbar, Button, Col, Row } from "react-bootstrap";
 import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
 import Clock from "./Clock.js"
+import { ToastContainer, toast } from "react-toastify";
+
 
 function NavbarCustom(props) {
+const [firstTime, setFirstTime] = useState(true);
+const [showNotification, setShowNotification] = useState(false);
+
+console.log("aaaaaaaaaaaaah")
+console.log(props.bookings)
+
+  
+let toPrint = props.bookings && props.bookings.length>0 ? 
+props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION") 
+:
+"";
+
+if (firstTime && toPrint.length !== 0) {
+  setShowNotification(true);
+  setFirstTime(false);
+}
+
 
   function checkType() {
     if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
@@ -12,8 +31,8 @@ function NavbarCustom(props) {
         <>
           <Row>
             <div className="notificationIcon" >
-              <BellFill size={30} className="notificationIcon mr-3" fill="white" />
-              <div className="notificationCounter"> </div>
+              <BellFill size={30} className="notificationIcon mr-3" fill="white" onClick={()=> {showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" })} } />
+              {showNotification && <div className="notificationCounter"> </div>}
             </div>
 
             <Link to="/cust" style={{ color: 'white' }}>
