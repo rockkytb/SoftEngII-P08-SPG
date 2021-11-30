@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col, Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,9 +49,19 @@ function Login(props) {
             <option value="M">Manager</option>
           </Form.Control>
         </Form.Group>
+        <Form.Group size="lg">
         <Button variant="warning" block size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>
+        </Form.Group>
+        <Form.Group size="lg">
+        <Link to="/register" style={{ color: 'white', textDecoration:'none'}}> 
+          <Button variant="warning" block size="lg">
+            Create a new account
+          </Button>
+        </Link>
+        </Form.Group>
+        
       </Form>
     </div>
   );
