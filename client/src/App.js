@@ -60,13 +60,13 @@ function App() {
   useEffect(() => {
     clearInterval(timers);
     if (virtualTime) {
-      //Adds 3 hours every 3 seconds
+      //Adds 12 hours every 3 seconds
       setTimers(
         setInterval(
           () =>
             setDate((oldDate) => {
               let d = new Date(oldDate);
-              d.setHours(oldDate.getHours() + 3);
+              d.setHours(oldDate.getHours() + 12);
               return d;
             }),
           3000
