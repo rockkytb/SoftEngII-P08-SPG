@@ -643,7 +643,7 @@ function App() {
                   <>
                     {loggedIn &&
                       (userdata.id.charAt(0) === "C" ||
-                        userdata.id.charAt(0) === "F" || userdata.id.charAt(0) === "S" ||
+                        userdata.id.charAt(0) === "F" ||
                         userdata.id.charAt(0) === "M") ? (
                       <Redirect to="/home" />
                     ) : (
