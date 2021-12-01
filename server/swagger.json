@@ -1,0 +1,266 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "SPG PROJECT APIs"
+    },
+    "host": "localhost:3001",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/newclient": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Create new client in system",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "description": "client that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/CreateClient"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New client is created",
+                        "schema": {
+                            "properties": {
+                                "idClient": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clientSessions": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Login of clients",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client",
+                        "schema": {
+                            "$ref": "#/definitions/Client"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get a client by mail",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client id if exists, -1 if not exists",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wallet": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get the balance of a client",
+                "parameters": [
+                    {
+                        "name": "client ID",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON with balance",
+                        "schema": {
+                            "properties": {
+                                "Balance": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/walletbalance": {
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Edit the wallet balance for a certain client",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON with id and new balance",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get all clients in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Clients"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Client": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateClient": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Clients": {
+            "type": "array",
+            "$ref": "#/definitions/Client"
+        }
+    }
+}

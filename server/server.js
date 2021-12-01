@@ -11,6 +11,11 @@ const dao = require("./dao"); // module for accessing the DB
 const validator = require("validator");
 let testmode = false;
 
+//SWAGGER 
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+
+
 //SHORT-TERM
 let date = 0;
 
@@ -31,6 +36,13 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument),
+);
+
 
 //init passport to use sessions
 app.use(passport.initialize());
@@ -265,7 +277,7 @@ app.get("/api/userinfo", isLoggedIn, (req, res) => {
 });
 
 //GET /api/clients/
-app.get("/api/clients", isLoggedIn, (req, res) => {
+app.get("/api/clients", (req, res) => {
   dao
     .getClients()
     .then((clients) => {
