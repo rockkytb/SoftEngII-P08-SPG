@@ -80,7 +80,6 @@ function App() {
 
     //SHORT-TERM: sends date to server
     //const resp = API.setDate(date.getDay());
-
   }, [virtualTime]);
 
   //authenticator
@@ -137,8 +136,11 @@ function App() {
         newUser.id = res.idClient;
         setAttaccoDDOS(true);
       }
-      if(!loggedIn){
-        const credentials = { username: newUser.email, password: newUser.clearpsw }
+      if (!loggedIn) {
+        const credentials = {
+          username: newUser.email,
+          password: newUser.clearpsw,
+        };
         doLogIn(credentials, "C");
       }
     };
@@ -188,67 +190,82 @@ function App() {
   const newProductMode = (booking) => {
     const bookingMode = async () => {
       await API.newBookingMode(booking);
-    }
+    };
     bookingMode();
-  }
+  };
 
   //update products, bookings and next week products
   useEffect(() => {
     console.log(userdata);
     //if (bookingsState) {
-      const getProducts = async () => {
-        // call: GET /api/products
-        const response = await fetch("/api/products");
+    const getProducts = async () => {
+      // call: GET /api/products
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        setProducts(productList);
+      }
+    };
+
+    const getDeliveries = async () => {
+      // call: GET /api/deliveries
+      if (
+        loggedIn &&
+        userdata &&
+        userdata.id &&
+        userdata.id.charAt(0) === "S"
+      ) {
+        const response = await fetch("/api/deliveries");
         const productList = await response.json();
         if (response.ok) {
-          setProducts(productList);
+          setDeliveries(productList);
         }
-      };
+      }
+    };
 
-      const getDeliveries = async () => {
-        // call: GET /api/deliveries
-        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
-          const response = await fetch("/api/deliveries");
-          const productList = await response.json();
-          if (response.ok) {
-            setDeliveries(productList);
-          }
+    const getBookings = async () => {
+      // call: GET /api/bookings
+      if (
+        loggedIn &&
+        userdata &&
+        userdata.id &&
+        userdata.id.charAt(0) === "S"
+      ) {
+        const response = await fetch("/api/bookings");
+        const bookingList = await response.json();
+        if (response.ok) {
+          setBookings(bookingList);
         }
-      };
-
-      const getBookings = async () => {
-        // call: GET /api/bookings
-        if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === 'S') {
-          const response = await fetch("/api/bookings");
-          const bookingList = await response.json();
-          if (response.ok) {
-            setBookings(bookingList);
-          }
-        } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
-          const response = await fetch(
-            "/api/bookings/clients/" + userdata.id.substring(1)
-          );
-          const bookingList = await response.json();
-          if (response.ok) {
-            console.log(bookingList)
-            setBookings(bookingList);
-          }
-
+      } else if (
+        loggedIn &&
+        userdata &&
+        userdata.id &&
+        userdata.id.charAt(0) === "C"
+      ) {
+        const response = await fetch(
+          "/api/bookings/clients/" + userdata.id.substring(1)
+        );
+        const bookingList = await response.json();
+        if (response.ok) {
+          console.log(bookingList);
+          setBookings(bookingList);
         }
+      }
+    };
 
-      };
-
-      //getFutureProducts();
-      getProducts();
-      getBookings();
-      getDeliveries();
-      //setBookingsState(false);
+    //getFutureProducts();
+    getProducts();
+    getBookings();
+    getDeliveries();
+    //setBookingsState(false);
     //}
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
   const getFutureProducts = async (farmerId) => {
     // call: GET /api/products_expected
-    const response = await fetch("/api/farmers/" + farmerId + "/products_expected");
+    const response = await fetch(
+      "/api/farmers/" + farmerId + "/products_expected"
+    );
     const productList = await response.json();
     if (response.ok) {
       setFutureProducts(productList);
@@ -263,15 +280,21 @@ function App() {
       })
       .catch((err) => console.log(err));
     return tmp;
-  }
+  };
 
   //update confirmed product from farmer
   useEffect(() => {
-    if (loggedIn && deliveryState && userdata.id && userdata.id.charAt(0) === "F") {
+    if (
+      loggedIn &&
+      deliveryState &&
+      userdata.id &&
+      userdata.id.charAt(0) === "F"
+    ) {
       const getConfirmedProductsFarmer = async () => {
         // call: GET /api/products/farmers/:id
-        const response = await fetch("/api/products/farmers/" +
-          userdata.id.substring(1));
+        const response = await fetch(
+          "/api/products/farmers/" + userdata.id.substring(1)
+        );
         const confirmedProductList = await response.json();
         if (response.ok) {
           setConfirmedProductsFarmer(confirmedProductList);
@@ -280,9 +303,9 @@ function App() {
 
       const getExpectedProductsFarmer = async () => {
         // call: GET /api/farmers/:farmerid/products_expected
-        const response = await fetch("/api/farmers/" +
-          userdata.id.substring(1) +
-          "/products_expected");
+        const response = await fetch(
+          "/api/farmers/" + userdata.id.substring(1) + "/products_expected"
+        );
         const expectedProductList = await response.json();
         if (response.ok) {
           setProductsExpectedFarmer(expectedProductList);
@@ -402,12 +425,12 @@ function App() {
       const confirmList = productList.map((product) => {
         return {
           id: product.id,
-          state: "CONFIRMED"
-        }
+          state: "CONFIRMED",
+        };
       });
       for (const product of confirmList) {
         await API.confirmProductsFarmer(product);
-      };
+      }
 
       setDeliveryState(true);
       toast.success("Products confirmed successfully", {
@@ -420,7 +443,6 @@ function App() {
     /*finally{
       setAttaccoDDOS(true);
     }*/
-
   };
 
   //get categories
@@ -501,8 +523,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
                             {setAttaccoDDOS(true)}
                             <ProductsList
@@ -512,7 +534,7 @@ function App() {
                               cart={cart}
                               setCart={(val) => setCart(val)}
                               categories={categories}
-                            //farmers = {farmers} //???
+                              //farmers = {farmers} //???
                             />
                           </>
                         ) : (
@@ -540,8 +562,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
+                        (userdata.id.charAt(0) === "C" ||
+                          userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
@@ -549,7 +571,7 @@ function App() {
                               getProducts={getFutureProducts}
                               cart={cart}
                               categories={categories}
-                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                              //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
                             />
                           </>
                         ) : (
@@ -576,8 +598,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {userdata.id &&
-                          (userdata.id.charAt(0) === "F") ? (
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
                             <ReportAvailability
                               className="below-nav main-content"
@@ -617,7 +638,7 @@ function App() {
                               className="below-nav main-content"
                               products={deliveries}
                               categories={categories}
-                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
                             />
                           </>
                         ) : (
@@ -644,9 +665,9 @@ function App() {
                 {update ? (
                   <>
                     {loggedIn &&
-                      (userdata.id.charAt(0) === "C" ||
-                        userdata.id.charAt(0) === "F" ||
-                        userdata.id.charAt(0) === "M") ? (
+                    (userdata.id.charAt(0) === "C" ||
+                      userdata.id.charAt(0) === "F" ||
+                      userdata.id.charAt(0) === "M") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
@@ -679,7 +700,8 @@ function App() {
                             <AcknowledgeDeliveryManager
                               className="below-nav main-content"
                               confirmAck={setReadAck}
-                              acknowledges={acknowledges} />
+                              acknowledges={acknowledges}
+                            />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -966,8 +988,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                          (userdata.id.charAt(0) === "S" ||
-                            userdata.id.charAt(0) === "C") ? (
+                        (userdata.id.charAt(0) === "S" ||
+                          userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview
