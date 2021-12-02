@@ -106,29 +106,6 @@ function BookingReview(props) {
 
   };
 
-  useEffect(() => {
-    const getSoldy = async () => {
-      let id;
-      if (clientID)
-        id = clientID.substring(1);
-      const response = await fetch("/api/wallet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: id }),
-      });
-      const wallet = await response.json();
-      if (response.ok) {
-        setSoldy(wallet.balance);
-      } else {
-        throw wallet;
-      }
-    };
-    if (clientID)
-      getSoldy();
-  }, [clientID]);
-
   const handleSubmit = (event) => {
 
     event.preventDefault();
