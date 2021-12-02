@@ -42,16 +42,11 @@ function BookingReview(props) {
     let tmp = 0;
 
     const book = async () => {
-      const res = await API.newBooking(IDclient);
-      if (res && res.idBooking) {
-        tmp = res.idBooking;
-      }
+      props.newBooking(IDclient, cart);
+     
     };
     book()
       .then(() => {
-        props.cart.map((p) => {
-          props.newProductBooking(tmp, p.id, p.quantity);
-        });
         props.newProductMode({
           idBooking: tmp,
           delivery: deliveryMode ? (1) : (0),

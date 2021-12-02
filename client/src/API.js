@@ -137,7 +137,32 @@ async function getWalletById(id){
     }
 }
 
-async function newBooking(clientId) {
+async function setNewWallet(id, amount){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/walletbalance', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    amount:amount
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+async function newBooking(clientId, products) {
     //call: POST /api/bookings
     return new Promise((resolve, reject) => {
         fetch(url + '/bookings', {
@@ -150,6 +175,10 @@ async function newBooking(clientId) {
             ),
         }).then((response) => {
             if (response.ok) {
+                if(products && products.length()>0)
+                products.map((p) => {
+                    newProductBooking(tmp, p.id, p.quantity);
+                  });
                 resolve(response.json());
             } else {
                 response.json()
@@ -161,6 +190,30 @@ async function newBooking(clientId) {
 
 }
 
+async function confirmBooking(id){
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookingstate', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                {
+                    id:id,
+                    state:"COMPLETED"
+                }
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
 
 async function newBookingProduct(ID_Booking, ID_Product, Qty) {
     //call: POST /api/bookingproduct
@@ -187,6 +240,29 @@ async function newBookingProduct(ID_Booking, ID_Product, Qty) {
     });
 }
 
+async function newBookingMode(booking) {
+    //call: POST /api/bookings_mode
+    return new Promise((resolve, reject) => {
+        fetch(url + '/bookings_mode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+                booking
+            ),
+        }).then((response) => {
+            if (response.ok) {
+                resolve(response.json());
+            } else {
+                response.json()
+                    .then((obj) => { reject(obj); }) // error msg in the response body
+                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
 async function editProductQty(ID_Product, Qty) {
     //call: PUT /api/productqty
     return new Promise((resolve, reject) => {
@@ -199,56 +275,6 @@ async function editProductQty(ID_Product, Qty) {
                 {
                    ID_Product: ID_Product,
                  Dec_Qty: Qty}
-            ),
-        }).then((response) => {
-            if (response.ok) {
-                resolve(response.json());
-            } else {
-                response.json()
-                    .then((obj) => { reject(obj); }) // error msg in the response body
-                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
-            }
-        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
-    });
-}
-
-async function setNewWallet(id, amount){
-    return new Promise((resolve, reject) => {
-        fetch(url + '/walletbalance', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-                {
-                    id:id,
-                    amount:amount
-                }
-            ),
-        }).then((response) => {
-            if (response.ok) {
-                resolve(response.json());
-            } else {
-                response.json()
-                    .then((obj) => { reject(obj); }) // error msg in the response body
-                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
-            }
-        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
-    });
-}
-
-async function confirmBooking(id){
-    return new Promise((resolve, reject) => {
-        fetch(url + '/bookingstate', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-                {
-                    id:id,
-                    state:"COMPLETED"
-                }
             ),
         }).then((response) => {
             if (response.ok) {
@@ -366,28 +392,6 @@ async function newAck(idFarmer,email) {
 
 }
 
-async function newBookingMode(booking) {
-    //call: POST /api/bookings_mode
-    return new Promise((resolve, reject) => {
-        fetch(url + '/bookings_mode', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-                booking
-            ),
-        }).then((response) => {
-            if (response.ok) {
-                resolve(response.json());
-            } else {
-                response.json()
-                    .then((obj) => { reject(obj); }) // error msg in the response body
-                    .catch((err) => { reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
-            }
-        }).catch((err) => { reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
-    });
-}
 
 async function newFutureProduct(id, products){
     //call: POST /api/bookings_mode

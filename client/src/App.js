@@ -156,12 +156,12 @@ function App() {
   };
 
   //deprecated, add booking to system db
-  const newBooking = async (clientID) => {
+  const newBooking = async (clientID, products) => {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
     // ora sono sordo
     const book = async () => {
-      const res = await API.newBooking(clientID);
+      const res = await API.newBooking(clientID, products);
       if (res && res.idBooking) {
         //setBooking({ id: res.idBooking });
         return res.idBooking;
