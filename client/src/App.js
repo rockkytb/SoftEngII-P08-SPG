@@ -190,6 +190,7 @@ function App() {
 
     setProducts(tmp.products)
     setBookings(tmp.bookings)
+    setClients(tmp.clients)
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
