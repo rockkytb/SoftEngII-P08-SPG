@@ -221,42 +221,6 @@ async function newBooking(clientId, products) {
   });
 }
 
-async function confirmBooking(id) {
-  return new Promise((resolve, reject) => {
-    fetch(url + "/bookingstate", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-        state: "COMPLETED",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          resolve(response.json());
-        } else {
-          response
-            .json()
-            .then((obj) => {
-              reject(obj);
-            }) // error msg in the response body
-            .catch((err) => {
-              reject({
-                errors: [
-                  { param: "Application", msg: "Cannot parse server response" },
-                ],
-              });
-            }); // something else
-        }
-      })
-      .catch((err) => {
-        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
-      }); // connection errors
-  });
-}
-
 async function newBookingProduct(ID_Booking, ID_Product, Qty) {
   //call: POST /api/bookingproduct
   return new Promise((resolve, reject) => {
@@ -295,6 +259,78 @@ async function newBookingProduct(ID_Booking, ID_Product, Qty) {
         reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
       }); // connection errors
   });
+}
+
+async function confirmBooking(id) {
+  return new Promise((resolve, reject) => {
+    fetch(url + "/bookingstate", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        state: "COMPLETED",
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve(response.json());
+        } else {
+          response
+            .json()
+            .then((obj) => {
+              reject(obj);
+            }) // error msg in the response body
+            .catch((err) => {
+              reject({
+                errors: [
+                  { param: "Application", msg: "Cannot parse server response" },
+                ],
+              });
+            }); // something else
+        }
+      })
+      .catch((err) => {
+        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+      }); // connection errors
+  });
+}
+
+async function attaccoDoS(userdata) {
+  const getProducts = async () => {
+    // call: GET /api/products
+    const response = await fetch("/api/products");
+    const productList = await response.json();
+    if (response.ok) {
+      return(productList);
+    }
+  };
+
+  const getBookings = async () => {
+    // call: GET /api/bookings
+    if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/bookings");
+      const bookingList = await response.json();
+      if (response.ok) {
+        return(bookingList);
+      }
+    } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      const response = await fetch(
+        "/api/bookings/clients/" + userdata.id.substring(1)
+      );
+      const bookingList = await response.json();
+      if (response.ok) {
+        return(bookingList);
+      }
+    }
+  };
+
+  let products = getProducts();
+  let bookings = getBookings();
+
+  return {products, bookings}
+
 }
 
 async function newBookingMode(booking) {

@@ -9,7 +9,6 @@ import {
   Route,
   Redirect,
   BrowserRouter as Router,
-  useHistory,
 } from "react-router-dom";
 import Employee from "./Employee";
 import SidebarCustom from "./Sidebar";
@@ -157,7 +156,7 @@ function App() {
       });
   };
 
-  //deprecated, add booking to system db
+  //add booking to system db
   const newBooking = async (clientID, products) => {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
@@ -186,7 +185,6 @@ function App() {
 
   //update products, bookings and next week products
   useEffect(() => {
-    console.log(userdata);
     //if (bookingsState) {
     const getProducts = async () => {
       // call: GET /api/products
@@ -243,10 +241,19 @@ function App() {
       }
     };
 
+    let tmp = API.attaccoDOS(userdata);
+
+    //TEST controllare se funziona tutto
+    setProducts(tmp[0])
+    setBookings(tmp[1])
+
+
+    //per testing di backend rimuovere i commenti delle funzioni qui sotto
+  
     //getFutureProducts();
-    getProducts();
-    getBookings();
-    getDeliveries();
+    //getProducts();
+    //getBookings();
+    //getDeliveries();
     //setBookingsState(false);
     //}
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
