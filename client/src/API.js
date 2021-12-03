@@ -634,8 +634,8 @@ async function attaccoDoS(userdata) {
     }
   };
 
-  let products = await getProducts();
-  let bookings = await getBookings();
+  let products = getProducts();
+  let bookings = getBookings();
 
   return { products, bookings };
 }
