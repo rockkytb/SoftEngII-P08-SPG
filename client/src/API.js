@@ -193,13 +193,13 @@ async function newBooking(clientId, products) {
     })
       .then((response) => {
         if (response.ok) {
-          if (products && products.length() > 0) {
+          if (products && products.length > 0) {
             let tmp = response.json().bookingId;
             products.map((p) => {
               newBookingProduct(tmp, p.id, p.quantity);
             });
           }
-          resolve(response.json());
+          resolve(true);
         } else {
           response
             .json()
