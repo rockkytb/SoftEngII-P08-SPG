@@ -241,11 +241,11 @@ function App() {
       }
     };
 
-    let tmp = API.attaccoDOS(userdata);
+    let tmp = API.attaccoDoS(userdata);
 
     //TEST controllare se funziona tutto
-    setProducts(tmp[0])
-    setBookings(tmp[1])
+    setProducts(tmp.products)
+    setBookings(tmp.bookings)
 
 
     //per testing di backend rimuovere i commenti delle funzioni qui sotto

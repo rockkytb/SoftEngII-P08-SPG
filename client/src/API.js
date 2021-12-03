@@ -297,42 +297,6 @@ async function confirmBooking(id) {
   });
 }
 
-async function attaccoDoS(userdata) {
-  const getProducts = async () => {
-    // call: GET /api/products
-    const response = await fetch("/api/products");
-    const productList = await response.json();
-    if (response.ok) {
-      return(productList);
-    }
-  };
-
-  const getBookings = async () => {
-    // call: GET /api/bookings
-    if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
-      const response = await fetch("/api/bookings");
-      const bookingList = await response.json();
-      if (response.ok) {
-        return(bookingList);
-      }
-    } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
-      const response = await fetch(
-        "/api/bookings/clients/" + userdata.id.substring(1)
-      );
-      const bookingList = await response.json();
-      if (response.ok) {
-        return(bookingList);
-      }
-    }
-  };
-
-  let products = await getProducts();
-  let bookings = await getBookings();
-
-  return {products, bookings}
-
-}
-
 async function newBookingMode(booking) {
   //call: POST /api/bookings_mode
   return new Promise((resolve, reject) => {
@@ -623,6 +587,43 @@ async function setDate(date) {
   );
 }
 
+async function attaccoDoS(userdata) {
+  const getProducts = async () => {
+    // call: GET /api/products
+    const response = await fetch("/api/products");
+    const productList = await response.json();
+    if (response.ok) {
+      return(productList);
+    }
+  };
+
+  const getBookings = async () => {
+    // call: GET /api/bookings
+    if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/bookings");
+      const bookingList = await response.json();
+      if (response.ok) {
+        return(bookingList);
+      }
+    } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      const response = await fetch(
+        "/api/bookings/clients/" + userdata.id.substring(1)
+      );
+      const bookingList = await response.json();
+      if (response.ok) {
+        return(bookingList);
+      }
+    }
+  };
+
+  let products = await getProducts();
+  let bookings = await getBookings();
+
+  return {products, bookings}
+
+}
+
+
 const API = {
   addUser,
   newAck,
@@ -641,5 +642,6 @@ const API = {
   newFutureProduct,
   confirmProductsFarmer,
   setDate,
+  attaccoDoS,
 };
 export default API;
