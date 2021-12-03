@@ -326,8 +326,8 @@ async function attaccoDoS(userdata) {
     }
   };
 
-  let products = getProducts();
-  let bookings = getBookings();
+  let products = await getProducts();
+  let bookings = await getBookings();
 
   return {products, bookings}
 
