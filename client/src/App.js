@@ -176,16 +176,6 @@ function App() {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   };
 
-  //add product of booking to system db
-  const newProductBooking = (bid, pid, qty) => {
-    //crea associazione tra prodotti e booking con quantità. parametri da passare da definire
-    const bookingProduct = async () => {
-      await API.newBookingProduct(bid, pid, qty);
-      await API.editProductQty(pid, qty);
-      setBookingsState(true);
-    };
-    bookingProduct();
-  };
 
   const newProductMode = (booking) => {
     const bookingMode = async () => {
@@ -1000,7 +990,7 @@ function App() {
                               clients={clients}
                               products={products}
                               setProducts={setProducts}
-                              newProductBooking={newProductBooking}
+                              newBooking={newBooking}
                               newProductMode={newProductMode}
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}

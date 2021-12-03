@@ -273,6 +273,8 @@ async function newBookingProduct(ID_Booking, ID_Product, Qty) {
     })
       .then((response) => {
         if (response.ok) {
+          //FIX should NOT do it here
+          editProductQty(ID_Product, Qty);
           resolve(response.json());
         } else {
           response
@@ -593,7 +595,6 @@ const API = {
   logOut,
   getUserInfo,
   newBooking,
-  newBookingProduct,
   editProductQty,
   getClientByEmail,
   getWalletById,

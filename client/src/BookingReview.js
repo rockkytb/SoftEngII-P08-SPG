@@ -70,32 +70,6 @@ function BookingReview(props) {
       .catch((err) => toast.error(err.errors, { position: "top-center" }));
   }
 
-  async function handleCreateBooking() {
-    const pickupdate = new Date(date);
-    if (
-      pickupdate.getDay() === 3 ||
-      pickupdate.getDay() === 4 ||
-      pickupdate.getDay() === 5
-    ) {
-      let tmpSoldy = await props.getWallet(clientID);
-      let total = 0;
-      let id;
-      if (clientID) id = clientID.substring(1);
-
-      setSoldy(tmpSoldy);
-
-      props.cart.map((p) => {
-        total += p.price;
-      });
-
-      if (total <= soldy) {
-        newBooking(id);
-      }
-    } else {
-      setShowAlertPickUp(true);
-    }
-  }
-
   const handleClose = () => {
     setDate("");
     setTime("");
