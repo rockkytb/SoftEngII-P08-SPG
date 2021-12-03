@@ -588,6 +588,7 @@ async function setDate(date) {
 }
 
 async function attaccoDoS(userdata) {
+  
   const getProducts = async () => {
     // call: GET /api/products
 
@@ -597,11 +598,7 @@ async function attaccoDoS(userdata) {
       if (response.ok) {
         return productList;
       }
-    } else if (
-      userdata &&
-      userdata.id &&
-      userdata.id.charAt(0) === "F"
-    ) {
+    } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
       const response = await fetch(
         "/api/products/farmers/" + userdata.id.substring(1)
       );
@@ -611,6 +608,7 @@ async function attaccoDoS(userdata) {
       }
     }
   };
+
   const getBookings = async () => {
     // call: GET /api/bookings
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
@@ -619,11 +617,7 @@ async function attaccoDoS(userdata) {
       if (response.ok) {
         return bookingList;
       }
-    } else if (
-      userdata &&
-      userdata.id &&
-      userdata.id.charAt(0) === "C"
-    ) {
+    } else if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
       const response = await fetch(
         "/api/bookings/clients/" + userdata.id.substring(1)
       );
@@ -634,10 +628,33 @@ async function attaccoDoS(userdata) {
     }
   };
 
+  const getClients = async () => {
+    // call: GET /api/clients
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/clients");
+      const clientList = await response.json();
+      if (response.ok) {
+        return clientList;
+      }
+    }
+  };
+
+  const getCategories = async () => {
+    // call: GET /api/categories
+    const response = await fetch("/api/categories");
+    const clientList = await response.json();
+    if (response.ok) {
+      return clientList;
+    }
+  };
+
   let products = getProducts();
   let bookings = getBookings();
+  let clients = getClients();
+  let categories = getCategories();
 
-  return { products, bookings };
+
+  return { products, bookings, clients };
 }
 
 const API = {
