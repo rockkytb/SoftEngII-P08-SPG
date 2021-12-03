@@ -460,6 +460,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
+                          {setAttaccoDDOS(true)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -713,6 +714,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
+                      {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -743,6 +745,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
+                      {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -952,7 +955,9 @@ function App() {
             exact
             path="/home"
             render={() => (
+              
               <div className="width100">
+                {setAttaccoDDOS(true)}
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
