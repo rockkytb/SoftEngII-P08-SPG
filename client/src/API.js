@@ -588,41 +588,74 @@ async function setDate(date) {
 }
 
 async function attaccoDoS(userdata) {
+  
   const getProducts = async () => {
     // call: GET /api/products
-    const response = await fetch("/api/products");
-    const productList = await response.json();
-    if (response.ok) {
-      return(productList);
+
+    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
+    } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
+      const response = await fetch(
+        "/api/products/farmers/" + userdata.id.substring(1)
+      );
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
     }
   };
 
   const getBookings = async () => {
     // call: GET /api/bookings
-    if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       const response = await fetch("/api/bookings");
       const bookingList = await response.json();
       if (response.ok) {
-        return(bookingList);
+        return bookingList;
       }
-    } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
+    } else if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
       const response = await fetch(
         "/api/bookings/clients/" + userdata.id.substring(1)
       );
       const bookingList = await response.json();
       if (response.ok) {
-        return(bookingList);
+        return bookingList;
       }
     }
   };
 
-  let products = await getProducts();
-  let bookings = await getBookings();
+  const getClients = async () => {
+    // call: GET /api/clients
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/clients");
+      const clientList = await response.json();
+      if (response.ok) {
+        return clientList;
+      }
+    }
+  };
 
-  return {products, bookings}
+  const getCategories = async () => {
+    // call: GET /api/categories
+    const response = await fetch("/api/categories");
+    const clientList = await response.json();
+    if (response.ok) {
+      return clientList;
+    }
+  };
 
+  let products = getProducts();
+  let bookings = getBookings();
+  let clients = getClients();
+  let categories = getCategories();
+
+
+  return { products, bookings, clients };
 }
-
 
 const API = {
   addUser,

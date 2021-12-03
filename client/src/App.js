@@ -185,89 +185,14 @@ function App() {
 
   //update products, bookings and next week products
   useEffect(() => {
-    //if (bookingsState) {
-    const getProducts = async () => {
-      // call: GET /api/products
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        setProducts(productList);
-      }
-    };
-
-    const getDeliveries = async () => {
-      // call: GET /api/deliveries
-      if (
-        loggedIn &&
-        userdata &&
-        userdata.id &&
-        userdata.id.charAt(0) === "S"
-      ) {
-        const response = await fetch("/api/deliveries");
-        const productList = await response.json();
-        if (response.ok) {
-          setDeliveries(productList);
-        }
-      }
-    };
-
-    const getBookings = async () => {
-      // call: GET /api/bookings
-      if (
-        loggedIn &&
-        userdata &&
-        userdata.id &&
-        userdata.id.charAt(0) === "S"
-      ) {
-        const response = await fetch("/api/bookings");
-        const bookingList = await response.json();
-        if (response.ok) {
-          setBookings(bookingList);
-        }
-      } else if (
-        loggedIn &&
-        userdata &&
-        userdata.id &&
-        userdata.id.charAt(0) === "C"
-      ) {
-        const response = await fetch(
-          "/api/bookings/clients/" + userdata.id.substring(1)
-        );
-        const bookingList = await response.json();
-        if (response.ok) {
-          console.log(bookingList);
-          setBookings(bookingList);
-        }
-      }
-    };
 
     let tmp = API.attaccoDoS(userdata);
 
-    //TEST controllare se funziona tutto
     setProducts(tmp.products)
     setBookings(tmp.bookings)
+    setClients(tmp.clients)
 
-
-    //per testing di backend rimuovere i commenti delle funzioni qui sotto
-  
-    //getFutureProducts();
-    //getProducts();
-    //getBookings();
-    //getDeliveries();
-    //setBookingsState(false);
-    //}
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
-
-  const getFutureProducts = async (farmerId) => {
-    // call: GET /api/products_expected
-    const response = await fetch(
-      "/api/farmers/" + farmerId + "/products_expected"
-    );
-    const productList = await response.json();
-    if (response.ok) {
-      setFutureProducts(productList);
-    }
-  };
 
   const addFutureProducts = async (id, products) => {
     let tmp = 0;
@@ -278,42 +203,6 @@ function App() {
       .catch((err) => console.log(err));
     return tmp;
   };
-
-  //update confirmed product from farmer
-  useEffect(() => {
-    if (
-      loggedIn &&
-      deliveryState &&
-      userdata.id &&
-      userdata.id.charAt(0) === "F"
-    ) {
-      const getConfirmedProductsFarmer = async () => {
-        // call: GET /api/products/farmers/:id
-        const response = await fetch(
-          "/api/products/farmers/" + userdata.id.substring(1)
-        );
-        const confirmedProductList = await response.json();
-        if (response.ok) {
-          setConfirmedProductsFarmer(confirmedProductList);
-        }
-      };
-
-      const getExpectedProductsFarmer = async () => {
-        // call: GET /api/farmers/:farmerid/products_expected
-        const response = await fetch(
-          "/api/farmers/" + userdata.id.substring(1) + "/products_expected"
-        );
-        const expectedProductList = await response.json();
-        if (response.ok) {
-          setProductsExpectedFarmer(expectedProductList);
-        }
-      };
-
-      getExpectedProductsFarmer();
-      getConfirmedProductsFarmer();
-      setDeliveryState(false);
-    }
-  }, [deliveryState, loggedIn]);
 
   //update acks manager
   useEffect(() => {
@@ -331,19 +220,6 @@ function App() {
       setAckState(false);
     }
   }, [ackState, loggedIn]);
-
-  //clients server calls
-  useEffect(() => {
-    const getClients = async () => {
-      // call: GET /api/clients
-      const response = await fetch("/api/clients");
-      const clientList = await response.json();
-      if (response.ok) {
-        setClients(clientList);
-      }
-    };
-    getClients();
-  }, [loggedIn, attaccoDDOS]);
 
   const getSingleClientByEmail = (email) => {
     let client;
@@ -441,19 +317,6 @@ function App() {
       setAttaccoDDOS(true);
     }*/
   };
-
-  //get categories
-  useEffect(() => {
-    const getClients = async () => {
-      // call: GET /api/categories
-      const response = await fetch("/api/categories");
-      const clientList = await response.json();
-      if (response.ok) {
-        setCategories(clientList);
-      }
-    };
-    getClients();
-  }, [attaccoDDOS]);
 
   return (
     <div className="page">
@@ -597,6 +460,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
+                          {setAttaccoDDOS(true)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -787,7 +651,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingConfirmFarmer
                               className="below-nav main-content"
-                              expectedProducts={productsExpectedFarmer}
+                              expectedProducts={products.filter((f)=>f.state=="EXPECTED")}
                               confirmProducts={confirmProductsFarmer}
                               calendarday={date}
                             />
@@ -821,7 +685,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingDeliveryFarmer
                               className="below-nav main-content"
-                              confirmedProducts={confirmedProductsFarmer}
+                              confirmedProducts={products.filter((f)=> f.state==="CONFIRMED")}
                               confirmDelivery={setCompletedDeliveryFarmer}
                               calendarday={date}
                             />
@@ -850,6 +714,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
+                      {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -880,6 +745,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
+                      {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -1089,7 +955,9 @@ function App() {
             exact
             path="/home"
             render={() => (
+              
               <div className="width100">
+                {setAttaccoDDOS(true)}
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
