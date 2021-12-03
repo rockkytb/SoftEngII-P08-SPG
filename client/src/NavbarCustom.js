@@ -83,9 +83,6 @@ if (firstTime && toPrint.length !== 0) {
   return (
     <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top">
 
-
-
-
       <Col md={2} xs={6} className="d-flex  justify-content-left">
         <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
