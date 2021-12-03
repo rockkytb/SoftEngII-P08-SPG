@@ -309,8 +309,8 @@ function App() {
         }
       };
 
-      getExpectedProductsFarmer();
-      getConfirmedProductsFarmer();
+      //getExpectedProductsFarmer();
+      //getConfirmedProductsFarmer();
       setDeliveryState(false);
     }
   }, [deliveryState, loggedIn]);
@@ -787,7 +787,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingConfirmFarmer
                               className="below-nav main-content"
-                              expectedProducts={productsExpectedFarmer}
+                              expectedProducts={products.filter((f)=>f.state=="EXPECTED")}
                               confirmProducts={confirmProductsFarmer}
                               calendarday={date}
                             />
@@ -821,7 +821,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingDeliveryFarmer
                               className="below-nav main-content"
-                              confirmedProducts={confirmedProductsFarmer}
+                              confirmedProducts={products.filter((f)=> f.state==="CONFIRMED")}
                               confirmDelivery={setCompletedDeliveryFarmer}
                               calendarday={date}
                             />
