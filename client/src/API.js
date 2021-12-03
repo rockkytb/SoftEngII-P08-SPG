@@ -590,28 +590,46 @@ async function setDate(date) {
 async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
-    const response = await fetch("/api/products");
-    const productList = await response.json();
-    if (response.ok) {
-      return(productList);
+
+    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
+    } else if (
+      userdata &&
+      userdata.id &&
+      userdata.id.charAt(0) === "F"
+    ) {
+      const response = await fetch(
+        "/api/products/farmers/" + userdata.id.substring(1)
+      );
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
     }
   };
-
   const getBookings = async () => {
     // call: GET /api/bookings
-    if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "S") {
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       const response = await fetch("/api/bookings");
       const bookingList = await response.json();
       if (response.ok) {
-        return(bookingList);
+        return bookingList;
       }
-    } else if (loggedIn && userdata && userdata.id && userdata.id.charAt(0) === "C") {
+    } else if (
+      userdata &&
+      userdata.id &&
+      userdata.id.charAt(0) === "C"
+    ) {
       const response = await fetch(
         "/api/bookings/clients/" + userdata.id.substring(1)
       );
       const bookingList = await response.json();
       if (response.ok) {
-        return(bookingList);
+        return bookingList;
       }
     }
   };
@@ -619,10 +637,8 @@ async function attaccoDoS(userdata) {
   let products = await getProducts();
   let bookings = await getBookings();
 
-  return {products, bookings}
-
+  return { products, bookings };
 }
-
 
 const API = {
   addUser,
