@@ -11,10 +11,9 @@ const dao = require("./dao"); // module for accessing the DB
 const validator = require("validator");
 let testmode = false;
 
-//SWAGGER 
-const swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('./swagger.json');
-
+//SWAGGER
+const swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
 
 //SHORT-TERM
 let date = 0;
@@ -37,12 +36,7 @@ app.use(
   })
 );
 
-app.use(
-  '/api-docs',
-  swaggerUi.serve, 
-  swaggerUi.setup(swaggerDocument),
-);
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //init passport to use sessions
 app.use(passport.initialize());
@@ -293,7 +287,7 @@ app.get("/api/clients", (req, res) => {
 //POST /api/client/
 app.post(
   "/api/client",
-  /*isLoggedIn,*/(req, res) => {
+  /*isLoggedIn,*/ (req, res) => {
     dao
       .getClientByEmail(req.body.email)
       .then((client) => {
@@ -549,7 +543,7 @@ app.put(
   }
 );
 
-// POST /api/farmers/:farmerid/products 
+// POST /api/farmers/:farmerid/products
 app.post(
   "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
   async (req, res) => {
@@ -831,6 +825,57 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
   }
 });
 
+// GET /api/clientsPreparation
+app.get("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
+  let result = [];
+  var problem = 0;
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      //do something with e.g. req.body[key]
+
+      if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
+        return res.status(422).json({
+          error: `Invalid product id of a element on the array, it must be positive`,
+        });
+      }
+    }
+  }
+  //All the product have valid body
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      const product = {
+        id: req.body[key].id,
+      };
+
+      dao
+        .getClientsPreparation(product.id)
+        .then((clients) => {
+          result.concat(clients);
+        })
+        .catch(() => {
+          problem = 1;
+        });
+    }
+  }
+  if (problem == 0) {
+    //All went fine
+
+    // eliminare duplicati
+
+    res.status(201).json(
+      result.filter(function (item, pos) {
+        return a.indexOf(item) == pos;
+      })
+    );
+  } else {
+    res.status(503).json({
+      error: `Database error or undefined product during the put of the state of array product`,
+    });
+  }
+});
+
 //POST /api/bookings_mode
 app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   const booking_mode = {
@@ -875,11 +920,9 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
           .json({ error: `Invalid state lenght of a element on the array` });
       }
       if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
-        return res
-          .status(422)
-          .json({
-            error: `Invalid product id of a element on the array, it must be positive`,
-          });
+        return res.status(422).json({
+          error: `Invalid product id of a element on the array, it must be positive`,
+        });
       }
     }
   }
@@ -910,8 +953,8 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
   }
 });
 
-//////TODO: move clock to backend 
-//////SHORT-TERM: receive the day of the week we put 
+//////TODO: move clock to backend
+//////SHORT-TERM: receive the day of the week we put
 app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
   date = req.body.date;
 
@@ -924,20 +967,17 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
       .getTotal()
       .then((booking) => {
         booking.map((c) => {
-          let wallet = dao
-            .getWallet(c.client)
-            .then((res) => res.balance);
-          if(wallet >= c.total){
+          let wallet = dao.getWallet(c.client).then((res) => res.balance);
+          if (wallet >= c.total) {
             dao
-            .updateWallet({amount: wallet-c.total, id: c.client })
-            .then((res) => res);
-          }
-          else{
+              .updateWallet({ amount: wallet - c.total, id: c.client })
+              .then((res) => res);
+          } else {
             dao
-            .editStateBooking({id: c.id, state: 'PENDINGCANCELATION'})
-            .then((res) => res);
+              .editStateBooking({ id: c.id, state: "PENDINGCANCELATION" })
+              .then((res) => res);
           }
-        })
+        });
         //res.status(200).json(clients);
       })
       .catch((err) => {
@@ -950,8 +990,6 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
   //All went fine
   res.status(201).json({ date: date });
 });
-
-
 
 // activate the server
 const server = app.listen(port, () => {

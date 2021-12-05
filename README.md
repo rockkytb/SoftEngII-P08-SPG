@@ -6,15 +6,19 @@ Only with testmode disabled
 Password is always : <b> testpassword </b>
 
 ### Customer
+
 1. email: antonio.bianchi@mail.it
 
 ### Shop Employee
+
 1. email: susan@employee.spg.com
 
 ### Manager
+
 1. email: john@manager.spg.com
 
 ### Farmer
+
 1. email: mark@farmer.spg.com
 2. email: sue@farmer.spg.com
 
@@ -258,6 +262,16 @@ Add new acknowledge for manager with state = NEW. Example:
 "idFarmer": 1,
 "email": "antonio.bianchi@mail.it"
 }
+
+#### GET /api/clientsPreparation
+
+This API receives a vector of products and for every product received, retrieve the client id, name, surname, email and collect all the clients in an array without duplications. example:
+[
+{"ID":1,
+"Name":"Antonio",
+"Surname":"Bianchi",
+"Email":"antonio.bianchi@mail.com"},
+...]
 
 #### GET /api/bookings
 

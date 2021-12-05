@@ -661,6 +661,34 @@ exports.insertTupleProductExpected = (pdtExp) => {
     );
   });
 };
+
+//GET /api/clientsPreparation
+
+exports.getClientsPreparation = (productId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT DISTINCT(C.ID), C.EMAIL, C.NAME, C.SURNAME FROM BOOKING_PRODUCTS BP, BOOKING B, CLIENT C WHERE ID_PRODUCT=? AND BP.ID_BOOKING=B.ID_BOOKING AND B.CLIENT_ID=C.ID";
+    db.all(sql, [productId], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else if (rows === undefined) {
+        resolve(false);
+      } else {
+        resolve(
+          rows.map((x) => {
+            return {
+              id: `C${x.ID}`,
+              username: x.EMAIL,
+              name: x.NAME,
+              surname: x.SURNAME,
+            };
+          })
+        );
+      }
+    });
+  });
+};
+
 // Create a new booking mode
 exports.createBookingMode = (bookingMode) => {
   return new Promise((resolve, reject) => {
@@ -724,13 +752,9 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run(
-      "DELETE FROM PRODUCT_WEEK WHERE ID >= ?",
-      [3],
-      (err) => {
-        errTest(err);
-      }
-    );
+    await db.run("DELETE FROM PRODUCT_WEEK WHERE ID >= ?", [3], (err) => {
+      errTest(err);
+    });
 
     await db.run(
       "DELETE FROM PRODUCT_WEEK WHERE ID != ? AND STATE!=?",
@@ -761,7 +785,6 @@ exports.cleanDb = async () => {
     );
   }
 };
-
 
 //SHORT-TERM:
 exports.getTotal = () => {
