@@ -83,19 +83,19 @@ if (firstTime && toPrint.length !== 0) {
   return (
     <Navbar className="navbar navbar-dark navbar-expand-sm fixed-top">
 
-      <Col md={2} xs={6} className="d-flex  justify-content-left">
+      <Col md={4} className="d-none d-md-flex  justify-content-left pl-0">
         <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
 
-      <Col md={8} className="d-none d-md-flex justify-content-center">
+      <Col md={4} className="d-none d-md-flex justify-content-center">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white' }}>
-            <h1 id="title">Le_Cose SPG s.p.a.</h1>
+            <h1 id="title">SPG s.p.a.</h1>
           </Link>
         </NavLink>
       </Col>
 
-      <Col md={2} xs={6} className="navbar-nav ml-md-auto justify-content-end">
+      <Col md={4} xs={12} className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link mr-3">
           <Link to="/home" style={{ color: 'white' }}>
             <HouseDoorFill size={30} />
