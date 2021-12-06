@@ -18,9 +18,9 @@ function CarouselCustom(props) {
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
+          height="100vh"
           src={cibo3}
           alt="First slide"
         />
@@ -37,9 +37,9 @@ function CarouselCustom(props) {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
+          height="100vh"
           src={cibo2}
           alt="Second slide"
         />
@@ -57,9 +57,9 @@ function CarouselCustom(props) {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
+          height="100vh"
           src={sfondo_cibo}
           alt="Third slide"
         />
