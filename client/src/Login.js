@@ -20,7 +20,7 @@ function Login(props) {
   }
 
   return (
-    <div className="Login">
+    <div className="Login below-nav main-content">
 
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
