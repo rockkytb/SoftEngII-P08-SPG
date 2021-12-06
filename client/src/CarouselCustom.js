@@ -24,7 +24,7 @@ function CarouselCustom(props) {
           className="d-block width100 page"
           width="100vh"
           height="100vh"
-          src={window.innerWidth < 768 ? (mobile1):(cibo3)}
+          src={window.innerWidth < 768 ? (mobile2):(cibo3)}
           alt="First slide"
         />
         <Carousel.Caption className="caption-middle">
@@ -63,7 +63,7 @@ function CarouselCustom(props) {
           className="d-block width100 page"
           width="100vh"
           height="100vh"
-          src={window.innerWidth < 768 ? (mobile2):(sfondo_cibo)}
+          src={window.innerWidth < 768 ? (mobile1):(sfondo_cibo)}
           alt="Third slide"
         />
 
