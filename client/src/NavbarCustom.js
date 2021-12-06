@@ -87,15 +87,15 @@ if (firstTime && toPrint.length !== 0) {
         <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
 
-      <Col md={4} className="d-none d-md-flex justify-content-center">
+      <Col md={4} xs={5} className="d-flex justify-content-center">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white' }}>
-            <h1 id="title">SPG s.p.a.</h1>
+            <h2 id="title">SPG s.p.a.</h2>
           </Link>
         </NavLink>
       </Col>
 
-      <Col md={4} xs={12} className="navbar-nav ml-md-auto justify-content-end">
+      <Col md={4} xs={7} className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link mr-3">
           <Link to="/home" style={{ color: 'white' }}>
             <HouseDoorFill size={30} />
