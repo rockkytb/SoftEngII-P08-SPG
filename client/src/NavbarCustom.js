@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Navbar, Button, Col, Row } from "react-bootstrap";
-import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill } from "react-bootstrap-icons"
+import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill, ClockFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Clock from "./Clock.js"
 import { ToastContainer, toast } from "react-toastify";
 
@@ -10,8 +12,18 @@ function NavbarCustom(props) {
 const [firstTime, setFirstTime] = useState(true);
 const [showNotification, setShowNotification] = useState(false);
 
-console.log("aaaaaaaaaaaaah")
-console.log(props.bookings)
+console.log("aaaaaaaaaaaaah");
+console.log(props.bookings);
+
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Content>
+      
+       <Clock mobile={true} date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
+      
+    </Popover.Content>
+  </Popover>
+);
 
   
 let toPrint = props.bookings && props.bookings.length>0 ? 
@@ -87,13 +99,21 @@ if (firstTime && toPrint.length !== 0) {
         <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
 
-      <Col md={4} xs={5} className="d-flex justify-content-center">
+      
+      <Col md={4} xs={4} className="d-flex justify-content-center ml-3">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white' }}>
             <h2 id="title">SPG s.p.a.</h2>
           </Link>
         </NavLink>
       </Col>
+
+      <Col xs={1} className="d-flex d-md-none justify-content-center ml-3 p-0">
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+          <ClockFill style={{color: 'white'}} size={30}/>
+        </OverlayTrigger>
+      </Col>
+
 
       <Col md={4} xs={7} className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link mr-3">

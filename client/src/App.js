@@ -428,7 +428,7 @@ function App() {
                             <ProductsList
                               className="below-nav main-content"
                               products={futureProducts}
-                              //getProducts={getFutureProducts}
+                              getProducts={getFutureProducts}
                               cart={cart}
                               categories={categories}
                               //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
