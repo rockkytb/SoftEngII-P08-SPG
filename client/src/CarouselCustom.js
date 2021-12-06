@@ -2,6 +2,9 @@ import React from 'react';
 import { Carousel,  Button } from 'react-bootstrap';
 import { useState } from 'react';
 import  sfondo_cibo  from './immagini/sfondo_cibo.jpg';
+import  mobile1  from './immagini/mobile1.jpg';
+import  mobile2  from './immagini/mobile2.jpg';
+import  mobile3  from './immagini/mobile3.jpg';
 import  cibo2 from './immagini/cibo2.jpg';
 import  cibo3 from './immagini/cibo3.jpg';
 import { Link } from "react-router-dom";
@@ -21,7 +24,7 @@ function CarouselCustom(props) {
           className="d-block width100 page"
           width="100vh"
           height="100vh"
-          src={cibo3}
+          src={window.innerWidth < 768 ? (mobile1):(cibo3)}
           alt="First slide"
         />
         <Carousel.Caption className="caption-middle">
@@ -40,7 +43,7 @@ function CarouselCustom(props) {
           className="d-block width100 page"
           width="100vh"
           height="100vh"
-          src={cibo2}
+          src={window.innerWidth < 768 ? (mobile3):(cibo2)}
           alt="Second slide"
         />
 
@@ -60,7 +63,7 @@ function CarouselCustom(props) {
           className="d-block width100 page"
           width="100vh"
           height="100vh"
-          src={sfondo_cibo}
+          src={window.innerWidth < 768 ? (mobile2):(sfondo_cibo)}
           alt="Third slide"
         />
 
