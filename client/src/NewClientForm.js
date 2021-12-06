@@ -143,14 +143,14 @@ function NewClientForm(props) {
                 </Row>
 
                 <Row>
-                    <Col xs={7} />
-                    <Col xs={1}>
+                    <Col md={7} xs={6}/>
+                    <Col md={1} xs={1}>
                         <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
-                    <Col xs={2} className="pl-5">
+                    <Col md={2} xs={3} className="pl-5">
                         <Button variant="warning" color="black" type="submit" className="float-right ">Register</Button>
                     </Col>
-                    <Col xs={2} />
+                    <Col md={2} xs={2}/>
                 </Row>
             </Form >
         </div>

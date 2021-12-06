@@ -1,12 +1,28 @@
-.page {
-  min-height: 100vh;
-  margin: 0%;
-  margin-right: 0px;
-  padding: 0%;
-  background-image: url("./immagini/sfondo_cibo.jpg");
-  color: white;
-  
+@media (min-width: 768px) {
+  .page {
+    min-height: 100vh;
+    margin: 0%;
+    margin-right: 0px;
+    padding: 0%;
+    background-image: url("./immagini/sfondo_cibo.jpg");
+    color: white;
+    
+  }
 }
+
+@media (max-width: 768px) {
+  .page {
+    min-height: 100vh;
+    margin: 0%;
+    margin-right: 0px;
+    padding: 0%;
+    background-image: url("./immagini/mobile2.jpg");
+    color: white;
+    
+  }
+}
+
+
 
 .width100 {
   width: 100%;
