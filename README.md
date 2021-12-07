@@ -13,9 +13,13 @@ Password is always : <b> testpassword </b>
 
 1. email: susan@employee.spg.com
 
-### Manager
+### Warehouse Manager
 
 1. email: john@manager.spg.com
+
+### Warehouse Worker
+
+1. email: tim@manager.spg.com
 
 ### Farmer
 
