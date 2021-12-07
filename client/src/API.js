@@ -592,7 +592,7 @@ async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
 
-    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
+    if (userdata && userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")) {
       const response = await fetch("/api/products");
       const productList = await response.json();
       if (response.ok) {
@@ -648,10 +648,10 @@ async function attaccoDoS(userdata) {
     }
   };
 
-  let products = getProducts();
-  let bookings = getBookings();
-  let clients = getClients();
-  let categories = getCategories();
+  let products = await getProducts();
+  let bookings = await getBookings();
+  let clients = await getClients();
+  let categories = await getCategories();
 
 
   return { products, bookings, clients };
