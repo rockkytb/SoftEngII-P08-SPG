@@ -526,7 +526,7 @@ exports.getAllProductsForFarmer = (farmerId) => {
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -540,6 +540,7 @@ exports.getAllBookings = () => {
         surname: e.SURNAME,
         qty: e.QTY,
         product: e.productName,
+        productID: e.productID
       }));
       resolve(bookings);
     });
