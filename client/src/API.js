@@ -79,6 +79,15 @@ async function logIn(credentials, type) {
         body: JSON.stringify(credentials),
       });
       break;
+      case "W":
+      response = await fetch(url + "/warehouseWorkerSessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      break;
     default:
       //error: wtf are you
       console.log("How did you get that?");
