@@ -137,8 +137,6 @@ export default function ProductsList(props) {
     });
   }
 
-  console.log(props.products)
-
   return (
     <>
       <div className="below-nav">
