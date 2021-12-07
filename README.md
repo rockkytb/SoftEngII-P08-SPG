@@ -269,7 +269,7 @@ Add new acknowledge for manager with state = NEW. Example:
 
 #### GET /api/clientsPreparation
 
-This API receives a vector of products and for every product received, retrieve the client id, name, surname, email and collect all the clients in an array without duplications. example:
+This API receives a vector of products_id and for every product received, retrieve the client id, name, surname, email and collect all the clients in an array without duplications. example:
 [
 {"ID":1,
 "Name":"Antonio",

@@ -64,17 +64,17 @@ describe("Test suite Integration Server", () => {
   describe("Post booking mode success", () => {
     it("should create a new booking mode", async () => {
       const res = await request(app).post("/api/bookings_mode").send({
-        "idBooking": 100,
-        "delivery": 1,
-        "street": "via giovanni ribet",
-        "city": "turin",
-        "province": "TO",
-        "postal_code": "12345",
-        "country": "italy",
-        "date": "22/11/2021",
-        "time": "13:20",
-        "extra_fee": 24.5
-    });
+        idBooking: 100,
+        delivery: 1,
+        street: "via giovanni ribet",
+        city: "turin",
+        province: "TO",
+        postal_code: "12345",
+        country: "italy",
+        date: "22/11/2021",
+        time: "13:20",
+        extra_fee: 24.5,
+      });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toHaveProperty("idBookingMode");
     });
@@ -307,6 +307,24 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  /*//TEST GET /api/clientsPreparation
+  describe("Get clients preparation success", () => {
+    it("ask the list of clients with products in preparation", async () => {
+      const res = await (
+        await request(app).get("/api/clientsPreparation")
+      ).body([{ id: 2 }]);
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual([
+        {
+          id: "C1",
+          username: "marco.bianchi@mail.it",
+          name: "Marco",
+          surname: "Bianchi",
+        },
+      ]);
+    });
+  });*/
+
   //TEST GET /api/categories
   describe("Get categories success", () => {
     it("ask the list of categories", async () => {
@@ -387,17 +405,15 @@ describe("Test suite Integration Server", () => {
   describe("get all products success", () => {
     it("test get api/products endpoint", async () => {
       const response = await request(app).get("/api/products");
-      expect(response.body).toEqual(
-        [
-          {
-              "id": 1,
-              "name": "Mele",
-              "category": "Fruit",
-              "price": 14.0,
-              "qty": 5,
-              "farmer_email": "antonio.bianchi@mail.it"
-          }
-      
+      expect(response.body).toEqual([
+        {
+          id: 1,
+          name: "Mele",
+          category: "Fruit",
+          price: 14.0,
+          qty: 5,
+          farmer_email: "antonio.bianchi@mail.it",
+        },
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
@@ -448,25 +464,22 @@ describe("Test suite Integration Server", () => {
   //POST /api/products/farmers/:id
   describe("get all confirmed products expected by farmer id success", () => {
     it("test get /api/products/farmers/1 endpoint", async () => {
-      const response = await request(app).get(
-        "/api/products/farmers/1"
-      );
+      const response = await request(app).get("/api/products/farmers/1");
       expect(response.body).toEqual([
         {
-          "id": 2,
-          "name": "Lamponi",
-          "category": "Fruit",
-          "price": 1.78,
-          "qty": 1,
-          "farmer_email": "antonio.bianchi@mail.it"
-        }
+          id: 2,
+          name: "Lamponi",
+          category: "Fruit",
+          price: 1.78,
+          qty: 1,
+          farmer_email: "antonio.bianchi@mail.it",
+        },
       ]);
 
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
     });
   });
-
 
   describe("get all bookings success", () => {
     it("test get api/bookings endpoint", async () => {
@@ -489,7 +502,7 @@ describe("Test suite Integration Server", () => {
           qty: 1,
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-        }
+        },
       ]);
       expect(response.body).toHaveLength(2);
       expect(response.statusCode).toBe(200);
@@ -509,15 +522,15 @@ describe("Test suite Integration Server", () => {
           qty: 3,
           product: "Mele",
         },
-       { 
-        email: "marco.bianchi@mail.it",
-        id: 1,
-        name: "Marco",
-        product: "Lamponi",
-        qty: 1,
-        state: "PENDINGCANCELATION",
-        surname: "Bianchi",
-      }
+        {
+          email: "marco.bianchi@mail.it",
+          id: 1,
+          name: "Marco",
+          product: "Lamponi",
+          qty: 1,
+          state: "PENDINGCANCELATION",
+          surname: "Bianchi",
+        },
       ]);
       expect(response.body).toHaveLength(2);
       expect(response.statusCode).toBe(200);
@@ -618,14 +631,14 @@ describe("Test suite Integration Server", () => {
           product: "Mele",
         },
         {
-         email: "marco.bianchi@mail.it",
+          email: "marco.bianchi@mail.it",
           id: 1,
           name: "Marco",
           product: "Lamponi",
           qty: 1,
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-        }
+        },
       ]);
       expect(res.body).toHaveLength(2);
       expect(res.statusCode).toBe(200);
@@ -791,7 +804,7 @@ describe("Put products with new state", ()=>{
       );
     });
   });
-/*
+  /*
   describe("Put products with expected state", () => {
     it("valid put", async () => {
       const parameter = 
@@ -809,5 +822,3 @@ describe("Put products with new state", ()=>{
   });
 */
 });
-
-
