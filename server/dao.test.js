@@ -162,6 +162,18 @@ describe("Test suite DAO", () => {
     ]);
   }, 10000);
 
+  // TEST GET CLIENTSPREPARATION
+
+  test("get clients preparation return success", async () => {
+    return expect(dao.getClientsPreparation(2)).resolves.toEqual([
+      {
+        id: "C1",
+        username: "marco.bianchi@mail.it",
+        name: "Marco",
+        surname: "Bianchi",
+      },
+    ]);
+  }, 10000);
   //TEST DAO FUNCTION GET CATEGORIES
 
   test("get categories return success", async () => {
@@ -302,7 +314,7 @@ test("get all products success", async () => {
       price: 14,
       qty: 5,
       farmer_email: "antonio.bianchi@mail.it",
-  }
+    },
   ];
 
   return expect(dao.getAllProducts()).resolves.toEqual(result);
@@ -330,50 +342,52 @@ test("get all all CONFIRMED products for a particular farmer success", async () 
 test("get all bookings success", async () => {
   //the booking table was cleared before running this test so I had to add a record into it manually.
 
-  const received = [{
-    id: 1,
-    state: "PENDINGCANCELATION",
-    email: "marco.bianchi@mail.it",
-    name: "Marco",
-    surname: "Bianchi",
-    qty: 3,
-    product: "Mele",
-  },
-  { 
-    email: "marco.bianchi@mail.it",
-    id: 1,
-    name: "Marco",
-    product: "Lamponi",
-    qty: 1,
-    state: "PENDINGCANCELATION",
-    surname: "Bianchi",
-  }
-];
+  const received = [
+    {
+      id: 1,
+      state: "PENDINGCANCELATION",
+      email: "marco.bianchi@mail.it",
+      name: "Marco",
+      surname: "Bianchi",
+      qty: 3,
+      product: "Mele",
+    },
+    {
+      email: "marco.bianchi@mail.it",
+      id: 1,
+      name: "Marco",
+      product: "Lamponi",
+      qty: 1,
+      state: "PENDINGCANCELATION",
+      surname: "Bianchi",
+    },
+  ];
 
   return expect(dao.getAllBookings()).resolves.toEqual(received);
 }, 10000);
 
 // TEST GET BOOKINGS FOR A PARTICULAR CLIENT
 test("get all bookings for a client success", async () => {
-  const received = [{
-    id: 1,
-    state: "PENDINGCANCELATION",
-    email: "marco.bianchi@mail.it",
-    name: "Marco",
-    surname: "Bianchi",
-    qty: 3,
-    product: "Mele",
-  },
-  { 
-    email: "marco.bianchi@mail.it",
-    id: 1,
-    name: "Marco",
-    product: "Lamponi",
-    qty: 1,
-    state: "PENDINGCANCELATION",
-    surname: "Bianchi",
-  }
-];
+  const received = [
+    {
+      id: 1,
+      state: "PENDINGCANCELATION",
+      email: "marco.bianchi@mail.it",
+      name: "Marco",
+      surname: "Bianchi",
+      qty: 3,
+      product: "Mele",
+    },
+    {
+      email: "marco.bianchi@mail.it",
+      id: 1,
+      name: "Marco",
+      product: "Lamponi",
+      qty: 1,
+      state: "PENDINGCANCELATION",
+      surname: "Bianchi",
+    },
+  ];
 
   return expect(dao.getAllBookingsForClient(1)).resolves.toEqual(received);
 }, 10000);
@@ -385,21 +399,21 @@ test("get all bookings for a non-existing client success", () => {
 //TEST CREATING NEW BOOKING MODE
 test("the creation of a new booking mode success", () => {
   const booking = {
-    "idBooking":2,
-    "delivery": 1,
-    "street": "via giovanni ribet",
-    "city": "turin",
-    "province": "TO",
-    "postal_code": "12345",
-    "country": "italy",
-    "date": "22/11/2021",
-    "time": "13:20",
-    "extra_fee": 24.5
-}
-  return expect(dao.createBookingMode(booking)).resolves.toBeGreaterThanOrEqual(1);
-
+    idBooking: 2,
+    delivery: 1,
+    street: "via giovanni ribet",
+    city: "turin",
+    province: "TO",
+    postal_code: "12345",
+    country: "italy",
+    date: "22/11/2021",
+    time: "13:20",
+    extra_fee: 24.5,
+  };
+  return expect(dao.createBookingMode(booking)).resolves.toBeGreaterThanOrEqual(
+    1
+  );
 });
-
 
 //TEST UPDATE WALLET BALANCE
 test("updating the wallet failed bacause client was not found", () => {
@@ -477,7 +491,7 @@ test("get all bookings with pendingcancelation state", async () => {
       qty: 3,
       product: "Mele",
     },
-    { 
+    {
       email: "marco.bianchi@mail.it",
       id: 1,
       name: "Marco",
@@ -485,7 +499,7 @@ test("get all bookings with pendingcancelation state", async () => {
       qty: 1,
       state: "PENDINGCANCELATION",
       surname: "Bianchi",
-    }
+    },
   ];
 
   return expect(dao.getBookingsStatePendingCancelation()).resolves.toEqual(
@@ -520,16 +534,17 @@ test("Insert a new Product expected", () => {
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 test("INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success", () => {
   const parameter = {
-    "name": "Apple",
-    "category_id": 2,
-    "price": 1.99,
-    "qty": 2,
-    "farmer_id": "1",
-    "state": "CONFIRMED",
+    name: "Apple",
+    category_id: 2,
+    price: 1.99,
+    qty: 2,
+    farmer_id: "1",
+    state: "CONFIRMED",
   };
-  return expect(dao.insertTupleProductWEEK(parameter)).resolves.toBeGreaterThanOrEqual(1);
+  return expect(
+    dao.insertTupleProductWEEK(parameter)
+  ).resolves.toBeGreaterThanOrEqual(1);
 });
-
 
 test("edit state of a product receiving an array with id-state", () => {
   const parameter = {
