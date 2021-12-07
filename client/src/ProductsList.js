@@ -137,6 +137,8 @@ export default function ProductsList(props) {
     });
   }
 
+  console.log(props.products)
+
   return (
     <>
       <div className="below-nav">
@@ -187,7 +189,7 @@ export default function ProductsList(props) {
           </Modal.Footer>
         </Modal>
         <CardColumns xs={1} md={5}>
-          <>{props.products.length && props.categories.length > 0 ? productsActions() : <></>}</>
+          <>{props.products.length > 0 ? productsActions() : <></>}</>
         </CardColumns>
       </div>
     </>

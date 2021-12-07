@@ -184,9 +184,9 @@ function App() {
   };
 
   //update products, bookings and next week products
-  useEffect(() => {
+  useEffect(async () => {
 
-    let tmp = API.attaccoDoS(userdata);
+    let tmp = await API.attaccoDoS(userdata);
 
     setProducts(tmp.products)
     setBookings(tmp.bookings)
@@ -427,8 +427,7 @@ function App() {
                           <>
                             <ProductsList
                               className="below-nav main-content"
-                              products={futureProducts}
-                              getProducts={getFutureProducts}
+                              products={products.filter((f)=> f.state==="EXPECTED")}
                               cart={cart}
                               categories={categories}
                               //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
