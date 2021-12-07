@@ -63,6 +63,24 @@ passport.use(
 );
 
 passport.use(
+  "warehouse-worker-local",
+  new LocalStrategy(function (username, password, done) {
+    dao
+      .getWarehouseWorker(username, password)
+      .then((user) => {
+        if (!user)
+          return done(null, false, {
+            message: "Incorrect username and/or password",
+          });
+        return done(null, user);
+      })
+      .catch((err) => {
+        return done(err);
+      });
+  })
+);
+
+passport.use(
   "manager-local",
   new LocalStrategy(function (username, password, done) {
     dao
@@ -186,6 +204,25 @@ const isLoggedIn = (req, res, next) => {
 //POST /api/clientSessions FOR LOGIN OF CLIENT
 app.post("/api/clientSessions", function (req, res, next) {
   passport.authenticate("client-local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).json(info);
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+//POST /api/warehouseWorkerSessions FOR LOGIN OF WAREHOUSE WORKER
+app.post("/api/warehouseWorkerSessions", function (req, res, next) {
+  passport.authenticate("warehouse-worker-local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
       // display wrong login messages
