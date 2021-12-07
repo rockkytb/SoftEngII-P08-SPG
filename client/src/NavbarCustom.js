@@ -100,10 +100,10 @@ if (firstTime && toPrint.length !== 0) {
       </Col>
 
       
-      <Col md={4} xs={4} className="d-flex justify-content-center ml-3">
+      <Col md={4} xs={2} className="d-flex justify-content-center ml-3">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white' }}>
-            <h2 id="title">SPG s.p.a.</h2>
+            <h2 id="title">SPG</h2>
           </Link>
         </NavLink>
       </Col>
@@ -115,7 +115,7 @@ if (firstTime && toPrint.length !== 0) {
       </Col>
 
 
-      <Col md={4} xs={7} className="navbar-nav ml-md-auto justify-content-end">
+      <Col md={4} xs={9} className="navbar-nav ml-md-auto justify-content-end">
         <NavLink className="nav-item nav-link mr-3">
           <Link to="/home" style={{ color: 'white' }}>
             <HouseDoorFill size={30} />
