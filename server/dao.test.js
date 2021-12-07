@@ -302,7 +302,52 @@ describe("Test suite DAO", () => {
       "S1"
     );
   }, 10000);
+
+  //TEST GET WAREHOUSE WORKER BY ID
+  test("get warehouse worker by id return false because no shop worker with that id exists", () => {
+    const id = 12;
+    return expect(dao.getWarehouseWorkerById(id)).resolves.toBe(false);
+  });
+
+  test("get shop employee by id return a warehouse worker", async () => {
+    const id = 1;
+
+    return expect(dao.getWarehouseWorkerById(id)).resolves.toHaveProperty(
+      "id",
+      "W1"
+    );
+  }, 10000);
+
+
+  //TEST GET WAREHOUSE WORKER
+  test("get warehouse worker return false because no email provided", () => {
+    return expect(dao.getWarehouseWorker()).resolves.toBe(false);
+  });
+
+  test("get warehouse worker return false because no user with that email exists", () => {
+    const email = "marco.bianchi@mail.it";
+    return expect(dao.getWarehouseWorker(email, "testpassword")).resolves.toBe(
+      false
+    );
+  });
+
+  test("get warehouse worker return false because wrong psw", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(dao.getWarehouseWorker(email, "testp")).resolves.toBe(false);
+  }, 10000);
+
+  test("get warehouse worker return success", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(
+      dao.getWarehouseWorker(email, "testpassword")
+    ).resolves.toHaveProperty("id", "W1");
+  }, 10000);
+
 });
+
+
+
+
 
 //TEST GET ALL PRODUCTS
 test("get all products success", async () => {

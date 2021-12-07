@@ -402,6 +402,32 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST POST /api/warehouseWorkerSession
+  describe("Warehouse worker Session success", () => {
+    it("send a valid user", async () => {
+      const res = await request(app).post("/api/warehouseWorkerSessions").send({
+        username: "antonio.bianchi@mail.it",
+        password: "testpassword",
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty("id", `W1`);
+    });
+  });
+
+  describe("Warehouse worker Session fails", () => {
+    it("send a wrong psw", async () => {
+      const res = await request(app).post("/api/warehouseWorkerSessions").send({
+        username: "antonio.bianchi@mail.it",
+        password: "test",
+      });
+      expect(res.statusCode).toEqual(401);
+      expect(res.body).toHaveProperty(
+        "message",
+        `Incorrect username and/or password`
+      );
+    });
+  });
+
   describe("get all products success", () => {
     it("test get api/products endpoint", async () => {
       const response = await request(app).get("/api/products");
