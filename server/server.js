@@ -512,6 +512,39 @@ app.put(
   }
 );
 
+//PUT /api/incrementProductQty
+app.put(
+  "/api/incrementProductQty", //isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid qty id, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product id, it must be positive` });
+    }
+
+    const product = {
+      ID_Product: req.body.ID_Product,
+      Dec_Qty: req.body.Inc_Qty,
+    };
+
+    try {
+      await dao.IncrementQtyProductWeek(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the put of bookingProduct: ${product}.`,
+      });
+    }
+
+    //All went fine
+    res.status(201).json(product);
+  }
+);
+
 //PUT /api/productstate
 app.put(
   "/api/productstate", //isLoggedIn,

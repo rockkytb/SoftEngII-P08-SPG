@@ -312,6 +312,23 @@ exports.editQtyProductWeek = (product) => {
   });
 };
 
+// Increment the quantity of a product
+exports.IncrementQtyProductWeek = (product) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
+    db.run(sql, [product.Inc_Qty, product.ID_Product], function (err, row) {
+      if (err) {
+        reject(err);
+        return;
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 // edit state of a product_week
 exports.editStateProductWeek = (product) => {
   return new Promise((resolve, reject) => {
