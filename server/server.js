@@ -183,6 +183,16 @@ passport.deserializeUser((id, done) => {
         done(err, null);
       });
   }
+  if (type === "W") {
+    dao
+      .getWarehouseWorkerById(identifier)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err, null);
+      });
+  }
 });
 
 // set-up the middlewares

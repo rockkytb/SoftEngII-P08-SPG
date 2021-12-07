@@ -135,7 +135,7 @@ exports.getWarehouseWorker = (email, password) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        const user = { id: `F${row.ID}`, username: row.EMAIL };
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
           if (result) resolve(user);
@@ -259,6 +259,23 @@ exports.getManagerById = (id) => {
         resolve(false);
       } else {
         const user = { id: `M${row.ID}`, username: row.EMAIL };
+        resolve(user);
+      }
+    });
+  });
+};
+
+//get Warehouse worker by Id
+exports.getWarehouseWorkerById = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM WAREHOUSE_WORKER WHERE ID = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
         resolve(user);
       }
     });
