@@ -47,7 +47,7 @@ function Login(props) {
             <option value="F">Farmer</option>
             <option value="S">Employee</option>
             <option value="M">Warehouse Manager</option>
-            <option value="W">Warehouse worker</option>
+            <option value="W">Warehouse Worker</option>
           </Form.Control>
         </Form.Group>
         <Form.Group size="lg">

@@ -29,6 +29,7 @@ import BookingConfirmFarmer from "./BookingConfirmFarmer";
 import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
 import ReportAvailability from "./ReportAvailability";
+import WarehouseWorker from "./WarehouseWorker";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -357,7 +358,13 @@ function App() {
                                 {userdata.id.charAt(0) === "M" ? (
                                   <Redirect to="/manager" />
                                 ) : (
-                                  <Redirect to="/" />
+                                  <>
+                                    {userdata.id.charAt(0) === "W" ? (
+                                      <Redirect to="/warehouseWorker" />
+                                    ) : (
+                                      <Redirect to="/" />
+                                    )}
+                                  </>
                                 )}
                               </>
                             )}
@@ -537,6 +544,36 @@ function App() {
                         getClientbyEmail={getSingleClientByEmail}
                       />
                     )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          {/* Warehouse worker home page */}
+          <Route
+            path="/warehouseWorker"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "W" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <WarehouseWorker className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
                   </>
                 ) : (
                   <></>
