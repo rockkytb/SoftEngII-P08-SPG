@@ -928,11 +928,9 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
         id: req.body[key].id,
       };
 
-      //  console.log(req.body[key].id);
       try {
         const clients = await dao.getClientsPreparation(product.id);
 
-        // console.log(clients);
         result = result.concat(clients);
         console.log(result);
       } catch (e) {
