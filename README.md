@@ -281,15 +281,46 @@ This API receives a vector of products_id and for every product received, retrie
 
 Retrieve the list of all bookings, return a JSON Vector
 
-    [{
-    	"id": 1,
-        "state": "PENDING",
-        "email": "client@gmail.com",
-        "name": "client1",
-        "surname": "clientSurname",
-        "qty": 3,
-        "product": "pro1"
-    },...]
+    [
+    {
+        "id": 1,
+        "state": "PENDINGCANCELATION",
+        "email": "marco.bianchi@mail.it",
+        "name": "Marco",
+        "surname": "Bianchi",
+        "products": [
+            {
+                "productID": 1,
+                "product": "Mele",
+                "qty": 3
+            },
+            {
+                "productID": 2,
+                "product": "Lamponi",
+                "qty": 1
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "state": "BOOKED",
+        "email": "marco.bianchi@mail.it",
+        "name": "Marco",
+        "surname": "Bianchi",
+        "products": [
+            {
+                "productID": 1,
+                "product": "Mele",
+                "qty": 2
+            },
+            {
+                "productID": 2,
+                "product": "Lamponi",
+                "qty": 2
+            }
+        ]
+    }
+    ]
 
 #### POST /api/bookingproduct
 

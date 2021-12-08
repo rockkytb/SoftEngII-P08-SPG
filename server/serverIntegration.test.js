@@ -517,20 +517,15 @@ describe("Test suite Integration Server", () => {
           email: "marco.bianchi@mail.it",
           name: "Marco",
           surname: "Bianchi",
-          qty: 3,
-          product: "Mele",
-        },
-        {
-          email: "marco.bianchi@mail.it",
-          id: 1,
-          name: "Marco",
-          product: "Lamponi",
-          qty: 1,
-          state: "PENDINGCANCELATION",
-          surname: "Bianchi",
-        },
+          products: [{qty: 3,
+            "productID": 1,
+            product: "Mele"},{product: "Lamponi",
+            "productID": 2,
+            qty: 1}]
+          
+        }
       ]);
-      expect(response.body).toHaveLength(2);
+      expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
     });
   });

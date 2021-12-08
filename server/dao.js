@@ -570,7 +570,8 @@ exports.getAllBookings = () => {
         reject(err);
         return;
       }
-      const bookings = rows.map((e) => ({
+      const bookings = [];
+      const prenotazioni = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
@@ -580,7 +581,31 @@ exports.getAllBookings = () => {
         product: e.productName,
         productID: e.productID
       }));
-      resolve(bookings);
+      prenotazioni.forEach(p=>{
+
+        if(bookings[p.id]){
+          bookings[p.id].products=[...bookings[p.id].products,{productID: p.productID,
+            product: p.product,
+            qty: p.qty}]
+        }
+        else{
+          bookings[p.id]= {
+            id: p.id,
+            state: p.state,
+            email: p.email,
+            name: p.name,
+            surname: p.surname,
+            products: [{
+              productID: p.productID,
+              product: p.product,
+              qty: p.qty
+            }]
+          }
+        }
+
+      });
+      const list = bookings.filter(b=> b!==null);
+      resolve(list);
     });
   });
 };
