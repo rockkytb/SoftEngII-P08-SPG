@@ -61,14 +61,14 @@ function ClientData(props) {
             </Modal.Footer>
           </Modal>
           :
-          <div className="text-center below-nav">
-            <p>Client id: {client.id}</p><br />
-            <p>Client name: {client.name + " " + client.surname}</p>
-            <p>Client email: {client.username}</p>
-            <p>Client wallet: {wallet}€</p><br />
+          <div className="text-center below-nav main-content">
+            <p>Client id: {client.id}</p>
+            <p>Name: {client.name + " " + client.surname}</p>
+            <p>Email: {client.username}</p>
+            <p>Wallet: {wallet}€</p>
             <Form>
               <Form.Group>
-                <Form.Label>Change wallet value:</Form.Label>
+                <Form.Label><h3 style={{ color: '#ffc107' }}>Change wallet value:</h3></Form.Label>
                 <Row>
                   <Col md={5} />
                   <Col classname="md-2">
