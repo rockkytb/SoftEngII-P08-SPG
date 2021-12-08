@@ -946,13 +946,11 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
   //All went fine
 
   // eliminare duplicati
+  result = result.filter(function (item, pos) {
+    return result.indexOf(item) == pos;
+  });
   console.log(result);
-  res.status(201).json(
-    result
-    /*  result.filter(function (item, pos) {
-        return a.indexOf(item) == pos;
-      })*/
-  );
+  res.status(201).json(result);
 });
 
 //POST /api/bookings_mode
