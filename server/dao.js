@@ -579,33 +579,54 @@ exports.getAllBookings = () => {
         surname: e.SURNAME,
         qty: e.QTY,
         product: e.productName,
-        productID: e.productID
+        productID: e.productID,
       }));
-      prenotazioni.forEach(p=>{
-
-        if(bookings[p.id]){
-          bookings[p.id].products=[...bookings[p.id].products,{productID: p.productID,
-            product: p.product,
-            qty: p.qty}]
-        }
-        else{
-          bookings[p.id]= {
+      prenotazioni.forEach((p) => {
+        if (bookings[p.id]) {
+          bookings[p.id].products = [
+            ...bookings[p.id].products,
+            { productID: p.productID, product: p.product, qty: p.qty },
+          ];
+        } else {
+          bookings[p.id] = {
             id: p.id,
             state: p.state,
             email: p.email,
             name: p.name,
             surname: p.surname,
-            products: [{
-              productID: p.productID,
-              product: p.product,
-              qty: p.qty
-            }]
-          }
+            products: [
+              {
+                productID: p.productID,
+                product: p.product,
+                qty: p.qty,
+              },
+            ],
+          };
         }
-
       });
-      const list = bookings.filter(b=> b!==null);
+      const list = bookings.filter((b) => b !== null);
       resolve(list);
+    });
+  });
+};
+
+//get  booking Modes Preparation
+exports.getbookingModesPreparation = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT * FROM BOOKING_MODE BM, BOOKING B, WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+    db.all(sql, [0, "PREPARATION"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        idBooking: e.ID_BOOKING,
+        idClient: e.CLIENT_ID,
+        date: e.DATE,
+        time: e.TIME,
+      }));
+      resolve(bookings);
     });
   });
 };
