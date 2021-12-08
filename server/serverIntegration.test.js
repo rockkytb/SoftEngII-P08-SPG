@@ -307,13 +307,13 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  /*//TEST GET /api/clientsPreparation
+  //TEST PUT /api/clientsPreparation
   describe("Get clients preparation success", () => {
     it("ask the list of clients with products in preparation", async () => {
-      const res = await (
-        await request(app).get("/api/clientsPreparation")
-      ).body([{ id: 2 }]);
-      expect(res.statusCode).toEqual(200);
+      const res = await request(app)
+        .put("/api/clientsPreparation")
+        .send([{ id: 2 }]);
+      expect(res.statusCode).toEqual(201);
       expect(res.body).toEqual([
         {
           id: "C1",
@@ -323,7 +323,7 @@ describe("Test suite Integration Server", () => {
         },
       ]);
     });
-  });*/
+  });
 
   //TEST GET /api/categories
   describe("Get categories success", () => {
@@ -517,13 +517,11 @@ describe("Test suite Integration Server", () => {
           email: "marco.bianchi@mail.it",
           name: "Marco",
           surname: "Bianchi",
-          products: [{qty: 3,
-            "productID": 1,
-            product: "Mele"},{product: "Lamponi",
-            "productID": 2,
-            qty: 1}]
-          
-        }
+          products: [
+            { qty: 3, productID: 1, product: "Mele" },
+            { product: "Lamponi", productID: 2, qty: 1 },
+          ],
+        },
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);

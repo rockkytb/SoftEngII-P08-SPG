@@ -929,19 +929,17 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
       };
 
       //  console.log(req.body[key].id);
+      try {
+        const clients = await dao.getClientsPreparation(product.id);
 
-      dao
-        .getClientsPreparation(product.id)
-        .then((clients) => {
-          // console.log(clients);
-          result = result.concat(clients);
-          console.log(result);
-        })
-        .catch(() => {
-          res.status(503).json({
-            error: `Database error or undefined product during the put of the state of array product`,
-          });
+        // console.log(clients);
+        result = result.concat(clients);
+        console.log(result);
+      } catch (e) {
+        res.status(503).json({
+          error: `Database error or undefined product during the put of the state of array product`,
         });
+      }
     }
   }
 
