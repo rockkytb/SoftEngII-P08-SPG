@@ -59,7 +59,7 @@ export default function BookingAcceptance(props) {
     }
 
     return (
-        <div className= "below-nav">
+        <div className= "below-nav no-flickr">
 
             <CardColumns xs={1} md={5}>
                 <>{props.bookings && props.bookings.length > 0 ? bookingActions() : <>No pending bookings present</>}</>

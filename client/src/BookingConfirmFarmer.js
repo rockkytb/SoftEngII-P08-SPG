@@ -49,7 +49,7 @@ export default function BookingConfirmFarmer(props) {
     }
 
     return (
-        <div className="below-nav">
+        <div className="below-nav no-flickr">
 
             <Alert show={showAlertTime} variant="danger">
                 <Alert.Heading>You cannot confirm products now</Alert.Heading>

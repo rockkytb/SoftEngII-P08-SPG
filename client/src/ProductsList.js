@@ -139,7 +139,7 @@ export default function ProductsList(props) {
 
   return (
     <>
-      <div className="below-nav">
+      <div className="below-nav ">
         <div class="col-md-12 text-center">
           <Link to={"/newOrder"}>
             <Button variant="warning" className="mr-2 md-2 ">Go to cart</Button>

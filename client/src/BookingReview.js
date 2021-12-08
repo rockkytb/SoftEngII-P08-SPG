@@ -173,7 +173,7 @@ function BookingReview(props) {
     ));
   }
   return (
-    <div className="below-nav">
+    <div className="below-nav no-flickr">
       <div class="col-md-12 text-center">
         <Link to={"/products"}>
           <Button variant="warning" className="mr-2 md-2 ">

@@ -52,7 +52,7 @@ export default function BookingDeliveryFarmer(props) {
     }
 
     return (
-        <div className= "below-nav">
+        <div className= "below-nav no-flickr">
             <Alert show={showAlertTime} variant="danger">
                 <Alert.Heading>You cannot confirm delivery now</Alert.Heading>
                 <p>
