@@ -83,11 +83,15 @@ export default function ProductsList(props) {
     setQuantity(1);
   };
 
+  const prodotti = categoryFilter.length === 0 ? (props.products):(props.products.filter(p=>categoryFilter.includes(p.category)));
+  const filteredProducts = farmerFilter.length === 0 ? (prodotti):(prodotti.filter(p=>farmerFilter.includes(p.farmer_email)));
+
+
   //DEFAULT, SORTED IN ALPHABETIC ORDER
   function productsActions() {
     //TOCHECK: problems into modifying a prop?
     //the product must be one from next week so it must be not already confirmed
-    return props.products.sort((a, b) => {
+    return filteredProducts.sort((a, b) => {
       var nameA = a.name.toUpperCase(); // ignore upper and lowercase
       var nameB = b.name.toUpperCase(); // ignore upper and lowercase
       if (nameA < nameB) {
@@ -247,7 +251,7 @@ export default function ProductsList(props) {
           </Modal.Footer>
         </Modal>
         <CardColumns xs={1} md={5}>
-          <>{props.products.length > 0 ? productsActions() : <></>}</>
+          <>{filteredProducts.length > 0 ? productsActions() : <>No products available</>}</>
         </CardColumns>
       </div>
     </>
