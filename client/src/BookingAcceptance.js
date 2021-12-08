@@ -28,11 +28,16 @@ export default function BookingAcceptance(props) {
                 <Card>
                     <Card.Body>
                         <Card.Text className="text-dark">
-                            Booking id: {booking.id} <br />
-                            Client: {booking.name + " " + booking.surname}<br />
-                            Client email: {booking.email} <br />
-                            Product: {booking.product}<br />
-                            Product quantity: {booking.qty}<br />
+                            <b>Booking id:</b> {booking.id} <br />
+                            <b>Client:</b> {booking.name + " " + booking.surname}<br />
+                            <b>Client email:</b> {booking.email} <br />
+                            <b>Product list:</b><br />
+                            {booking.products.map(p=>{
+                                return <>
+                                    Product: {p.product}<br />
+                                    Quantity: {p.qty}<br /><br />
+                                </>
+                            })}
                             {/*productsView()*/}
                         </Card.Text>
                         <Button
