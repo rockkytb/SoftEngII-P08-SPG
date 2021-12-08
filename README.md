@@ -282,6 +282,15 @@ This API receives a vector of products_id and for every product received, retrie
 Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION
 
 response example:
+[
+{"idBooking":3,
+"state":PREPARATION,
+"idClient":1,
+"delivery":0,
+"date":"22/11/2021",
+"time":"13:20",
+
+},...]
 
 #### GET /api/bookings
 
