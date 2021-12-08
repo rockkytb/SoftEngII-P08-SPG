@@ -40,6 +40,26 @@ function BookingReview(props) {
   const [extraFee, setExtraFee] = useState(0);
   const [validated, setValidated] = useState(false);
 
+  function computeMaxDate(){
+    const date= new Date();
+    /*We want to have next week, not the current weeks because confirmations
+    happens saturday and sunday*/
+    if(date.getDay()===4 || date.getDay()===5)
+      date.setDate(date.getDate() + 7);
+    while(date.getDay()!==5){
+      date.setDate(date.getDate() + 1);
+    }
+    return date.toISOString().split("T")[0];
+  }
+
+  function computeMinDate(){
+    const date= new Date();
+    while(date.getDay()!==3){
+      date.setDate(date.getDate() + 1);
+    }
+    return date.toISOString().split("T")[0];
+  }
+
   async function newBooking(IDclient) {
     // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
     // sì però stai calmo
@@ -343,7 +363,8 @@ function BookingReview(props) {
                         <Form.Control
                           type="date"
                           value={date}
-                          min={new Date().toISOString().split("T")[0]}
+                          min={computeMinDate()}
+                          max={computeMaxDate()}
                           required
                           onChange={(ev) => setDate(ev.target.value)}
                         />
@@ -480,7 +501,8 @@ function BookingReview(props) {
                         <Form.Control
                           type="date"
                           value={date}
-                          min={new Date().toISOString().split("T")[0]}
+                          min={computeMinDate()}
+                          max={computeMaxDate()}
                           required
                           onChange={(ev) => setDate(ev.target.value)}
                         />
