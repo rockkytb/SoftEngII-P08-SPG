@@ -267,7 +267,7 @@ Add new acknowledge for manager with state = NEW. Example:
 "email": "antonio.bianchi@mail.it"
 }
 
-#### GET /api/clientsPreparation
+#### PUT /api/clientsPreparation
 
 This API receives a vector of products_id and for every product received, retrieve the client id, name, surname, email and collect all the clients in an array without duplications. example:
 [
