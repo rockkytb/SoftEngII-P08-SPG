@@ -905,10 +905,9 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
   }
 });
 
-// GET /api/clientsPreparation
-app.get("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
+// put /api/clientsPreparation
+app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
   let result = [];
-  var problem = 0;
 
   for (var key in req.body) {
     if (req.body.hasOwnProperty(key)) {
@@ -929,31 +928,33 @@ app.get("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
         id: req.body[key].id,
       };
 
+      //  console.log(req.body[key].id);
+
       dao
         .getClientsPreparation(product.id)
         .then((clients) => {
-          result.concat(clients);
+          // console.log(clients);
+          result = result.concat(clients);
+          console.log(result);
         })
         .catch(() => {
-          problem = 1;
+          res.status(503).json({
+            error: `Database error or undefined product during the put of the state of array product`,
+          });
         });
     }
   }
-  if (problem == 0) {
-    //All went fine
 
-    // eliminare duplicati
+  //All went fine
 
-    res.status(201).json(
-      result.filter(function (item, pos) {
+  // eliminare duplicati
+  console.log(result);
+  res.status(201).json(
+    result
+    /*  result.filter(function (item, pos) {
         return a.indexOf(item) == pos;
-      })
-    );
-  } else {
-    res.status(503).json({
-      error: `Database error or undefined product during the put of the state of array product`,
-    });
-  }
+      })*/
+  );
 });
 
 //POST /api/bookings_mode
