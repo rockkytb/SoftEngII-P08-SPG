@@ -277,6 +277,12 @@ This API receives a vector of products_id and for every product received, retrie
 "Email":"antonio.bianchi@mail.com"},
 ...]
 
+### GET /api/bookingModesPreparation
+
+Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION
+
+response example:
+
 #### GET /api/bookings
 
 Retrieve the list of all bookings, return a JSON Vector
