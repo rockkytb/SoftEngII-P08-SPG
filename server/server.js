@@ -801,6 +801,21 @@ app.get("/api/products", (req, res) => {
     });
 });
 
+//GET /api/bookingModesPreparation
+app.get(
+  "/api/bookings",
+  /* isLoggedIn,*/ (req, res) => {
+    dao
+      .getbookingModesPreparation()
+      .then((bookings) => {
+        res.status(200).json(bookings);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  }
+);
+
 //GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
 app.get("/api/products/farmers/:id", (req, res) => {
   const id = req.params.id;
