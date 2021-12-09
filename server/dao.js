@@ -819,7 +819,7 @@ exports.getClientsPreparation = (productId) => {
 exports.createBookingMode = (bookingMode) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee, state) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
       [
@@ -833,6 +833,7 @@ exports.createBookingMode = (bookingMode) => {
         bookingMode.date,
         bookingMode.time,
         bookingMode.extra_fee,
+        "NEW"
       ],
       function (err) {
         if (err) {
