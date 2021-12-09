@@ -386,7 +386,7 @@ exports.editStateProductWeek = (product) => {
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE) VALUES(?, ?, ?, ?, ?, ?)";
+      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
       [
@@ -396,6 +396,8 @@ exports.insertTupleProductWEEK = (product) => {
         product.qty,
         product.farmer_id,
         product.state,
+        product.size,
+        product.unit_of_measure
       ],
       function (err) {
         if (err) {
@@ -493,7 +495,7 @@ exports.createClient = (client) => {
 exports.getAllProducts = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -505,6 +507,8 @@ exports.getAllProducts = () => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
       resolve(products);
@@ -516,7 +520,7 @@ exports.getAllProducts = () => {
 exports.getAllProductsExpectedForFarmer = (idFarmer) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 
     db.all(sql, [idFarmer, "EXPECTED"], (err, rows) => {
       if (err) {
@@ -529,6 +533,8 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
         state: e.STATE,
       }));
@@ -541,7 +547,7 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 exports.getAllProductsForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=?";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=?";
     db.all(sql, [farmerId], (err, rows) => {
       if (err) {
         reject(err);
@@ -553,6 +559,8 @@ exports.getAllProductsForFarmer = (farmerId) => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
       resolve(products);

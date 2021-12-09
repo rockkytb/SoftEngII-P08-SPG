@@ -634,6 +634,8 @@ app.post(
       qty: req.body.qty,
       farmer_id: req.params.farmerid,
       state: "CONFIRMED",
+      size: req.body.size,
+      unit_of_measure: req.body.unit_of_measure
     };
 
     let productId;
@@ -662,6 +664,8 @@ app.post(
       qty: req.body.qty,
       farmer_id: req.params.farmerid,
       state: "EXPECTED",
+      size: req.body.size,
+      unit_of_measure: req.body.unit_of_measure
     };
 
     let productId;

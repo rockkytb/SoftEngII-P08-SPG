@@ -225,6 +225,8 @@ describe("Test suite DAO", () => {
         qty: 5,
         farmer_email: "antonio.bianchi@mail.it",
         state: "EXPECTED",
+        size: 1,
+        unit_of_measure: 'kg'
       },
     ]);
   }, 10000);
@@ -353,6 +355,8 @@ test("get all products success", async () => {
       price: 14,
       qty: 5,
       farmer_email: "antonio.bianchi@mail.it",
+      size: 1,
+      unit_of_measure :'kg'
     },
   ];
 
@@ -587,6 +591,8 @@ test("INSERT into Product_WEEK by receiving a product confirmed by farmer with s
     qty: 2,
     farmer_id: "1",
     state: "CONFIRMED",
+    size: 1,
+    unit_of_measure: "kg"
   };
   return expect(
     dao.insertTupleProductWEEK(parameter)
