@@ -623,6 +623,30 @@ app.put(
   }
 );
 
+//DELETE /api/products/{id}
+app.delete(
+  "/api/products/:id", //isLoggedIn,
+  async (req, res) => {
+    const id = req.params.id;
+    if (!validator.isInt(id, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product id, it must be positive` });
+    }
+
+    try {
+      await dao.deleteProduct(id);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during the deletation of productId: ${id}.`,
+      });
+    }
+
+    //All went fine
+    res.status(204).json();
+  }
+);
+
 // POST /api/farmers/:farmerid/products
 app.post(
   "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
