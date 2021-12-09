@@ -318,7 +318,6 @@ describe("Test suite DAO", () => {
     );
   }, 10000);
 
-
   //TEST GET WAREHOUSE WORKER
   test("get warehouse worker return false because no email provided", () => {
     return expect(dao.getWarehouseWorker()).resolves.toBe(false);
@@ -342,12 +341,7 @@ describe("Test suite DAO", () => {
       dao.getWarehouseWorker(email, "testpassword")
     ).resolves.toHaveProperty("id", "W1");
   }, 10000);
-
 });
-
-
-
-
 
 //TEST GET ALL PRODUCTS
 test("get all products success", async () => {
@@ -394,16 +388,25 @@ test("get all bookings success", async () => {
       email: "marco.bianchi@mail.it",
       name: "Marco",
       surname: "Bianchi",
-      products: [{qty: 3,
-        "productID": 1,
-        product: "Mele"},{product: "Lamponi",
-        "productID": 2,
-        qty: 1}]
-      
-    }
+      products: [
+        { qty: 3, productID: 1, product: "Mele" },
+        { product: "Lamponi", productID: 2, qty: 1 },
+      ],
+    },
   ];
 
   return expect(dao.getAllBookings()).resolves.toEqual(received);
+}, 10000);
+
+//TEST GET /api/bookingModesPreparation
+test("get all bookings modes in preparation success", async () => {
+  const received = [
+    {
+      id: 1,
+    },
+  ];
+
+  return expect(dao.getbookingModesPreparation()).resolves.toEqual(received);
 }, 10000);
 
 // TEST GET BOOKINGS FOR A PARTICULAR CLIENT
