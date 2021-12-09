@@ -446,3 +446,8 @@ json returned:
 ##### GETALLBOOKINGS(app.get("/api/bookings"), GETALLBOOKINGFORCLIENT(app.get("/api/bookings/clients/:id"), getBookingsStatePendingCancelation(app.get("/api/bookingsPendingCancelation"), getTotal(app.post("/api/clock"): I DIDN'T CHANGE THESE FUNCTIONS FOR THE COLUMNS CHANGED IN THE PRODUCT_WEEK
 
 ##### I CHANGED FOR THE ADD COLUMNS IN PRODUCT_WEEK THE app.post("/api/farmers/:farmerid/products"),             app.get("/api/products"), app.get("/api/farmers/:farmerid/products_expected"),                                  app.get("/api/products/farmers/:id"), 
+
+
+#### DELETE /api/products/:id
+
+delete a product from product_week table with the given id
