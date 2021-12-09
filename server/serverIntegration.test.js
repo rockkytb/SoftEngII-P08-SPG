@@ -528,6 +528,23 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //test get  booking Modes Preparation
+  describe("Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION", () => {
+    it("test GET /api/bookingModesPreparation", async () => {
+      const response = await request(app).get("/api/bookingModesPreparation");
+      expect(response.body).toEqual([
+        {
+          idBooking: 1,
+          idClient: 1,
+          date: "14/10/2009",
+          time: "14:20",
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
   describe("get all bookings for a client success", () => {
     it("test get api/bookings/clients/1 endpoint", async () => {
       const response = await request(app).get("/api/bookings/clients/1");

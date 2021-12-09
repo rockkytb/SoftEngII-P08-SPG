@@ -803,7 +803,7 @@ app.get("/api/products", (req, res) => {
 
 //GET /api/bookingModesPreparation
 app.get(
-  "/api/bookings",
+  "/api/bookingModesPreparation",
   /* isLoggedIn,*/ (req, res) => {
     dao
       .getbookingModesPreparation()

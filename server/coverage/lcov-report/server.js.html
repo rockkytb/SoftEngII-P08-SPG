@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.57% </span>
+                <span class="strong">61.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>234/380</span>
+                <span class='fraction'>237/384</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.6% </span>
+                <span class="strong">56.88% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>60/106</span>
+                <span class='fraction'>62/109</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.58% </span>
+                <span class="strong">63.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>234/368</span>
+                <span class='fraction'>237/372</span>
             </div>
         
             
@@ -1134,7 +1134,20 @@
 <a name='L1075'></a><a href='#L1075'>1075</a>
 <a name='L1076'></a><a href='#L1076'>1076</a>
 <a name='L1077'></a><a href='#L1077'>1077</a>
-<a name='L1078'></a><a href='#L1078'>1078</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1078'></a><a href='#L1078'>1078</a>
+<a name='L1079'></a><a href='#L1079'>1079</a>
+<a name='L1080'></a><a href='#L1080'>1080</a>
+<a name='L1081'></a><a href='#L1081'>1081</a>
+<a name='L1082'></a><a href='#L1082'>1082</a>
+<a name='L1083'></a><a href='#L1083'>1083</a>
+<a name='L1084'></a><a href='#L1084'>1084</a>
+<a name='L1085'></a><a href='#L1085'>1085</a>
+<a name='L1086'></a><a href='#L1086'>1086</a>
+<a name='L1087'></a><a href='#L1087'>1087</a>
+<a name='L1088'></a><a href='#L1088'>1088</a>
+<a name='L1089'></a><a href='#L1089'>1089</a>
+<a name='L1090'></a><a href='#L1090'>1090</a>
+<a name='L1091'></a><a href='#L1091'>1091</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1156,7 +1169,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">50x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1939,6 +1952,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2064,10 +2092,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -3014,6 +3040,21 @@ app.get("/api/products", (req, res) =&gt; {
     });
 });
 &nbsp;
+//GET /api/bookingModesPreparation
+app.get(
+  "/api/bookingModesPreparation",
+  /* isLoggedIn,*/ (req, res) =&gt; {
+    dao
+      .getbookingModesPreparation()
+      .then((bookings) =&gt; {
+        res.status(200).json(bookings);
+      })
+      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >        res.status(500).json(error);</span>
+      });
+  }
+);
+&nbsp;
 //GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
 app.get("/api/products/farmers/:id", (req, res) =&gt; {
   const id = req.params.id;
@@ -3141,11 +3182,9 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) =&gt; {
         id: req.body[key].id,
       };
 &nbsp;
-      //  console.log(req.body[key].id);
       try {
         const clients = await dao.getClientsPreparation(product.id);
 &nbsp;
-        // console.log(clients);
         result = result.concat(clients);
         console.log(result);
       } catch (e) {
@@ -3295,7 +3334,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Dec 08 2021 14:17:30 GMT+0100 (Ora standard dell’Europa centrale)
+                at Thu Dec 09 2021 13:41:06 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>

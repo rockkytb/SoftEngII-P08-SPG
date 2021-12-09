@@ -614,7 +614,7 @@ exports.getAllBookings = () => {
 exports.getbookingModesPreparation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT * FROM BOOKING_MODE BM, BOOKING B, WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+      "SELECT * FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
     db.all(sql, [0, "PREPARATION"], (err, rows) => {
       if (err) {
         reject(err);
@@ -842,9 +842,13 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?", [1], (err) => {
       errTest(err);
     });
-    await db.run("DELETE FROM BOOKING_MODE ", (err) => {
-      errTest(err);
-    });
+    await db.run(
+      "DELETE FROM BOOKING_MODE WHERE ID_BOOKING!=? ",
+      [1],
+      (err) => {
+        errTest(err);
+      }
+    );
 
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",

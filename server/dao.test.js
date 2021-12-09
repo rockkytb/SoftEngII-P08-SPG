@@ -402,7 +402,10 @@ test("get all bookings success", async () => {
 test("get all bookings modes in preparation success", async () => {
   const received = [
     {
-      id: 1,
+      idBooking: 1,
+      idClient: 1,
+      date: "14/10/2009",
+      time: "14:20",
     },
   ];
 
