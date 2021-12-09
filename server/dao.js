@@ -327,7 +327,7 @@ exports.createBookingProduct = (bookingProduct) => {
         if (err) {
           reject(err);
         }
-        resolve(true);
+        resolve(this.lastID);
       }
     );
   });
