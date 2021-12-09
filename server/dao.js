@@ -846,6 +846,24 @@ exports.createBookingMode = (bookingMode) => {
   });
 };
 
+// edit state of a booking mode
+exports.updateStateBookingMode = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE BOOKING_MODE SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, ["PREPARATION",id], function (error) {
+      if (error) {
+      reject(error.message);
+        return;
+      }else if (this.changes === 0) {
+        reject({ error: "BOOKING MODE ID NOT FOUND" });
+        return;
+      } 
+      else {
+        resolve(id);
+      }
+    });
+  });
+};
 
 //get all the bookings of the client id that are in state booked
 

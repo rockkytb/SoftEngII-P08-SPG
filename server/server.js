@@ -1023,6 +1023,27 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   res.status(201).json({ idBookingMode: bookingModeId });
 });
 
+//PUT /api/bookings_mode/{id}
+app.put(
+  "/api/bookings_mode/:id", //isLoggedIn,
+  async (req, res) => {
+    const id = req.params.id;
+    if (!validator.isInt(id, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid booking mode id, it must be positive` });
+    }
+    dao
+    .updateStateBookingMode(id)
+    .then(() => {
+      res.status(200).json({"bookingModeId":id});
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+  }
+);
+
 //PUT  /api/products
 app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
   var result;
