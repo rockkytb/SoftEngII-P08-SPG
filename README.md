@@ -451,3 +451,13 @@ json returned:
 #### DELETE /api/products/:id
 
 delete a product from product_week table with the given id
+
+#### PUT /api/bookings_mode/:id
+
+updates a given booking_mode state to PREPERATION
+returns 
+{
+    "error": "BOOKING MODE ID NOT FOUND"
+} with status code 500
+if booking mode id was not found.
+
