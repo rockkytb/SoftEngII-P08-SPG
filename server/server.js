@@ -1086,7 +1086,7 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
 
 app.get("/api/bookings/booked/clients/:id", (req, res) => {
   const id = req.params.id;
-  
+  console.log(id);
   if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
     return res
       .status(422)

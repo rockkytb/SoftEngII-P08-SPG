@@ -828,19 +828,26 @@ exports.createBookingMode = (bookingMode) => {
 exports.getAllBookingsForClientBooked = (id) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";
-    db.run(sql, [id],(err, rows) => {
+    db.all(sql,[id], (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
 
-      const bookings = rows.map((e) => ({
-        id_booking: e.ID_BOOKING,
-        id_client: e.CLIENT_ID,
-        state: e.STATE
-      }));
+      else if (rows === undefined) {
+       console.log("rows non è definito---------")
+        resolve(false);
+      }
+      
+      else{
+        const bookings = rows.map((e) => ({
+          id_booking: e.ID_BOOKING,
+          id_client: e.CLIENT_ID,
+          state: e.STATE
+        }));
 
-      resolve(bookings);
+        resolve(bookings);
+    }
     });
   });
 };
