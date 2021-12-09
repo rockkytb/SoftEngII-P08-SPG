@@ -414,3 +414,32 @@ Receive a JSON Object with client ID and new balance
 
     {"id":1,
     "amount":19.99}
+
+#### NEW API
+
+#### GET /api/bookings/booked/clients/:id
+
+to get all the bookings of the client id that are 
+in state = BOOKED (ONLY THE BOOKINGS, NOT THE PRODUCTS)
+json returned:
+
+[
+    {
+    "id_booking" : 1
+    "id_client" : 1
+    "state" : PENDINGCANCELATION
+    },
+...]
+
+#### GET /api/bookingProducts/:bookingId
+
+GET all the product associated to a particular booking.
+json returned:
+
+[
+    "id" = 1,
+    "name" = "Mele"
+    "category" = 
+    "price" = 14.0
+]
+

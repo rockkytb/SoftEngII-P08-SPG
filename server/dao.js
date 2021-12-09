@@ -822,6 +822,29 @@ exports.createBookingMode = (bookingMode) => {
   });
 };
 
+
+//get all the bookings of the client id that are in state booked
+
+exports.getAllBookingsForClientBooked = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";
+    db.run(sql, [id],(err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const bookings = rows.map((e) => ({
+        id_booking: e.ID_BOOKING,
+        id_client: e.CLIENT_ID,
+        state: e.STATE
+      }));
+
+      resolve(bookings);
+    });
+  });
+};
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
   const errTest = (err) => {
