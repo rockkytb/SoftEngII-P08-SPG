@@ -405,6 +405,7 @@ test("get all bookings modes in preparation success", async () => {
       idBooking: 1,
       idClient: 1,
       date: "14/10/2009",
+      state: "PENDINGCANCELATION",
       time: "14:20",
     },
   ];

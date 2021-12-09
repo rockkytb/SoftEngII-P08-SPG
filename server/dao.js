@@ -614,7 +614,7 @@ exports.getAllBookings = () => {
 exports.getbookingModesPreparation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT * FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
     db.all(sql, [0, "PREPARATION"], (err, rows) => {
       if (err) {
         reject(err);
@@ -623,6 +623,7 @@ exports.getbookingModesPreparation = () => {
       const bookings = rows.map((e) => ({
         idBooking: e.ID_BOOKING,
         idClient: e.CLIENT_ID,
+        state: e.STAT,
         date: e.DATE,
         time: e.TIME,
       }));

@@ -536,6 +536,7 @@ describe("Test suite Integration Server", () => {
         {
           idBooking: 1,
           idClient: 1,
+          state: "PENDINGCANCELATION",
           date: "14/10/2009",
           time: "14:20",
         },
