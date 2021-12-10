@@ -144,6 +144,7 @@ function App() {
         doLogIn(credentials, "C");
       }
     };
+    
     add()
       .then(() => {
         toast.success("Registration completed", { position: "top-center" });
@@ -318,6 +319,8 @@ function App() {
       setAttaccoDDOS(true);
     }*/
   };
+
+/////// ROUTES
 
   return (
     <div className="page">

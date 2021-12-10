@@ -200,7 +200,7 @@ async function newBooking(clientId, products) {
       },
       body: JSON.stringify({ idClient: clientId }),
     }).then((response) => {
-      if (response.ok) resolve(response.json());
+      if (response.ok) return response.json();
     });
   }
 
@@ -220,7 +220,7 @@ async function newBooking(clientId, products) {
         .then((response) => {
           if (response.ok) {
             //FIX should NOT do it here
-            editProductQty(ID_Product, Qty);
+            //editProductQty(ID_Product, Qty);
             resolve(response.json());
           } else {
             response

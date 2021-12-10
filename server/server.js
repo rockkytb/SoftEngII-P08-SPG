@@ -492,12 +492,12 @@ app.post(
   async (req, res) => {
     for (var key in req.body) {
       if (req.body.hasOwnProperty(key)) {
-        if (!validator.isInt(`${req.body[key].ID_Booking}`, { min: 1 })) {
+        if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
           return res
             .status(422)
             .json({ error: `Invalid booking id, it must be positive` });
         }
-        if (!validator.isInt(`${req.body[key].ID_Product}`, { min: 1 })) {
+        /*if (!validator.isInt(`${req.body[key].ID_Product}`, { min: 1 })) {
           return res
             .status(422)
             .json({ error: `Invalid product id, it must be positive` });
@@ -507,18 +507,18 @@ app.post(
           return res
             .status(422)
             .json({ error: `Invalid qty id, it must be positive` });
-        }
+        }*/
       }
     }
 
-    var problem = 0;
+    /*var problem = 0;
     var arrayResult = [];
     var bookingProduct;
 
     for (var key in req.body) {
       if (req.body.hasOwnProperty(key)) {
         bookingProduct = {
-          ID_Booking: req.body[key].ID_Booking,
+          ID_Booking: req.body.ID_Booking,
           ID_Product: req.body[key].ID_Product,
           Qty: req.body[key].Qty,
         };
@@ -531,14 +531,40 @@ app.post(
           break;
         }
       }
+    }*/ 
+    let problems = 0;
+    if(req.body && req.body.products && req.body.products.length > 0){
+      for(const i of req.body.products){
+        if (!i.id || !i.quantity || !validator.isInt(`${i.id}`, { min: 1 }) || !validator.isInt(`${i.quantity}`, { min: 1 })) {
+          return res
+            .status(422)
+            .json({ error: `Invalid product datas` });
+        }
+        let bookingProduct = {
+          ID_Booking : req.body.ID_Booking,
+          ID_Product : i.id,
+          Qty : i.quantity
+        }
+        try{
+          await dao.createBookingProduct(bookingProduct);
+        }
+        catch (err){
+          problems++;
+        }
+      }
     }
-
-    if (problem == 0) {
+    else{
+      return res
+            .status(422)
+            .json({ error: `No products existent` });
+    }
+      
+    if (problems == 0) {
       //All went fine
-      res.status(201).json(arrayResult);
+      res.status(201).json("Ok");
     } else {
-      res.status(503).json({
-        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
+      res.status(201).json({
+        error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
       });
     }
   }
