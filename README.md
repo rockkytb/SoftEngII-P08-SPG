@@ -299,7 +299,7 @@ response example:
 [
 {"idBooking":3,
 "idClient":1,
-state:"PENDINGCANCELATION",
+state:"BOOKED",
 "date":"22/11/2021",
 "time":"13:20",
 },...]

@@ -412,7 +412,7 @@ exports.insertTupleProductWEEK = (product) => {
         product.farmer_id,
         product.state,
         product.size,
-        product.unit_of_measure
+        product.unit_of_measure,
       ],
       function (err) {
         if (err) {
@@ -633,6 +633,28 @@ exports.getAllBookings = () => {
   });
 };
 
+// GET /api/bookingModesNew/pickup
+exports.getbookingModesNewPickup = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+    db.all(sql, [0, "PREPARATION"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        idBooking: e.ID_BOOKING,
+        idClient: e.CLIENT_ID,
+        state: e.STAT,
+        date: e.DATE,
+        time: e.TIME,
+      }));
+      resolve(bookings);
+    });
+  });
+};
+
 //get  booking Modes Preparation
 exports.getbookingModesPreparation = () => {
   return new Promise((resolve, reject) => {
@@ -833,7 +855,7 @@ exports.createBookingMode = (bookingMode) => {
         bookingMode.date,
         bookingMode.time,
         bookingMode.extra_fee,
-        "NEW"
+        "NEW",
       ],
       function (err) {
         if (err) {
@@ -850,15 +872,14 @@ exports.createBookingMode = (bookingMode) => {
 exports.updateStateBookingMode = (id) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE BOOKING_MODE SET STATE = ? WHERE ID_BOOKING = ?";
-    db.run(sql, ["PREPARATION",id], function (error) {
+    db.run(sql, ["PREPARATION", id], function (error) {
       if (error) {
-      reject(error.message);
+        reject(error.message);
         return;
-      }else if (this.changes === 0) {
+      } else if (this.changes === 0) {
         reject({ error: "BOOKING MODE ID NOT FOUND" });
         return;
-      } 
-      else {
+      } else {
         resolve(id);
       }
     });
@@ -870,26 +891,22 @@ exports.updateStateBookingMode = (id) => {
 exports.getAllBookingsForClientBooked = (id) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";
-    db.all(sql,[id], (err, rows) => {
+    db.all(sql, [id], (err, rows) => {
       if (err) {
         reject(err);
         return;
-      }
-
-      else if (rows === undefined) {
-       console.log("rows non è definito---------")
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
         resolve(false);
-      }
-      
-      else{
+      } else {
         const bookings = rows.map((e) => ({
           id_booking: e.ID_BOOKING,
           id_client: e.CLIENT_ID,
-          state: e.STATE
+          state: e.STATE,
         }));
 
         resolve(bookings);
-    }
+      }
     });
   });
 };
