@@ -291,6 +291,19 @@ state:"PENDINGCANCELATION",
 
 },...]
 
+### GET /api/bookingModesNew/pickup
+
+get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW. Furthermore the state of the booking must be != PENDINGCANCELATION
+
+response example:
+[
+{"idBooking":3,
+"idClient":1,
+state:"PENDINGCANCELATION",
+"date":"22/11/2021",
+"time":"13:20",
+},...]
+
 #### GET /api/bookings
 
 Retrieve the list of all bookings, return a JSON Vector
@@ -419,16 +432,16 @@ Receive a JSON Object with client ID and new balance
 
 #### GET /api/bookings/booked/clients/:id
 
-to get all the bookings of the client id that are 
+to get all the bookings of the client id that are
 in state = BOOKED (ONLY THE BOOKINGS, NOT THE PRODUCTS)
 json returned:
 
 [
-    {
-    "id_booking" : 1
-    "id_client" : 1
-    "state" : "BOOKED"
-    },
+{
+"id_booking" : 1
+"id_client" : 1
+"state" : "BOOKED"
+},
 ...]
 
 #### GET /api/bookingProducts/:bookingId
@@ -437,16 +450,15 @@ GET all the product associated to a particular booking.
 json returned:
 
 [
-    "id" = 1,
-    "name" = "Mele"
-    "category" = 
-    "price" = 14.0
+"id" = 1,
+"name" = "Mele"
+"category" =
+"price" = 14.0
 ]
 
 ##### GETALLBOOKINGS(app.get("/api/bookings"), GETALLBOOKINGFORCLIENT(app.get("/api/bookings/clients/:id"), getBookingsStatePendingCancelation(app.get("/api/bookingsPendingCancelation"), getTotal(app.post("/api/clock"): I DIDN'T CHANGE THESE FUNCTIONS FOR THE COLUMNS CHANGED IN THE PRODUCT_WEEK
 
-##### I CHANGED FOR THE ADD COLUMNS IN PRODUCT_WEEK THE app.post("/api/farmers/:farmerid/products"),             app.get("/api/products"), app.get("/api/farmers/:farmerid/products_expected"),                                  app.get("/api/products/farmers/:id"), 
-
+##### I CHANGED FOR THE ADD COLUMNS IN PRODUCT_WEEK THE app.post("/api/farmers/:farmerid/products"), app.get("/api/products"), app.get("/api/farmers/:farmerid/products_expected"), app.get("/api/products/farmers/:id"),
 
 #### DELETE /api/products/:id
 
@@ -455,9 +467,8 @@ delete a product from product_week table with the given id
 #### PUT /api/bookings_mode/:id
 
 updates a given booking_mode state to PREPERATION
-returns 
+returns
 {
-    "error": "BOOKING MODE ID NOT FOUND"
+"error": "BOOKING MODE ID NOT FOUND"
 } with status code 500
 if booking mode id was not found.
-
