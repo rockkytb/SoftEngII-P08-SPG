@@ -79,7 +79,7 @@ async function logIn(credentials, type) {
         body: JSON.stringify(credentials),
       });
       break;
-      case "W":
+    case "W":
       response = await fetch(url + "/warehouseWorkerSessions", {
         method: "POST",
         headers: {
@@ -192,82 +192,64 @@ async function setNewWallet(id, amount) {
 
 async function newBooking(clientId, products) {
   //call: POST /api/bookings
-  return new Promise((resolve, reject) => {
+  async function getId(clientId) {
     fetch(url + "/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ idClient: clientId }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          if (products && products.length > 0) {
-            let tmp = response.json().bookingId;
-            products.map((p) => {
-              newBookingProduct(tmp, p.id, p.quantity);
-            });
-          }
-          resolve(true);
-        } else {
-          response
-            .json()
-            .then((obj) => {
-              reject(obj);
-            }) // error msg in the response body
-            .catch((err) => {
-              reject({
-                errors: [
-                  { param: "Application", msg: "Cannot parse server response" },
-                ],
-              });
-            }); // something else
-        }
-      })
-      .catch((err) => {
-        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
-      }); // connection errors
-  });
-}
+    }).then((response) => {
+      if (response.ok) resolve(response.json());
+    });
+  }
 
-async function newBookingProduct(ID_Booking, ID_Product, Qty) {
-  //call: POST /api/bookingproduct
-  return new Promise((resolve, reject) => {
-    fetch(url + "/bookingproduct", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ID_Booking: ID_Booking,
-        ID_Product: ID_Product,
-        Qty: Qty,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          //FIX should NOT do it here
-          editProductQty(ID_Product, Qty);
-          resolve(response.json());
-        } else {
-          response
-            .json()
-            .then((obj) => {
-              reject(obj);
-            }) // error msg in the response body
-            .catch((err) => {
-              reject({
-                errors: [
-                  { param: "Application", msg: "Cannot parse server response" },
-                ],
-              });
-            }); // something else
-        }
+  async function newBookingProduct(ID_Booking, products) {
+    //call: POST /api/bookingproduct
+    return new Promise((resolve, reject) => {
+      fetch(url + "/bookingproduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ID_Booking: ID_Booking,
+          products: products,
+        }),
       })
-      .catch((err) => {
-        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
-      }); // connection errors
-  });
+        .then((response) => {
+          if (response.ok) {
+            //FIX should NOT do it here
+            editProductQty(ID_Product, Qty);
+            resolve(response.json());
+          } else {
+            response
+              .json()
+              .then((obj) => {
+                reject(obj);
+              }) // error msg in the response body
+              .catch((err) => {
+                reject({
+                  errors: [
+                    {
+                      param: "Application",
+                      msg: "Cannot parse server response",
+                    },
+                  ],
+                });
+              }); // something else
+          }
+        })
+        .catch((err) => {
+          reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+        }); // connection errors
+    });
+  }
+
+  let id = await getId(clientId);
+  let result = await newBookingProduct(id, products);
+
+  return result;
 }
 
 async function confirmBooking(id) {
@@ -597,11 +579,14 @@ async function setDate(date) {
 }
 
 async function attaccoDoS(userdata) {
-  
   const getProducts = async () => {
     // call: GET /api/products
 
-    if (userdata && userdata.id && (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")) {
+    if (
+      userdata &&
+      userdata.id &&
+      (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")
+    ) {
       const response = await fetch("/api/products");
       const productList = await response.json();
       if (response.ok) {
@@ -661,7 +646,6 @@ async function attaccoDoS(userdata) {
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
-
 
   return { products, bookings, clients };
 }
