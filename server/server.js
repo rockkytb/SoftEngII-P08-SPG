@@ -490,10 +490,8 @@ app.post(
 app.post(
   "/api/bookingproducts", //isLoggedIn,
   async (req, res) => {
-
     for (var key in req.body) {
       if (req.body.hasOwnProperty(key)) {
-   
         if (!validator.isInt(`${req.body[key].ID_Booking}`, { min: 1 })) {
           return res
             .status(422)
@@ -513,8 +511,8 @@ app.post(
       }
     }
 
-    var problem=0;
-    var arrayResult=[];
+    var problem = 0;
+    var arrayResult = [];
     var bookingProduct;
 
     for (var key in req.body) {
@@ -535,16 +533,16 @@ app.post(
       }
     }
 
-    if(problem == 0){
+    if (problem == 0) {
       //All went fine
       res.status(201).json(arrayResult);
-    }
-    else{
+    } else {
       res.status(503).json({
         error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
-    });
+      });
+    }
   }
-});
+);
 
 //PUT /api/productqty
 app.put(
@@ -679,7 +677,7 @@ app.post(
       farmer_id: req.params.farmerid,
       state: "CONFIRMED",
       size: req.body.size,
-      unit_of_measure: req.body.unit_of_measure
+      unit_of_measure: req.body.unit_of_measure,
     };
 
     let productId;
@@ -709,7 +707,7 @@ app.post(
       farmer_id: req.params.farmerid,
       state: "EXPECTED",
       size: req.body.size,
-      unit_of_measure: req.body.unit_of_measure
+      unit_of_measure: req.body.unit_of_measure,
     };
 
     let productId;
@@ -855,6 +853,21 @@ app.get(
   /* isLoggedIn,*/ (req, res) => {
     dao
       .getbookingModesPreparation()
+      .then((bookings) => {
+        res.status(200).json(bookings);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  }
+);
+
+// GET /api/bookingModesNew/pickup
+app.get(
+  "/api/bookingModesNew/pickup",
+  /* isLoggedIn,*/ (req, res) => {
+    dao
+      .getbookingModesNewPickup()
       .then((bookings) => {
         res.status(200).json(bookings);
       })
@@ -1054,13 +1067,13 @@ app.put(
         .json({ error: `Invalid booking mode id, it must be positive` });
     }
     dao
-    .updateStateBookingMode(id)
-    .then(() => {
-      res.status(200).json({"bookingModeId":id});
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
+      .updateStateBookingMode(id)
+      .then(() => {
+        res.status(200).json({ bookingModeId: id });
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
   }
 );
 
@@ -1150,18 +1163,15 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
   res.status(201).json({ date: date });
 });
 
-
 //GET /api/bookings/booked/clients/:id
 
 app.get("/api/bookings/booked/clients/:id", (req, res) => {
   const id = req.params.id;
   console.log(id);
   if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({
-        error: `Invalid product id of a element on the array, it must be positive`,
-      });
+    return res.status(422).json({
+      error: `Invalid product id of a element on the array, it must be positive`,
+    });
   }
 
   dao

@@ -637,8 +637,8 @@ exports.getAllBookings = () => {
 exports.getbookingModesNewPickup = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
-    db.all(sql, [0, "PREPARATION"], (err, rows) => {
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND AND BM.STATE=? AND B.STATE!=?";
+    db.all(sql, [0, "NEW", "PENDINGCANCELATION"], (err, rows) => {
       if (err) {
         reject(err);
         return;
