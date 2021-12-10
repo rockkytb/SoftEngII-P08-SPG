@@ -226,7 +226,7 @@ describe("Test suite DAO", () => {
         farmer_email: "antonio.bianchi@mail.it",
         state: "EXPECTED",
         size: 1,
-        unit_of_measure: 'kg'
+        unit_of_measure: "kg",
       },
     ]);
   }, 10000);
@@ -356,7 +356,7 @@ test("get all products success", async () => {
       qty: 5,
       farmer_email: "antonio.bianchi@mail.it",
       size: 1,
-      unit_of_measure :'kg'
+      unit_of_measure: "kg",
     },
   ];
 
@@ -367,16 +367,28 @@ test("get all products success", async () => {
 test("get all all CONFIRMED products for a particular farmer success", async () => {
   const result = [
     {
+      id: 1,
+      name: "Mele",
+      category: "Fruit",
+      price: 14,
+      qty: 5,
+      size: 1,
+      unit_of_measure: "kg",
+      farmer_email: "antonio.bianchi@mail.it",
+    },
+    {
+      category: "Fruit",
+      farmer_email: "antonio.bianchi@mail.it",
       id: 2,
       name: "Lamponi",
-      category: "Fruit",
       price: 1.78,
       qty: 1,
-      farmer_email: "antonio.bianchi@mail.it",
+      size: 1,
+      unit_of_measure: "g",
     },
   ];
 
-  return expect(dao.getAllConfirmedProductsForFarmer(1)).resolves.toEqual(
+  return expect(dao.getAllProductsConfirmedForFarmer(1)).resolves.toEqual(
     result
   );
 }, 10000);
@@ -413,8 +425,21 @@ test("get all bookings modes in preparation success", async () => {
       time: "14:20",
     },
   ];
-
   return expect(dao.getbookingModesPreparation()).resolves.toEqual(received);
+}, 10000);
+
+//TEST GET /api/bookingModesNew/pickup
+test("get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW", async () => {
+  const received = [
+    {
+      idBooking: 2,
+      idClient: 1,
+      date: "14/10/2009",
+      state: "BOOKED",
+      time: "14:20",
+    },
+  ];
+  return expect(dao.getbookingModesNewPickup()).resolves.toEqual(received);
 }, 10000);
 
 // TEST GET BOOKINGS FOR A PARTICULAR CLIENT
@@ -450,7 +475,7 @@ test("get all bookings for a non-existing client success", () => {
 //TEST CREATING NEW BOOKING MODE
 test("the creation of a new booking mode success", () => {
   const booking = {
-    idBooking: 2,
+    idBooking: 9,
     delivery: 1,
     street: "via giovanni ribet",
     city: "turin",
@@ -592,7 +617,7 @@ test("INSERT into Product_WEEK by receiving a product confirmed by farmer with s
     farmer_id: "1",
     state: "CONFIRMED",
     size: 1,
-    unit_of_measure: "kg"
+    unit_of_measure: "kg",
   };
   return expect(
     dao.insertTupleProductWEEK(parameter)

@@ -559,7 +559,7 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 };
 
 //get all products in state = CONFIRMED of a particular farmer from PRODUCT_WEEK table
-exports.getAllProductsForFarmer = (farmerId) => {
+exports.getAllProductsConfirmedForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
       "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=?";
@@ -637,7 +637,7 @@ exports.getAllBookings = () => {
 exports.getbookingModesNewPickup = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND AND BM.STATE=? AND B.STATE!=?";
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=?  AND BM.STATE=? AND B.STATE!=?";
     db.all(sql, [0, "NEW", "PENDINGCANCELATION"], (err, rows) => {
       if (err) {
         reject(err);
@@ -929,16 +929,12 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?", [1], (err) => {
+    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING > ?", [2], (err) => {
       errTest(err);
     });
-    await db.run(
-      "DELETE FROM BOOKING_MODE WHERE ID_BOOKING!=? ",
-      [1],
-      (err) => {
-        errTest(err);
-      }
-    );
+    await db.run("DELETE FROM BOOKING_MODE WHERE ID_BOOKING>? ", [2], (err) => {
+      errTest(err);
+    });
 
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",

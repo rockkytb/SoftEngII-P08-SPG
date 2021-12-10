@@ -193,11 +193,15 @@ describe("Test suite Integration Server", () => {
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid Booking id", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 0,
-        ID_Product: 2,
-        Qty: 3,
-      });
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send([
+          {
+            ID_Booking: 0,
+            ID_Product: 2,
+            Qty: 3,
+          },
+        ]);
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
@@ -208,11 +212,15 @@ describe("Test suite Integration Server", () => {
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid product id", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 1,
-        ID_Product: -1,
-        Qty: 3,
-      });
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send([
+          {
+            ID_Booking: 1,
+            ID_Product: -1,
+            Qty: 3,
+          },
+        ]);
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
@@ -223,11 +231,15 @@ describe("Test suite Integration Server", () => {
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid qty", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 1,
-        ID_Product: 1,
-        Qty: -1,
-      });
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send([
+          {
+            ID_Booking: 1,
+            ID_Product: 1,
+            Qty: -1,
+          },
+        ]);
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
@@ -537,6 +549,24 @@ describe("Test suite Integration Server", () => {
           idBooking: 1,
           idClient: 1,
           state: "PENDINGCANCELATION",
+          date: "14/10/2009",
+          time: "14:20",
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  //test GET /api/bookingModesNew/pickup
+  describe("Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW", () => {
+    it("test /api/bookingModesNew/pickup", async () => {
+      const response = await request(app).get("/api/bookingModesNew/pickup");
+      expect(response.body).toEqual([
+        {
+          idBooking: 2,
+          idClient: 1,
+          state: "BOOKED",
           date: "14/10/2009",
           time: "14:20",
         },

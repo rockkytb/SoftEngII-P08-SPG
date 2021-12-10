@@ -881,7 +881,7 @@ app.get(
 app.get("/api/products/farmers/:id", (req, res) => {
   const id = req.params.id;
   dao
-    .getAllProductsForFarmer(id)
+    .getAllProductsConfirmedForFarmer(id)
     .then((product) => {
       res.status(200).json(product);
     })
