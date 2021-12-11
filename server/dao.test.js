@@ -624,21 +624,6 @@ test("increment qty of a product success", async () => {
   product = {
     ID_Product: 1,
     Inc_Qty: 2,
-<<<<<<< Updated upstream
-=======
-  };
-  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual({
-    "ID": 1,
-    "NAME": "Mele",
-    "CATEGORY_ID": 1,
-    "PRICE": 14,
-    "QTY": 12,
-    "FARMER_ID": 1,
-    "STATE": "EXPECTED",
-    "SIZE": 1,
-    "UNIT_OF_MEASURE": "kg"
-  });
->>>>>>> Stashed changes
 
   }
   expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual(
