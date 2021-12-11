@@ -83,10 +83,9 @@ describe("Test suite Integration Server", () => {
   //TEST update status of BOOKING MODE API
   describe("updating booking mode status success", () => {
     it("should update a booking mode status to PREPERATION", async () => {
-
-        const res = await request(app).put(`/api/bookings_mode/2`).send();
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ "bookingModeId": "2"});
+      const res = await request(app).put(`/api/bookings_mode/2`).send();
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual({ bookingModeId: "2" });
     });
   });
 
@@ -231,26 +230,23 @@ describe("Test suite Integration Server", () => {
 
   describe("increment product qty", () => {
     it("send a valid request body", async () => {
-        const res = await request(app).put("/api/incrementProductQty").send({
-          ID_Product: 1,
-          Inc_Qty: 2,
-        });
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual(
-          {
-            "ID": 1,
-            "NAME": "Mele",
-            "CATEGORY_ID": 1,
-            "PRICE": 14,
-            "QTY": 12,
-            "FARMER_ID": 1,
-            "STATE": "EXPECTED",
-            "SIZE": 1,
-            "UNIT_OF_MEASURE": "kg"
-        }
-        );
-      }
-    );
+      const res = await request(app).put("/api/incrementProductQty").send({
+        ID_Product: 1,
+        Inc_Qty: 2,
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual({
+        ID: 1,
+        NAME: "Mele",
+        CATEGORY_ID: 1,
+        PRICE: 14,
+        QTY: 12,
+        FARMER_ID: 1,
+        STATE: "EXPECTED",
+        SIZE: 1,
+        UNIT_OF_MEASURE: "kg",
+      });
+    });
   });
 
   describe("delete a product", () => {
@@ -290,17 +286,17 @@ describe("Test suite Integration Server", () => {
     it("send a invalid Booking id", async () => {
       const res = await request(app)
         .post("/api/bookingproducts")
-        .send([
-          {
-            ID_Booking: 0,
-            ID_Product: 2,
-            Qty: 3,
-          },
-        ]);
+        .send({
+          ID_Booking: -2,
+          products: [
+            { id: 1, quantity: 42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
-        "Invalid booking id, it must be positive"
+        `Bad request`
       );
     });
   });
@@ -309,18 +305,15 @@ describe("Test suite Integration Server", () => {
     it("send a invalid product id", async () => {
       const res = await request(app)
         .post("/api/bookingproducts")
-        .send([
-          {
-            ID_Booking: 1,
-            ID_Product: -1,
-            Qty: 3,
-          },
-        ]);
+        .send({
+          ID_Booking: 2,
+          products: [
+            { id: -1, quantity: 42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        `No products existent`
-      );
+      expect(res.body).toHaveProperty("error", `Invalid product data`);
     });
   });
 
@@ -328,17 +321,17 @@ describe("Test suite Integration Server", () => {
     it("send a invalid qty", async () => {
       const res = await request(app)
         .post("/api/bookingproducts")
-        .send([
-          {
-            ID_Booking: 1,
-            ID_Product: 1,
-            Qty: -1,
-          },
-        ]);
+        .send({
+          ID_Booking: 2,
+          products: [
+            { id: 1, quantity: -42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
-        `Invalid qty id, it must be positive`
+        `Invalid product data`
       );
     });
   });
@@ -547,7 +540,7 @@ describe("Test suite Integration Server", () => {
           qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
           size: 1,
-          unit_of_measure: "kg"
+          unit_of_measure: "kg",
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -591,7 +584,7 @@ describe("Test suite Integration Server", () => {
           farmer_email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
           size: 1,
-          unit_of_measure: "kg"
+          unit_of_measure: "kg",
         },
       ]);
 

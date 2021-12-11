@@ -533,15 +533,17 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
       }
     }*/
   let problems = 0;
-  if (req.body && req.body.products && req.body.products.length > 0) {
+  if (req.body && req.body.products && req.body.products.length > 0 && req.body.ID_Booking > 0) {
     for (const i of req.body.products) {
       if (
         !i.id ||
         !i.quantity ||
         !validator.isInt(`${i.id}`, { min: 1 }) ||
-        !validator.isInt(`${i.quantity}`, { min: 1 })
+        !validator.isInt(`${i.quantity}`, { min: 1 } ||
+        i.id<=0 ||
+        id.qty<=0)
       ) {
-        return res.status(422).json({ error: `Invalid product datas` });
+        return res.status(422).json({ error: `Invalid product data` });
       }
       let bookingProduct = {
         ID_Booking: req.body.ID_Booking,
@@ -555,7 +557,7 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
       }
     }
   } else {
-    return res.status(422).json({ error: `No products existent` });
+    return res.status(422).json({ error: `Bad request` });
   }
 
   if (problems == 0) {
