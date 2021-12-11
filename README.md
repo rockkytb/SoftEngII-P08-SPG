@@ -472,3 +472,18 @@ returns
 "error": "BOOKING MODE ID NOT FOUND"
 } with status code 500
 if booking mode id was not found.
+
+
+###### Now the api /api/products/farmers/:id return the elements with state confirmed or preparation 
+
+###### GET /api/bookingProducts/:bookingId GET all the product associated to a particular booking.
+
+    products = {
+          id_product: e.ID,
+          name_product: e.NAME,
+          category: e.CATEGORY_NAME, 
+          price: e.PRICE, 
+          qty_booking: e.QTY_BOOKING, 
+          email: e.FARMER_EMAIL, 
+          state: e.STATE
+    }

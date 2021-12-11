@@ -911,6 +911,33 @@ exports.getAllBookingsForClientBooked = (id) => {
   });
 };
 
+exports.productsOfBooking = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql="SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
+    db.all(sql, [id], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
+        resolve(false);
+      } else {
+        const products = rows.map((e) => ({
+          id_product: e.ID,
+          name_product: e.NAME,
+          category: e.CATEGORY_NAME, 
+          price: e.PRICE, 
+          qty_booking: e.QTY_BOOKING, 
+          email: e.FARMER_EMAIL, 
+          state: e.STATE
+        }));
+
+        resolve(products);
+      }
+    })
+  })
+}
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
   const errTest = (err) => {

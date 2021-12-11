@@ -1193,7 +1193,6 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
 
 app.get("/api/bookings/booked/clients/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
   if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
     return res.status(422).json({
       error: `Invalid product id of a element on the array, it must be positive`,
@@ -1209,6 +1208,28 @@ app.get("/api/bookings/booked/clients/:id", (req, res) => {
       res.status(500).json(error);
     });
 });
+
+
+///GET /api/bookingProducts/:bookingId
+app.get("/api/bookingProducts/:bookingId", (req, res) => {
+  const id = req.params.bookingId;
+  console.log(req.params.bookingId)
+  if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
+    return res.status(422).json({
+      error: `Invalid product id of a element on the array, it must be positive`,
+    });
+  }
+
+  dao
+    .productsOfBooking(id)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 
 // activate the server
 const server = app.listen(port, () => {
