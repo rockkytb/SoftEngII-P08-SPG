@@ -318,7 +318,7 @@ app.get("/api/userinfo", isLoggedIn, (req, res) => {
 });
 
 //GET /api/clients/
-app.get("/api/clients", (req, res) => {
+app.get("/api/clients", isLoggedIn, (req, res) => {
   dao
     .getClients()
     .then((clients) => {
@@ -332,25 +332,26 @@ app.get("/api/clients", (req, res) => {
 });
 
 //POST /api/client/
-app.post(
-  "/api/client",
-  /*isLoggedIn,*/ (req, res) => {
-    dao
-      .getClientByEmail(req.body.email)
-      .then((client) => {
-        if (client.id === -1) {
-          res.status(401).json(client);
-        } else {
-          res.status(200).json(client);
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({
-          errors: `Database errors: ${err}.`,
-        });
-      });
+app.post("/api/client", isLoggedIn, (req, res) => {
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res.status(422).json({ error: `Invalid email` });
   }
-);
+
+  dao
+    .getClientByEmail(req.body.email)
+    .then((client) => {
+      if (client.id === -1) {
+        res.status(401).json(client);
+      } else {
+        res.status(200).json(client);
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });
+});
 
 //GET /api/categories/
 
@@ -531,34 +532,33 @@ app.post(
           break;
         }
       }
-    }*/ 
+    }*/
     let problems = 0;
-    if(req.body && req.body.products && req.body.products.length > 0){
-      for(const i of req.body.products){
-        if (!i.id || !i.quantity || !validator.isInt(`${i.id}`, { min: 1 }) || !validator.isInt(`${i.quantity}`, { min: 1 })) {
-          return res
-            .status(422)
-            .json({ error: `Invalid product datas` });
+    if (req.body && req.body.products && req.body.products.length > 0) {
+      for (const i of req.body.products) {
+        if (
+          !i.id ||
+          !i.quantity ||
+          !validator.isInt(`${i.id}`, { min: 1 }) ||
+          !validator.isInt(`${i.quantity}`, { min: 1 })
+        ) {
+          return res.status(422).json({ error: `Invalid product datas` });
         }
         let bookingProduct = {
-          ID_Booking : req.body.ID_Booking,
-          ID_Product : i.id,
-          Qty : i.quantity
-        }
-        try{
+          ID_Booking: req.body.ID_Booking,
+          ID_Product: i.id,
+          Qty: i.quantity,
+        };
+        try {
           await dao.createBookingProduct(bookingProduct);
-        }
-        catch (err){
+        } catch (err) {
           problems++;
         }
       }
+    } else {
+      return res.status(422).json({ error: `No products existent` });
     }
-    else{
-      return res
-            .status(422)
-            .json({ error: `No products existent` });
-    }
-      
+
     if (problems == 0) {
       //All went fine
       res.status(201).json("Ok");
@@ -625,7 +625,7 @@ app.put(
     let updatedProduct;
     try {
       updatedProduct = await dao.IncrementQtyProductWeek(product);
-      console.log("updatedProduct="+updatedProduct)
+      console.log("updatedProduct=" + updatedProduct);
     } catch (err) {
       res.status(503).json({
         error: `Database error during incrementing product qty: ${product}.`,
@@ -1210,11 +1210,10 @@ app.get("/api/bookings/booked/clients/:id", (req, res) => {
     });
 });
 
-
 ///GET /api/bookingProducts/:bookingId
 app.get("/api/bookingProducts/:bookingId", (req, res) => {
   const id = req.params.bookingId;
-  console.log(req.params.bookingId)
+  console.log(req.params.bookingId);
   if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
     return res.status(422).json({
       error: `Invalid product id of a element on the array, it must be positive`,
@@ -1230,7 +1229,6 @@ app.get("/api/bookingProducts/:bookingId", (req, res) => {
       res.status(500).json(error);
     });
 });
-
 
 // activate the server
 const server = app.listen(port, () => {
