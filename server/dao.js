@@ -354,14 +354,28 @@ exports.editQtyProductWeek = (product) => {
 exports.IncrementQtyProductWeek = (product) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
-    db.run(sql, [product.Inc_Qty, product.ID_Product], function (err, row) {
+    db.run(sql, [product.Inc_Qty, product.ID_Product], function (err) {
       if (err) {
         reject(err);
         return;
-      } else if (row === undefined) {
-        resolve(false);
       } else {
-        resolve(true);
+        let updatedProduct = getProduct(product.ID_Product)
+        resolve(updatedProduct);
+      }
+    });
+  });
+};
+
+// retrieve a product with a given id
+function getProduct  (id) {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * from PRODUCT_WEEK WHERE ID = ?";
+    db.get(sql, [id], function (err, row) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(row);
       }
     });
   });

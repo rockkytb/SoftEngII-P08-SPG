@@ -607,10 +607,10 @@ app.put(
 app.put(
   "/api/incrementProductQty", //isLoggedIn,
   async (req, res) => {
-    if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
+    if (!validator.isInt(`${req.body.Inc_Qty}`, { min: 1 })) {
       return res
         .status(422)
-        .json({ error: `Invalid qty id, it must be positive` });
+        .json({ error: `Invalid qty, it must be positive` });
     }
     if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
       return res
@@ -620,19 +620,20 @@ app.put(
 
     const product = {
       ID_Product: req.body.ID_Product,
-      Dec_Qty: req.body.Inc_Qty,
+      Inc_Qty: req.body.Inc_Qty,
     };
-
+    let updatedProduct;
     try {
-      await dao.IncrementQtyProductWeek(product);
+      updatedProduct = await dao.IncrementQtyProductWeek(product);
+      console.log("updatedProduct="+updatedProduct)
     } catch (err) {
       res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${product}.`,
+        error: `Database error during incrementing product qty: ${product}.`,
       });
     }
 
     //All went fine
-    res.status(201).json(product);
+    res.status(200).json(updatedProduct);
   }
 );
 
