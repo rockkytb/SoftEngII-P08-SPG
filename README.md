@@ -487,3 +487,26 @@ if booking mode id was not found.
           email: e.FARMER_EMAIL, 
           state: e.STATE
     }
+    
+#### PUT /api/incrementProductQty
+
+Increments the qty of a product in product_week table
+
+Receive a JSON object
+
+    {
+    "ID_Product": 2,
+    "Inc_Qty": 3
+}
+return the updated product info:
+    "ID": 2,
+    "NAME": "Lamponi",
+    "CATEGORY_ID": 1,
+    "PRICE": 1.78,
+    "QTY": 4,
+    "FARMER_ID": 1,
+    "STATE": "CONFIRMED",
+    "SIZE": 1,
+    "UNIT_OF_MEASURE": "g"
+}
+   
