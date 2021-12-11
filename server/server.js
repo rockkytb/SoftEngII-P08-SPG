@@ -491,14 +491,15 @@ app.post(
 app.post(
   "/api/bookingproducts", //isLoggedIn,
   async (req, res) => {
+    /*
     for (var key in req.body) {
       if (req.body.hasOwnProperty(key)) {
-        if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
+        if (!validator.isInt(`${req.body[key].ID_Booking}`, { min: 1 })) {
           return res
             .status(422)
             .json({ error: `Invalid booking id, it must be positive` });
         }
-        /*if (!validator.isInt(`${req.body[key].ID_Product}`, { min: 1 })) {
+        if (!validator.isInt(`${req.body[key].ID_Product}`, { min: 1 })) {
           return res
             .status(422)
             .json({ error: `Invalid product id, it must be positive` });
@@ -508,11 +509,11 @@ app.post(
           return res
             .status(422)
             .json({ error: `Invalid qty id, it must be positive` });
-        }*/
+        }
       }
     }
 
-    /*var problem = 0;
+    var problem = 0;
     var arrayResult = [];
     var bookingProduct;
 

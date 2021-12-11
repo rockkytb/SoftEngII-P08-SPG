@@ -231,6 +231,7 @@ describe("Test suite Integration Server", () => {
 
   describe("increment product qty", () => {
     it("send a valid request body", async () => {
+<<<<<<< Updated upstream
         const res = await request(app).put("/api/incrementProductQty").send({
           ID_Product: 1,
           Inc_Qty: 2,
@@ -251,6 +252,32 @@ describe("Test suite Integration Server", () => {
         );
       }
     );
+=======
+      const res = await request(app).put("/api/incrementProductQty").send({
+        ID_Product: 2,
+        Inc_Qty: 2,
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual({
+        ID: 2,
+        NAME: "Lamponi",
+        CATEGORY_ID: 1,
+        PRICE: 1.78,
+        QTY: 12,
+        FARMER_ID: 1,
+        STATE: "CONFIRMED",
+        SIZE: 1,
+        UNIT_OF_MEASURE: "g",
+      });
+    });
+    // decrement the added qty so that the db won't change
+    /*
+    dao.IncrementQtyProductWeek({
+      ID_Product: 2,
+      Dec_Qty: 2,
+    });
+    */
+>>>>>>> Stashed changes
   });
 
   describe("delete a product", () => {
@@ -319,7 +346,7 @@ describe("Test suite Integration Server", () => {
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
-        `Invalid product id, it must be positive`
+        `No products existent`
       );
     });
   });
@@ -544,8 +571,10 @@ describe("Test suite Integration Server", () => {
           name: "Mele",
           category: "Fruit",
           price: 14.0,
-          qty: 5,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "kg"
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -563,8 +592,10 @@ describe("Test suite Integration Server", () => {
           name: "Lamponi",
           category: "Fruit",
           price: 1.78,
-          qty: 1,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "g",
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -583,9 +614,11 @@ describe("Test suite Integration Server", () => {
           name: "Mele",
           category: "Fruit",
           price: 14,
-          qty: 5,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "kg"
         },
       ]);
 
@@ -604,8 +637,10 @@ describe("Test suite Integration Server", () => {
           name: "Lamponi",
           category: "Fruit",
           price: 1.78,
-          qty: 1,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "g",
         },
       ]);
 

@@ -994,6 +994,11 @@ exports.cleanDb = async () => {
       errTest(err);
     });
 
+    
+    await db.run("UPDATE PRODUCT_WEEK SET QTY=10 WHERE ID >= ?", [1], (err) => {
+      errTest(err);
+    });
+
     await db.run(
       "DELETE FROM PRODUCT_WEEK WHERE ID != ? AND STATE!=?",
       [1, "CONFIRMED"],

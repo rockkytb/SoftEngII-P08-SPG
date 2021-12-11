@@ -222,7 +222,7 @@ describe("Test suite DAO", () => {
         name: "Mele",
         category: "Fruit",
         price: 14,
-        qty: 5,
+        qty: 10,
         farmer_email: "antonio.bianchi@mail.it",
         state: "EXPECTED",
         size: 1,
@@ -353,7 +353,7 @@ test("get all products success", async () => {
       name: "Mele",
       category: "Fruit",
       price: 14,
-      qty: 5,
+      qty: 10,
       farmer_email: "antonio.bianchi@mail.it",
       size: 1,
       unit_of_measure: "kg",
@@ -367,25 +367,15 @@ test("get all products success", async () => {
 test("get all all CONFIRMED products for a particular farmer success", async () => {
   const result = [
     {
-      id: 1,
-      name: "Mele",
-      category: "Fruit",
-      price: 14,
-      qty: 5,
-      size: 1,
-      unit_of_measure: "kg",
-      farmer_email: "antonio.bianchi@mail.it",
-    },
-    {
-      category: "Fruit",
-      farmer_email: "antonio.bianchi@mail.it",
       id: 2,
       name: "Lamponi",
+      category: "Fruit",
+      farmer_email: "antonio.bianchi@mail.it",
       price: 1.78,
-      qty: 1,
+      qty: 10,
       size: 1,
       unit_of_measure: "g",
-    },
+    }
   ];
 
   return expect(dao.getAllProductsConfirmedForFarmer(1)).resolves.toEqual(
@@ -550,9 +540,7 @@ test("create a row in the booking product table", () => {
     ID_Product: 2,
     Qty: 3,
   };
-  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(
-    true
-  );
+  return expect(dao.createBookingProduct(bookingProduct)).resolves.toEqual(3);
 });
 
 //TEST GET ALL BOOKINGS WITH PENDINGCANCELATION STATE
@@ -636,6 +624,21 @@ test("increment qty of a product success", async () => {
   product = {
     ID_Product: 1,
     Inc_Qty: 2,
+<<<<<<< Updated upstream
+=======
+  };
+  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual({
+    "ID": 1,
+    "NAME": "Mele",
+    "CATEGORY_ID": 1,
+    "PRICE": 14,
+    "QTY": 12,
+    "FARMER_ID": 1,
+    "STATE": "EXPECTED",
+    "SIZE": 1,
+    "UNIT_OF_MEASURE": "kg"
+  });
+>>>>>>> Stashed changes
 
   }
   expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual(
