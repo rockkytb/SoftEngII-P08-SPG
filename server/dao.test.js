@@ -632,7 +632,7 @@ test("increment qty of a product success", async () => {
       "NAME": "Mele",
       "CATEGORY_ID": 1,
       "PRICE": 14,
-      "QTY": 9,
+      "QTY": 12,
       "FARMER_ID": 1,
       "STATE": "EXPECTED",
       "SIZE": 1,
