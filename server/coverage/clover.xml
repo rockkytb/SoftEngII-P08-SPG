@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639246361535" clover="3.2.0">
-  <project timestamp="1639246361535" name="All files">
+<coverage generated="1639255439715" clover="3.2.0">
+  <project timestamp="1639255439715" name="All files">
     <metrics statements="876" coveredstatements="585" conditionals="298" coveredconditionals="150" methods="293" coveredmethods="208" elements="1467" coveredelements="943" complexity="0" loc="876" ncloc="876" packages="1" files="2" classes="2"/>
-    <file name="dao.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.js">
+    <file name="dao.js" path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.js">
       <metrics statements="468" coveredstatements="327" conditionals="154" coveredconditionals="79" methods="171" coveredmethods="140"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
@@ -473,7 +473,7 @@
       <line num="1041" count="0" type="stmt"/>
       <line num="1047" count="0" type="stmt"/>
     </file>
-    <file name="server.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/server.js">
+    <file name="server.js" path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js">
       <metrics statements="408" coveredstatements="258" conditionals="144" coveredconditionals="71" methods="122" coveredmethods="68"/>
       <line num="3" count="1" type="stmt"/>
       <line num="4" count="1" type="stmt"/>
