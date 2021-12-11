@@ -276,15 +276,15 @@ describe("Test suite Integration Server", () => {
         size: 1,
         unit_of_measure: "kg",
       };
-      // insert a test product 
-      
-      let productId = await dao.insertTupleProductWEEK(product)
-      const res = await request(app).delete(`/api/products/${productId}`).send();
+      // insert a test product
+
+      let productId = await dao.insertTupleProductWEEK(product);
+      const res = await request(app)
+        .delete(`/api/products/${productId}`)
+        .send();
       expect(res.statusCode).toEqual(204);
     });
-   
   });
-
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid Booking id", async () => {
@@ -383,8 +383,8 @@ describe("Test suite Integration Server", () => {
   describe("Get client by email fails", () => {
     it("don't send an email", async () => {
       const res = await request(app).post("/api/client");
-      expect(res.statusCode).toEqual(401);
-      expect(res.body).toHaveProperty("id", -1);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid email");
     });
   });
 
