@@ -226,25 +226,23 @@ describe("Test suite Integration Server", () => {
         Inc_Qty: 2,
       });
       expect(res.statusCode).toEqual(200);
-      expect(res.body).toEqual(
-        {
-          "ID": 2,
-          "NAME": "Lamponi",
-          "CATEGORY_ID": 1,
-          "PRICE": 1.78,
-          "QTY": 3,
-          "FARMER_ID": 1,
-          "STATE": "CONFIRMED",
-          "SIZE": 1,
-          "UNIT_OF_MEASURE": "g"
-      }
-      );
+      expect(res.body).toEqual({
+        ID: 2,
+        NAME: "Lamponi",
+        CATEGORY_ID: 1,
+        PRICE: 1.78,
+        QTY: 3,
+        FARMER_ID: 1,
+        STATE: "CONFIRMED",
+        SIZE: 1,
+        UNIT_OF_MEASURE: "g",
+      });
     });
     // decrement the added qty so that the db won't change
-     dao.IncrementQtyProductWeek({
+    dao.IncrementQtyProductWeek({
       ID_Product: 2,
       Dec_Qty: 2,
-    })
+    });
   });
 
   describe("delete a product", () => {
@@ -270,15 +268,15 @@ describe("Test suite Integration Server", () => {
         size: 1,
         unit_of_measure: "kg",
       };
-      // insert a test product 
-      
-      let productId = await dao.insertTupleProductWEEK(product)
-      const res = await request(app).delete(`/api/products/${productId}`).send();
+      // insert a test product
+
+      let productId = await dao.insertTupleProductWEEK(product);
+      const res = await request(app)
+        .delete(`/api/products/${productId}`)
+        .send();
       expect(res.statusCode).toEqual(204);
     });
-   
   });
-
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid Booking id", async () => {
@@ -377,8 +375,8 @@ describe("Test suite Integration Server", () => {
   describe("Get client by email fails", () => {
     it("don't send an email", async () => {
       const res = await request(app).post("/api/client");
-      expect(res.statusCode).toEqual(401);
-      expect(res.body).toHaveProperty("id", -1);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid email");
     });
   });
 
