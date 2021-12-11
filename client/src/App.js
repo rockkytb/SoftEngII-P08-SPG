@@ -827,7 +827,6 @@ function App() {
                               //getClient={getSingleClientByEmail}
                               getWallet={(id) => getWalletById(id)}
                               changeWallet={setNewWallet}
-                              className="below-nav main-content"
                             />
                           </>
                         ) : (
@@ -861,7 +860,6 @@ function App() {
                               className="below-nav main-content"
                               bookings={bookings}
                               products={futureProducts}
-                              className="below-nav main-content"
                             />
                           </>
                         ) : (
@@ -907,7 +905,6 @@ function App() {
                               setBookingsState={setBookingsState}
                               getWallet={getWalletById}
                               calendarday={date}
-                              className="below-nav main-content"
                             />
                           </>
                         ) : (
@@ -942,7 +939,6 @@ function App() {
                               bookings={bookings}
                               confirmBooking={setCompletedBooking}
                               products={products}
-                              className="below-nav main-content"
                             />
                           </>
                         ) : (

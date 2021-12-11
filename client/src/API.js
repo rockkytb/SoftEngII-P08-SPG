@@ -192,22 +192,26 @@ async function setNewWallet(id, amount) {
 
 async function newBooking(clientId, products) {
   //call: POST /api/bookings
-  async function getId(clientId) {
-    fetch(url + "/bookings", {
+  const getId = async (clientId) => {
+  
+    const response = await fetch(url + "/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ idClient: clientId }),
-    }).then((response) => {
-      if (response.ok) return response.json();
-    });
-  }
+    })
+
+    const id = await response.json();
+    if (response.ok) {
+      return id.idBooking;
+    }
+  };
 
   async function newBookingProduct(ID_Booking, products) {
     //call: POST /api/bookingproduct
     return new Promise((resolve, reject) => {
-      fetch(url + "/bookingproduct", {
+      fetch(url + "/bookingproducts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -247,6 +251,7 @@ async function newBooking(clientId, products) {
   }
 
   let id = await getId(clientId);
+  console.log(id)
   let result = await newBookingProduct(id, products);
 
   return result;
