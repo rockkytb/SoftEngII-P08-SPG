@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639227703096" clover="3.2.0">
-  <project timestamp="1639227703096" name="All files">
-    <metrics statements="877" coveredstatements="564" conditionals="300" coveredconditionals="142" methods="291" coveredmethods="197" elements="1468" coveredelements="903" complexity="0" loc="877" ncloc="877" packages="1" files="2" classes="2"/>
+<coverage generated="1639230503580" clover="3.2.0">
+  <project timestamp="1639230503580" name="All files">
+    <metrics statements="877" coveredstatements="575" conditionals="300" coveredconditionals="145" methods="291" coveredmethods="201" elements="1468" coveredelements="921" complexity="0" loc="877" ncloc="877" packages="1" files="2" classes="2"/>
     <file name="dao.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.js">
-      <metrics statements="464" coveredstatements="314" conditionals="154" coveredconditionals="77" methods="169" coveredmethods="132"/>
+      <metrics statements="464" coveredstatements="319" conditionals="154" coveredconditionals="78" methods="169" coveredmethods="135"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
       <line num="8" count="2" type="stmt"/>
@@ -195,10 +195,10 @@
       <line num="371" count="2" type="stmt"/>
       <line num="372" count="2" type="stmt"/>
       <line num="373" count="2" type="stmt"/>
-      <line num="374" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="374" count="2" type="cond" truecount="1" falsecount="1"/>
       <line num="375" count="0" type="stmt"/>
       <line num="376" count="0" type="stmt"/>
-      <line num="378" count="1" type="stmt"/>
+      <line num="378" count="2" type="stmt"/>
       <line num="385" count="2" type="stmt"/>
       <line num="386" count="3" type="stmt"/>
       <line num="387" count="3" type="stmt"/>
@@ -208,21 +208,21 @@
       <line num="391" count="0" type="stmt"/>
       <line num="393" count="3" type="stmt"/>
       <line num="400" count="2" type="stmt"/>
-      <line num="401" count="0" type="stmt"/>
-      <line num="402" count="0" type="stmt"/>
-      <line num="403" count="0" type="stmt"/>
-      <line num="404" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="401" count="2" type="stmt"/>
+      <line num="402" count="2" type="stmt"/>
+      <line num="403" count="2" type="stmt"/>
+      <line num="404" count="2" type="cond" truecount="1" falsecount="1"/>
       <line num="405" count="0" type="stmt"/>
       <line num="406" count="0" type="stmt"/>
-      <line num="408" count="0" type="stmt"/>
+      <line num="408" count="2" type="stmt"/>
       <line num="415" count="2" type="stmt"/>
-      <line num="416" count="1" type="stmt"/>
-      <line num="418" count="1" type="stmt"/>
-      <line num="419" count="1" type="stmt"/>
-      <line num="432" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="416" count="3" type="stmt"/>
+      <line num="418" count="3" type="stmt"/>
+      <line num="419" count="3" type="stmt"/>
+      <line num="432" count="3" type="cond" truecount="1" falsecount="1"/>
       <line num="433" count="0" type="stmt"/>
       <line num="434" count="0" type="stmt"/>
-      <line num="436" count="1" type="stmt"/>
+      <line num="436" count="3" type="stmt"/>
       <line num="443" count="2" type="stmt"/>
       <line num="444" count="2" type="stmt"/>
       <line num="445" count="2" type="stmt"/>
@@ -437,28 +437,28 @@
       <line num="939" count="0" type="stmt"/>
       <line num="949" count="0" type="stmt"/>
       <line num="956" count="2" type="stmt"/>
-      <line num="957" count="94" type="stmt"/>
-      <line num="958" count="837" type="cond" truecount="1" falsecount="1"/>
+      <line num="957" count="96" type="stmt"/>
+      <line num="958" count="864" type="cond" truecount="1" falsecount="1"/>
       <line num="959" count="0" type="stmt"/>
-      <line num="962" count="94" type="cond" truecount="1" falsecount="1"/>
-      <line num="965" count="94" type="stmt"/>
-      <line num="969" count="93" type="stmt"/>
-      <line num="973" count="94" type="stmt"/>
-      <line num="974" count="93" type="stmt"/>
-      <line num="976" count="94" type="stmt"/>
-      <line num="977" count="93" type="stmt"/>
-      <line num="980" count="94" type="stmt"/>
-      <line num="984" count="93" type="stmt"/>
-      <line num="988" count="94" type="stmt"/>
-      <line num="989" count="93" type="stmt"/>
-      <line num="992" count="94" type="stmt"/>
-      <line num="996" count="93" type="stmt"/>
-      <line num="1000" count="94" type="stmt"/>
-      <line num="1004" count="93" type="stmt"/>
-      <line num="1008" count="94" type="stmt"/>
-      <line num="1009" count="93" type="stmt"/>
-      <line num="1012" count="94" type="stmt"/>
-      <line num="1016" count="93" type="stmt"/>
+      <line num="962" count="96" type="cond" truecount="1" falsecount="1"/>
+      <line num="965" count="96" type="stmt"/>
+      <line num="969" count="96" type="stmt"/>
+      <line num="973" count="96" type="stmt"/>
+      <line num="974" count="96" type="stmt"/>
+      <line num="976" count="96" type="stmt"/>
+      <line num="977" count="96" type="stmt"/>
+      <line num="980" count="96" type="stmt"/>
+      <line num="984" count="96" type="stmt"/>
+      <line num="988" count="96" type="stmt"/>
+      <line num="989" count="96" type="stmt"/>
+      <line num="992" count="96" type="stmt"/>
+      <line num="996" count="96" type="stmt"/>
+      <line num="1000" count="96" type="stmt"/>
+      <line num="1004" count="96" type="stmt"/>
+      <line num="1008" count="96" type="stmt"/>
+      <line num="1009" count="96" type="stmt"/>
+      <line num="1012" count="96" type="stmt"/>
+      <line num="1016" count="96" type="stmt"/>
       <line num="1023" count="2" type="stmt"/>
       <line num="1024" count="0" type="stmt"/>
       <line num="1026" count="0" type="stmt"/>
@@ -470,7 +470,7 @@
       <line num="1042" count="0" type="stmt"/>
     </file>
     <file name="server.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/server.js">
-      <metrics statements="413" coveredstatements="250" conditionals="146" coveredconditionals="65" methods="122" coveredmethods="65"/>
+      <metrics statements="413" coveredstatements="256" conditionals="146" coveredconditionals="67" methods="122" coveredmethods="66"/>
       <line num="3" count="1" type="stmt"/>
       <line num="4" count="1" type="stmt"/>
       <line num="5" count="1" type="stmt"/>
@@ -484,7 +484,7 @@
       <line num="16" count="1" type="stmt"/>
       <line num="19" count="1" type="stmt"/>
       <line num="22" count="1" type="stmt"/>
-      <line num="23" count="54" type="stmt"/>
+      <line num="23" count="56" type="stmt"/>
       <line num="27" count="1" type="stmt"/>
       <line num="28" count="1" type="stmt"/>
       <line num="31" count="1" type="stmt"/>
@@ -699,13 +699,13 @@
       <line num="661" count="0" type="stmt"/>
       <line num="667" count="0" type="stmt"/>
       <line num="672" count="1" type="stmt"/>
-      <line num="675" count="0" type="stmt"/>
-      <line num="676" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="677" count="0" type="stmt"/>
-      <line num="682" count="0" type="stmt"/>
-      <line num="683" count="0" type="stmt"/>
+      <line num="675" count="2" type="stmt"/>
+      <line num="676" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="677" count="1" type="stmt"/>
+      <line num="682" count="1" type="stmt"/>
+      <line num="683" count="1" type="stmt"/>
       <line num="685" count="0" type="stmt"/>
-      <line num="691" count="0" type="stmt"/>
+      <line num="691" count="1" type="stmt"/>
       <line num="696" count="1" type="stmt"/>
       <line num="699" count="0" type="stmt"/>
       <line num="712" count="0" type="stmt"/>

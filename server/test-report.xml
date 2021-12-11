@@ -1,54 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="11"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="5"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="3"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="126"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="111"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="96"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="4"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="101"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="4"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="6"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="2"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="4"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="96"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="115"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="99"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="5"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="207"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="11"/>
     <testCase name="Test suite DAO get client return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="192"/>
-    <testCase name="Test suite DAO get client return success" duration="97"/>
-    <testCase name="Test suite DAO get client return -1 because no email provided" duration="2"/>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="4"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="340"/>
+    <testCase name="Test suite DAO get client return success" duration="109"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="3"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="3"/>
     <testCase name="Test suite DAO get client return success" duration="2"/>
-    <testCase name="Test suite DAO get client return success" duration="4"/>
-    <testCase name="Test suite DAO get clients preparation return success" duration="3"/>
+    <testCase name="Test suite DAO get client return success" duration="3"/>
+    <testCase name="Test suite DAO get clients preparation return success" duration="6"/>
     <testCase name="Test suite DAO get categories return success" duration="2"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get client by id return success" duration="7"/>
-    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="4"/>
-    <testCase name="Test suite DAO get products expected by farmer return success" duration="9"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="2"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="93"/>
-    <testCase name="Test suite DAO get farmer return success" duration="88"/>
-    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="2"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="6"/>
-    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="95"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="80"/>
-    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="2"/>
-    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because wrong psw" duration="84"/>
-    <testCase name="Test suite DAO get warehouse worker return success" duration="78"/>
-    <testCase name="get all products success" duration="1"/>
-    <testCase name="get all all CONFIRMED products for a particular farmer success" duration="6">
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="4"/>
+    <testCase name="Test suite DAO get client by id return success" duration="2"/>
+    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="1"/>
+    <testCase name="Test suite DAO get products expected by farmer return success" duration="8">
       <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
 
-- Expected  - 10
-+ Received  +  0
+- Expected  - 1
++ Received  + 1
 
-@@ -1,19 +1,9 @@
+@@ -3,11 +3,11 @@
+      "category": "Fruit",
+      "farmer_email": "antonio.bianchi@mail.it",
+      "id": 1,
+      "name": "Mele",
+      "price": 14,
+-     "qty": 5,
++     "qty": 7,
+      "size": 1,
+      "state": "EXPECTED",
+      "unit_of_measure": "kg",
+    },
+  ]
+    at Object.toEqual (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js:219:68)
+    at Promise.then.completed (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
+    at _callCircusTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
+    at _runTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
+    at _runTestsForDescribeBlock (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
+    at run (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
+    </testCase>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="109"/>
+    <testCase name="Test suite DAO get farmer return success" duration="94"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="6"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="88"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="111"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="3"/>
+    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="1"/>
+    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="1"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="1"/>
+    <testCase name="Test suite DAO get warehouse worker return false because wrong psw" duration="90"/>
+    <testCase name="Test suite DAO get warehouse worker return success" duration="95"/>
+    <testCase name="get all products success" duration="3">
+      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+@@ -3,10 +3,10 @@
+      "category": "Fruit",
+      "farmer_email": "antonio.bianchi@mail.it",
+      "id": 1,
+      "name": "Mele",
+      "price": 14,
+-     "qty": 5,
++     "qty": 7,
+      "size": 1,
+      "unit_of_measure": "kg",
+    },
+  ]
+    at Object.toEqual (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js:363:48)
+    at Promise.then.completed (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
+    at _callCircusTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
+    at _runTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
+    at run (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:167:21)]]></failure>
+    </testCase>
+    <testCase name="get all all CONFIRMED products for a particular farmer success" duration="8">
+      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
+
+- Expected  - 11
++ Received  +  1
+
   Array [
     Object {
       "category": "Fruit",
@@ -66,8 +122,12 @@
       "id": 2,
       "name": "Lamponi",
       "price": 1.78,
-      "qty": 1,
+-     "qty": 1,
++     "qty": 3,
       "size": 1,
+      "unit_of_measure": "g",
+    },
+  ]
     at Object.toEqual (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
     at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js:391:67)
     at Promise.then.completed (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
@@ -83,14 +143,14 @@
     <testCase name="get all bookings modes in preparation success" duration="1"/>
     <testCase name="get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW" duration="1"/>
     <testCase name="get all bookings for a client success" duration="1"/>
-    <testCase name="get all bookings for a non-existing client success" duration="1"/>
-    <testCase name="the creation of a new booking mode success" duration="2"/>
-    <testCase name="updating the wallet failed bacause client was not found" duration="2"/>
-    <testCase name="updating the wallet failed bacause client id was not provided" duration="4"/>
-    <testCase name="update of wallet balance was successfull" duration="2"/>
+    <testCase name="get all bookings for a non-existing client success" duration="0"/>
+    <testCase name="the creation of a new booking mode success" duration="4"/>
+    <testCase name="updating the wallet failed bacause client was not found" duration="1"/>
+    <testCase name="updating the wallet failed bacause client id was not provided" duration="0"/>
+    <testCase name="update of wallet balance was successfull" duration="3"/>
     <testCase name="Creation of wallet with balance= 0.0 was successfull" duration="2"/>
-    <testCase name="Creation of wallet fails,id 1 already exists" duration="1"/>
-    <testCase name="Edit the state of a booking with a valid request" duration="0"/>
+    <testCase name="Creation of wallet fails,id 1 already exists" duration="0"/>
+    <testCase name="Edit the state of a booking with a valid request" duration="1"/>
     <testCase name="create a row in the booking product table" duration="3">
       <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
 
@@ -107,70 +167,120 @@ Received: 3
     at run (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)
     at runAndTransformResultsToJestFormat (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:167:21)]]></failure>
     </testCase>
-    <testCase name="get all bookings with pendingcancelation state" duration="1"/>
+    <testCase name="get all bookings with pendingcancelation state" duration="2"/>
     <testCase name="Insert a new Product expected without a field category" duration="1"/>
     <testCase name="INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success" duration="3"/>
-    <testCase name="edit state of a product receiving an array with id-state" duration="0"/>
-    <testCase name="increment qty of a product success" duration="1"/>
-    <testCase name="get all acks with NEW state success" duration="2">
+    <testCase name="edit state of a product receiving an array with id-state" duration="1"/>
+    <testCase name="increment qty of a product success" duration="0"/>
+    <testCase name="delete a product with a given id success" duration="1"/>
+    <testCase name="get all acks with NEW state success" duration="4"/>
+    <testCase name="the creation of ack success" duration="3">
       <failure message="Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: PRODUCT_WEEK.QTY"><![CDATA[Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: PRODUCT_WEEK.QTY]]></failure>
+      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+@@ -2,10 +2,10 @@
+    "CATEGORY_ID": 1,
+    "FARMER_ID": 1,
+    "ID": 1,
+    "NAME": "Mele",
+    "PRICE": 14,
+-   "QTY": 7,
++   "QTY": 9,
+    "SIZE": 1,
+    "STATE": "EXPECTED",
+    "UNIT_OF_MEASURE": "kg",
+  }
+    at Object.toEqual (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/dao.test.js:640:57)
+    at Promise.then.completed (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
+    at _callCircusTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
+    at _runTest (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
+    at _runTestsForDescribeBlock (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
+    at run (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/Khatere/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:167:21)]]></failure>
     </testCase>
-    <testCase name="the creation of ack success" duration="5"/>
   </file>
   <file path="/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="82">
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="88"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="12">
       <failure message="Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: PRODUCT_WEEK.QTY"><![CDATA[Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: PRODUCT_WEEK.QTY]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="7"/>
-    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="10"/>
-    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="9"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="8"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="8"/>
+    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="13"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="10"/>
     <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="9"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="7"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="5"/>
-    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="214"/>
-    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="8"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="4"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="5"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="5"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="6"/>
-    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="7"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="5"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="7">
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="6"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="6"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="119"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="24"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="8"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="10"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="24"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="17"/>
+    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="22">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+@@ -2,10 +2,10 @@
+    "CATEGORY_ID": 1,
+    "FARMER_ID": 1,
+    "ID": 2,
+    "NAME": "Lamponi",
+    "PRICE": 1.78,
+-   "QTY": 3,
++   "QTY": 5,
+    "SIZE": 1,
+    "STATE": "CONFIRMED",
+    "UNIT_OF_MEASURE": "g",
+  }
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:229:24)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="7"/>
+    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="16"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="16"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="11">
       <failure message="Error: expect(received).toHaveProperty(path, value)"><![CDATA[Error: expect(received).toHaveProperty(path, value)
 
 Expected path: "error"
 
 Expected value: "Invalid product id, it must be positive"
 Received value: "Invalid booking id, it must be positive"
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:281:24)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:314:24)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="6">
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="10">
       <failure message="Error: expect(received).toHaveProperty(path, value)"><![CDATA[Error: expect(received).toHaveProperty(path, value)
 
 Expected path: "error"
 
 Expected value: "Invalid qty id, it must be positive"
 Received value: "Invalid booking id, it must be positive"
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:300:24)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:333:24)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="96"/>
-    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="86"/>
-    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="4"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="136"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="107"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="5"/>
     <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="4"/>
-    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="5"/>
-    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="6"/>
-    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="10"/>
-    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="11"/>
-    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="105"/>
-    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="98"/>
-    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="87"/>
-    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="87"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="8"/>
+    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="5"/>
+    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="24"/>
+    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="8"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="113"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="84"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="96"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="79"/>
     <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="85"/>
-    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="88"/>
-    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="7">
+    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="79"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="6">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
 - Expected  - 1
@@ -183,15 +293,15 @@ Received value: "Invalid booking id, it must be positive"
       "name": "Mele",
       "price": 14,
 -     "qty": 5,
-+     "qty": 7,
++     "qty": 9,
 +     "size": 1,
 +     "unit_of_measure": "kg",
     },
   ]
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:502:29)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:535:29)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="5">
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="4">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
 - Expected  - 1
@@ -204,15 +314,15 @@ Received value: "Invalid booking id, it must be positive"
       "name": "Lamponi",
       "price": 1.78,
 -     "qty": 1,
-+     "qty": 3,
++     "qty": 5,
 +     "size": 1,
 +     "unit_of_measure": "g",
     },
   ]
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:521:29)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:554:29)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="6">
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="5">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
 - Expected  - 1
@@ -225,16 +335,16 @@ Received value: "Invalid booking id, it must be positive"
       "name": "Mele",
       "price": 14,
 -     "qty": 5,
-+     "qty": 7,
++     "qty": 9,
 +     "size": 1,
       "state": "EXPECTED",
 +     "unit_of_measure": "kg",
     },
   ]
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:541:29)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:574:29)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="8">
+    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="4">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
 - Expected  - 1
@@ -247,31 +357,31 @@ Received value: "Invalid booking id, it must be positive"
       "name": "Lamponi",
       "price": 1.78,
 -     "qty": 1,
-+     "qty": 3,
++     "qty": 5,
 +     "size": 1,
 +     "unit_of_measure": "g",
     },
   ]
-    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:562:29)
+    at Object.<anonymous> (/Users/Khatere/SoftEngII-P08-SPG/server/serverIntegration.test.js:595:29)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="8"/>
-    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="5"/>
-    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="4"/>
-    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="4"/>
-    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="5"/>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="5"/>
+    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="6"/>
+    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="5"/>
+    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="12"/>
+    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="10"/>
     <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="4"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="7"/>
-    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="4"/>
-    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="6"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="7"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="4"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="16"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="5"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="9"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="4"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="5"/>
     <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="4"/>
     <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="4"/>
     <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="5"/>
-    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="6"/>
-    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="12"/>
-    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="10"/>
+    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="7"/>
+    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="8"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="5"/>
     <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="7"/>
   </file>
 </testExecutions>

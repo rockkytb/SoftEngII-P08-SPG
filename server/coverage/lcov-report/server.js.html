@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.82% </span>
+                <span class="strong">60.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>250/425</span>
+                <span class='fraction'>256/425</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.52% </span>
+                <span class="strong">45.89% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>65/146</span>
+                <span class='fraction'>67/146</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.27% </span>
+                <span class="strong">54.09% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>65/122</span>
+                <span class='fraction'>66/122</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.53% </span>
+                <span class="strong">61.98% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>250/413</span>
+                <span class='fraction'>256/413</span>
             </div>
         
             
@@ -1320,7 +1320,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">56x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1972,23 +1972,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3212,16 +3212,16 @@ app.put(
 //DELETE /api/products/{id}
 app.delete(
   "/api/products/:id", //isLoggedIn,
-<span class="fstat-no" title="function not covered" >  as</span>ync (req, res) =&gt; {
-    const id = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-<span class="cstat-no" title="statement not covered" >    if (!validator.isInt(id, { min: 1 })) {</span>
-<span class="cstat-no" title="statement not covered" >      return res</span>
+  async (req, res) =&gt; {
+    const id = req.params.id;
+    if (!validator.isInt(id, { min: 1 })) {
+      return res
         .status(422)
         .json({ error: `Invalid product id, it must be positive` });
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      await dao.deleteProduct(id);</span>
+    try {
+      await dao.deleteProduct(id);
     } catch (err) {
 <span class="cstat-no" title="statement not covered" >      res.status(503).json({</span>
         error: `Database error during the deletation of productId: ${id}.`,
@@ -3229,7 +3229,7 @@ app.delete(
     }
 &nbsp;
     //All went fine
-<span class="cstat-no" title="statement not covered" >    res.status(204).json();</span>
+    res.status(204).json();
   }
 );
 &nbsp;
@@ -3787,7 +3787,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Dec 11 2021 14:01:43 GMT+0100 (Central European Standard Time)
+                at Sat Dec 11 2021 14:48:23 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="prettify.js"></script>

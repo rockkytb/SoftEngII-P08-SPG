@@ -241,11 +241,44 @@ describe("Test suite Integration Server", () => {
       );
     });
     // decrement the added qty so that the db won't change
-    dao.IncrementQtyProductWeek({
+    await dao.IncrementQtyProductWeek({
       ID_Product: 2,
       Dec_Qty: 2,
     })
   });
+
+  describe("delete a product", () => {
+    it("send an invalid product id", async () => {
+      const res = await request(app).delete("/api/products/-1").send();
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid product id, it must be positive`
+      );
+    });
+  });
+
+  describe("delete a product", () => {
+    it("send a valid product id", async () => {
+      const product = {
+        name: "test",
+        category_id: 1,
+        price: 10,
+        qty: 1,
+        farmer_id: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+      // insert a test product 
+      
+      let productId = await dao.insertTupleProductWEEK(product)
+      const res = await request(app).delete(`/api/products/${productId}`).send();
+      expect(res.statusCode).toEqual(204);
+    });
+   
+  });
+
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid Booking id", async () => {

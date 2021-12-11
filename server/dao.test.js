@@ -650,10 +650,27 @@ test("increment qty of a product success", () => {
   });
 
   // decrement the added qty so that the db won't change
-  dao.IncrementQtyProductWeek({
+  await dao.IncrementQtyProductWeek({
     ID_Product: 1,
     Dec_Qty: 2,
   })
+});
+
+test("delete a product with a given id success", () => {
+  const product = {
+    name: "test",
+    category_id: 1,
+    price: 10,
+    qty: 1,
+    farmer_id: 1,
+    state: "CONFIRMED",
+    size: 1,
+    unit_of_measure: "kg",
+  };
+  // insert a test product 
+  let productId = dao.insertTupleProductWEEK(product)
+
+  expect(dao.deleteProduct(productId)).resolves.toBe(true)
 });
 
 
