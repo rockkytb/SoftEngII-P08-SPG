@@ -488,10 +488,8 @@ app.post(
 
 //POST /api/bookingproducts
 
-app.post(
-  "/api/bookingproducts", //isLoggedIn,
-  async (req, res) => {
-    /*
+app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
+  /*
     for (var key in req.body) {
       if (req.body.hasOwnProperty(key)) {
         if (!validator.isInt(`${req.body[key].ID_Booking}`, { min: 1 })) {
@@ -534,42 +532,41 @@ app.post(
         }
       }
     }*/
-    let problems = 0;
-    if (req.body && req.body.products && req.body.products.length > 0) {
-      for (const i of req.body.products) {
-        if (
-          !i.id ||
-          !i.quantity ||
-          !validator.isInt(`${i.id}`, { min: 1 }) ||
-          !validator.isInt(`${i.quantity}`, { min: 1 })
-        ) {
-          return res.status(422).json({ error: `Invalid product datas` });
-        }
-        let bookingProduct = {
-          ID_Booking: req.body.ID_Booking,
-          ID_Product: i.id,
-          Qty: i.quantity,
-        };
-        try {
-          await dao.createBookingProduct(bookingProduct);
-        } catch (err) {
-          problems++;
-        }
+  let problems = 0;
+  if (req.body && req.body.products && req.body.products.length > 0) {
+    for (const i of req.body.products) {
+      if (
+        !i.id ||
+        !i.quantity ||
+        !validator.isInt(`${i.id}`, { min: 1 }) ||
+        !validator.isInt(`${i.quantity}`, { min: 1 })
+      ) {
+        return res.status(422).json({ error: `Invalid product datas` });
       }
-    } else {
-      return res.status(422).json({ error: `No products existent` });
+      let bookingProduct = {
+        ID_Booking: req.body.ID_Booking,
+        ID_Product: i.id,
+        Qty: i.quantity,
+      };
+      try {
+        await dao.createBookingProduct(bookingProduct);
+      } catch (err) {
+        problems++;
+      }
     }
-
-    if (problems == 0) {
-      //All went fine
-      res.status(201).json("Ok");
-    } else {
-      res.status(201).json({
-        error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
-      });
-    }
+  } else {
+    return res.status(422).json({ error: `No products existent` });
   }
-);
+
+  if (problems == 0) {
+    //All went fine
+    res.status(201).json("Ok");
+  } else {
+    res.status(201).json({
+      error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+    });
+  }
+});
 
 //PUT /api/productqty
 app.put(
