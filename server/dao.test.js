@@ -650,7 +650,7 @@ test("increment qty of a product success", () => {
   });
 
   // decrement the added qty so that the db won't change
-  await dao.IncrementQtyProductWeek({
+   dao.IncrementQtyProductWeek({
     ID_Product: 1,
     Dec_Qty: 2,
   })

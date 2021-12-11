@@ -241,7 +241,7 @@ describe("Test suite Integration Server", () => {
       );
     });
     // decrement the added qty so that the db won't change
-    await dao.IncrementQtyProductWeek({
+     dao.IncrementQtyProductWeek({
       ID_Product: 2,
       Dec_Qty: 2,
     })

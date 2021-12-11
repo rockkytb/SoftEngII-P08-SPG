@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639230503580" clover="3.2.0">
-  <project timestamp="1639230503580" name="All files">
+<coverage generated="1639231157291" clover="3.2.0">
+  <project timestamp="1639231157291" name="All files">
     <metrics statements="877" coveredstatements="575" conditionals="300" coveredconditionals="145" methods="291" coveredmethods="201" elements="1468" coveredelements="921" complexity="0" loc="877" ncloc="877" packages="1" files="2" classes="2"/>
     <file name="dao.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.js">
       <metrics statements="464" coveredstatements="319" conditionals="154" coveredconditionals="78" methods="169" coveredmethods="135"/>
@@ -195,10 +195,10 @@
       <line num="371" count="2" type="stmt"/>
       <line num="372" count="2" type="stmt"/>
       <line num="373" count="2" type="stmt"/>
-      <line num="374" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="374" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="375" count="0" type="stmt"/>
       <line num="376" count="0" type="stmt"/>
-      <line num="378" count="2" type="stmt"/>
+      <line num="378" count="1" type="stmt"/>
       <line num="385" count="2" type="stmt"/>
       <line num="386" count="3" type="stmt"/>
       <line num="387" count="3" type="stmt"/>
@@ -438,7 +438,7 @@
       <line num="949" count="0" type="stmt"/>
       <line num="956" count="2" type="stmt"/>
       <line num="957" count="96" type="stmt"/>
-      <line num="958" count="864" type="cond" truecount="1" falsecount="1"/>
+      <line num="958" count="863" type="cond" truecount="1" falsecount="1"/>
       <line num="959" count="0" type="stmt"/>
       <line num="962" count="96" type="cond" truecount="1" falsecount="1"/>
       <line num="965" count="96" type="stmt"/>
@@ -452,7 +452,7 @@
       <line num="988" count="96" type="stmt"/>
       <line num="989" count="96" type="stmt"/>
       <line num="992" count="96" type="stmt"/>
-      <line num="996" count="96" type="stmt"/>
+      <line num="996" count="95" type="stmt"/>
       <line num="1000" count="96" type="stmt"/>
       <line num="1004" count="96" type="stmt"/>
       <line num="1008" count="96" type="stmt"/>
