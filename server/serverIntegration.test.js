@@ -80,6 +80,16 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST update status of BOOKING MODE API
+  describe("updating booking mode status success", () => {
+    it("should update a booking mode status to PREPERATION", async () => {
+
+        const res = await request(app).put(`/api/bookings_mode/2`).send();
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toEqual({ "bookingModeId": "2"});
+    });
+  });
+
   //TEST API POST NEW CLIENT
   describe("Post new client fail", () => {
     it("create a new client fails due to invalid email", async () => {
@@ -221,30 +231,26 @@ describe("Test suite Integration Server", () => {
 
   describe("increment product qty", () => {
     it("send a valid request body", async () => {
-      const res = await request(app).put("/api/incrementProductQty").send({
-        ID_Product: 2,
-        Inc_Qty: 2,
-      });
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toEqual(
-        {
-          "ID": 2,
-          "NAME": "Lamponi",
-          "CATEGORY_ID": 1,
-          "PRICE": 1.78,
-          "QTY": 3,
-          "FARMER_ID": 1,
-          "STATE": "CONFIRMED",
-          "SIZE": 1,
-          "UNIT_OF_MEASURE": "g"
+        const res = await request(app).put("/api/incrementProductQty").send({
+          ID_Product: 1,
+          Inc_Qty: 2,
+        });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toEqual(
+          {
+            "ID": 1,
+            "NAME": "Mele",
+            "CATEGORY_ID": 1,
+            "PRICE": 14,
+            "QTY": 9,
+            "FARMER_ID": 1,
+            "STATE": "EXPECTED",
+            "SIZE": 1,
+            "UNIT_OF_MEASURE": "kg"
+        }
+        );
       }
-      );
-    });
-    // decrement the added qty so that the db won't change
-     dao.IncrementQtyProductWeek({
-      ID_Product: 2,
-      Dec_Qty: 2,
-    })
+    );
   });
 
   describe("delete a product", () => {

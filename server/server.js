@@ -625,7 +625,6 @@ app.put(
     let updatedProduct;
     try {
       updatedProduct = await dao.IncrementQtyProductWeek(product);
-      console.log("updatedProduct="+updatedProduct)
     } catch (err) {
       res.status(503).json({
         error: `Database error during incrementing product qty: ${product}.`,
@@ -1035,7 +1034,6 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
         const clients = await dao.getClientsPreparation(product.id);
 
         result = result.concat(clients);
-        console.log(result);
       } catch (e) {
         res.status(503).json({
           error: `Database error or undefined product during the put of the state of array product`,
@@ -1050,7 +1048,6 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
   result = result.filter(function (item, pos) {
     return result.indexOf(item) == pos;
   });
-  console.log(result);
   res.status(201).json(result);
 });
 

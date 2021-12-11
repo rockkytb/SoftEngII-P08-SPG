@@ -976,7 +976,9 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM BOOKING_MODE WHERE ID_BOOKING>? ", [2], (err) => {
       errTest(err);
     });
-
+    await db.run("UPDATE  BOOKING_MODE SET STATE=\"NEW\" WHERE ID_BOOKING=? ", [2], (err) => {
+      errTest(err);
+    });
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",
       [1],
@@ -986,6 +988,9 @@ exports.cleanDb = async () => {
     );
 
     await db.run("DELETE FROM PRODUCT_WEEK WHERE ID >= ?", [3], (err) => {
+      errTest(err);
+    });
+    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [7,1], (err) => {
       errTest(err);
     });
 

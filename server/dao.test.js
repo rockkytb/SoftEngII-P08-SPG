@@ -632,29 +632,26 @@ test("edit state of a product receiving an array with id-state", () => {
   return expect(dao.editStateProductWeek(parameter)).resolves.toEqual(true);
 });
 
-test("increment qty of a product success", () => {
-  const product = {
+test("increment qty of a product success", async () => {
+  product = {
     ID_Product: 1,
     Inc_Qty: 2,
-  };
-  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual({
-    "ID": 1,
-    "NAME": "Mele",
-    "CATEGORY_ID": 1,
-    "PRICE": 14,
-    "QTY": 7,
-    "FARMER_ID": 1,
-    "STATE": "EXPECTED",
-    "SIZE": 1,
-    "UNIT_OF_MEASURE": "kg"
-  });
 
-  // decrement the added qty so that the db won't change
-   dao.IncrementQtyProductWeek({
-    ID_Product: 1,
-    Dec_Qty: 2,
-  })
-});
+  }
+  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual(
+    {
+      "ID": 1,
+      "NAME": "Mele",
+      "CATEGORY_ID": 1,
+      "PRICE": 14,
+      "QTY": 9,
+      "FARMER_ID": 1,
+      "STATE": "EXPECTED",
+      "SIZE": 1,
+      "UNIT_OF_MEASURE": "kg"
+    }
+  );
+}, 10000);
 
 test("delete a product with a given id success", () => {
   const product = {

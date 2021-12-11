@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.23% </span>
+                <span class="strong">60.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>256/425</span>
+                <span class='fraction'>257/422</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.89% </span>
+                <span class="strong">46.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>67/146</span>
+                <span class='fraction'>68/146</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.09% </span>
+                <span class="strong">55.73% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>66/122</span>
+                <span class='fraction'>68/122</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.98% </span>
+                <span class="strong">62.68% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>256/413</span>
+                <span class='fraction'>257/410</span>
             </div>
         
             
@@ -1295,10 +1295,7 @@
 <a name='L1236'></a><a href='#L1236'>1236</a>
 <a name='L1237'></a><a href='#L1237'>1237</a>
 <a name='L1238'></a><a href='#L1238'>1238</a>
-<a name='L1239'></a><a href='#L1239'>1239</a>
-<a name='L1240'></a><a href='#L1240'>1240</a>
-<a name='L1241'></a><a href='#L1241'>1241</a>
-<a name='L1242'></a><a href='#L1242'>1242</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1239'></a><a href='#L1239'>1239</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1320,7 +1317,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-yes">57x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1925,7 +1922,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2335,7 +2331,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2351,7 +2346,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2387,16 +2381,16 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -3166,7 +3160,6 @@ app.put(
     let updatedProduct;
     try {
       updatedProduct = await dao.IncrementQtyProductWeek(product);
-      console.log("updatedProduct="+updatedProduct)
     } catch (err) {
 <span class="cstat-no" title="statement not covered" >      res.status(503).json({</span>
         error: `Database error during incrementing product qty: ${product}.`,
@@ -3576,7 +3569,6 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) =&gt; {
         const clients = await dao.getClientsPreparation(product.id);
 &nbsp;
         result = result.concat(clients);
-        console.log(result);
       } catch (e) {
 <span class="cstat-no" title="statement not covered" >        res.status(503).json({</span>
           error: `Database error or undefined product during the put of the state of array product`,
@@ -3591,7 +3583,6 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) =&gt; {
   result = result.filter(function (item, pos) {
     return result.indexOf(item) == pos;
   });
-  console.log(result);
   res.status(201).json(result);
 });
 &nbsp;
@@ -3627,17 +3618,17 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) =&gt; {
 //PUT /api/bookings_mode/{id}
 app.put(
   "/api/bookings_mode/:id", //isLoggedIn,
-<span class="fstat-no" title="function not covered" >  as</span>ync (req, res) =&gt; {
-    const id = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-<span class="cstat-no" title="statement not covered" >    if (!validator.isInt(id, { min: 1 })) {</span>
+  async (req, res) =&gt; {
+    const id = req.params.id;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!validator.isInt(id, { min: 1 })) {
 <span class="cstat-no" title="statement not covered" >      return res</span>
         .status(422)
         .json({ error: `Invalid booking mode id, it must be positive` });
     }
-<span class="cstat-no" title="statement not covered" >    dao</span>
+    dao
       .updateStateBookingMode(id)
-      .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >        res.status(200).json({ bookingModeId: id });</span>
+      .then(() =&gt; {
+        res.status(200).json({ bookingModeId: id });
       })
       .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >        res.status(500).json(error);</span>
@@ -3787,7 +3778,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Dec 11 2021 14:59:17 GMT+0100 (Central European Standard Time)
+                at Sat Dec 11 2021 17:32:01 GMT+0100 (Central European Standard Time)
             </div>
         </div>
         <script src="prettify.js"></script>
