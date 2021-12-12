@@ -690,12 +690,26 @@ app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
       .status(422)
       .json({ error: `Invalid category id, it must be positive` });
   }
-  if (!validator.isInt(id, { min: 1 })) {
+  if (!validator.isReal(req.body.price, { min: 0 })) {
     return res
       .status(422)
-      .json({ error: `Invalid product id, it must be positive` });
+      .json({ error: `Invalid product price, it must be positive` });
   }
-
+  if (!validator.isInt(req.body.farmerid, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+  if (!validator.isInt(req.body.size, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid size, it must be positive` });
+  }
+  if (!validator.isString(req.body.unit_of_measure).isLength({ max: 15 })) {
+    return res
+      .status(422)
+      .json({
+        error: `Invalid unit of measure, it must be a string of max 15 length`,
+      });
+  }
   const product = {
     name: req.body.name,
     category_id: req.body.category,
