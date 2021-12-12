@@ -260,6 +260,28 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //// test POST /api/farmers/:farmerid/products
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products success", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(201);
+    });
+  }, 10000);
+
   describe("delete a product", () => {
     it("send a valid product id", async () => {
       const product = {
@@ -294,10 +316,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        `Bad request`
-      );
+      expect(res.body).toHaveProperty("error", `Bad request`);
     });
   });
 
@@ -329,10 +348,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        `Invalid product data`
-      );
+      expect(res.body).toHaveProperty("error", `Invalid product data`);
     });
   });
 
