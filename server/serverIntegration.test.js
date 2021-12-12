@@ -282,6 +282,30 @@ describe("Test suite Integration Server", () => {
     });
   }, 10000);
 
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong category id", async () => {
+      const product = {
+        name: "test",
+        category: -1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid category id, it must be positive`
+      );
+    });
+  }, 10000);
+
   describe("delete a product", () => {
     it("send a valid product id", async () => {
       const product = {

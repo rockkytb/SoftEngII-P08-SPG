@@ -679,12 +679,6 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 
 // POST /api/farmers/:farmerid/products
 app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
-  if (!validator.isAscii(req.body.name)) {
-    return res
-      .status(422)
-      .json({ error: `Invalid product name, it must be a string` });
-  }
-
   if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
     return res
       .status(422)
@@ -709,14 +703,14 @@ app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
     });
   }
   const product = {
-    name: req.body.name,
+    name: `${req.body.name}`,
     category_id: req.body.category,
     price: req.body.price,
     qty: req.body.qty,
     farmer_id: req.params.farmerid,
     state: "CONFIRMED",
     size: req.body.size,
-    unit_of_measure: req.body.unit_of_measure,
+    unit_of_measure: `${req.body.unit_of_measure}`,
   };
 
   let productId;

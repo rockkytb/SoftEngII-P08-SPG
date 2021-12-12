@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.73% </span>
+                <span class="strong">63.02% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>271/432</span>
+                <span class='fraction'>271/430</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.75% </span>
+                <span class="strong">54.43% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>86/160</span>
+                <span class='fraction'>86/158</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.52% </span>
+                <span class="strong">64.83% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>271/420</span>
+                <span class='fraction'>271/418</span>
             </div>
         
             
@@ -1297,13 +1297,7 @@
 <a name='L1238'></a><a href='#L1238'>1238</a>
 <a name='L1239'></a><a href='#L1239'>1239</a>
 <a name='L1240'></a><a href='#L1240'>1240</a>
-<a name='L1241'></a><a href='#L1241'>1241</a>
-<a name='L1242'></a><a href='#L1242'>1242</a>
-<a name='L1243'></a><a href='#L1243'>1243</a>
-<a name='L1244'></a><a href='#L1244'>1244</a>
-<a name='L1245'></a><a href='#L1245'>1245</a>
-<a name='L1246'></a><a href='#L1246'>1246</a>
-<a name='L1247'></a><a href='#L1247'>1247</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1241'></a><a href='#L1241'>1241</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1325,7 +1319,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-yes">59x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1506,8 +1500,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1984,14 +1978,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3230,14 +3218,8 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) =&gt; {
 &nbsp;
 // POST /api/farmers/:farmerid/products
 app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) =&gt; {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!validator.isAscii(req.body.name)) {
-<span class="cstat-no" title="statement not covered" >    return res</span>
-      .status(422)
-      .json({ error: `Invalid product name, it must be a string` });
-  }
-&nbsp;
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
-<span class="cstat-no" title="statement not covered" >    return res</span>
+  if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
+    return res
       .status(422)
       .json({ error: `Invalid category id, it must be positive` });
   }
@@ -3260,14 +3242,14 @@ app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) =&gt; {
     });
   }
   const product = {
-    name: req.body.name,
+    name: `${req.body.name}`,
     category_id: req.body.category,
     price: req.body.price,
     qty: req.body.qty,
     farmer_id: req.params.farmerid,
     state: "CONFIRMED",
     size: req.body.size,
-    unit_of_measure: req.body.unit_of_measure,
+    unit_of_measure: `${req.body.unit_of_measure}`,
   };
 &nbsp;
   let productId;
@@ -3802,7 +3784,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Dec 12 2021 12:45:00 GMT+0100 (Ora standard dell’Europa centrale)
+                at Sun Dec 12 2021 12:59:48 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
