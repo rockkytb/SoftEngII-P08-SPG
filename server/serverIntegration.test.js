@@ -427,6 +427,173 @@ describe("Test suite Integration Server", () => {
     });
   }, 10000);
 
+  //// test POST /api/farmers/:farmerid/products
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products success", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(201);
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong category id", async () => {
+      const product = {
+        name: "test",
+        category: -1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid category id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong price", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: -10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid product price, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong farmer id", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: -1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: -1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid quantity, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: -1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid size, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong unit of measure", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure:
+          "kgkajdlajlfafaljfafljfdafladjfldfldjafladjfaljfaljflj",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid unit of measure, it must be a string of max 15 length`
+      );
+    });
+  }, 10000);
+
   ////
   describe("delete a product", () => {
     it("send a valid product id", async () => {
@@ -1129,21 +1296,20 @@ describe("Put products with new state", ()=>{
       );
     });
   });
-  /*
-  describe("Put products with expected state", () => {
-    it("valid put", async () => {
-      const parameter = 
-        {
-          name: "Apple",
-          category: 2,
-          price: 1.99,
-          qty: 2
-          };
 
-      const res = await request(app).post("/api/farmers/1/productsExpected").send(parameter);
+  /* describe("Put products with expected state", () => {
+    it("valid put", async () => {
+      const parameter = {
+        name: "Apple",
+        category: 2,
+        price: 1.99,
+        qty: 2,
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(parameter);
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual("productId", 13);
     });
-  });
-*/
+  });*/
 });
