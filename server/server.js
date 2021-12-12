@@ -899,7 +899,7 @@ app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
 });
 
 //GET /api/products to get a list of all products
-app.get("/api/products", (req, res) => {
+app.get("/api/products", isLoggedIn, (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {
@@ -911,37 +911,36 @@ app.get("/api/products", (req, res) => {
 });
 
 //GET /api/bookingModesPreparation
-app.get(
-  "/api/bookingModesPreparation",
-  /* isLoggedIn,*/ (req, res) => {
-    dao
-      .getbookingModesPreparation()
-      .then((bookings) => {
-        res.status(200).json(bookings);
-      })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
-  }
-);
+app.get("/api/bookingModesPreparation", isLoggedIn, (req, res) => {
+  dao
+    .getbookingModesPreparation()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 // GET /api/bookingModesNew/pickup
-app.get(
-  "/api/bookingModesNew/pickup",
-  /* isLoggedIn,*/ (req, res) => {
-    dao
-      .getbookingModesNewPickup()
-      .then((bookings) => {
-        res.status(200).json(bookings);
-      })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
-  }
-);
+app.get("/api/bookingModesNew/pickup", isLoggedIn, (req, res) => {
+  dao
+    .getbookingModesNewPickup()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 //GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
-app.get("/api/products/farmers/:id", (req, res) => {
+app.get("/api/products/farmers/:id", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
   const id = req.params.id;
   dao
     .getAllProductsConfirmedForFarmer(id)
@@ -954,7 +953,7 @@ app.get("/api/products/farmers/:id", (req, res) => {
 });
 
 //GET /api/bookings to get a list of all bookings
-app.get("/api/bookings", (req, res) => {
+app.get("/api/bookings", isLoggedIn, (req, res) => {
   dao
     .getAllBookings()
     .then((bookings) => {
@@ -966,7 +965,7 @@ app.get("/api/bookings", (req, res) => {
 });
 
 //GET /api/bookings/clients/{id} to get a list of all bookings for a particular cllient
-app.get("/api/bookings/clients/:id", (req, res) => {
+app.get("/api/bookings/clients/:id", isLoggedIn, (req, res) => {
   const id = req.params.id;
   dao
     .getAllBookingsForClient(id)

@@ -897,9 +897,22 @@ describe("Test suite Integration Server", () => {
       expect(response.statusCode).toBe(200);
     });
   });
+
+  describe("get all CONFIRMED products for a particular farmer success", () => {
+    it("test //GET /api/products/farmers/:id fail", async () => {
+      const response = await request(app).get("/api/products/farmers/-1");
+
+      expect(response.statusCode).toBe(422);
+      expect(response.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
+    });
+  });
+
   //test get /api/farmers/:farmerid/products_expected
   describe("get all products expected by farmer id success", () => {
-    it("test get /api/farmers/:farmerid/products_expected endpoint", async () => {
+    it("test get /api/farmers/:farmerid/products_expected endpoint fail", async () => {
       const response = await request(app).get(
         "/api/farmers/-1/products_expected"
       );

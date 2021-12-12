@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.14% </span>
+                <span class="strong">66.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>295/446</span>
+                <span class='fraction'>297/448</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.91% </span>
+                <span class="strong">61.36% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>106/174</span>
+                <span class='fraction'>108/176</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.97% </span>
+                <span class="strong">68.11% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>295/434</span>
+                <span class='fraction'>297/436</span>
             </div>
         
             
@@ -1329,8 +1329,7 @@
 <a name='L1270'></a><a href='#L1270'>1270</a>
 <a name='L1271'></a><a href='#L1271'>1271</a>
 <a name='L1272'></a><a href='#L1272'>1272</a>
-<a name='L1273'></a><a href='#L1273'>1273</a>
-<a name='L1274'></a><a href='#L1274'>1274</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1273'></a><a href='#L1273'>1273</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1352,7 +1351,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">72x</span>
+<span class="cline-any cline-yes">73x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1533,8 +1532,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">44x</span>
-<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2244,8 +2243,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2257,10 +2254,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2272,8 +2266,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3504,7 +3502,7 @@ app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) =&gt;
 });
 &nbsp;
 //GET /api/products to get a list of all products
-app.get("/api/products", (req, res) =&gt; {
+app.get("/api/products", isLoggedIn, (req, res) =&gt; {
   dao
     .getAllProducts()
     .then((product) =&gt; {
@@ -3516,37 +3514,36 @@ app.get("/api/products", (req, res) =&gt; {
 });
 &nbsp;
 //GET /api/bookingModesPreparation
-app.get(
-  "/api/bookingModesPreparation",
-  /* isLoggedIn,*/ (req, res) =&gt; {
-    dao
-      .getbookingModesPreparation()
-      .then((bookings) =&gt; {
-        res.status(200).json(bookings);
-      })
-      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json(error);</span>
-      });
-  }
-);
+app.get("/api/bookingModesPreparation", isLoggedIn, (req, res) =&gt; {
+  dao
+    .getbookingModesPreparation()
+    .then((bookings) =&gt; {
+      res.status(200).json(bookings);
+    })
+    .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(error);</span>
+    });
+});
 &nbsp;
 // GET /api/bookingModesNew/pickup
-app.get(
-  "/api/bookingModesNew/pickup",
-  /* isLoggedIn,*/ (req, res) =&gt; {
-    dao
-      .getbookingModesNewPickup()
-      .then((bookings) =&gt; {
-        res.status(200).json(bookings);
-      })
-      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json(error);</span>
-      });
-  }
-);
+app.get("/api/bookingModesNew/pickup", isLoggedIn, (req, res) =&gt; {
+  dao
+    .getbookingModesNewPickup()
+    .then((bookings) =&gt; {
+      res.status(200).json(bookings);
+    })
+    .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >      res.status(500).json(error);</span>
+    });
+});
 &nbsp;
 //GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
-app.get("/api/products/farmers/:id", (req, res) =&gt; {
+app.get("/api/products/farmers/:id", isLoggedIn, (req, res) =&gt; {
+  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
   const id = req.params.id;
   dao
     .getAllProductsConfirmedForFarmer(id)
@@ -3883,7 +3880,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Dec 12 2021 18:01:01 GMT+0100 (Ora standard dell’Europa centrale)
+                at Sun Dec 12 2021 18:06:15 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
