@@ -694,6 +694,11 @@ app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
       .status(422)
       .json({ error: `Invalid farmer id, it must be positive` });
   }
+  if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid quantity, it must be positive` });
+  }
   if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
     return res.status(422).json({ error: `Invalid size, it must be positive` });
   }
