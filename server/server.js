@@ -679,6 +679,23 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 
 // POST /api/farmers/:farmerid/products
 app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
+  if (!validator.isString(req.body.name)) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product name, it must be a string` });
+  }
+
+  if (!validator.isInt(req.body.category, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid category id, it must be positive` });
+  }
+  if (!validator.isInt(id, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
   const product = {
     name: req.body.name,
     category_id: req.body.category,
