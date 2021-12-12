@@ -369,39 +369,36 @@ app.get("/api/categories", isLoggedIn, (req, res) => {
 });
 
 //POST /api/acknowledge
-app.post(
-  "/api/acknowledge",
-  /*isLoggedIn*/ async (req, res) => {
-    if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid farmer id, it must be positive` });
-    }
-
-    if (!validator.isEmail(`${req.body.email}`)) {
-      return res.status(422).json({ error: `Invalid farmer email` });
-    }
-
-    const ack = {
-      idFarmer: req.body.idFarmer,
-      email: req.body.email,
-      state: "NEW",
-    };
-
-    let ackId;
-
-    try {
-      ackId = await dao.createAcknowledge(ack);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json({ idAck: ackId });
+app.post("/api/acknowledge", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
   }
-);
+
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res.status(422).json({ error: `Invalid farmer email` });
+  }
+
+  const ack = {
+    idFarmer: req.body.idFarmer,
+    email: req.body.email,
+    state: "NEW",
+  };
+
+  let ackId;
+
+  try {
+    ackId = await dao.createAcknowledge(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idAck: ackId });
+});
 
 //POST /api/bookings
 app.post("/api/bookings", isLoggedIn, async (req, res) => {
@@ -431,60 +428,57 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
 });
 
 //POST /api/newclient
-app.post(
-  "/api/newclient", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isEmail(req.body.email)) {
-      return res.status(422).json({ error: `Invalid client's email` });
-    }
-
-    if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
-      return res.status(422).json({ error: `Invalid client's name` });
-    }
-
-    if (!validator.isLength(req.body.surname, { min: 1, max: 100 })) {
-      return res.status(422).json({ error: `Invalid client's surname` });
-    }
-
-    if (!validator.isLength(req.body.password, { min: 60, max: 60 })) {
-      return res.status(422).json({ error: `Invalid client's password hash` });
-    }
-
-    const client = {
-      email: req.body.email,
-      name: req.body.name,
-      surname: req.body.surname,
-      password: req.body.password,
-    };
-
-    dao
-      .getClientByEmail(client.email)
-      .then((c) => {
-        if (c.id != -1) {
-          return res.status(503).json({
-            error: `Error: ${client.email} already used.`,
-          });
-        }
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          errors: `Database errors: ${err}.`,
-        });
-      });
-
-    let clientId;
-
-    try {
-      clientId = await dao.createClient(client);
-      await dao.createWallet(clientId);
-      res.status(201).json({ idClient: clientId });
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the creation of client: ${client.email}.`,
-      });
-    }
+app.post("/api/newclient", isLoggedIn, async (req, res) => {
+  if (!validator.isEmail(req.body.email)) {
+    return res.status(422).json({ error: `Invalid client's email` });
   }
-);
+
+  if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
+    return res.status(422).json({ error: `Invalid client's name` });
+  }
+
+  if (!validator.isLength(req.body.surname, { min: 1, max: 100 })) {
+    return res.status(422).json({ error: `Invalid client's surname` });
+  }
+
+  if (!validator.isLength(req.body.password, { min: 60, max: 60 })) {
+    return res.status(422).json({ error: `Invalid client's password hash` });
+  }
+
+  const client = {
+    email: req.body.email,
+    name: req.body.name,
+    surname: req.body.surname,
+    password: req.body.password,
+  };
+
+  dao
+    .getClientByEmail(client.email)
+    .then((c) => {
+      if (c.id != -1) {
+        return res.status(503).json({
+          error: `Error: ${client.email} already used.`,
+        });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });
+
+  let clientId;
+
+  try {
+    clientId = await dao.createClient(client);
+    await dao.createWallet(clientId);
+    res.status(201).json({ idClient: clientId });
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of client: ${client.email}.`,
+    });
+  }
+});
 
 //POST /api/bookingproducts
 
@@ -533,15 +527,21 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
       }
     }*/
   let problems = 0;
-  if (req.body && req.body.products && req.body.products.length > 0 && req.body.ID_Booking > 0) {
+  if (
+    req.body &&
+    req.body.products &&
+    req.body.products.length > 0 &&
+    req.body.ID_Booking > 0
+  ) {
     for (const i of req.body.products) {
       if (
         !i.id ||
         !i.quantity ||
         !validator.isInt(`${i.id}`, { min: 1 }) ||
-        !validator.isInt(`${i.quantity}`, { min: 1 } ||
-        i.id<=0 ||
-        id.qty<=0)
+        !validator.isInt(
+          `${i.quantity}`,
+          { min: 1 } || i.id <= 0 || id.qty <= 0
+        )
       ) {
         return res.status(422).json({ error: `Invalid product data` });
       }
@@ -571,155 +571,138 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
 });
 
 //PUT /api/productqty
-app.put(
-  "/api/productqty", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid qty id, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const product = {
-      ID_Product: req.body.ID_Product,
-      Dec_Qty: req.body.Dec_Qty,
-    };
-
-    try {
-      await dao.editQtyProductWeek(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${product}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(product);
+app.put("/api/productqty", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid qty id, it must be positive` });
   }
-);
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  const product = {
+    ID_Product: req.body.ID_Product,
+    Dec_Qty: req.body.Dec_Qty,
+  };
+
+  try {
+    await dao.editQtyProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of bookingProduct: ${product}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(product);
+});
 
 //PUT /api/incrementProductQty
-app.put(
-  "/api/incrementProductQty", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.Inc_Qty}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid qty, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const product = {
-      ID_Product: req.body.ID_Product,
-      Inc_Qty: req.body.Inc_Qty,
-    };
-    let updatedProduct;
-    try {
-      updatedProduct = await dao.IncrementQtyProductWeek(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during incrementing product qty: ${product}.`,
-      });
-    }
-
-    //All went fine
-    res.status(200).json(updatedProduct);
+app.put("/api/incrementProductQty", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.Inc_Qty}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid qty, it must be positive` });
   }
-);
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  const product = {
+    ID_Product: req.body.ID_Product,
+    Inc_Qty: req.body.Inc_Qty,
+  };
+  let updatedProduct;
+  try {
+    updatedProduct = await dao.IncrementQtyProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during incrementing product qty: ${product}.`,
+    });
+  }
+
+  //All went fine
+  res.status(200).json(updatedProduct);
+});
 
 //PUT /api/productstate
-app.put(
-  "/api/productstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
-      return res.status(422).json({ error: `Invalid state lenght` });
-    }
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const product = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    try {
-      await dao.editStateProductWeek(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${product}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(product);
+app.put("/api/productstate", isLoggedIn, async (req, res) => {
+  if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid state lenght` });
   }
-);
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  const product = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  try {
+    await dao.editStateProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of bookingProduct: ${product}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(product);
+});
 
 //DELETE /api/products/{id}
-app.delete(
-  "/api/products/:id", //isLoggedIn,
-  async (req, res) => {
-    const id = req.params.id;
-    if (!validator.isInt(id, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    try {
-      await dao.deleteProduct(id);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the deletation of productId: ${id}.`,
-      });
-    }
-
-    //All went fine
-    res.status(204).json();
+app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isInt(id, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
   }
-);
+
+  try {
+    await dao.deleteProduct(id);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the deletation of productId: ${id}.`,
+    });
+  }
+
+  //All went fine
+  res.status(204).json();
+});
 
 // POST /api/farmers/:farmerid/products
-app.post(
-  "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
-  async (req, res) => {
-    const product = {
-      name: req.body.name,
-      category_id: req.body.category,
-      price: req.body.price,
-      qty: req.body.qty,
-      farmer_id: req.params.farmerid,
-      state: "CONFIRMED",
-      size: req.body.size,
-      unit_of_measure: req.body.unit_of_measure,
-    };
+app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
+  const product = {
+    name: req.body.name,
+    category_id: req.body.category,
+    price: req.body.price,
+    qty: req.body.qty,
+    farmer_id: req.params.farmerid,
+    state: "CONFIRMED",
+    size: req.body.size,
+    unit_of_measure: req.body.unit_of_measure,
+  };
 
-    let productId;
+  let productId;
 
-    try {
-      productId = await dao.insertTupleProductWEEK(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during insertion into product_week table.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json({ productId: productId });
+  try {
+    productId = await dao.insertTupleProductWEEK(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during insertion into product_week table.`,
+    });
   }
-);
+
+  //All went fine
+  res.status(201).json({ productId: productId });
+});
 
 // POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
 app.post(
