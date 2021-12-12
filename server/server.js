@@ -793,67 +793,61 @@ app.post(
 );
 
 //PUT /api/bookingstate
-app.put(
-  "/api/bookingstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const booking = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    let result;
-
-    try {
-      result = await dao.editStateBooking(booking);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of booking state: ${result}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.put("/api/bookingstate", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
   }
-);
+
+  const booking = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  let result;
+
+  try {
+    result = await dao.editStateBooking(booking);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of booking state: ${result}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 //PUT /api/ackstate
-app.put(
-  "/api/ackstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid ack id, it must be positive` });
-    }
-
-    const ack = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    let result;
-
-    try {
-      result = await dao.editStateAck(ack);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of ack state: ${result}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.put("/api/ackstate", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid ack id, it must be positive` });
   }
-);
+
+  const ack = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  let result;
+
+  try {
+    result = await dao.editStateAck(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of ack state: ${result}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 // GET /api/acksNew to get all acks with NEW state
-app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
+app.get("/api/acksNew", isLoggedIn, async (req, res) => {
   dao
     .getAcksStateNew()
     .then((acks) => {
@@ -865,32 +859,35 @@ app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
 });
 
 //POST /api/wallet
-app.post(
-  "/api/wallet", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid booking id, it must be positive` });
-    }
-
-    let result;
-
-    try {
-      result = await dao.getWallet(req.body.id);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.post("/api/wallet", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking id, it must be positive` });
   }
-);
+
+  let result;
+
+  try {
+    result = await dao.getWallet(req.body.id);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 //GET /api/farmers/:farmerid/products_expected to get a list of all products
-app.get("/api/farmers/:farmerid/products_expected", (req, res) => {
+app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.farmerid}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
   dao
     .getAllProductsExpectedForFarmer(req.params.farmerid)
     .then((products) => {
