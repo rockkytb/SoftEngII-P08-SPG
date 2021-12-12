@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import  apple  from "./product_images/apple.png";
 import { Link } from "react-router-dom";
 import { CardColumns, Card, Row,Col, Button, Modal, Form } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 
 export default function ProductsList(props) {
@@ -109,15 +111,22 @@ export default function ProductsList(props) {
           <Card className="text-dark">
             {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
             <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
+              <Card.Title><h4>{product.name}</h4><h6> {product.size} {product.unit_of_measure}</h6></Card.Title>
               <Card.Text>
-                Unit Price: {product.price} €
-                <br />
-                Category: {product.category}
-                <br />
-                Available quantity: {product.qty}
-                <br />
-                Farmer : {product.farmer_email}
+                <Row>
+                  <Col xs={7}>
+                    <b>Price:</b> {product.price} € 
+                    <br />
+                    <b>Category:</b> {product.category}
+                    <br />
+                    <b>Available quantity:</b> {product.qty}
+                    <br />
+                    <b>Farmer:</b> {product.farmer_email}
+                  </Col>
+                  <Col xs={5}>
+                    <Image src={apple} rounded fluid />
+                  </Col>
+                </Row>
               </Card.Text>
               <Button
                 variant="warning"
