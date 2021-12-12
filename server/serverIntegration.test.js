@@ -1375,4 +1375,46 @@ describe("get all bookings of a client with the booked state", () => {
 });
 
 
+describe("get all products of a particular booking", () => {
+  it("get with a valid id", async () => {
+
+    const result = [
+      {
+        id_product: 1,
+        name_product: "Mele",
+        category: "Fruit", 
+        price: 14.0, 
+        qty_booking: 3, 
+        email: "antonio.bianchi@mail.it", 
+        state: "EXPECTED"
+      },
+      {
+        id_product: 2,
+        name_product: "Lamponi",
+        category: "Fruit", 
+        price: 1.78, 
+        qty_booking: 1, 
+        email: "antonio.bianchi@mail.it", 
+        state: "CONFIRMED"
+      }
+    ]
+    
+    const res = await request(app).get("/api/bookingProducts/1");
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual(result);
+  });
+});
+
+describe("get all products of a particular booking", () => {
+  it("get with a invalid id", async () => {
+    
+    const res = await request(app).get("/api/bookingProducts/0");
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty(
+      "error",
+      "Invalid product id of a element on the array, it must be positive"
+    );
+  });
+});
+
 });

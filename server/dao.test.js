@@ -689,3 +689,31 @@ test("get all bookings for a particular client with the booked state ", () => {
   ]
   return expect(dao.getAllBookingsForClientBooked(id)).resolves.toEqual(result);
 });
+
+
+
+//test productsOfBooking 
+test("GET all the product associated to a particular booking", () => {
+  const id = 1;
+  const result =[ 
+    {
+      id_product: 1,
+      name_product: "Mele",
+      category: "Fruit", 
+      price: 14.0, 
+      qty_booking: 3, 
+      email: "antonio.bianchi@mail.it", 
+      state: "EXPECTED"
+    },
+    {
+      id_product: 2,
+      name_product: "Lamponi",
+      category: "Fruit", 
+      price: 1.78, 
+      qty_booking: 1, 
+      email: "antonio.bianchi@mail.it", 
+      state: "CONFIRMED"
+    }
+  ]
+  return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
+});
