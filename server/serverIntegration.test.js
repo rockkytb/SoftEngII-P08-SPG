@@ -1338,4 +1338,41 @@ describe("Put products with new state", ()=>{
       expect(res.statusCode).toEqual(201);
     });
   });*/
+
+  
+
+  describe("get all bookings of a client with the booked state", () => {
+    it("get with a valid id", async () => {
+  
+      const result = {
+          id_booking: 2,
+          id_client: 1,
+          state: "BOOKED",
+        }
+      
+      const res = await request(app).get("/api/bookings/booked/clients/1");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual([result]);
+    });
+
+  });
+describe("get all bookings of a client with the booked state", () => {
+  it("get with a invalid id", async () => {
+
+    const result = {
+        id_booking: 2,
+        id_client: 1,
+        state: "BOOKED",
+      }
+    
+    const res = await request(app).get("/api/bookings/booked/clients/0");
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty(
+      "error",
+      "Invalid product id of a element on the array, it must be positive"
+    );
+  });
+});
+
+
 });

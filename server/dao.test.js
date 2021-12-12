@@ -675,3 +675,17 @@ test("the creation of ack success", () => {
   };
   return expect(dao.createAcknowledge(ack)).resolves.toEqual(2);
 });
+
+
+//test getAllBookingsForClientBooked 
+test("get all bookings for a particular client with the booked state ", () => {
+  const id = 1;
+  const result =[ 
+    {
+      id_booking: 2,
+      id_client: 1,
+      state: "BOOKED",
+    }
+  ]
+  return expect(dao.getAllBookingsForClientBooked(id)).resolves.toEqual(result);
+});
