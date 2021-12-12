@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import API from "./API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "react-bootstrap/Image";
+import ImageFinder from "./ImageFinder.js";
 
 function BookingReview(props) {
   const [clientID, setClientID] = useState(
@@ -154,12 +156,21 @@ function BookingReview(props) {
         <Card className="text-dark">
           {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
           <Card.Body>
-            <Card.Title>{product.name}</Card.Title>
-            <Card.Text>Unit Price: {product.price} €</Card.Text>
+            <Card.Title><h4>{product.name}</h4><h6> {product.size} {product.unit_of_measure}</h6></Card.Title>
             <Card.Text>
-              Total Price: {product.price * product.quantity} €
+              <Row>
+                <Col xs={7}>
+                  <b>Price:</b> {product.price} € <br />
+                
+                  <b>Total Price:</b> {product.price * product.quantity} € <br />
+                
+                  <b>Quantity:</b> {product.quantity}
+                </Col>
+                <Col xs={5}>
+                    <Image src={ImageFinder(product.name.toLowerCase())} rounded fluid />
+                </Col>
+              </Row>
             </Card.Text>
-            <Card.Text>Quantity: {product.quantity}</Card.Text>
             <Button
               variant="warning"
               onClick={() => {

@@ -13,6 +13,8 @@ export default function ProductsList(props) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
+  const [size, setSize] = useState(0);
+  const [unitOfMeasure, setUnitOfMeasure] = useState("");
 
   //FILTERS
   const[categoryFilter,setCategoryFilter]= useState([]);
@@ -32,6 +34,8 @@ export default function ProductsList(props) {
       name: name,
       quantity: orderQuantity,
       price: price,
+      size: size,
+      unit_of_measure: unitOfMeasure
     };
 
     props.setCart((oldList) => {
@@ -84,6 +88,8 @@ export default function ProductsList(props) {
     setProductId();
     setName("");
     setQuantity(1);
+    setSize(0);
+    setUnitOfMeasure("");
   };
 
   const prodotti = categoryFilter.length === 0 ? (props.products):(props.products.filter(p=>categoryFilter.includes(p.category)));
@@ -136,6 +142,8 @@ export default function ProductsList(props) {
                   setName(product.name);
                   setQuantity(product.qty);
                   setPrice(product.price);
+                  setSize(product.size);
+                  setUnitOfMeasure(product.unit_of_measure);
                   setShowView(true);
                 }}
               >
