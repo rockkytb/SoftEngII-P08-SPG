@@ -125,7 +125,7 @@ export default function ProductsList(props) {
                     <b>Farmer:</b> {product.farmer_email}
                   </Col>
                   <Col xs={5}>
-                    <Image src={ImageFinder("apple")} rounded fluid />
+                    <Image src={ImageFinder(product.name.toLowerCase())} rounded fluid />
                   </Col>
                 </Row>
               </Card.Text>
