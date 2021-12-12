@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import  apple  from "./product_images/apple.png";
 import { Link } from "react-router-dom";
 import { CardColumns, Card, Row,Col, Button, Modal, Form } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
+import ImageFinder from "./ImageFinder.js";
 
 export default function ProductsList(props) {
   const [showView, setShowView] = useState(false);
@@ -24,6 +24,7 @@ export default function ProductsList(props) {
   const availableCategories = Array.from(new Set(props.products.map(p=>p.category)));
   const availableFarmers = Array.from(new Set(props.products.map(p=>p.farmer_email)));
 
+  
   function handleAddToCart() {
     let update = 0;
     let product = {
@@ -124,7 +125,7 @@ export default function ProductsList(props) {
                     <b>Farmer:</b> {product.farmer_email}
                   </Col>
                   <Col xs={5}>
-                    <Image src={apple} rounded fluid />
+                    <Image src={ImageFinder("apple")} rounded fluid />
                   </Col>
                 </Row>
               </Card.Text>
