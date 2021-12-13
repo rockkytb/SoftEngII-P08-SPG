@@ -1039,9 +1039,9 @@ describe("Test suite Integration Server", () => {
       expect(response.body).toEqual([
         {
           idBooking: 2,
-          idClient: 1,
+          idClient: 2,
           state: "BOOKED",
-          date: "14/10/2009",
+          date: "2021-12-15",
           time: "14:20",
         },
       ]);

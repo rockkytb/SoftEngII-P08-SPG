@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639418950259" clover="3.2.0">
-  <project timestamp="1639418950259" name="All files">
-    <metrics statements="930" coveredstatements="669" conditionals="340" coveredconditionals="199" methods="300" coveredmethods="226" elements="1570" coveredelements="1094" complexity="0" loc="930" ncloc="930" packages="1" files="2" classes="2"/>
+<coverage generated="1639419590646" clover="3.2.0">
+  <project timestamp="1639419590646" name="All files">
+    <metrics statements="930" coveredstatements="666" conditionals="340" coveredconditionals="198" methods="300" coveredmethods="224" elements="1570" coveredelements="1088" complexity="0" loc="930" ncloc="930" packages="1" files="2" classes="2"/>
     <file name="dao.js" path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.js">
-      <metrics statements="485" coveredstatements="355" conditionals="160" coveredconditionals="85" methods="177" coveredmethods="151"/>
+      <metrics statements="485" coveredstatements="352" conditionals="160" coveredconditionals="84" methods="177" coveredmethods="149"/>
       <line num="4" count="2" type="stmt"/>
       <line num="5" count="2" type="stmt"/>
       <line num="8" count="2" type="stmt"/>
@@ -338,9 +338,9 @@
       <line num="704" count="2" type="stmt"/>
       <line num="705" count="2" type="stmt"/>
       <line num="718" count="2" type="stmt"/>
-      <line num="719" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="719" count="0" type="cond" truecount="0" falsecount="2"/>
       <line num="720" count="0" type="stmt"/>
-      <line num="725" count="2" type="stmt"/>
+      <line num="725" count="0" type="stmt"/>
       <line num="744" count="2" type="stmt"/>
       <line num="745" count="2" type="stmt"/>
       <line num="751" count="2" type="stmt"/>
@@ -426,9 +426,9 @@
       <line num="947" count="0" type="stmt"/>
       <line num="948" count="0" type="stmt"/>
       <line num="949" count="1" type="cond" truecount="1" falsecount="1"/>
-      <line num="950" count="1" type="stmt"/>
-      <line num="951" count="1" type="stmt"/>
-      <line num="953" count="0" type="stmt"/>
+      <line num="950" count="0" type="stmt"/>
+      <line num="951" count="0" type="stmt"/>
+      <line num="953" count="1" type="stmt"/>
       <line num="961" count="2" type="stmt"/>
       <line num="962" count="2" type="stmt"/>
       <line num="963" count="2" type="stmt"/>
@@ -883,8 +883,8 @@
       <line num="1148" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="1149" count="0" type="stmt"/>
       <line num="1153" count="1" type="stmt"/>
-      <line num="1156" count="0" type="stmt"/>
-      <line num="1159" count="1" type="stmt"/>
+      <line num="1156" count="1" type="stmt"/>
+      <line num="1159" count="0" type="stmt"/>
       <line num="1165" count="1" type="stmt"/>
       <line num="1167" count="3" type="stmt"/>
       <line num="1169" count="3" type="stmt"/>

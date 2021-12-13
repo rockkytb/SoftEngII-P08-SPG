@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.92% </span>
+                <span class="strong">72.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>369/506</span>
+                <span class='fraction'>365/506</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.12% </span>
+                <span class="strong">52.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>85/160</span>
+                <span class='fraction'>84/160</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.31% </span>
+                <span class="strong">84.18% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>151/177</span>
+                <span class='fraction'>149/177</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.19% </span>
+                <span class="strong">72.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>355/485</span>
+                <span class='fraction'>352/485</span>
             </div>
         
             
@@ -1890,13 +1890,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2121,10 +2121,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2968,7 +2968,7 @@ exports.getbookingModesNewPickup = () =&gt; {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      const bookings = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+      const bookings = rows.map((e) =&gt; ({
         idBooking: e.ID_BOOKING,
         idClient: e.CLIENT_ID,
         state: e.STAT,
@@ -2991,7 +2991,7 @@ exports.getbookingModesPreparation = () =&gt; {
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       const bookings = [];
-      const prenotazioni = rows.map((e) =&gt; ({
+      const prenotazioni = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         id: e.ID_BOOKING,
 &nbsp;
         email: e.EMAIL,
@@ -3004,14 +3004,14 @@ exports.getbookingModesPreparation = () =&gt; {
         product: e.productName,
         productID: e.productID,
       }));
-      prenotazioni.forEach((p) =&gt; {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (bookings[p.id]) {
+      prenotazioni.forEach(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; {
+<span class="cstat-no" title="statement not covered" >        if (bookings[p.id]) {</span>
 <span class="cstat-no" title="statement not covered" >          bookings[p.id].products = [</span>
             ...bookings[p.id].products,
             { productID: p.productID, product: p.product, qty: p.qty },
           ];
         } else {
-          bookings[p.id] = {
+<span class="cstat-no" title="statement not covered" >          bookings[p.id] = {</span>
             id: p.id,
             state: p.state,
             email: p.email,
@@ -3030,7 +3030,7 @@ exports.getbookingModesPreparation = () =&gt; {
           };
         }
       });
-      const list = bookings.filter((b) =&gt; b !== null);
+      const list = bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >b !== null)</span>;
       resolve(list);
     });
   });
@@ -3235,11 +3235,11 @@ exports.updateStateBookingMode = (id) =&gt; {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
 <span class="cstat-no" title="statement not covered" >        reject(error.message);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
-      } else if (this.changes === 0) {
-        reject({ error: "BOOKING MODE ID NOT FOUND" });
-        return;
-      } else <span class="missing-if-branch" title="else path not taken" >E</span>{
-<span class="cstat-no" title="statement not covered" >        resolve(id);</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (this.changes === 0) {
+<span class="cstat-no" title="statement not covered" >        reject({ error: "BOOKING MODE ID NOT FOUND" });</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+        resolve(id);
       }
     });
   });
@@ -3409,7 +3409,7 @@ exports.getTotal = <span class="fstat-no" title="function not covered" >()</span
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Dec 13 2021 19:09:10 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Dec 13 2021 19:19:50 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
