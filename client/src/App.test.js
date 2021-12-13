@@ -190,7 +190,15 @@ test('renders Carousel logged', () => {
 });
 
 test('renders Login and log button', () => {
-  shallow(<Login />);
+  const login = shallow(<Login handleSubmit={function handleSubmit(){}}/>);
+  
+  login.find('#emailField').simulate('change',{target : { value : "antonio.bianchi@mail.it"}});
+  login.find('#pswField').simulate('change',{target : { value : "testpsw"}});
+  login.find('#userType').simulate('change',{target : { value : "F"}});
+  login.find('#submitLogin').simulate('click', {
+    preventDefault: () => {
+    }
+   });
   shallow(<LogButton />);
 });
 
