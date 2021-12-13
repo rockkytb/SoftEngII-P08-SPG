@@ -73,7 +73,19 @@ test('renders Sidebar', () => {
 });
 
 test('renders Navbar', () => {
-  shallow(<NavbarCustom />);
+  const bookings = [{state:"PENDINGCANCELATION",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  const nc= shallow(<NavbarCustom logged={true} bookings={bookings} user={{id:"C1"}} />);
+  nc.find('#notificationBell').simulate('click');
+  shallow(<NavbarCustom logged={true} bookings={bookings} user={{id:"M1"}} />);
+  shallow(<NavbarCustom logged={true} bookings={bookings} user={{id:"F1"}} />);
+  shallow(<NavbarCustom logged={true} bookings={bookings} user={{id:"S1"}} />);
+});
+
+test('renders Navbar empty', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  shallow(<NavbarCustom bookings={bookings}/>);
 });
 
 test('renders Acknowledge delivery farmer', () => {
