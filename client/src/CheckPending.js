@@ -11,7 +11,7 @@ export default function CheckPending(props) {
 
     function bookingActions() {
         let toPrint = props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION");
-        if (toPrint.length == 0) {
+        if (toPrint.length === 0) {
             return (<>No pending bookings present</>);
         }
         return toPrint.map((booking) => (

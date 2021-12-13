@@ -24,7 +24,13 @@ import SidebarCustom from './Sidebar.js';
 import ProductsList from './ProductsList.js';
 import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
+import BookingAcceptance from './BookingAcceptance.js';
+import BookingConfirmFarmer from './BookingConfirmFarmer.js';
+import BookingDeliveryFarmer from './BookingDeliveryFarmer.js';
 import CarouselCustom from './CarouselCustom.js';
+import CheckPending from './CheckPending.js';
+import ClientData from './ClientData.js';
+import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
@@ -69,6 +75,55 @@ test('renders Navbar', () => {
   shallow(<NavbarCustom />);
 });
 
+test('renders Acknowledge delivery farmer', () => {
+  const acknowledges=[{farmer:"farmer1"}]
+  const adf = shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
+  adf.find('#confirmfarmer1').simulate('click');
+});
+
+test('renders Acknowledge delivery farmer empty', () => {
+  const acknowledges=[]
+  const adf = shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
+});
+
+test('renders BookingAcceptance', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
+  ba.find('#setAsCompleted1').simulate('click');
+
+});
+
+test('renders BookingAcceptance empty', () => {
+  const bookings = [];
+  const ba =shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
+
+});
+
+test('renders BookingConfirmFarmer', () => {
+  const expectedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
+  const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
+  bcf.find('#confirmButton').simulate('click');
+  bcf.find('#closeButton').simulate('click');
+});
+
+test('renders BookingConfirmFarmer empty', () => {
+  const expectedProducts = [];
+  const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
+});
+
+test('renders BookingDeliveryFarmer', () => {
+  const confirmedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
+  const bdf =shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
+  bdf.find('#deliveryButton').simulate('click');
+  bdf.find('#closeButton').simulate('click');
+});
+
+test('renders BookingDeliveryFarmer empty', () => {
+  const confirmedProducts = [];
+  const bdf =shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
+});
+
 test('renders BookingReview', () => {
   const clients = [{ id: "C1", name: "Ciccio", surname: "Sultano" },
   { id: "C2", name: "prodi", surname: "Ciccio" }]
@@ -103,19 +158,59 @@ test('renders BookingReview', () => {
 
 });
 
+test('renders CheckPending', () => {
+  const bookings = [{state:"PENDINGCANCELATION",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<CheckPending bookings={bookings}/>);
+});
+
+test('renders CheckPending Empty', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+  products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<CheckPending bookings={bookings}/>);
+});
+
+test('renders ClientData', () => {
+  const clients = [{id:1,name:"Antonio", surname:"Bianchi"},{id:2,name:"Marco", surname:"Bianchi"}]
+  const cd= shallow(<ClientData clients={clients} getWallet={function getWallet(){}} changeWallet={function changeWallet(){}} />);
+  cd.find('#selectClient').simulate('change',{target : { value : 1}});
+  cd.find('#submitButton').simulate('click');
+  cd.find('#changeWallet').simulate('change',{target : { value : 10.99}});
+  cd.find('#clientButton1').simulate('click');
+});
+
+
 test('renders Carousel', () => {
   const carousel= shallow(<CarouselCustom />);
   carousel.find('#Carousel').simulate('select');
 });
 
+test('renders Carousel logged', () => {
+  const carousel= shallow(<CarouselCustom logged={true} />);
+});
+
 test('renders Login and log button', () => {
-  shallow(<Login />);
+  const login = shallow(<Login handleSubmit={function handleSubmit(){}}/>);
+  
+  login.find('#emailField').simulate('change',{target : { value : "antonio.bianchi@mail.it"}});
+  login.find('#pswField').simulate('change',{target : { value : "testpsw"}});
+  login.find('#userType').simulate('change',{target : { value : "F"}});
+  login.find('#submitLogin').simulate('click', {
+    preventDefault: () => {
+    }
+   });
   shallow(<LogButton />);
 });
 
 test('renders clock', () => {
-  shallow(<Clock date={new Date()}/>);
+ const ck = shallow(<Clock date={new Date()} mobile={false} setVirtualTime={function setVirtualTime(){}}/>);
+ ck.find('#virtualTime').simulate('click');
 });
+
+test('renders clock mobile', () => {
+  const ck = shallow(<Clock date={new Date()} mobile={true} setVirtualTime={function setVirtualTime(){}}/>);
+  ck.find('#mobileButton').simulate('click');
+ });
 
 test('renders App', () => {
   shallow(<App/>);

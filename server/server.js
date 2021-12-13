@@ -678,7 +678,7 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 });
 
 //DELETE /api/bookingProduct
-app.delete("/api/bookingProduct", async (req, res) => {
+app.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
     return res
       .status(422)
