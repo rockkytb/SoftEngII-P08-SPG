@@ -598,16 +598,14 @@ async function attaccoDoS(userdata) {
         return productList;
       }
     } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
-      let expected = [];
-      let confirmed = [];
+      let prodi = [];
       const getExpected = async (userdata) => {
         const response = await fetch(
           "/api/farmers/" + userdata.id.substring(1) + "/products_expected"
         );
         const productList = await response.json();
         if (response.ok) {
-         return productList;
-         
+          prodi.push(productList);
         }
       };
       const getConfirmed = async (userdata) => {
@@ -616,22 +614,21 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          return productList2;
-
+          prodi.push(productList2);
         }
       };
 
-      expected = await getExpected(userdata);
-      confirmed = await getConfirmed(userdata);
+      await getExpected(userdata);
+      await getConfirmed(userdata);
 
-      return {expected, confirmed};
+      return prodi;
     }
   };
 
   const getBookings = async () => {
     // call: GET /api/bookings (S), GET api/bookings/clients/:id (C), GET /api/bookingModesNew/pickup (M)
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
-      const response = await fetch("/api/bookings");
+      const response = await fetch("/api/bookingModesPreparation");
       const bookingList = await response.json();
       if (response.ok) {
         return bookingList;
@@ -676,7 +673,6 @@ async function attaccoDoS(userdata) {
   };
 
   let products = await getProducts();
-  console.log(products)
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
@@ -692,45 +688,6 @@ async function confirmPreparation(id) {
         "Content-Type": "application/json",
       }
       
-    })
-      .then((response) => {
-        if (response.ok) {
-          resolve(response.json());
-        } else {
-          response
-            .json()
-            .then((obj) => {
-              reject(obj);
-            }) // error msg in the response body
-            .catch((err) => {
-              reject({
-                errors: [
-                  { param: "Application", msg: "Cannot parse server response" },
-                ],
-              });
-            }); // something else
-        }
-      })
-      .catch((err) => {
-        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
-      }); // connection errors
-  });
-}
-
-async function confirmPreparationFarmer(productList) {
-  return new Promise((resolve, reject) => {
-    const preparationList = productList.map((product) => {
-      return {
-        id: product.id,
-        state: "PREPARATION",
-      };
-    });
-    fetch(url + "/products", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(preparationList),
     })
       .then((response) => {
         if (response.ok) {
@@ -776,6 +733,5 @@ const API = {
   setDate,
   attaccoDoS,
   confirmPreparation,
-  confirmPreparationFarmer,
 };
 export default API;
