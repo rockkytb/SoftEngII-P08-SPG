@@ -727,7 +727,6 @@ exports.getbookingModesPreparation = () => {
             state: p.state,
             email: p.email,
             name: p.name,
-            state: p.state,
             time: p.time,
             date: p.date,
             surname: p.surname,
