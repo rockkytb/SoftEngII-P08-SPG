@@ -640,18 +640,15 @@ describe("Test suite Integration Server", () => {
         ID_Product: 121,
         Qty: 15,
       };
-      // insert a test booking product 
-      dao.createBookingProduct(bookingProduct)
-      const res = await request(app)
-        .delete(`/api/bookingProduct`)
-        .send({
-          "ID_Booking": 101,
-          "ID_Product": 121
-        });
+      // insert a test booking product
+      dao.createBookingProduct(bookingProduct);
+      const res = await request(app).delete(`/api/bookingProduct`).send({
+        ID_Booking: 101,
+        ID_Product: 121,
+      });
       expect(res.statusCode).toEqual(204);
     });
   });
-
 
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid product id", async () => {
@@ -782,15 +779,15 @@ describe("Test suite Integration Server", () => {
       expect(res.body).toEqual([
         {
           id: "1",
-          name: "Fruit"
+          name: "Fruit",
         },
         {
           id: "2",
-          name: "Spices"
+          name: "Spices",
         },
         {
           id: "3",
-          name: "Vegetables"
+          name: "Vegetables",
         },
       ]);
     });
@@ -1014,10 +1011,19 @@ describe("Test suite Integration Server", () => {
       const response = await request(app).get("/api/bookingModesPreparation");
       expect(response.body).toEqual([
         {
-          idBooking: 1,
-          idClient: 1,
+          date: "2021-12-15",
+          email: "marco.bianchi@mail.it",
+          id: 1,
+          name: "Marco",
+          products: [
+            {
+              product: "Mele",
+              productID: 1,
+              qty: 3,
+            },
+          ],
           state: "PENDINGCANCELATION",
-          date: "14/10/2009",
+          surname: "Bianchi",
           time: "14:20",
         },
       ]);
@@ -1356,82 +1362,73 @@ describe("Put products with new state", ()=>{
     });
   });*/
 
-  
-
   describe("get all bookings of a client with the booked state", () => {
     it("get with a valid id", async () => {
-  
       const result = {
-          id_booking: 2,
-          id_client: 1,
-          state: "BOOKED",
-        }
-      
+        id_booking: 2,
+        id_client: 1,
+        state: "BOOKED",
+      };
+
       const res = await request(app).get("/api/bookings/booked/clients/1");
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual([result]);
     });
-
   });
-describe("get all bookings of a client with the booked state", () => {
-  it("get with a invalid id", async () => {
-
-    const result = {
+  describe("get all bookings of a client with the booked state", () => {
+    it("get with a invalid id", async () => {
+      const result = {
         id_booking: 2,
         id_client: 1,
         state: "BOOKED",
-      }
-    
-    const res = await request(app).get("/api/bookings/booked/clients/0");
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty(
-      "error",
-      "Invalid product id of a element on the array, it must be positive"
-    );
+      };
+
+      const res = await request(app).get("/api/bookings/booked/clients/0");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
   });
-});
 
+  describe("get all products of a particular booking", () => {
+    it("get with a valid id", async () => {
+      const result = [
+        {
+          id_product: 1,
+          name_product: "Mele",
+          category: "Fruit",
+          price: 14.0,
+          qty_booking: 3,
+          email: "antonio.bianchi@mail.it",
+          state: "EXPECTED",
+        },
+        {
+          id_product: 2,
+          name_product: "Lamponi",
+          category: "Fruit",
+          price: 1.78,
+          qty_booking: 1,
+          email: "antonio.bianchi@mail.it",
+          state: "CONFIRMED",
+        },
+      ];
 
-describe("get all products of a particular booking", () => {
-  it("get with a valid id", async () => {
-
-    const result = [
-      {
-        id_product: 1,
-        name_product: "Mele",
-        category: "Fruit", 
-        price: 14.0, 
-        qty_booking: 3, 
-        email: "antonio.bianchi@mail.it", 
-        state: "EXPECTED"
-      },
-      {
-        id_product: 2,
-        name_product: "Lamponi",
-        category: "Fruit", 
-        price: 1.78, 
-        qty_booking: 1, 
-        email: "antonio.bianchi@mail.it", 
-        state: "CONFIRMED"
-      }
-    ]
-    
-    const res = await request(app).get("/api/bookingProducts/1");
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(result);
+      const res = await request(app).get("/api/bookingProducts/1");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual(result);
+    });
   });
-});
 
-describe("get all products of a particular booking", () => {
-  it("get with a invalid id", async () => {
-    
-    const res = await request(app).get("/api/bookingProducts/0");
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty(
-      "error",
-      "Invalid product id of a element on the array, it must be positive"
-    );
+  describe("get all products of a particular booking", () => {
+    it("get with a invalid id", async () => {
+      const res = await request(app).get("/api/bookingProducts/0");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
   });
-});
-
 });

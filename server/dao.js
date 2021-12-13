@@ -695,8 +695,7 @@ exports.getbookingModesNewPickup = () => {
 exports.getbookingModesPreparation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      //  c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID
-      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B,PRODUCT P, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID and P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
     db.all(sql, [0, "PREPARATION"], (err, rows) => {
       if (err) {
         reject(err);
@@ -705,7 +704,7 @@ exports.getbookingModesPreparation = () => {
       const bookings = [];
       const prenotazioni = rows.map((e) => ({
         id: e.ID_BOOKING,
-        state: e.STATE,
+
         email: e.EMAIL,
         name: e.NAME,
         surname: e.SURNAME,

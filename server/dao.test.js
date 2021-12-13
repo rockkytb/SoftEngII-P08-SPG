@@ -180,15 +180,15 @@ describe("Test suite DAO", () => {
     return expect(dao.getCategories()).resolves.toEqual([
       {
         id: "1",
-        name: "Fruit"
+        name: "Fruit",
       },
       {
         id: "2",
-        name: "Spices"
+        name: "Spices",
       },
       {
         id: "3",
-        name: "Vegetables"
+        name: "Vegetables",
       },
     ]);
   }, 10000);
@@ -372,7 +372,7 @@ test("get all all CONFIRMED products for a particular farmer success", async () 
       qty: 10,
       size: 1,
       unit_of_measure: "g",
-    }
+    },
   ];
 
   return expect(dao.getAllProductsConfirmedForFarmer(1)).resolves.toEqual(
@@ -405,10 +405,19 @@ test("get all bookings success", async () => {
 test("get all bookings modes in preparation success", async () => {
   const received = [
     {
-      idBooking: 1,
-      idClient: 1,
-      date: "14/10/2009",
+      date: "2021-12-15",
+      email: "marco.bianchi@mail.it",
+      id: 1,
+      name: "Marco",
+      products: [
+        {
+          product: "Mele",
+          productID: 1,
+          qty: 3,
+        },
+      ],
       state: "PENDINGCANCELATION",
+      surname: "Bianchi",
       time: "14:20",
     },
   ];
@@ -621,21 +630,18 @@ test("increment qty of a product success", async () => {
   product = {
     ID_Product: 1,
     Inc_Qty: 2,
-
-  }
-  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual(
-    {
-      "ID": 1,
-      "NAME": "Mele",
-      "CATEGORY_ID": 1,
-      "PRICE": 14,
-      "QTY": 12,
-      "FARMER_ID": 1,
-      "STATE": "EXPECTED",
-      "SIZE": 1,
-      "UNIT_OF_MEASURE": "kg"
-    }
-  );
+  };
+  expect(dao.IncrementQtyProductWeek(product)).resolves.toEqual({
+    ID: 1,
+    NAME: "Mele",
+    CATEGORY_ID: 1,
+    PRICE: 14,
+    QTY: 12,
+    FARMER_ID: 1,
+    STATE: "EXPECTED",
+    SIZE: 1,
+    UNIT_OF_MEASURE: "kg",
+  });
 }, 10000);
 
 test("delete a product with a given id success", () => {
@@ -649,10 +655,10 @@ test("delete a product with a given id success", () => {
     size: 1,
     unit_of_measure: "kg",
   };
-  // insert a test product 
-  let productId = dao.insertTupleProductWEEK(product)
+  // insert a test product
+  let productId = dao.insertTupleProductWEEK(product);
 
-  expect(dao.deleteProduct(productId)).resolves.toBe(true)
+  expect(dao.deleteProduct(productId)).resolves.toBe(true);
 });
 
 test("delete a booking product success", () => {
@@ -661,15 +667,16 @@ test("delete a booking product success", () => {
     ID_Product: 120,
     Qty: 15,
   };
-  // insert a test booking product 
-  dao.createBookingProduct(bookingProduct)
+  // insert a test booking product
+  dao.createBookingProduct(bookingProduct);
 
-  expect(dao.deleteBookingProduct({
-    "ID_Booking": 100,
-    "ID_Product": 120
-  })).resolves.toBe(true)
+  expect(
+    dao.deleteBookingProduct({
+      ID_Booking: 100,
+      ID_Product: 120,
+    })
+  ).resolves.toBe(true);
 });
-
 
 //Test get all acks with NEW state
 test("get all acks with NEW state success", () => {
@@ -688,44 +695,41 @@ test("the creation of ack success", () => {
   return expect(dao.createAcknowledge(ack)).resolves.toEqual(2);
 });
 
-
-//test getAllBookingsForClientBooked 
+//test getAllBookingsForClientBooked
 test("get all bookings for a particular client with the booked state ", () => {
   const id = 1;
-  const result =[ 
+  const result = [
     {
       id_booking: 2,
       id_client: 1,
       state: "BOOKED",
-    }
-  ]
+    },
+  ];
   return expect(dao.getAllBookingsForClientBooked(id)).resolves.toEqual(result);
 });
 
-
-
-//test productsOfBooking 
+//test productsOfBooking
 test("GET all the product associated to a particular booking", () => {
   const id = 1;
-  const result =[ 
+  const result = [
     {
       id_product: 1,
       name_product: "Mele",
-      category: "Fruit", 
-      price: 14.0, 
-      qty_booking: 3, 
-      email: "antonio.bianchi@mail.it", 
-      state: "EXPECTED"
+      category: "Fruit",
+      price: 14.0,
+      qty_booking: 3,
+      email: "antonio.bianchi@mail.it",
+      state: "EXPECTED",
     },
     {
       id_product: 2,
       name_product: "Lamponi",
-      category: "Fruit", 
-      price: 1.78, 
-      qty_booking: 1, 
-      email: "antonio.bianchi@mail.it", 
-      state: "CONFIRMED"
-    }
-  ]
+      category: "Fruit",
+      price: 1.78,
+      qty_booking: 1,
+      email: "antonio.bianchi@mail.it",
+      state: "CONFIRMED",
+    },
+  ];
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
 });
