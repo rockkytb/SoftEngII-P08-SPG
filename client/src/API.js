@@ -628,7 +628,7 @@ async function attaccoDoS(userdata) {
   const getBookings = async () => {
     // call: GET /api/bookings (S), GET api/bookings/clients/:id (C), GET /api/bookingModesNew/pickup (M)
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
-      const response = await fetch("/api/bookings");
+      const response = await fetch("/api/bookingModesPreparation");
       const bookingList = await response.json();
       if (response.ok) {
         return bookingList;

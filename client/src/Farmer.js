@@ -25,6 +25,10 @@ function Farmer(props) {
                       <Button variant="warning" className="m-3 ml-2 md-1 "> Confirm Delivery </Button> 
                   </Link>
 
+                  <Link to="/confirmPreparationFarmer"> 
+                      <Button variant="warning" className="m-3 ml-2 md-1 "> Confirm Preparation </Button> 
+                  </Link>
+
                   
               </Col>
             </Row>

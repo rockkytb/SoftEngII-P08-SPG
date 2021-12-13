@@ -20,7 +20,7 @@ export default function BookingAcceptance(props) {
     function bookingActions() {
         //FIX il filtro prende tutto quello che non è completed
         let toPrint = props.bookings.filter((bk) => bk.state !== "COMPLETED");
-        if(toPrint.length == 0){
+        if(toPrint.length === 0){
             return (<>No pending bookings present</>);
         }
         return toPrint.map((booking) => (
@@ -43,6 +43,7 @@ export default function BookingAcceptance(props) {
                         <Button
                             variant="warning"
                             disabled={booking.state=="COMPLETED"}
+                            id={"setAsCompleted"+booking.id}
                             onClick={() => {
                                 props.confirmBooking(booking.id);
                                 booking.state="COMPLETED"

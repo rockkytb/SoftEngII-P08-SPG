@@ -31,7 +31,7 @@ function Clock (props) {
             <Col md={6} className={props.mobile ? (""):("ml-3")} >
                 {props.mobile? (<>
                         
-                        <Button variant={props.virtualTime ? ("success"):("danger")} onClick = {()=>{props.setVirtualTime((oldVT)=>!oldVT)}}>Virtual clock - {props.virtualTime ? ("Enabled"):("Disabled")}</Button>
+                        <Button id="mobileButton" variant={props.virtualTime ? ("success"):("danger")} onClick = {()=>{props.setVirtualTime((oldVT)=>!oldVT)}}>Virtual clock - {props.virtualTime ? ("Enabled"):("Disabled")}</Button>
                         
                         </>):(<>
                     <span className="custom-control custom-switch d-inline" size={10}>

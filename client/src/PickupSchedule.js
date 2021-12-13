@@ -21,7 +21,7 @@ let scheduled = props.bookings.sort(function (a, b) {
 
 
     function pickupScheduleActions() {
-        if(scheduled.length == 0){
+        if(scheduled.length === 0){
             return (<>No pick-up scheduled</>);
         }
         return scheduled.map((b) => (
@@ -36,6 +36,7 @@ let scheduled = props.bookings.sort(function (a, b) {
                         </Card.Text>
                         <Button
                             variant="warning"
+                            id={"confirmButton"+b.idBooking}
                             onClick={() => {
                                 
                                 props.confirmPreparation(b.idBooking);

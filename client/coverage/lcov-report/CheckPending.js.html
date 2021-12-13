@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,23 +119,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,7 +147,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,15 +166,15 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >CheckPending(</span>props) {
+export default function CheckPending(props) {
 &nbsp;
-    function <span class="fstat-no" title="function not covered" >bookingActions(</span>) {
-        let toPrint = <span class="cstat-no" title="statement not covered" >props.bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>k) =&gt; <span class="cstat-no" title="statement not covered" >bk.state === "PENDINGCANCELATION")</span>;</span>
-<span class="cstat-no" title="statement not covered" >        if (toPrint.length == 0) {</span>
-<span class="cstat-no" title="statement not covered" >            return (&lt;&gt;No pending bookings present&lt;/&gt;);</span>
+    function bookingActions() {
+        let toPrint = props.bookings.filter((bk) =&gt; bk.state === "PENDINGCANCELATION");
+        if (toPrint.length === 0) {
+            return (&lt;&gt;No pending bookings present&lt;/&gt;);
         }
-<span class="cstat-no" title="statement not covered" >        return toPrint.map(<span class="fstat-no" title="function not covered" >(b</span>ooking) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >            &lt;Col&gt;</span>
+        return toPrint.map((booking) =&gt; (
+            &lt;Col&gt;
                 &lt;Card&gt;
                     &lt;Card.Body&gt;
                         &lt;Card.Text className="text-dark"&gt;
@@ -182,8 +182,8 @@ export default function <span class="fstat-no" title="function not covered" >Che
                             &lt;b&gt;Client:&lt;/b&gt; {booking.name + " " + booking.surname}&lt;br /&gt;
                             &lt;b&gt;Client email:&lt;/b&gt; {booking.email} &lt;br /&gt;
                             &lt;b&gt;Product list:&lt;/b&gt;&lt;br /&gt;
-                            {booking.products.map(<span class="fstat-no" title="function not covered" >p=</span>&gt;{
-<span class="cstat-no" title="statement not covered" >                                return &lt;&gt;</span>
+                            {booking.products.map(p=&gt;{
+                                return &lt;&gt;
                                     Product: {p.product}&lt;br /&gt;
                                     Quantity: {p.qty}&lt;br /&gt;&lt;br /&gt;
                                 &lt;/&gt;
@@ -199,11 +199,11 @@ export default function <span class="fstat-no" title="function not covered" >Che
         ));
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className="below-nav no-flickr"&gt;
 &nbsp;
             &lt;CardColumns xs={1} md={5}&gt;
-                &lt;&gt;{props.bookings &amp;&amp; props.bookings.length &gt; 0 ? bookingActions() : &lt;&gt;No pending bookings present&lt;/&gt;}&lt;/&gt;
+                &lt;&gt;{props.bookings &amp;&amp; props.bookings.length &gt; 0 ? bookingActions() : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;No pending bookings present&lt;/&gt;}</span>&lt;/&gt;
             &lt;/CardColumns&gt;
         &lt;/div&gt;
     );
@@ -214,7 +214,7 @@ export default function <span class="fstat-no" title="function not covered" >Che
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Dec 13 2021 12:14:41 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Dec 13 2021 17:44:21 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>

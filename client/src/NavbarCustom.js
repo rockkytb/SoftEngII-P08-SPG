@@ -43,7 +43,7 @@ if (firstTime && toPrint.length !== 0) {
         <>
           <Row>
             <div className="notificationIcon" >
-              <BellFill size={30} className="notificationIcon mr-3" fill="white" onClick={()=> {showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" })} } />
+              <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" })} } />
               {showNotification && <div className="notificationCounter"> </div>}
             </div>
 

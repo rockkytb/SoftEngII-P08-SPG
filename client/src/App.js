@@ -31,6 +31,7 @@ import CheckPending from "./CheckPending";
 import ReportAvailability from "./ReportAvailability";
 import WarehouseWorker from "./WarehouseWorker";
 import PickupSchedule from "./PickupSchedule";
+import PreparationConfirmFarmer from "./PreparationConfirmFarmer"
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -191,11 +192,15 @@ function App() {
   useEffect(async () => {
 
     let tmp = await API.attaccoDoS(userdata);
-
+    console.log(tmp)
     setProducts(tmp.products)
     setBookings(tmp.bookings)
     setClients(tmp.clients)
     setCategories(tmp.categories)
+    if (userdata && userdata.id) {
+    setProductsExpectedFarmer( userdata.id.charAt(0) === "F" ? tmp.products.expected : "")
+    setConfirmedProductsFarmer( userdata.id.charAt(0) === "F" ? tmp.products.confirmed : "")
+    }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
@@ -323,6 +328,7 @@ function App() {
     }*/
   };
 
+
   const confirmPreparation = async (id) => {
     try {
       await API.confirmPreparation(id);
@@ -336,6 +342,22 @@ function App() {
       console.log(err);
     }
   };
+
+  const confirmPreparationFarmer = async (id) => {
+    try {
+      await API.confirmPreparationFarmer(id);
+      setAttaccoDDOS(old => !old);
+      toast.success("Preparation confirmed", {
+        position: "top-center",
+      });
+    } catch (err) {
+      setAttaccoDDOS(old => !old);
+      toast.error("Error confirming preparation", { position: "top-center" });
+      console.log(err);
+    }
+  };
+
+
   /////// ROUTES
 
   return (
@@ -705,7 +727,6 @@ function App() {
                           <>
                             {/*<SidebarCustom /> */}
                             <Farmer className="below-nav main-content" 
-                            expectedProducts={products ? products.filter((f) => f.state==="EXPECTED") : []}
                             />
                           </>
                         ) : (
@@ -737,8 +758,42 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingConfirmFarmer
                               className="below-nav main-content"
-                              expectedProducts={products ? products.filter((f)=> f.state==="EXPECTED") : []}
+                              expectedProducts={productsExpectedFarmer}
                               confirmProducts={confirmProductsFarmer}
+                              calendarday={date}
+                            />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+<Route
+            path="/confirmPreparationFarmer"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "F" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <PreparationConfirmFarmer
+                              className="below-nav main-content"
+                              confirmedProducts={confirmedProductsFarmer}
+                              confirmPreparationFarmer={confirmPreparationFarmer}
                               calendarday={date}
                             />
                           </>
@@ -771,7 +826,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingDeliveryFarmer
                               className="below-nav main-content"
-                              confirmedProducts={products ? products : []}
+                              confirmedProducts={confirmedProductsFarmer ? confirmedProductsFarmer : []}
                               confirmDelivery={setCompletedDeliveryFarmer}
                               calendarday={date}
                             />

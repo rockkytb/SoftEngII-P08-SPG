@@ -31,6 +31,7 @@ export default function BookingDeliveryFarmer(props) {
                         </Card.Text>
                         <Button
                             variant="warning"
+                            id="deliveryButton"
                             onClick={() => {
                                 if(props.calendarday.getDay() === 2){
                                 //TODO, confirm delivery
@@ -62,6 +63,7 @@ export default function BookingDeliveryFarmer(props) {
                 <div className="d-flex justify-content-end">
                     <Button
                     variant="warning"
+                    id="closeButton"
                     onClick={() => {
                     
                         setShowAlertTime(false);

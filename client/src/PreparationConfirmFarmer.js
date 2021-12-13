@@ -8,42 +8,40 @@ import {
     Alert
 } from "react-bootstrap";
 
-export default function BookingConfirmFarmer(props) {
+export default function PreparationConfirmFarmer(props) {
 
     const [showAlertTime, setShowAlertTime] = useState(false);
 
     function confirmActions() {
-        if (props.expectedProducts.length === 0) {
-            return (<>No expected products to confirm</>);
+        console.log(props.confirmedProducts)
+        if (props.confirmedProducts.length == 0) {
+            return (<>No products to confirm</>);
         }
         return (
             <Col>
-                {props.expectedProducts.map((product) => {
+                {props.confirmedProducts.map((product) => {
                     return (
                         <Card>
                             <Card.Body>
                                 <Card.Text className="text-dark">
 
-
                                     <>
                                         Product:<b> {product.name + "  "}</b><br />
                                         Quantity:<b> {product.qty}</b><br /><br />
                                     </>
-
                                 </Card.Text>
                                 <Button
                                     variant="warning"
-                                    id={"confirmButton"+product.name}
                                     onClick={() => {
                                         if (props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9) {
-                                            props.confirmProducts(props.expectedProducts);
+                                            props.confirmPreparationFarmer(props.confirmedProducts);
                                         }
                                         else {
                                             setShowAlertTime(true);
                                         }
                                     }}
                                 >
-                                    Confirm products
+                                    Confirm preparation
                                 </Button>
                             </Card.Body>
                         </Card>
@@ -65,7 +63,6 @@ export default function BookingConfirmFarmer(props) {
                 <div className="d-flex justify-content-end">
                     <Button
                         variant="warning"
-                        id="closeButton"
                         onClick={() => {
 
                             setShowAlertTime(false);
@@ -78,7 +75,7 @@ export default function BookingConfirmFarmer(props) {
             </Alert>
 
             <CardColumns xs={1} md={5}>
-                <>{props.expectedProducts && props.expectedProducts.length > 0 ? confirmActions() : <>No products to confirm</>}</>
+                <>{props.confirmedProducts && props.confirmedProducts.length > 0 ? confirmActions() : <>No products to confirm</>}</>
             </CardColumns>
         </div>
     );
