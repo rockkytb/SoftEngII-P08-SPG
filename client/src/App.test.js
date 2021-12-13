@@ -28,6 +28,7 @@ import BookingAcceptance from './BookingAcceptance.js';
 import BookingConfirmFarmer from './BookingConfirmFarmer.js';
 import BookingDeliveryFarmer from './BookingDeliveryFarmer.js';
 import CarouselCustom from './CarouselCustom.js';
+import CheckPending from './CheckPending.js';
 import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
@@ -155,6 +156,19 @@ test('renders BookingReview', () => {
    });
 
 });
+
+test('renders CheckPending', () => {
+  const bookings = [{state:"PENDINGCANCELATION",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<CheckPending bookings={bookings}/>);
+});
+
+test('renders CheckPending Empty', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+  products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<CheckPending bookings={bookings}/>);
+});
+
 
 test('renders Carousel', () => {
   const carousel= shallow(<CarouselCustom />);

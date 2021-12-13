@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639402620361" clover="3.2.0">
-  <project timestamp="1639402620361" name="All files">
-    <metrics statements="764" coveredstatements="322" conditionals="547" coveredconditionals="136" methods="310" coveredmethods="121" elements="1621" coveredelements="579" complexity="0" loc="764" ncloc="764" packages="1" files="26" classes="26"/>
+<coverage generated="1639407444962" clover="3.2.0">
+  <project timestamp="1639407444962" name="All files">
+    <metrics statements="764" coveredstatements="329" conditionals="547" coveredconditionals="141" methods="310" coveredmethods="126" elements="1621" coveredelements="596" complexity="0" loc="764" ncloc="764" packages="1" files="26" classes="26"/>
     <file name="API.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\API.js">
       <metrics statements="207" coveredstatements="129" conditionals="89" coveredconditionals="55" methods="93" coveredmethods="62"/>
       <line num="1" count="2" type="stmt"/>
@@ -564,14 +564,14 @@
       <line num="20" count="3" type="stmt"/>
     </file>
     <file name="CheckPending.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\CheckPending.js">
-      <metrics statements="7" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
-      <line num="13" count="0" type="stmt"/>
-      <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="15" count="0" type="stmt"/>
-      <line num="17" count="0" type="stmt"/>
-      <line num="18" count="0" type="stmt"/>
-      <line num="27" count="0" type="stmt"/>
-      <line num="43" count="0" type="stmt"/>
+      <metrics statements="7" coveredstatements="7" conditionals="6" coveredconditionals="5" methods="5" coveredmethods="5"/>
+      <line num="13" count="2" type="stmt"/>
+      <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="43" count="2" type="stmt"/>
     </file>
     <file name="ClientData.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\ClientData.js">
       <metrics statements="18" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="9" coveredmethods="0"/>
