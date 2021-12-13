@@ -415,7 +415,7 @@ exports.deleteProduct = (productId) => {
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE) VALUES(?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
       [
@@ -426,7 +426,6 @@ exports.insertTupleProductWEEK = (product) => {
         product.farmer_id,
         product.state,
         product.size,
-        product.unit_of_measure,
       ],
       function (err) {
         if (err) {
