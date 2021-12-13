@@ -13,7 +13,7 @@ export default function BookingConfirmFarmer(props) {
     const [showAlertTime, setShowAlertTime] = useState(false);
 
     function confirmActions() {
-        if (props.expectedProducts.length == 0) {
+        if (props.expectedProducts.length === 0) {
             return (<>No expected products to confirm</>);
         }
         return (
@@ -31,6 +31,7 @@ export default function BookingConfirmFarmer(props) {
                         </Card.Text>
                         <Button
                             variant="warning"
+                            id="confirmButton"
                             onClick={() => {
                                 if (props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9) {
                                     props.confirmProducts(props.expectedProducts);
@@ -60,6 +61,7 @@ export default function BookingConfirmFarmer(props) {
                 <div className="d-flex justify-content-end">
                     <Button
                         variant="warning"
+                        id="closeButton"
                         onClick={() => {
 
                             setShowAlertTime(false);

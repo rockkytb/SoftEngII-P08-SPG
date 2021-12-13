@@ -85,8 +85,22 @@ test('renders BookingAcceptance', () => {
 
 });
 
+test('renders BookingAcceptance empty', () => {
+  const bookings = [];
+  const ba =shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
+
+});
+
 test('renders BookingConfirmFarmer', () => {
-  shallow(<BookingConfirmFarmer />);
+  const expectedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
+  const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
+  bcf.find('#confirmButton').simulate('click');
+  bcf.find('#closeButton').simulate('click');
+});
+
+test('renders BookingConfirmFarmer empty', () => {
+  const expectedProducts = [];
+  const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
 });
 
 test('renders BookingDeliveryFarmer', () => {
