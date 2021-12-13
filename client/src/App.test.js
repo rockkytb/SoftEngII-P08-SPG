@@ -79,7 +79,7 @@ test('renders BookingReview', () => {
 
   const userdata = {id:"C1",name:"Antonio"}
 
-  const br = shallow(<BookingReview clients={clients} cart={cart} getWallet={mockOk} userdata={userdata}
+  const br = shallow(<BookingReview clients={clients} setCart={function setCart(){}} setProducts={function setProducts(){}} cart={cart} getWallet={mockOk} userdata={userdata}
                       calendarday={new Date()} />);
   
 
@@ -89,10 +89,23 @@ test('renders BookingReview', () => {
   br.find('#closeModal').simulate('click');
   expect(br.find(Modal).prop('show')).toBe(false);
 
+  br.find('#removeButton').simulate('click');
+
+  br.find('#submitModal').simulate('click', {
+    preventDefault: () => {
+    },
+    currentTarget: {
+      checkValidity: () => {
+        return true;
+      }
+    }
+   });
+
 });
 
 test('renders Carousel', () => {
-  shallow(<CarouselCustom />);
+  const carousel= shallow(<CarouselCustom />);
+  carousel.find('#Carousel').simulate('select');
 });
 
 test('renders Login and log button', () => {

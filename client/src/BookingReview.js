@@ -223,6 +223,7 @@ function BookingReview(props) {
         <div className="d-flex justify-content-end">
           <Button
             variant="warning"
+            id="removeButton"
             onClick={() => {
               props.cart.forEach((product) => {
                 props.setProducts((oldList) => {

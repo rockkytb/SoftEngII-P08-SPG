@@ -18,7 +18,7 @@ function CarouselCustom(props) {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel activeIndex={index} id="Carousel" onSelect={handleSelect}>
       <Carousel.Item>
         <img
           className="d-block width100 page"
