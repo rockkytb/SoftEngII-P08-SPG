@@ -19,6 +19,7 @@ import Employee from './Employee.js';
 import Customer from './Customer.js';
 import Farmer from './Farmer';
 import Manager from './Manager.js';
+import WarehouseWorker from './WarehouseWorker.js';
 import SidebarCustom from './Sidebar.js';
 import ProductsList from './ProductsList.js';
 import NavbarCustom from './NavbarCustom.js';
@@ -48,8 +49,12 @@ test('renders Customer', () => {
   shallow(<Customer />);
 });
 
-test('renders Manager', () => {
+test('renders Warehouse Manager', () => {
   shallow(<Manager />);
+});
+
+test('renders Warehouse Worker', () => {
+  shallow(<WarehouseWorker />);
 });
 
 test('renders Farmer', () => {

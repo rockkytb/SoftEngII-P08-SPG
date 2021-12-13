@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639387876805" clover="3.2.0">
-  <project timestamp="1639387876805" name="All files">
-    <metrics statements="760" coveredstatements="149" conditionals="543" coveredconditionals="44" methods="308" coveredmethods="31" elements="1611" coveredelements="224" complexity="0" loc="760" ncloc="760" packages="1" files="26" classes="26"/>
+<coverage generated="1639388293001" clover="3.2.0">
+  <project timestamp="1639388293001" name="All files">
+    <metrics statements="760" coveredstatements="152" conditionals="543" coveredconditionals="44" methods="308" coveredmethods="34" elements="1611" coveredelements="230" complexity="0" loc="760" ncloc="760" packages="1" files="26" classes="26"/>
     <file name="API.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\API.js">
-      <metrics statements="207" coveredstatements="2" conditionals="89" coveredconditionals="0" methods="93" coveredmethods="0"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="5" count="0" type="stmt"/>
-      <line num="6" count="0" type="stmt"/>
+      <metrics statements="207" coveredstatements="4" conditionals="89" coveredconditionals="0" methods="93" coveredmethods="2"/>
+      <line num="1" count="2" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
       <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
       <line num="20" count="0" type="stmt"/>
       <line num="22" count="0" type="stmt"/>
@@ -210,7 +210,7 @@
       <line num="699" count="0" type="stmt"/>
       <line num="702" count="0" type="stmt"/>
       <line num="711" count="0" type="stmt"/>
-      <line num="716" count="1" type="stmt"/>
+      <line num="716" count="2" type="stmt"/>
     </file>
     <file name="AcknowledgeDeliveryManager.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\AcknowledgeDeliveryManager.js">
       <metrics statements="6" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -621,7 +621,7 @@
       <line num="12" count="0" type="stmt"/>
       <line num="14" count="24" type="stmt"/>
       <line num="16" count="1224" type="cond" truecount="1" falsecount="1"/>
-      <line num="19" count="0" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
     </file>
     <file name="Login.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\Login.js">
       <metrics statements="12" coveredstatements="7" conditionals="4" coveredconditionals="2" methods="7" coveredmethods="3"/>
@@ -833,8 +833,8 @@
       <line num="5" count="1" type="stmt"/>
     </file>
     <file name="WarehouseWorker.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\WarehouseWorker.js">
-      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <line num="7" count="0" type="stmt"/>
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="7" count="1" type="stmt"/>
     </file>
     <file name="styleMock.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\styleMock.js">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
