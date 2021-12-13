@@ -418,7 +418,7 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
   try {
     bookingId = await dao.createBooking(booking);
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the creation of booking for client: ${booking.idClient}.`,
     });
   }
@@ -1106,7 +1106,7 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   try {
     bookingModeId = await dao.createBookingMode(booking_mode);
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the creation of booking mode.`,
     });
   }

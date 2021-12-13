@@ -367,7 +367,7 @@ exports.IncrementQtyProductWeek = (product) => {
 };
 
 // retrieve a product with a given id
-function getProduct  (id) {
+function getProduct(id) {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * from PRODUCT_WEEK WHERE ID = ?";
     db.get(sql, [id], function (err, row) {
@@ -414,25 +414,37 @@ exports.deleteProduct = (productId) => {
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    db.run(
-      sql,
-      [
-        product.name,
-        product.category_id,
-        product.price,
-        product.qty,
-        product.farmer_id,
-        product.state,
-        product.size,
-      ],
-      function (err) {
-        if (err) {
+    const getUnity = "SELECT MEASURE FROM CATEGORY WHERE ID = ?";
+    db.get(
+      getUnity,
+      [product.category_id],
+      (err, row) => {
+        if (err)
           reject(err);
-          return;
+        else {
+          const sql =
+            "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+          db.run(
+            sql,
+            [
+              product.name,
+              product.category_id,
+              product.price,
+              product.qty,
+              product.farmer_id,
+              product.state,
+              product.size,
+              row.MEASURE,
+            ],
+            function (err) {
+              if (err) {
+                reject(err);
+                return;
+              }
+              resolve(this.lastID);
+            }
+          );
         }
-        resolve(this.lastID);
       }
     );
   });
@@ -926,7 +938,7 @@ exports.getAllBookingsForClientBooked = (id) => {
 
 exports.productsOfBooking = (id) => {
   return new Promise((resolve, reject) => {
-    const sql="SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
+    const sql = "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
     db.all(sql, [id], (err, rows) => {
       if (err) {
         reject(err);
@@ -938,10 +950,10 @@ exports.productsOfBooking = (id) => {
         const products = rows.map((e) => ({
           id_product: e.ID,
           name_product: e.NAME,
-          category: e.CATEGORY_NAME, 
-          price: e.PRICE, 
-          qty_booking: e.QTY_BOOKING, 
-          email: e.FARMER_EMAIL, 
+          category: e.CATEGORY_NAME,
+          price: e.PRICE,
+          qty_booking: e.QTY_BOOKING,
+          email: e.FARMER_EMAIL,
           state: e.STATE
         }));
 
@@ -989,7 +1001,7 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM PRODUCT_WEEK WHERE ID >= ?", [3], (err) => {
       errTest(err);
     });
-    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [10,1], (err) => {
+    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [10, 1], (err) => {
       errTest(err);
     });
 
