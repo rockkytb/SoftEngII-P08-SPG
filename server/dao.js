@@ -410,6 +410,21 @@ exports.deleteProduct = (productId) => {
   });
 };
 
+// delete a booking product from booking_product table!
+exports.deleteBookingProduct = (productId,bookingId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
+    db.run(sql, [bookingId,productId], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {

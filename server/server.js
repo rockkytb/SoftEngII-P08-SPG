@@ -677,6 +677,30 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
   res.status(204).json();
 });
 
+//DELETE /api/bookingProduct
+app.delete("/api/bookingProduct", async (req, res) => {
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking id, it must be positive` });
+  }
+  try {
+    await dao.deleteBookingProduct(req.body.ID_Product,req.body.ID_Booking);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the deletation of booking product.`,
+    });
+  }
+
+  //All went fine
+  res.status(204).json();
+});
+
 // POST /api/farmers/:farmerid/products
 app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.category}`, { min: 1 })) {

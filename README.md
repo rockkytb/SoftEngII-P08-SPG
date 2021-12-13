@@ -179,7 +179,7 @@ retrieves all the acks with state = NEW, return a JSON Vector
 
 #### POST /api/bookings_mode
 
-Create a new booking mode
+Create a new booking mode with state=NEW
 
 Receive a JSON object
 
@@ -463,6 +463,16 @@ json returned:
 #### DELETE /api/products/:id
 
 delete a product from product_week table with the given id
+
+#### DELETE /api/bookingProduct
+
+delete a booking product 
+request body :
+{
+    "ID_Product": 1,
+    "ID_Booking": 1
+}
+response status code is 204 (no content)
 
 #### PUT /api/bookings_mode/:id
 

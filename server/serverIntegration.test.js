@@ -633,6 +633,26 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  describe("delete a booking product", () => {
+    it("send a valid product id and booking id", async () => {
+      let bookingProduct = {
+        ID_Booking: 101,
+        ID_Product: 121,
+        Qty: 15,
+      };
+      // insert a test booking product 
+      dao.createBookingProduct(bookingProduct)
+      const res = await request(app)
+        .delete(`/api/bookingProduct`)
+        .send({
+          "ID_Booking": 101,
+          "ID_Product": 121
+        });
+      expect(res.statusCode).toEqual(204);
+    });
+  });
+
+
   describe("Put a row in the table BOOKING_PRODUCTS", () => {
     it("send a invalid product id", async () => {
       const res = await request(app)

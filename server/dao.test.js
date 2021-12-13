@@ -655,6 +655,21 @@ test("delete a product with a given id success", () => {
   expect(dao.deleteProduct(productId)).resolves.toBe(true)
 });
 
+test("delete a booking product success", () => {
+  let bookingProduct = {
+    ID_Booking: 100,
+    ID_Product: 120,
+    Qty: 15,
+  };
+  // insert a test booking product 
+  dao.createBookingProduct(bookingProduct)
+
+  expect(dao.deleteBookingProduct({
+    "ID_Booking": 100,
+    "ID_Product": 120
+  })).resolves.toBe(true)
+});
+
 
 //Test get all acks with NEW state
 test("get all acks with NEW state success", () => {
