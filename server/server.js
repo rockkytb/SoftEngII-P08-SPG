@@ -537,31 +537,29 @@ app.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
     req.body.ID_Booking > 0 &&
     req.body.quantity > 0
   ) {
- 
+    let bookingProduct = {
+      ID_Booking: req.body.ID_Booking,
+      ID_Product: req.body.ID_Product,
+      Qty: req.body.quantity,
+    };
+    try {
+      await dao.updateBookingProduct(bookingProduct);
+    } catch (err) {
+      res.status(503).json({
+        error: `fottiti stronzo.`,
+      });
+    }
 
-      let bookingProduct = {
-        ID_Booking: req.body.ID_Booking,
-        ID_Product: req.body.ID_Product,
-        Qty: req.body.quantity,
-      };
-      try {
-        await dao.updateBookingProduct(bookingProduct);
-      } catch (err) {
-        res.status(503).json({
-          error: `fottiti stronzo.`,
-        });
-      }
-
-  if (problems == 0) {
-    //All went fine
-    res.status(201).json("Ok");
-  } else {
-    res.status(201).json({
-      error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
-    });
+    if (problems == 0) {
+      //All went fine
+      res.status(201).json("Ok");
+    } else {
+      res.status(201).json({
+        error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+      });
+    }
   }
-}});
-
+});
 
 //PUT /api/productqty
 app.put("/api/productqty", isLoggedIn, async (req, res) => {
@@ -683,7 +681,7 @@ app.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
       .json({ error: `Invalid booking id, it must be positive` });
   }
   try {
-    await dao.deleteBookingProduct(req.body.ID_Product,req.body.ID_Booking);
+    await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking);
   } catch (err) {
     res.status(503).json({
       error: `Database error during the deletation of booking product.`,
@@ -790,7 +788,7 @@ app.post(
       farmer_id: req.params.farmerid,
       state: "EXPECTED",
       size: req.body.size,
-      unit_of_measure: req.body.unit_of_measure
+      unit_of_measure: req.body.unit_of_measure,
     };
 
     let productId;
@@ -995,7 +993,7 @@ app.get("/api/bookings/clients/:id", isLoggedIn, (req, res) => {
 });
 
 //PUT /api/walletbalance to update wallet balance
-app.put("/api/walletbalance" /*isLoggedIn,*/, async (req, res) => {
+app.put("/api/walletbalance", isLoggedIn, async (req, res) => {
   if (!validator.isFloat(`${req.body.amount}`, { min: 0 })) {
     return res
       .status(422)
@@ -1017,7 +1015,7 @@ app.put("/api/walletbalance" /*isLoggedIn,*/, async (req, res) => {
 });
 
 // GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
-app.get("/api/bookingsPendingCancelation" /*isLoggedIn,*/, async (req, res) => {
+app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
   dao
     .getBookingsStatePendingCancelation()
     .then((bookings) => {
@@ -1030,7 +1028,7 @@ app.get("/api/bookingsPendingCancelation" /*isLoggedIn,*/, async (req, res) => {
 
 // POST /api/products_expected receive a vector of tuples of products expected
 
-app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
+app.post("/api/products_expected", isLoggedIn, async (req, res) => {
   var idProduct;
   var results = [];
   var problem = 0;
@@ -1061,7 +1059,7 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
 });
 
 // put /api/clientsPreparation
-app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
+app.put("/api/clientsPreparation", isLoggedIn, async (req, res) => {
   let result = [];
 
   for (var key in req.body) {
@@ -1105,7 +1103,7 @@ app.put("/api/clientsPreparation" /*, isLoggedIn*/, async (req, res) => {
 });
 
 //POST /api/bookings_mode
-app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
+app.post("/api/bookings_mode", isLoggedIn, async (req, res) => {
   const booking_mode = {
     idBooking: req.body.idBooking,
     delivery: req.body.delivery,
@@ -1134,28 +1132,25 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
 });
 
 //PUT /api/bookings_mode/{id}
-app.put(
-  "/api/bookings_mode/:id", //isLoggedIn,
-  async (req, res) => {
-    const id = req.params.id;
-    if (!validator.isInt(id, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid booking mode id, it must be positive` });
-    }
-    dao
-      .updateStateBookingMode(id)
-      .then(() => {
-        res.status(200).json({ bookingModeId: id });
-      })
-      .catch((error) => {
-        res.status(500).json(error);
-      });
+app.put("/api/bookings_mode/:id", isLoggedIn, async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isInt(id, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking mode id, it must be positive` });
   }
-);
+  dao
+    .updateStateBookingMode(id)
+    .then(() => {
+      res.status(200).json({ bookingModeId: id });
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 //PUT  /api/products
-app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
+app.put("/api/products", isLoggedIn, async (req, res) => {
   var result;
   var problem = 0;
 
@@ -1204,7 +1199,7 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
 
 //////TODO: move clock to backend
 //////SHORT-TERM: receive the day of the week we put
-app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
+app.post("/api/clock", isLoggedIn, async (req, res) => {
   date = req.body.date;
 
   if (!date || date < 1 || date > 7)
@@ -1242,7 +1237,7 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
 
 //GET /api/bookings/booked/clients/:id
 
-app.get("/api/bookings/booked/clients/:id", (req, res) => {
+app.get("/api/bookings/booked/clients/:id", isLoggedIn, (req, res) => {
   const id = req.params.id;
   if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
     return res.status(422).json({
@@ -1261,7 +1256,7 @@ app.get("/api/bookings/booked/clients/:id", (req, res) => {
 });
 
 ///GET /api/bookingProducts/:bookingId
-app.get("/api/bookingProducts/:bookingId", (req, res) => {
+app.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
   const id = req.params.bookingId;
   console.log(req.params.bookingId);
   if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
