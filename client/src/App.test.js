@@ -33,6 +33,7 @@ import ClientData from './ClientData.js';
 import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
+import ReportAvailability from './ReportAvailability.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -221,4 +222,30 @@ test('renders ProductList', () => {
   { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
   const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
   shallow(<ProductsList products={products} categories={categories}/>);
+});
+
+test('renders ReportAvailability', () => {
+  const categories=[{id:1,name:"fruit"},{id:2,name:"vegetables"}]
+  const ra = shallow(<ReportAvailability id={"F1"}categories={categories} addFutureProducts={function addFutureProducts(){}} setDirty={function setDirty(){}}/>);
+  ra.find('#nameField').simulate('change',{target : { value : "name"}});
+  ra.find('#categoryField').simulate('change',{target : { value : 2}});
+  ra.find('#priceField').simulate('change',{target : { value : 3.39}});
+  ra.find('#quantityField').simulate('change',{target : { value : 20}});
+  ra.find('#sizeField').simulate('change',{target : { value : 3.39}});
+  ra.find('#uomField').simulate('change',{target : { value : "kg"}});
+  ra.find('#submitButton').simulate('click', {
+    preventDefault: () => {
+    },
+    currentTarget: {
+      checkValidity: () => {
+        return true;
+      }
+    }
+   });
+  ra.find('#clearButton').simulate('click');
+});
+
+test('renders ReportAvailability empty', () => {
+  const categories=[]
+  const ra = shallow(<ReportAvailability categories={categories} setDirty={function setDirty(){}}/>);
 });
