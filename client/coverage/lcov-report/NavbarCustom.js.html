@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35% </span>
+                <span class="strong">38.09% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/20</span>
+                <span class='fraction'>8/21</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35% </span>
+                <span class="strong">38.09% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/20</span>
+                <span class='fraction'>8/21</span>
             </div>
         
             
@@ -194,7 +194,26 @@
 <a name='L135'></a><a href='#L135'>135</a>
 <a name='L136'></a><a href='#L136'>136</a>
 <a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,6 +230,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,6 +306,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -333,8 +367,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState } from 'react';
 import { NavLink, Navbar, Button, Col, Row } from "react-bootstrap";
-import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill } from "react-bootstrap-icons"
+import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill, ClockFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Clock from "./Clock.js"
 import { ToastContainer, toast } from "react-toastify";
 &nbsp;
@@ -343,8 +379,18 @@ function NavbarCustom(props) {
 const [firstTime, setFirstTime] = useState(true);
 const [showNotification, setShowNotification] = useState(false);
 &nbsp;
-console.log("aaaaaaaaaaaaah")
-console.log(props.bookings)
+console.log("aaaaaaaaaaaaah");
+console.log(props.bookings);
+&nbsp;
+const popover = (
+  &lt;Popover id="popover-basic"&gt;
+    &lt;Popover.Content&gt;
+      
+       &lt;Clock mobile={true} date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}&gt;&lt;/Clock&gt;
+      
+    &lt;/Popover.Content&gt;
+  &lt;/Popover&gt;
+);
 &nbsp;
   
 let toPrint = props.bookings &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >props.bookings.length&gt;0 </span>? 
@@ -416,22 +462,27 @@ let toPrint = props.bookings &amp;&amp; <span class="branch-1 cbranch-no" title=
   return (
     &lt;Navbar className="navbar navbar-dark navbar-expand-sm fixed-top"&gt;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-      &lt;Col md={2} className="d-flex  justify-content-left"&gt;
+      &lt;Col md={4} className="d-none d-md-flex  justify-content-left pl-0"&gt;
         &lt;Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}&gt;&lt;/Clock&gt;
       &lt;/Col&gt;
 &nbsp;
-      &lt;Col md={8} className="d-flex  justify-content-center"&gt;
+      
+      &lt;Col md={4} xs={2} className="d-flex justify-content-center ml-3"&gt;
         &lt;NavLink className="navbar-brand"&gt;
           &lt;Link to="/home" style={{ textDecoration: 'none', color: 'white' }}&gt;
-            &lt;h1 id="title"&gt;Le_Cose SPG s.p.a.&lt;/h1&gt;
+            &lt;h2 id="title"&gt;SPG&lt;/h2&gt;
           &lt;/Link&gt;
         &lt;/NavLink&gt;
       &lt;/Col&gt;
 &nbsp;
-      &lt;Col md={2} className="navbar-nav ml-md-auto justify-content-end"&gt;
+      &lt;Col xs={1} className="d-flex d-md-none justify-content-center ml-3 p-0"&gt;
+        &lt;OverlayTrigger trigger="click" placement="bottom" overlay={popover}&gt;
+          &lt;ClockFill style={{color: 'white'}} size={30}/&gt;
+        &lt;/OverlayTrigger&gt;
+      &lt;/Col&gt;
+&nbsp;
+&nbsp;
+      &lt;Col md={4} xs={9} className="navbar-nav ml-md-auto justify-content-end"&gt;
         &lt;NavLink className="nav-item nav-link mr-3"&gt;
           &lt;Link to="/home" style={{ color: 'white' }}&gt;
             &lt;HouseDoorFill size={30} /&gt;
@@ -475,7 +526,7 @@ export default NavbarCustom;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Nov 30 2021 09:49:45 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Dec 13 2021 10:31:16 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
