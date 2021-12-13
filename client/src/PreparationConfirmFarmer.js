@@ -14,7 +14,7 @@ export default function PreparationConfirmFarmer(props) {
 
     function confirmActions() {
         console.log(props.confirmedProducts)
-        if (props.confirmedProducts.length == 0) {
+        if (props.confirmedProducts.length === 0) {
             return (<>No products to confirm</>);
         }
         return (
@@ -32,6 +32,7 @@ export default function PreparationConfirmFarmer(props) {
                                 </Card.Text>
                                 <Button
                                     variant="warning"
+                                    id={"confirmButton"+product.name}
                                     onClick={() => {
                                         if (props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9) {
                                             props.confirmPreparationFarmer(props.confirmedProducts);
@@ -63,6 +64,7 @@ export default function PreparationConfirmFarmer(props) {
                 <div className="d-flex justify-content-end">
                     <Button
                         variant="warning"
+                        id="closeButton"
                         onClick={() => {
 
                             setShowAlertTime(false);

@@ -35,6 +35,7 @@ import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
 import ReportAvailability from './ReportAvailability.js';
 import PickupSchedule from './PickupSchedule.js';
+import PreparationConfirmFarmer from './PreparationConfirmFarmer.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -271,6 +272,18 @@ test('renders PickupSchedule empty', () => {
   shallow(<PickupSchedule bookings={bookings}/>);
 });
 
+test('renders PreparationConfirmFarmer', () => {
+  const confirmedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
+  const pcf = shallow(<PreparationConfirmFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmPreparationFarmer={function confirmPreparationFarmer(){}}/>);
+  pcf.find('#confirmButtonapple').simulate('click');
+  pcf.find('#closeButton').simulate('click');
+});
+
+test('renders PreparationConfirmFarmer empty', () => {
+  const confirmedProducts = [];
+  shallow(<PreparationConfirmFarmer calendarday={new Date()} confirmedProducts={confirmedProducts}/>);
+  
+});
 
 test('renders ReportAvailability', () => {
   const categories=[{id:1,name:"fruit"},{id:2,name:"vegetables"}]
@@ -290,7 +303,7 @@ test('renders ReportAvailability', () => {
       }
     }
    });
-  ra.find('#clearButton').simulate('click');
+  
 });
 
 test('renders ReportAvailability empty', () => {
