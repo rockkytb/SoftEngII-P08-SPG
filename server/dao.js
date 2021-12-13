@@ -54,7 +54,7 @@ exports.getCategories = () => {
           rows.map((x) => {
             return {
               id: `${x.ID}`,
-              name: x.NAME
+              name: x.NAME,
             };
           })
         );
@@ -358,7 +358,7 @@ exports.IncrementQtyProductWeek = (product) => {
         reject(err);
         return;
       } else {
-        let updatedProduct = getProduct(product.ID_Product)
+        let updatedProduct = getProduct(product.ID_Product);
         resolve(updatedProduct);
       }
     });
@@ -378,7 +378,7 @@ function getProduct(id) {
       }
     });
   });
-};
+}
 
 // edit state of a product_week
 exports.editStateProductWeek = (product) => {
@@ -411,10 +411,11 @@ exports.deleteProduct = (productId) => {
 };
 
 // delete a booking product from booking_product table!
-exports.deleteBookingProduct = (productId,bookingId) => {
+exports.deleteBookingProduct = (productId, bookingId) => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
-    db.run(sql, [bookingId,productId], function (err) {
+    const sql =
+      "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
+    db.run(sql, [bookingId, productId], function (err) {
       if (err) {
         reject(err);
         return;
@@ -429,38 +430,33 @@ exports.deleteBookingProduct = (productId,bookingId) => {
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
     const getUnity = "SELECT NAME FROM CATEGORY WHERE ID = ?";
-    db.get(
-      getUnity,
-      [product.category_id],
-      (err, row) => {
-        if (err)
-          reject(err);
-        else {
-          const sql =
-            "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-          db.run(
-            sql,
-            [
-              product.name,
-              product.category_id,
-              product.price,
-              product.qty,
-              product.farmer_id,
-              product.state,
-              product.size,
-              product.unit_of_measure,
-            ],
-            function (err) {
-              if (err) {
-                reject(err);
-                return;
-              }
-              resolve(this.lastID);
+    db.get(getUnity, [product.category_id], (err, row) => {
+      if (err) reject(err);
+      else {
+        const sql =
+          "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        db.run(
+          sql,
+          [
+            product.name,
+            product.category_id,
+            product.price,
+            product.qty,
+            product.farmer_id,
+            product.state,
+            product.size,
+            product.unit_of_measure,
+          ],
+          function (err) {
+            if (err) {
+              reject(err);
+              return;
             }
-          );
-        }
+            resolve(this.lastID);
+          }
+        );
       }
-    );
+    });
   });
 };
 
@@ -670,6 +666,7 @@ exports.getAllBookings = () => {
       resolve(list);
     });
   });
+  //veloce
 };
 
 // GET /api/bookingModesNew/pickup
@@ -698,20 +695,55 @@ exports.getbookingModesNewPickup = () => {
 exports.getbookingModesPreparation = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+      //  c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID
+      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B,PRODUCT P, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
     db.all(sql, [0, "PREPARATION"], (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
-      const bookings = rows.map((e) => ({
-        idBooking: e.ID_BOOKING,
-        idClient: e.CLIENT_ID,
+      const bookings = [];
+      const prenotazioni = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        email: e.EMAIL,
+        name: e.NAME,
+        surname: e.SURNAME,
+        qty: e.QTY,
         state: e.STAT,
-        date: e.DATE,
         time: e.TIME,
+        date: e.DATE,
+        product: e.productName,
+        productID: e.productID,
       }));
-      resolve(bookings);
+      prenotazioni.forEach((p) => {
+        if (bookings[p.id]) {
+          bookings[p.id].products = [
+            ...bookings[p.id].products,
+            { productID: p.productID, product: p.product, qty: p.qty },
+          ];
+        } else {
+          bookings[p.id] = {
+            id: p.id,
+            state: p.state,
+            email: p.email,
+            name: p.name,
+            state: p.state,
+            time: p.time,
+            date: p.date,
+            surname: p.surname,
+            products: [
+              {
+                productID: p.productID,
+                product: p.product,
+                qty: p.qty,
+              },
+            ],
+          };
+        }
+      });
+      const list = bookings.filter((b) => b !== null);
+      resolve(list);
     });
   });
 };
@@ -952,7 +984,8 @@ exports.getAllBookingsForClientBooked = (id) => {
 
 exports.productsOfBooking = (id) => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
+    const sql =
+      "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?";
     db.all(sql, [id], (err, rows) => {
       if (err) {
         reject(err);
@@ -968,14 +1001,14 @@ exports.productsOfBooking = (id) => {
           price: e.PRICE,
           qty_booking: e.QTY_BOOKING,
           email: e.FARMER_EMAIL,
-          state: e.STATE
+          state: e.STATE,
         }));
 
         resolve(products);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
@@ -1001,9 +1034,13 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM BOOKING_MODE WHERE ID_BOOKING>? ", [2], (err) => {
       errTest(err);
     });
-    await db.run("UPDATE  BOOKING_MODE SET STATE=\"NEW\" WHERE ID_BOOKING=? ", [2], (err) => {
-      errTest(err);
-    });
+    await db.run(
+      'UPDATE  BOOKING_MODE SET STATE="NEW" WHERE ID_BOOKING=? ',
+      [2],
+      (err) => {
+        errTest(err);
+      }
+    );
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",
       [1],
@@ -1015,9 +1052,13 @@ exports.cleanDb = async () => {
     await db.run("DELETE FROM PRODUCT_WEEK WHERE ID >= ?", [3], (err) => {
       errTest(err);
     });
-    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [10, 1], (err) => {
-      errTest(err);
-    });
+    await db.run(
+      "UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?",
+      [10, 1],
+      (err) => {
+        errTest(err);
+      }
+    );
 
     await db.run(
       "DELETE FROM PRODUCT_WEEK WHERE ID != ? AND STATE!=?",
