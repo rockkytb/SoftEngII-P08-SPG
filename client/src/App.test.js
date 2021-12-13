@@ -45,7 +45,21 @@ test('renders app', () => {
 });
 
 test('renders new client form', () => {
-  shallow(<NewClientForm />);
+  const ncf = shallow(<NewClientForm getClientbyEmail={function getClientbyEmail(){return "ant.bnc@mail.it"}} addUser={function addUser(){}}/>);
+  ncf.find('#nameField').simulate('change',{target : { value : "antonio"}});
+  ncf.find('#surnameField').simulate('change',{target : { value : "bianchi"}});
+  ncf.find('#emailField').simulate('change',{target : { value : "antonio.bianchi@mail.it"}});
+  ncf.find('#pswField').simulate('change',{target : { value : "testpsw"}});
+  ncf.find('#submitButton').simulate('click', {
+    preventDefault: () => {
+    },
+    currentTarget: {
+      checkValidity: () => {
+        return true;
+      }
+    }
+   });
+   ncf.find('#clearButton').simulate('click');
 });
 
 test('renders Employee', () => {

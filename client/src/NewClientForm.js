@@ -67,6 +67,7 @@ function NewClientForm(props) {
                             <Form.Control
                                 autoFocus
                                 type='text'
+                                id="nameField"
                                 value={name}
                                 required
                                 onChange={ev => setName(ev.target.value)} />
@@ -85,6 +86,7 @@ function NewClientForm(props) {
                             <Form.Label>Surname:</Form.Label>
                             <Form.Control
                                 type='text'
+                                id="surnameField"
                                 value={surname}
                                 required
                                 onChange={ev => setSurname(ev.target.value)} />
@@ -103,6 +105,7 @@ function NewClientForm(props) {
                             <Form.Label>Email:</Form.Label>
                             <Form.Control
                                 type="email"
+                                id="emailField"
                                 value={email}
                                 required
                                 onChange={ev => setEmail(ev.target.value)} />
@@ -131,6 +134,7 @@ function NewClientForm(props) {
                             <Form.Label>Password:</Form.Label>
                             <Form.Control
                                 type='password'
+                                id="pswField"
                                 value={password}
                                 required
                                 onChange={ev => setPassword(ev.target.value)} />
@@ -145,10 +149,10 @@ function NewClientForm(props) {
                 <Row>
                     <Col md={7} xs={6}/>
                     <Col md={1} xs={1}>
-                        <Button onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                        <Button id="clearButton" onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
                     <Col md={2} xs={3} className="pl-5">
-                        <Button variant="warning" color="black" type="submit" className="float-right ">Register</Button>
+                        <Button variant="warning" color="black" id="submitButton" type="submit" className="float-right ">Register</Button>
                     </Col>
                     <Col md={2} xs={2}/>
                 </Row>
