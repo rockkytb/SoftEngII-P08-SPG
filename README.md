@@ -57,6 +57,10 @@ Login of farmers
 
 Login of shop employees
 
+#### POST /api/warehouseWorkerSessions
+
+Login of warehouse managers
+
 #### GET /api/clients
 
 return the JSON vector of all clients.
