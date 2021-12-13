@@ -1404,15 +1404,6 @@ describe("Put products with new state", ()=>{
           email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
         },
-        {
-          id_product: 2,
-          name_product: "Lamponi",
-          category: "Fruit",
-          price: 1.78,
-          qty_booking: 1,
-          email: "antonio.bianchi@mail.it",
-          state: "CONFIRMED",
-        },
       ];
 
       const res = await request(app).get("/api/bookingProducts/1");

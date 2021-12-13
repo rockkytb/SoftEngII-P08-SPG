@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1639419590646" clover="3.2.0">
-  <project timestamp="1639419590646" name="All files">
+<coverage generated="1639420435289" clover="3.2.0">
+  <project timestamp="1639420435289" name="All files">
     <metrics statements="930" coveredstatements="666" conditionals="340" coveredconditionals="198" methods="300" coveredmethods="224" elements="1570" coveredelements="1088" complexity="0" loc="930" ncloc="930" packages="1" files="2" classes="2"/>
     <file name="dao.js" path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.js">
       <metrics statements="485" coveredstatements="352" conditionals="160" coveredconditionals="84" methods="177" coveredmethods="149"/>
