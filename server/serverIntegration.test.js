@@ -1021,10 +1021,15 @@ describe("Test suite Integration Server", () => {
               productID: 1,
               qty: 3,
             },
+            {
+              product: "Lamponi",
+              productID: 2,
+              qty: 1,
+            }
           ],
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-          time: "14:20",
+          time: "18:07",
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -1039,7 +1044,7 @@ describe("Test suite Integration Server", () => {
       expect(response.body).toEqual([
         {
           idBooking: 2,
-          idClient: 2,
+          idClient: 1,
           state: "BOOKED",
           date: "2021-12-15",
           time: "14:20",
@@ -1403,6 +1408,15 @@ describe("Put products with new state", ()=>{
           qty_booking: 3,
           email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
+        },
+        {
+          category: "Fruit",
+          email: "antonio.bianchi@mail.it",
+          id_product: 2,
+          name_product: "Lamponi",
+          price: 1.78,
+          qty_booking: 1,
+          state: "CONFIRMED",
         },
       ];
 

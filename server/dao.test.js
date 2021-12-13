@@ -415,10 +415,15 @@ test("get all bookings modes in preparation success", async () => {
           productID: 1,
           qty: 3,
         },
+        {
+          product: "Lamponi",
+          productID: 2,
+          qty: 1,
+        }
       ],
       state: "PENDINGCANCELATION",
       surname: "Bianchi",
-      time: "14:20",
+      time: "18:07",
     },
   ];
   return expect(dao.getbookingModesPreparation()).resolves.toEqual(received);
@@ -430,7 +435,7 @@ test("get all the records from BOOKING_MODE table WHERE delivery = 0 and state =
     {
       idBooking: 2,
       idClient: 1,
-      date: "14/10/2009",
+      date: "2021-12-15",
       state: "BOOKED",
       time: "14:20",
     },
