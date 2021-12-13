@@ -24,7 +24,11 @@ import SidebarCustom from './Sidebar.js';
 import ProductsList from './ProductsList.js';
 import NavbarCustom from './NavbarCustom.js';
 import BookingReview from './BookingReview.js';
+import BookingAcceptance from './BookingAcceptance.js';
+import BookingConfirmFarmer from './BookingConfirmFarmer.js';
+import BookingDeliveryFarmer from './BookingDeliveryFarmer.js';
 import CarouselCustom from './CarouselCustom.js';
+import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
@@ -69,6 +73,27 @@ test('renders Navbar', () => {
   shallow(<NavbarCustom />);
 });
 
+test('renders Acknowledge delivery farmer', () => {
+  shallow(<AcknowledgeDeliveryFarmer />);
+});
+
+test('renders BookingAcceptance', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3}]}];
+  const ba =shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
+  ba.find('#setAsCompleted1').simulate('click');
+
+});
+
+test('renders BookingConfirmFarmer', () => {
+  shallow(<BookingConfirmFarmer />);
+});
+
+test('renders BookingDeliveryFarmer', () => {
+  
+  shallow(<BookingDeliveryFarmer/>);
+});
+
 test('renders BookingReview', () => {
   const clients = [{ id: "C1", name: "Ciccio", surname: "Sultano" },
   { id: "C2", name: "prodi", surname: "Ciccio" }]
@@ -106,6 +131,10 @@ test('renders BookingReview', () => {
 test('renders Carousel', () => {
   const carousel= shallow(<CarouselCustom />);
   carousel.find('#Carousel').simulate('select');
+});
+
+test('renders Carousel logged', () => {
+  const carousel= shallow(<CarouselCustom logged={true} />);
 });
 
 test('renders Login and log button', () => {

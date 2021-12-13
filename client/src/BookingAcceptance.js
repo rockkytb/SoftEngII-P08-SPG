@@ -43,6 +43,7 @@ export default function BookingAcceptance(props) {
                         <Button
                             variant="warning"
                             disabled={booking.state=="COMPLETED"}
+                            id={"setAsCompleted"+booking.id}
                             onClick={() => {
                                 props.confirmBooking(booking.id);
                                 booking.state="COMPLETED"
