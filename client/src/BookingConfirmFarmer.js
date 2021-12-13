@@ -33,6 +33,7 @@ export default function BookingConfirmFarmer(props) {
                                 </Card.Text>
                                 <Button
                                     variant="warning"
+                                    id={"confirmButton"+product.name}
                                     onClick={() => {
                                         if (props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9) {
                                             props.confirmProducts(props.expectedProducts);

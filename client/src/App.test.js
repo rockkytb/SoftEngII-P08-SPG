@@ -104,7 +104,7 @@ test('renders BookingAcceptance empty', () => {
 test('renders BookingConfirmFarmer', () => {
   const expectedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
   const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
-  bcf.find('#confirmButton').simulate('click');
+  bcf.find('#confirmButtonapple').simulate('click');
   bcf.find('#closeButton').simulate('click');
 });
 
