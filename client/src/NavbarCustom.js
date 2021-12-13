@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 function NavbarCustom(props) {
 const [firstTime, setFirstTime] = useState(true);
 const [showNotification, setShowNotification] = useState(false);
+const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
 
 console.log("aaaaaaaaaaaaah");
 console.log(props.bookings);
@@ -36,6 +37,15 @@ if (firstTime && toPrint.length !== 0) {
   setFirstTime(false);
 }
 
+let toPrintConfirm = props.bookings && props.bookings>0 ? 
+props.bookings.filter((bk) => bk.state === "CONFIRMED")
+:
+"";
+console.log(toPrintConfirm)
+if (firstTime && toPrintConfirm.length !== 0) {
+  setShowNotificationPreparation(true);
+  setFirstTime(false);
+}
 
   function checkType() {
     if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
@@ -43,8 +53,12 @@ if (firstTime && toPrint.length !== 0) {
         <>
           <Row>
             <div className="notificationIcon" >
-              <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" })} } />
-              {showNotification && <div className="notificationCounter"> </div>}
+              <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {
+                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }); 
+                showNotificationPreparation && toast.success("Your booking has been prepared", {position: "top-right"}) }
+                } />
+            
+            {(showNotification || showNotificationPreparation) && <div className="notificationCounter"> </div>}
             </div>
 
             <Link to="/cust" style={{ color: 'white' }}>

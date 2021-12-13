@@ -11,7 +11,7 @@ import {
 export default function BookingConfirmFarmer(props) {
 
     const [showAlertTime, setShowAlertTime] = useState(false);
-
+    {console.log(props.expectedProducts)}
     function confirmActions() {
         if (props.expectedProducts.length === 0) {
             return (<>No expected products to confirm</>);

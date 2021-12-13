@@ -1214,6 +1214,9 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
           let wallet = dao.getWallet(c.client).then((res) => res.balance);
           if (wallet >= c.total) {
             dao
+            .editStateBooking({id: c.id, state: "CONFIRMED"})
+            .then((res)=> res)
+            dao
               .updateWallet({ amount: wallet - c.total, id: c.client })
               .then((res) => res);
           } else {
@@ -1222,6 +1225,7 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
               .then((res) => res);
           }
         });
+        
         //res.status(200).json(clients);
       })
       .catch((err) => {

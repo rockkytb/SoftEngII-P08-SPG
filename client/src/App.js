@@ -199,8 +199,9 @@ function App() {
     setClients(tmp.clients)
     setCategories(tmp.categories)
     if (userdata && userdata.id) {
-    setProductsExpectedFarmer( userdata.id.charAt(0) === "F" ? tmp.products.expected : "")
-    setConfirmedProductsFarmer( userdata.id.charAt(0) === "F" ? tmp.products.confirmed : "")
+    setProductsExpectedFarmer( userdata.id.charAt(0) === "F" ? tmp.products[0] : "")
+    console.log(tmp.products)
+    setConfirmedProductsFarmer( userdata.id.charAt(0) === "F" ? tmp.products[1] : "")
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);

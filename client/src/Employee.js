@@ -31,7 +31,7 @@ function Employee(props) {
               <Button variant="warning" className="m-3 ml-2 md-1 "> Browse Available products </Button>
             </Link>
             <Link to="/emp/pending">
-              <Button variant="warning" className="m-3 ml-2 md-1 "> Check Pending Cancellation </Button>
+              <Button variant="warning" className="m-3 ml-2 md-1 "> Check Pending Cancelation </Button>
             </Link>
 
           </Col>

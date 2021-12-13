@@ -8,20 +8,33 @@ import {
 } from "react-bootstrap";
 
 export default function PickupSchedule(props) {
+    
+    let scheduled = props.bookings.sort(function (a, b) {
+       let tmpa = new Date(a.date);
+       let tmpb = new Date(b.date);
 
-let scheduled = props.bookings.sort(function (a, b) {
-    if ((a.date > b.date) && (a.time > b.time)) {
-        return -1;
-    }
-    if ((b.date > a.date) && (b.time > a.time)) {
-        return 1;
-    }
-    return 0;
-});
+
+
+        if ((tmpa > tmpb)) {
+            return -1;
+        }
+        if ((tmpb > tmpa)) {
+            return 1;
+        }
+        if (tmpa === tmpb) {
+            if (tmpa > tmpb) {
+                return -1;
+            }
+            if (b.time > a.time) {
+                return 1;
+            }
+        }
+        return 0;
+    });
 
 
     function pickupScheduleActions() {
-        if(scheduled.length === 0){
+        if (scheduled.length === 0) {
             return (<>No pick-up scheduled</>);
         }
         return scheduled.map((b) => (
@@ -29,19 +42,19 @@ let scheduled = props.bookings.sort(function (a, b) {
                 <Card>
                     <Card.Body>
                         <Card.Text className="text-dark">
-                                Client: {b.idClient+ "  "} <br />
-                                Booking: {b.idBooking+ " "} <br />
-                                Date: <b>{b.date+ " "} </b> <br />
-                                Time: <b>{b.time+ " "} </b> <br />
+                            Client: {b.idClient + "  "} <br />
+                            Booking: {b.idBooking + " "} <br />
+                            Date: <b>{b.date + " "} </b> <br />
+                            Time: <b>{b.time + " "} </b> <br />
                         </Card.Text>
                         <Button
                             variant="warning"
-                            id={"confirmButton"+b.idBooking}
+                            id={"confirmButton" + b.idBooking}
                             onClick={() => {
-                                
+
                                 props.confirmPreparation(b.idBooking);
                             }}
-                            
+
                         >
                             Confirm preparation
                         </Button>
@@ -52,7 +65,7 @@ let scheduled = props.bookings.sort(function (a, b) {
     }
 
     return (
-        <div className= "below-nav">
+        <div className="below-nav">
 
             <CardColumns xs={1} md={5}>
                 <>{scheduled && scheduled.length > 0 ? pickupScheduleActions() : <>No pick-up scheduled</>}</>
