@@ -893,7 +893,8 @@ function App() {
                             <OrderList className="below-nav main-content" 
                             bookings={bookings}
                             products={products}
-                            updateOrder={(product) => API.updateOrder(product)}/>
+                            updateOrder={(product) => API.updateOrder(product)}
+                            calendarday={date}/>
                           </>
                         ) : (
                           <Redirect to="/home" />

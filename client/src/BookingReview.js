@@ -27,7 +27,6 @@ function BookingReview(props) {
   const [showAlertTime, setShowAlertTime] = useState(false);
   const [showAlertPickUp, setShowAlertPickUp] = useState(false);
   const [show, setShow] = useState(false);
-  const [soldy, setSoldy] = useState(0);
 
   const [showNoValidation, setShowNoValidation] = useState(false);
 
