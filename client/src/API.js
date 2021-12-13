@@ -625,7 +625,7 @@ async function attaccoDoS(userdata) {
   };
 
   const getBookings = async () => {
-    // call: GET /api/bookings
+    // call: GET /api/bookings (S), GET api/bookings/clients/:id (C), GET /api/bookingModesNew/pickup (M)
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       const response = await fetch("/api/bookings");
       const bookingList = await response.json();
@@ -635,6 +635,14 @@ async function attaccoDoS(userdata) {
     } else if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
       const response = await fetch(
         "/api/bookings/clients/" + userdata.id.substring(1)
+      );
+      const bookingList = await response.json();
+      if (response.ok) {
+        return bookingList;
+      }
+    } else if (userdata && userdata.id && userdata.id.charAt(0) === "M") {
+      const response = await fetch(
+        "/api/bookingModesNew/pickup"
       );
       const bookingList = await response.json();
       if (response.ok) {

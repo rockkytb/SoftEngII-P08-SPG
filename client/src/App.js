@@ -30,6 +30,7 @@ import AcknowledgeDeliveryManager from "./AcknowledgeDeliveryManager";
 import CheckPending from "./CheckPending";
 import ReportAvailability from "./ReportAvailability";
 import WarehouseWorker from "./WarehouseWorker";
+import PickupSchedule from "./PickupSchedule";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -52,6 +53,7 @@ function App() {
   const [acknowledges, setAcknowledges] = useState([]);
   const [ackState, setAckState] = useState(true);
   const [productsExpectedFarmer, setProductsExpectedFarmer] = useState([]);
+
   //const [booking, setBooking] = useState();
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
@@ -144,7 +146,7 @@ function App() {
         doLogIn(credentials, "C");
       }
     };
-    
+
     add()
       .then(() => {
         toast.success("Registration completed", { position: "top-center" });
@@ -321,7 +323,7 @@ function App() {
     }*/
   };
 
-/////// ROUTES
+  /////// ROUTES
 
   return (
     <div className="page">
@@ -394,8 +396,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             {setAttaccoDDOS(true)}
                             <ProductsList
@@ -405,7 +407,7 @@ function App() {
                               cart={cart}
                               setCart={(val) => setCart(val)}
                               categories={categories}
-                              //farmers = {farmers} //???
+                            //farmers = {farmers} //???
                             />
                           </>
                         ) : (
@@ -433,15 +435,15 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "C" ||
-                          userdata.id.charAt(0) === "S") ? (
+                          (userdata.id.charAt(0) === "C" ||
+                            userdata.id.charAt(0) === "S") ? (
                           <>
                             <ProductsList
                               className="below-nav main-content"
-                              products={products.filter((f)=> f.state==="EXPECTED")}
+                              products={products.filter((f) => f.state === "EXPECTED")}
                               cart={cart}
                               categories={categories}
-                              //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
+                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
                             />
                           </>
                         ) : (
@@ -470,7 +472,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                          {setAttaccoDDOS(true)}
+                            {setAttaccoDDOS(true)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -509,7 +511,7 @@ function App() {
                               className="below-nav main-content"
                               products={deliveries}
                               categories={categories}
-                              //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
+                            //farmers = {farmers} //??? //eh metti mai che serve (tipo per le notifiche)
                             />
                           </>
                         ) : (
@@ -536,9 +538,9 @@ function App() {
                 {update ? (
                   <>
                     {loggedIn &&
-                    (userdata.id.charAt(0) === "C" ||
-                      userdata.id.charAt(0) === "F" ||
-                      userdata.id.charAt(0) === "M") ? (
+                      (userdata.id.charAt(0) === "C" ||
+                        userdata.id.charAt(0) === "F" ||
+                        userdata.id.charAt(0) === "M") ? (
                       <Redirect to="/home" />
                     ) : (
                       /** REGISTER */
@@ -632,6 +634,35 @@ function App() {
                           <>
                             {/*<SidebarCustom /> */}
                             <Manager className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/pickupSchedule"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <PickupSchedule className="below-nav main-content" bookings={bookings} />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -756,7 +787,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                      {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -787,7 +818,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                      {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -891,8 +922,8 @@ function App() {
                     {loggedIn ? (
                       <>
                         {userdata.id &&
-                        (userdata.id.charAt(0) === "S" ||
-                          userdata.id.charAt(0) === "C") ? (
+                          (userdata.id.charAt(0) === "S" ||
+                            userdata.id.charAt(0) === "C") ? (
                           <>
                             {/*<SidebarCustom />*/}
                             <BookingReview
@@ -993,7 +1024,7 @@ function App() {
             exact
             path="/home"
             render={() => (
-              
+
               <div className="width100">
                 {setAttaccoDDOS(true)}
                 <CarouselCustom className="customCarousel" logged={loggedIn} />

@@ -19,6 +19,14 @@ function Manager(props) {
               </Col>
             </Row>
 
+            <Row md={12}>
+                <Col className="md-4 pr-0 pl-0 ">
+                <Link to="/pickupSchedule"> 
+                    <Button variant="warning" className="m-3 ml-2 md-1 "> Pick-up Schedule </Button> 
+                </Link>
+              </Col>
+            </Row>
+
           </Container>
 
     </>
