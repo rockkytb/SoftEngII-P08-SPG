@@ -16,9 +16,12 @@ function ReportAvailability(props) {
     const [price, setPrice] = useState(0.0);
     const [qty, setQty] = useState(0);
     const [size, setSize] = useState(0);
+    const [unitOfMeasure, setUnitOfMeasure] = useState("");
 
     //const [measure, setMeasure] = useState("");
     //const [state, setState] = useState("");
+
+    const UOM = ["kg","g","l"];
 
     if (category == -1) {
         if (props.categories && props.categories[0] && props.categories[0].id)
@@ -39,6 +42,7 @@ function ReportAvailability(props) {
                 price: price,
                 qty: qty,
                 size: size,
+                unit_of_measure: unitOfMeasure,
                 farmerid: props.id.substring(1),
             };
             console.log(product);
@@ -140,11 +144,32 @@ function ReportAvailability(props) {
                         <Col xs={2} />
                     </Row>
 
+                    <Row>
+                        <Col xs={2} />
+                        <Col xs={8}>
+                            <Form.Group controlId='select'>
+                                <Form.Label>Unit of measure:</Form.Label>
+                                <Form.Control as="select" value={unitOfMeasure} onChange={e => setUnitOfMeasure(e.target.value)}>
+                                    {UOM ?
+                                        UOM.map((c) =>
+                                            <option value={c}>
+                                                {c}
+                                            </option>
+                                        ) : <></>}
+                                </Form.Control>
+                                {unitOfMeasure && <Form.Control.Feedback type="invalid">
+                                    Please insert a valid unitOfMeasure for the product.
+                                </Form.Control.Feedback>}
+                            </Form.Group>
+                        </Col>
+                        <Col xs={2} />
+                    </Row>
+
 
                     <Row>
                         <Col xs={8} />
                         <Col xs={1}>
-                            <Button onClick={() => { setName(""); setCategory(props.categories[0].id); setPrice(0.0); setQty(0); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                            <Button onClick={() => { setName(""); setCategory(props.categories[0].id); setPrice(0.0); setQty(0); setUnitOfMeasure(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                         </Col>
                         <Col xs={1} className="pl-5">
                             <Button type="submit" variant="warning" className="float-right ">Add</Button>
