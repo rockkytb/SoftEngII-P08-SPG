@@ -137,6 +137,7 @@ export default function ProductsList(props) {
               </Card.Text>
               <Button
                 variant="warning"
+                id={"addCart"+product.id}
                 onClick={() => {
                   setProductId(product.id);
                   setName(product.name);
@@ -168,7 +169,7 @@ export default function ProductsList(props) {
 
               <Dropdown.Menu>
                 {availableCategories.map((c,catid)=>(<>
-                  <Dropdown.Item onClick={() => {
+                  <Dropdown.Item id={"catFilter"+c} onClick={() => {
                         if(categoryFilter.includes(c)){
                           setCategoryFilter(oldList => {return oldList.filter(cat => cat !== c);});
                         }
@@ -199,7 +200,7 @@ export default function ProductsList(props) {
 
                 <Dropdown.Menu>
                 {availableFarmers.map((f,farmerid)=>(<>
-                  <Dropdown.Item onClick={() => {
+                  <Dropdown.Item id={"farmerFilter"+f.charAt(0)+f.charAt(1)} onClick={() => {
                         console.log(farmerFilter);
                         if(farmerFilter.includes(f)){
                           setFarmerFilter(oldList => {return oldList.filter(farmer => farmer !== f);});
@@ -239,6 +240,7 @@ export default function ProductsList(props) {
                   <Form.Label>: Quantity</Form.Label>
                   <Form.Control
                     type="number"
+                    id="qtyButton"
                     defaultValue="1"
                     default="1"
                     min="1"
@@ -260,10 +262,10 @@ export default function ProductsList(props) {
             </Col>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleViewClose}>
+            <Button id="closeButton" variant="secondary" onClick={handleViewClose}>
               Close
             </Button>
-            <Button variant="warning" onClick={() => handleAddToCart()}>
+            <Button id="submitButton" variant="warning" onClick={() => handleAddToCart()}>
               Submit
             </Button>
           </Modal.Footer>

@@ -245,10 +245,17 @@ test('renders App', () => {
 });
 
 test('renders ProductList', () => {
-  const products = [{ id: 1, name: "prod1", quantity: 3, price: 3.50 },
-  { id: 2, name: "prod2", quantity: 3, price: 3.50 }]
+  const products = [{ id: 1, name: "prod1", farmer_email:"ab@mail.it", category:"fruit", quantity: 3, price: 3.50 },
+  { id: 2, name: "prod2",category:"fruit",farmer_email:"ab@mail.it", quantity: 3, price: 3.50 }]
   const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
-  shallow(<ProductsList products={products} categories={categories}/>);
+  const pl = shallow(<ProductsList products={products} categories={categories} setCart={function setCart(){}} setProducts={function setProducts(){}}/>);
+  pl.find('#addCart1').simulate('click');
+  pl.find('#catFilterfruit').simulate('click');
+  pl.find('#farmerFilterab').simulate('click');
+  pl.find('#qtyButton').simulate('change',{target:10});
+  pl.find('#submitButton').simulate('click');
+
+  pl.find('#closeButton').simulate('click');
 });
 
 test('renders PickupSchedule', () => {
