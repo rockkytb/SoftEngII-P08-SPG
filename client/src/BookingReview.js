@@ -68,7 +68,7 @@ function BookingReview(props) {
     let tmp = 0;
 
     const book = async () => {
-      props.newBooking(IDclient, props.cart);
+      tmp = await props.newBooking(IDclient, props.cart);
     };
     book()
       .then(() => {
