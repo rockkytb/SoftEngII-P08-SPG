@@ -32,6 +32,7 @@ import ReportAvailability from "./ReportAvailability";
 import WarehouseWorker from "./WarehouseWorker";
 import PickupSchedule from "./PickupSchedule";
 import PreparationConfirmFarmer from "./PreparationConfirmFarmer"
+import OrderList from "./OrderList"
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -860,6 +861,39 @@ function App() {
                           <>
                             {/*<SidebarCustom /> */}
                             <Customer className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+<Route
+            path="/cust/orders"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {setAttaccoDDOS(true)}
+                        {userdata.id && userdata.id.charAt(0) === "C" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <OrderList className="below-nav main-content" 
+                            bookings={bookings}
+                            products={products}
+                            updateOrder={(product) => API.updateOrder(product)}/>
                           </>
                         ) : (
                           <Redirect to="/home" />

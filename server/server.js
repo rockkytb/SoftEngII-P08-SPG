@@ -483,49 +483,6 @@ app.post("/api/newclient", isLoggedIn, async (req, res) => {
 //POST /api/bookingproducts
 
 app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
-  /*
-    for (var key in req.body) {
-      if (req.body.hasOwnProperty(key)) {
-        if (!validator.isInt(`${req.body[key].ID_Booking}`, { min: 1 })) {
-          return res
-            .status(422)
-            .json({ error: `Invalid booking id, it must be positive` });
-        }
-        if (!validator.isInt(`${req.body[key].ID_Product}`, { min: 1 })) {
-          return res
-            .status(422)
-            .json({ error: `Invalid product id, it must be positive` });
-        }
-
-        if (!validator.isInt(`${req.body[key].Qty}`, { min: 1 })) {
-          return res
-            .status(422)
-            .json({ error: `Invalid qty id, it must be positive` });
-        }
-      }
-    }
-
-    var problem = 0;
-    var arrayResult = [];
-    var bookingProduct;
-
-    for (var key in req.body) {
-      if (req.body.hasOwnProperty(key)) {
-        bookingProduct = {
-          ID_Booking: req.body.ID_Booking,
-          ID_Product: req.body[key].ID_Product,
-          Qty: req.body[key].Qty,
-        };
-
-        try {
-          await dao.createBookingProduct(bookingProduct);
-          arrayResult.push(bookingProduct);
-        } catch (err) {
-          problem = 1;
-          break;
-        }
-      }
-    }*/
   let problems = 0;
   if (
     req.body &&
@@ -569,6 +526,42 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
     });
   }
 });
+
+//PUT /api/bookingproducts
+
+app.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
+  let problems = 0;
+  if (
+    req.body &&
+    req.body.ID_Product &&
+    req.body.ID_Booking > 0 &&
+    req.body.quantity > 0
+  ) {
+ 
+
+      let bookingProduct = {
+        ID_Booking: req.body.ID_Booking,
+        ID_Product: req.body.ID_Product,
+        Qty: req.body.quantity,
+      };
+      try {
+        await dao.updateBookingProduct(bookingProduct);
+      } catch (err) {
+        res.status(503).json({
+          error: `fottiti stronzo.`,
+        });
+      }
+
+  if (problems == 0) {
+    //All went fine
+    res.status(201).json("Ok");
+  } else {
+    res.status(201).json({
+      error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+    });
+  }
+}});
+
 
 //PUT /api/productqty
 app.put("/api/productqty", isLoggedIn, async (req, res) => {

@@ -544,6 +544,62 @@ async function newFutureProduct(id, products) {
   );
 }
 
+async function confirmPreparation(id) {
+  return new Promise((resolve, reject) => {
+    fetch(url + "/bookings_mode/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      }
+      
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve(response.json());
+        } else {
+          response
+            .json()
+            .then((obj) => {
+              reject(obj);
+            }) // error msg in the response body
+            .catch((err) => {
+              reject({
+                errors: [
+                  { param: "Application", msg: "Cannot parse server response" },
+                ],
+              });
+            }); // something else
+        }
+      })
+      .catch((err) => {
+        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+      }); // connection errors
+  });
+}
+
+async function updateOrder(product){
+
+  const update = async () => {
+    const response = await fetch(url + "/bookingproducts", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    })
+
+    const result = await response.json();
+    if(response.ok){
+      return result 
+    }else{
+      return result
+    }
+  }
+
+  let mrTorgue = update(product);
+  return mrTorgue;
+}
+
 //TODO: move clock to backend
 //SHORT-TERM: post to server to receive date-time
 async function setDate(date) {
@@ -680,39 +736,6 @@ async function attaccoDoS(userdata) {
   return { products, bookings, clients, categories };
 }
 
-async function confirmPreparation(id) {
-  return new Promise((resolve, reject) => {
-    fetch(url + "/bookings_mode/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      }
-      
-    })
-      .then((response) => {
-        if (response.ok) {
-          resolve(response.json());
-        } else {
-          response
-            .json()
-            .then((obj) => {
-              reject(obj);
-            }) // error msg in the response body
-            .catch((err) => {
-              reject({
-                errors: [
-                  { param: "Application", msg: "Cannot parse server response" },
-                ],
-              });
-            }); // something else
-        }
-      })
-      .catch((err) => {
-        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
-      }); // connection errors
-  });
-}
-
 const API = {
   addUser,
   newAck,
@@ -733,5 +756,6 @@ const API = {
   setDate,
   attaccoDoS,
   confirmPreparation,
+  updateOrder,
 };
 export default API;
