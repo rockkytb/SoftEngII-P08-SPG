@@ -475,6 +475,12 @@
                                 },
                                 "qty": {
                                     "type": "number"
+                                },
+                                "size": {
+                                    "type": "integer"
+                                },
+                                "unit_of_measure": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -666,6 +672,31 @@
                 }
             }
         },
+        "/products/farmers/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the farmer",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all CONFIRMED products for a particular farmer in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "tags": [
@@ -814,6 +845,31 @@
                 }
             }
         },
+        "/bookings/booked/clients/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of client that we want to find his bookings that are in state = BOOKED ",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all bookings with state= booked in system for a client",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bookedBookings"
+                        }
+                    }
+                }
+            }
+        },
         "/bookingsPendingCancelation": {
             "get": {
                 "tags": [
@@ -861,11 +917,53 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "New booking mode is created",
+                        "description": "New booking mode is created with state=NEW",
                         "schema": {
                             "properties": {
                                 "idBookingMode": {
                                     "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookings_mode/{id}": {
+            "put": {
+                "tags": [
+                    "Booking"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the booking mode to be updated",
+                        "type": "integer"
+                    }
+                ],
+                "summary": "updates a given booking_mode state to PREPERATION",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated booking mode state to PREPERATION",
+                        "schema": {
+                            "properties": {
+                                "bookingModeId": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "booking mode with the provided id was not found in system",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -913,6 +1011,56 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "summary": "Delete a booking product record with the given booking id and product id",
+                "parameters": [
+                    {
+                        "name": "product booking ",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Booking": {
+                                    "type": "integer"
+                                },
+                                "ID_Product": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "tags": [
+                    "Booking"
+                ],
+                "responses": {
+                    "204": {}
+                }
+            }
+        },
+        "/bookingProducts/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of a specific booking product",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "GET all the product associated to a particular booking",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/abookingProducts"
+                        }
+                    }
+                }
             }
         },
         "/productqty": {
@@ -944,6 +1092,41 @@
                     "200": {
                         "description": "Return ???",
                         "schema": {}
+                    }
+                }
+            }
+        },
+        "/incrementProductQty": {
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Increments the qty of a product in product_week table",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Product": {
+                                    "type": "integer"
+                                },
+                                "Inc_Qty": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns updated product information",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
                     }
                 }
             }
@@ -1040,6 +1223,12 @@
                 },
                 "farmer_email": {
                     "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "unit_of_measure": {
+                    "type": "string"
                 }
             }
         },
@@ -1117,11 +1306,9 @@
                 "surname": {
                     "type": "string"
                 },
-                "qty": {
-                    "type": "number"
-                },
-                "product": {
-                    "type": "string"
+                "Products": {
+                    "type": "array",
+                    "$ref": "#/definitions/bookingProduct"
                 }
             }
         },
@@ -1162,6 +1349,65 @@
         "ProductStates": {
             "type": "array",
             "$ref": "#/definitions/ProductState"
+        },
+        "bookingProduct": {
+            "properties": {
+                "productID": {
+                    "type": "integer"
+                },
+                "product": {
+                    "type": "string"
+                },
+                "qty": {
+                    "type": "number"
+                }
+            }
+        },
+        "abookingProduct": {
+            "properties": {
+                "id_product": {
+                    "type": "integer"
+                },
+                "name_product": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty_booking": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "abookingProducts": {
+            "type": "array",
+            "$ref": "#/definitions/abookingProduct"
+        },
+        "bookedBooking": {
+            "properties": {
+                "id_booking": {
+                    "type": "integer"
+                },
+                "id_client": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "bookedBookings": {
+            "type": "array",
+            "$ref": "#/definitions/bookedBooking"
         }
     }
 }
