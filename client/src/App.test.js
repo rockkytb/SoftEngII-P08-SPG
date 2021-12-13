@@ -34,6 +34,7 @@ import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
 import ReportAvailability from './ReportAvailability.js';
+import PickupSchedule from './PickupSchedule.js';
 import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -199,7 +200,7 @@ test('renders Carousel', () => {
 });
 
 test('renders Carousel logged', () => {
-  const carousel= shallow(<CarouselCustom logged={true} />);
+  shallow(<CarouselCustom logged={true} />);
 });
 
 test('renders Login and log button', () => {
@@ -235,6 +236,20 @@ test('renders ProductList', () => {
   const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
   shallow(<ProductsList products={products} categories={categories}/>);
 });
+
+test('renders PickupSchedule', () => {
+  const bookings = [{state:"BOOKED",idBooking:1,idClient:1, date:"2021-12-08", time:"20:57"},
+  {state:"BOOKED",idBooking:2,idClient:2, date:"2021-12-09", time:"20:57"},
+  {state:"BOOKED",idBooking:3,idClient:3, date:"2021-12-18", time:"20:57"}];
+  const ps =shallow(<PickupSchedule bookings={bookings} confirmPreparation={function confirmPreparation(){}}/>);
+  ps.find('#confirmButton1').simulate('click');
+});
+
+test('renders PickupSchedule empty', () => {
+  const bookings = [];
+  shallow(<PickupSchedule bookings={bookings}/>);
+});
+
 
 test('renders ReportAvailability', () => {
   const categories=[{id:1,name:"fruit"},{id:2,name:"vegetables"}]
