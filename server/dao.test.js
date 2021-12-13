@@ -180,18 +180,15 @@ describe("Test suite DAO", () => {
     return expect(dao.getCategories()).resolves.toEqual([
       {
         id: "1",
-        name: "Fruit",
-        measure: "Kg",
+        name: "Fruit"
       },
       {
         id: "2",
-        name: "Spices",
-        measure: "Box",
+        name: "Spices"
       },
       {
         id: "3",
-        name: "Vegetables",
-        measure: "Kg",
+        name: "Vegetables"
       },
     ]);
   }, 10000);

@@ -773,6 +773,7 @@ app.post(
       farmer_id: req.params.farmerid,
       state: "EXPECTED",
       size: req.body.size,
+      unit_of_measure: req.body.unit_of_measure
     };
 
     let productId;

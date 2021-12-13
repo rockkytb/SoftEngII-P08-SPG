@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.3% </span>
+                <span class="strong">73.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>357/487</span>
+                <span class='fraction'>360/491</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.89% </span>
+                <span class="strong">53.84% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>83/154</span>
+                <span class='fraction'>84/156</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.54% </span>
+                <span class="strong">86.62% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>148/171</span>
+                <span class='fraction'>149/172</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.86% </span>
+                <span class="strong">72.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>341/468</span>
+                <span class='fraction'>344/472</span>
             </div>
         
             
@@ -1107,7 +1107,17 @@
 <a name='L1048'></a><a href='#L1048'>1048</a>
 <a name='L1049'></a><a href='#L1049'>1049</a>
 <a name='L1050'></a><a href='#L1050'>1050</a>
-<a name='L1051'></a><a href='#L1051'>1051</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1051'></a><a href='#L1051'>1051</a>
+<a name='L1052'></a><a href='#L1052'>1052</a>
+<a name='L1053'></a><a href='#L1053'>1053</a>
+<a name='L1054'></a><a href='#L1054'>1054</a>
+<a name='L1055'></a><a href='#L1055'>1055</a>
+<a name='L1056'></a><a href='#L1056'>1056</a>
+<a name='L1057'></a><a href='#L1057'>1057</a>
+<a name='L1058'></a><a href='#L1058'>1058</a>
+<a name='L1059'></a><a href='#L1059'>1059</a>
+<a name='L1060'></a><a href='#L1060'>1060</a>
+<a name='L1061'></a><a href='#L1061'>1061</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -1162,7 +1172,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1523,6 +1532,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -1543,6 +1560,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2213,8 +2233,7 @@ exports.getCategories = () =&gt; {
           rows.map((x) =&gt; {
             return {
               id: `${x.ID}`,
-              name: x.NAME,
-              measure: x.MEASURE,
+              name: x.NAME
             };
           })
         );
@@ -2526,7 +2545,7 @@ exports.IncrementQtyProductWeek = (product) =&gt; {
 };
 &nbsp;
 // retrieve a product with a given id
-function getProduct  (id) {
+function getProduct(id) {
   return new Promise((resolve, reject) =&gt; {
     const sql = "SELECT * from PRODUCT_WEEK WHERE ID = ?";
     db.get(sql, [id], function (err, row) {
@@ -2573,26 +2592,37 @@ exports.deleteProduct = (productId) =&gt; {
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) =&gt; {
   return new Promise((resolve, reject) =&gt; {
-    const sql =
-      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-    db.run(
-      sql,
-      [
-        product.name,
-        product.category_id,
-        product.price,
-        product.qty,
-        product.farmer_id,
-        product.state,
-        product.size,
-        product.unit_of_measure,
-      ],
-      function (err) {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+    const getUnity = "SELECT NAME FROM CATEGORY WHERE ID = ?";
+    db.get(
+      getUnity,
+      [product.category_id],
+      (err, row) =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
 <span class="cstat-no" title="statement not covered" >          reject(err);</span>
-<span class="cstat-no" title="statement not covered" >          return;</span>
+        else {
+          const sql =
+            "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+          db.run(
+            sql,
+            [
+              product.name,
+              product.category_id,
+              product.price,
+              product.qty,
+              product.farmer_id,
+              product.state,
+              product.size,
+              product.unit_of_measure,
+            ],
+            function (err) {
+              <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >                reject(err);</span>
+<span class="cstat-no" title="statement not covered" >                return;</span>
+              }
+              resolve(this.lastID);
+            }
+          );
         }
-        resolve(this.lastID);
       }
     );
   });
@@ -3086,7 +3116,7 @@ exports.getAllBookingsForClientBooked = (id) =&gt; {
 &nbsp;
 exports.productsOfBooking = (id) =&gt; {
   return new Promise((resolve, reject) =&gt; {
-    const sql="SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
+    const sql = "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?"
     db.all(sql, [id], (err, rows) =&gt; {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
@@ -3098,10 +3128,10 @@ exports.productsOfBooking = (id) =&gt; {
         const products = rows.map((e) =&gt; ({
           id_product: e.ID,
           name_product: e.NAME,
-          category: e.CATEGORY_NAME, 
-          price: e.PRICE, 
-          qty_booking: e.QTY_BOOKING, 
-          email: e.FARMER_EMAIL, 
+          category: e.CATEGORY_NAME,
+          price: e.PRICE,
+          qty_booking: e.QTY_BOOKING,
+          email: e.FARMER_EMAIL,
           state: e.STATE
         }));
 &nbsp;
@@ -3149,7 +3179,7 @@ exports.cleanDb = async () =&gt; {
     await db.run("DELETE FROM PRODUCT_WEEK WHERE ID &gt;= ?", [3], (err) =&gt; {
       errTest(err);
     });
-    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [10,1], (err) =&gt; {
+    await db.run("UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?", [10, 1], (err) =&gt; {
       errTest(err);
     });
 &nbsp;
@@ -3214,7 +3244,7 @@ exports.getTotal = <span class="fstat-no" title="function not covered" >()</span
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Dec 12 2021 18:50:27 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Dec 13 2021 09:56:41 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>

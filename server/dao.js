@@ -54,8 +54,7 @@ exports.getCategories = () => {
           rows.map((x) => {
             return {
               id: `${x.ID}`,
-              name: x.NAME,
-              measure: x.MEASURE,
+              name: x.NAME
             };
           })
         );
@@ -414,7 +413,7 @@ exports.deleteProduct = (productId) => {
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
-    const getUnity = "SELECT MEASURE FROM CATEGORY WHERE ID = ?";
+    const getUnity = "SELECT NAME FROM CATEGORY WHERE ID = ?";
     db.get(
       getUnity,
       [product.category_id],
@@ -434,7 +433,7 @@ exports.insertTupleProductWEEK = (product) => {
               product.farmer_id,
               product.state,
               product.size,
-              row.MEASURE,
+              product.unit_of_measure,
             ],
             function (err) {
               if (err) {

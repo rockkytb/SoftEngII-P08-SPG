@@ -762,18 +762,15 @@ describe("Test suite Integration Server", () => {
       expect(res.body).toEqual([
         {
           id: "1",
-          name: "Fruit",
-          measure: "Kg",
+          name: "Fruit"
         },
         {
           id: "2",
-          name: "Spices",
-          measure: "Box",
+          name: "Spices"
         },
         {
           id: "3",
-          name: "Vegetables",
-          measure: "Kg",
+          name: "Vegetables"
         },
       ]);
     });
