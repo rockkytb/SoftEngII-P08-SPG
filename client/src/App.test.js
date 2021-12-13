@@ -74,7 +74,14 @@ test('renders Navbar', () => {
 });
 
 test('renders Acknowledge delivery farmer', () => {
-  shallow(<AcknowledgeDeliveryFarmer />);
+  const acknowledges=[{farmer:"farmer1"}]
+  const adf = shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
+  adf.find('#confirmfarmer1').simulate('click');
+});
+
+test('renders Acknowledge delivery farmer empty', () => {
+  const acknowledges=[]
+  const adf = shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
 });
 
 test('renders BookingAcceptance', () => {
@@ -164,8 +171,14 @@ test('renders Login and log button', () => {
 });
 
 test('renders clock', () => {
-  shallow(<Clock date={new Date()}/>);
+ const ck = shallow(<Clock date={new Date()} mobile={false} setVirtualTime={function setVirtualTime(){}}/>);
+ ck.find('#virtualTime').simulate('click');
 });
+
+test('renders clock mobile', () => {
+  const ck = shallow(<Clock date={new Date()} mobile={true} setVirtualTime={function setVirtualTime(){}}/>);
+  ck.find('#mobileButton').simulate('click');
+ });
 
 test('renders App', () => {
   shallow(<App/>);
