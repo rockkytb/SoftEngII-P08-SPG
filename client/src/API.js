@@ -598,14 +598,16 @@ async function attaccoDoS(userdata) {
         return productList;
       }
     } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
-      let prodi = [];
+      let expected = [];
+      let confirmed = [];
       const getExpected = async (userdata) => {
         const response = await fetch(
           "/api/farmers/" + userdata.id.substring(1) + "/products_expected"
         );
         const productList = await response.json();
         if (response.ok) {
-          prodi.push(productList);
+         return productList;
+         
         }
       };
       const getConfirmed = async (userdata) => {
@@ -614,14 +616,15 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          prodi.push(productList2);
+          return productList2;
+
         }
       };
 
-      await getExpected(userdata);
-      await getConfirmed(userdata);
+      expected = await getExpected(userdata);
+      confirmed = await getConfirmed(userdata);
 
-      return prodi;
+      return {expected, confirmed};
     }
   };
 
@@ -673,6 +676,7 @@ async function attaccoDoS(userdata) {
   };
 
   let products = await getProducts();
+  console.log(products)
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
@@ -688,6 +692,45 @@ async function confirmPreparation(id) {
         "Content-Type": "application/json",
       }
       
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve(response.json());
+        } else {
+          response
+            .json()
+            .then((obj) => {
+              reject(obj);
+            }) // error msg in the response body
+            .catch((err) => {
+              reject({
+                errors: [
+                  { param: "Application", msg: "Cannot parse server response" },
+                ],
+              });
+            }); // something else
+        }
+      })
+      .catch((err) => {
+        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+      }); // connection errors
+  });
+}
+
+async function confirmPreparationFarmer(productList) {
+  return new Promise((resolve, reject) => {
+    const preparationList = productList.map((product) => {
+      return {
+        id: product.id,
+        state: "PREPARATION",
+      };
+    });
+    fetch(url + "/products", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(preparationList),
     })
       .then((response) => {
         if (response.ok) {
@@ -733,5 +776,6 @@ const API = {
   setDate,
   attaccoDoS,
   confirmPreparation,
+  confirmPreparationFarmer,
 };
 export default API;
