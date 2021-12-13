@@ -15,6 +15,7 @@ function ReportAvailability(props) {
     const [category, setCategory] = useState(props.categories && props.categories[0] && props.categories[0].id ? props.categories[0].id : -1);
     const [price, setPrice] = useState(0.0);
     const [qty, setQty] = useState(0);
+    const [size, setSize] = useState(0);
 
     //const [measure, setMeasure] = useState("");
     //const [state, setState] = useState("");
@@ -37,7 +38,8 @@ function ReportAvailability(props) {
                 category: category,
                 price: price,
                 qty: qty,
-                farmer_id: props.id.substring(1),
+                size: size,
+                farmerid: props.id.substring(1),
             };
             console.log(product);
 
@@ -123,6 +125,21 @@ function ReportAvailability(props) {
                         </Col>
                         <Col xs={2} />
                     </Row>
+
+                    <Row>
+                        <Col xs={2} />
+                        <Col xs={8}>
+                            <Form.Group controlId='text'>
+                                <Form.Label>Size:</Form.Label>
+                                <Form.Control type="number" min="0" step="1" value={size} onChange={ev => setSize(ev.target.value)} />
+                                {qty <= 0 && <Form.Control.Feedback type="invalid">
+                                    Please insert the size of a single product.
+                                </Form.Control.Feedback>}
+                            </Form.Group>
+                        </Col>
+                        <Col xs={2} />
+                    </Row>
+
 
                     <Row>
                         <Col xs={8} />

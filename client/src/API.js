@@ -193,14 +193,13 @@ async function setNewWallet(id, amount) {
 async function newBooking(clientId, products) {
   //call: POST /api/bookings
   const getId = async (clientId) => {
-  
     const response = await fetch(url + "/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ idClient: clientId }),
-    })
+    });
 
     const id = await response.json();
     if (response.ok) {
@@ -251,7 +250,7 @@ async function newBooking(clientId, products) {
   }
 
   let id = await getId(clientId);
-  console.log(id)
+  console.log(id);
   let result = await newBookingProduct(id, products);
 
   return result;
@@ -598,13 +597,30 @@ async function attaccoDoS(userdata) {
         return productList;
       }
     } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
-      const response = await fetch(
-        "/api/products/farmers/" + userdata.id.substring(1)
-      );
-      const productList = await response.json();
-      if (response.ok) {
-        return productList;
-      }
+      let prodi = [];
+      const getExpected = async (userdata) => {
+        const response = await fetch(
+          "/api/farmers/" + userdata.id.substring(1) + "/products_expected"
+        );
+        const productList = await response.json();
+        if (response.ok) {
+          prodi.push(productList);
+        }
+      };
+      const getConfirmed = async (userdata) => {
+        const response2 = await fetch(
+          "/api/products/farmers/" + userdata.id.substring(1)
+        );
+        const productList2 = await response2.json();
+        if (response2.ok) {
+          prodi.push(productList2);
+        }
+      };
+
+      await getExpected(userdata);
+      await getConfirmed(userdata);
+
+      return prodi;
     }
   };
 
@@ -652,7 +668,7 @@ async function attaccoDoS(userdata) {
   let clients = await getClients();
   let categories = await getCategories();
 
-  return { products, bookings, clients };
+  return { products, bookings, clients, categories };
 }
 
 const API = {

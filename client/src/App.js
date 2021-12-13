@@ -193,6 +193,7 @@ function App() {
     setProducts(tmp.products)
     setBookings(tmp.bookings)
     setClients(tmp.clients)
+    setCategories(tmp.categories)
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
 
@@ -659,7 +660,9 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Farmer className="below-nav main-content" />
+                            <Farmer className="below-nav main-content" 
+                            expectedProducts={products ? products.filter((f) => f.state==="EXPECTED") : []}
+                            />
                           </>
                         ) : (
                           <Redirect to="/home" />
@@ -690,7 +693,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingConfirmFarmer
                               className="below-nav main-content"
-                              expectedProducts={products.filter((f)=>f.state=="EXPECTED")}
+                              expectedProducts={products ? products.filter((f)=> f.state==="EXPECTED") : []}
                               confirmProducts={confirmProductsFarmer}
                               calendarday={date}
                             />
@@ -724,7 +727,7 @@ function App() {
                             {/*<SidebarCustom /> */}
                             <BookingDeliveryFarmer
                               className="below-nav main-content"
-                              confirmedProducts={products.filter((f)=> f.state==="CONFIRMED")}
+                              confirmedProducts={products ? products : []}
                               confirmDelivery={setCompletedDeliveryFarmer}
                               calendarday={date}
                             />
