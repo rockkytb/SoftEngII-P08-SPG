@@ -104,8 +104,15 @@ test('renders BookingConfirmFarmer empty', () => {
 });
 
 test('renders BookingDeliveryFarmer', () => {
-  
-  shallow(<BookingDeliveryFarmer/>);
+  const confirmedProducts = [{name:"apple",qty:3},{name:"peach",qty:3}];
+  const bdf =shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
+  bdf.find('#deliveryButton').simulate('click');
+  bdf.find('#closeButton').simulate('click');
+});
+
+test('renders BookingDeliveryFarmer empty', () => {
+  const confirmedProducts = [];
+  const bdf =shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
 });
 
 test('renders BookingReview', () => {
