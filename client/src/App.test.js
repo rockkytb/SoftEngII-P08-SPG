@@ -29,6 +29,7 @@ import BookingConfirmFarmer from './BookingConfirmFarmer.js';
 import BookingDeliveryFarmer from './BookingDeliveryFarmer.js';
 import CarouselCustom from './CarouselCustom.js';
 import CheckPending from './CheckPending.js';
+import ClientData from './ClientData.js';
 import AcknowledgeDeliveryFarmer from './AcknowledgeDeliveryManager.js';
 import { Login, LogButton } from './Login.js';
 import Clock from './Clock.js';
@@ -167,6 +168,15 @@ test('renders CheckPending Empty', () => {
   const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
   products:[{product:"apple",qty:3}]}];
   const ba =shallow(<CheckPending bookings={bookings}/>);
+});
+
+test('renders ClientData', () => {
+  const clients = [{id:1,name:"Antonio", surname:"Bianchi"},{id:2,name:"Marco", surname:"Bianchi"}]
+  const cd= shallow(<ClientData clients={clients} getWallet={function getWallet(){}} changeWallet={function changeWallet(){}} />);
+  cd.find('#selectClient').simulate('change',{target : { value : 1}});
+  cd.find('#submitButton').simulate('click');
+  cd.find('#changeWallet').simulate('change',{target : { value : 10.99}});
+  cd.find('#clientButton1').simulate('click');
 });
 
 
