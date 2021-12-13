@@ -323,6 +323,19 @@ function App() {
     }*/
   };
 
+  const confirmPreparation = async (id) => {
+    try {
+      await API.confirmPreparation(id);
+      setAttaccoDDOS(old => !old);
+      toast.success("Preparation confirmed", {
+        position: "top-center",
+      });
+    } catch (err) {
+      setAttaccoDDOS(old => !old);
+      toast.error("Error confirming preparation", { position: "top-center" });
+      console.log(err);
+    }
+  };
   /////// ROUTES
 
   return (
@@ -662,7 +675,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "M" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <PickupSchedule className="below-nav main-content" bookings={bookings} />
+                            <PickupSchedule className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
                           <Redirect to="/home" />

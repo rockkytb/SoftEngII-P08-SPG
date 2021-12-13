@@ -193,6 +193,7 @@ async function setNewWallet(id, amount) {
 async function newBooking(clientId, products) {
   //call: POST /api/bookings
   const getId = async (clientId) => {
+
     const response = await fetch(url + "/bookings", {
       method: "POST",
       headers: {
@@ -679,6 +680,39 @@ async function attaccoDoS(userdata) {
   return { products, bookings, clients, categories };
 }
 
+async function confirmPreparation(id) {
+  return new Promise((resolve, reject) => {
+    fetch(url + "/bookings_mode/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      }
+      
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve(response.json());
+        } else {
+          response
+            .json()
+            .then((obj) => {
+              reject(obj);
+            }) // error msg in the response body
+            .catch((err) => {
+              reject({
+                errors: [
+                  { param: "Application", msg: "Cannot parse server response" },
+                ],
+              });
+            }); // something else
+        }
+      })
+      .catch((err) => {
+        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+      }); // connection errors
+  });
+}
+
 const API = {
   addUser,
   newAck,
@@ -698,5 +732,6 @@ const API = {
   confirmProductsFarmer,
   setDate,
   attaccoDoS,
+  confirmPreparation,
 };
 export default API;

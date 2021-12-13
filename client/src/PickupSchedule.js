@@ -34,7 +34,16 @@ let scheduled = props.bookings.sort(function (a, b) {
                                 Date: <b>{b.date+ " "} </b> <br />
                                 Time: <b>{b.time+ " "} </b> <br />
                         </Card.Text>
-                      
+                        <Button
+                            variant="warning"
+                            onClick={() => {
+                                
+                                props.confirmPreparation(b.idBooking);
+                            }}
+                            
+                        >
+                            Confirm preparation
+                        </Button>
                     </Card.Body>
                 </Card>
             </Col>
