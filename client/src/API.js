@@ -618,7 +618,7 @@ async function confirmPreparationFarmer(productList) {
 
 async function updateOrder(product){
 
-  const update = async () => {
+  const update = async (product) => {
     const response = await fetch(url + "/bookingproducts", {
       method: "PUT",
       headers: {
@@ -631,7 +631,7 @@ async function updateOrder(product){
     if(response.ok){
       return result 
     }else{
-      return result
+      return "error";
     }
   }
 
