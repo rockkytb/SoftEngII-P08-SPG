@@ -114,7 +114,7 @@ export default function OrderList(props) {
       <div className="below-nav no-flickr">
 
         <Alert show={showAlertTime} variant="danger">
-        <Alert.Heading>You cannot confirm booking now</Alert.Heading>
+        <Alert.Heading>You cannot update booking now</Alert.Heading>
         <p>
           Bookings must happen only from 10 am of Saturday until 23 pm of Sunday
         </p>
