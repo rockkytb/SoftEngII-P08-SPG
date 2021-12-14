@@ -9,6 +9,7 @@ import {
   Button,
   Modal,
   Form,
+  Alert
 } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -22,6 +23,7 @@ export default function ProductsList(props) {
   const [quantity, setQuantity] = useState(1);
   const [bookingId, setBookingId] = useState(0);
   const [orderQuantity, setOrderQuantity] = useState(1);
+  const [showAlertTime, setShowAlertTime] = useState(false);
 
   function handleAddToCart() {
 
