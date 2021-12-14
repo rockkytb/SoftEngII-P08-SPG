@@ -56,7 +56,7 @@ export default function PreparationConfirmFarmer(props) {
         <div className="below-nav no-flickr">
 
             <Alert show={showAlertTime} variant="danger">
-                <Alert.Heading>You cannot confirm products now</Alert.Heading>
+                <Alert.Heading>You cannot confirm preparation now</Alert.Heading>
                 <p>
                     Product must be confirmed only from 09:00 am to 23:59 pm of Monday
                 </p>

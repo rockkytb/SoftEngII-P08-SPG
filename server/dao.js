@@ -619,7 +619,7 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 exports.getAllProductsConfirmedForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and (p.STATE='CONFIRMED' or p.STATE='PREPARATION')";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and (p.STATE='CONFIRMED')";
     db.all(sql, [farmerId], (err, rows) => {
       if (err) {
         reject(err);
