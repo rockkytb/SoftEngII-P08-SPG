@@ -95,6 +95,15 @@ if (firstTime && toPrintConfirm.length !== 0) {
         </>
       )
     }
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'W') {
+      return (
+        <>
+          <Link to="/warehouseWorker" style={{ color: 'white' }}>
+            <PersonCircle size={30} />
+          </Link>
+        </>
+      )
+    }
     else {
       return (
         <>
