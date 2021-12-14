@@ -894,7 +894,9 @@ function App() {
                             <OrderList className="below-nav main-content" 
                             bookings={bookings}
                             products={products}
-                            updateOrder={(product) => API.updateOrder(product)}
+                            updateOrder={async (product) =>{await API.updateOrder(product);
+                              toast.success("Booking updated", { position: "top-center" });
+                              setAttaccoDDOS(old => !old);}}
                             calendarday={date}/>
                           </>
                         ) : (
