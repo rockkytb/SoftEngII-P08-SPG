@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import { Modal, Row,Col, Form, Button } from "react-bootstrap";
 
@@ -37,6 +38,7 @@ function ClientData(props) {
                     <Form.Label>Select Client</Form.Label>
                     <Form.Control
                       as="select"
+                      id="selectClient"
                       onChange={(e) => setId(e.target.value)}
                       //defaultValue={props.clients && props.clients.length > 0 ? props.clients[0].id : ""}
                     >
@@ -55,29 +57,29 @@ function ClientData(props) {
               </Col>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="warning" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id === id)) }}>
+              <Button variant="warning" id="submitButton" disabled={props.clients && (props.clients.length <= 0)} onClick={() => { setClient(props.clients.find((c) => c.id === id)) }}>
                 Submit
               </Button>
             </Modal.Footer>
           </Modal>
           :
-          <div className="text-center below-nav">
-            <p>Client id: {client.id}</p><br />
-            <p>Client name: {client.name + " " + client.surname}</p>
-            <p>Client email: {client.username}</p>
-            <p>Client wallet: {wallet}€</p><br />
+          <div className="text-center below-nav main-content">
+            <p>Client id: {client.id}</p>
+            <p>Name: {client.name + " " + client.surname}</p>
+            <p>Email: {client.username}</p>
+            <p>Wallet: {wallet}€</p>
             <Form>
               <Form.Group>
-                <Form.Label>Change wallet value:</Form.Label>
+                <Form.Label><h3 style={{ color: '#ffc107' }}>Change wallet value:</h3></Form.Label>
                 <Row>
                   <Col md={5} />
                   <Col classname="md-2">
-                    <Form.Control type="number" min="0" step="0.01" value={newWallet} onChange={ev => setNewWallet(ev.target.value)} />
+                    <Form.Control type="number" id="changeWallet" min="0" step="0.01" value={newWallet} onChange={ev => setNewWallet(ev.target.value)} />
                   </Col>
                   <Col md={5} />
                 </Row>
               </Form.Group>
-              <Button variant="warning" onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
+              <Button variant="warning" id={"clientButton"+client.id} onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
                 Submit
               </Button>
             </Form>

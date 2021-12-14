@@ -11,6 +11,10 @@ const dao = require("./dao"); // module for accessing the DB
 const validator = require("validator");
 let testmode = false;
 
+//SWAGGER
+const swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
+
 //SHORT-TERM
 let date = 0;
 
@@ -32,6 +36,8 @@ app.use(
   })
 );
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 //init passport to use sessions
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,6 +49,24 @@ passport.use(
   new LocalStrategy(function (username, password, done) {
     dao
       .getClient(username, password)
+      .then((user) => {
+        if (!user)
+          return done(null, false, {
+            message: "Incorrect username and/or password",
+          });
+        return done(null, user);
+      })
+      .catch((err) => {
+        return done(err);
+      });
+  })
+);
+
+passport.use(
+  "warehouse-worker-local",
+  new LocalStrategy(function (username, password, done) {
+    dao
+      .getWarehouseWorker(username, password)
       .then((user) => {
         if (!user)
           return done(null, false, {
@@ -159,6 +183,16 @@ passport.deserializeUser((id, done) => {
         done(err, null);
       });
   }
+  if (type === "W") {
+    dao
+      .getWarehouseWorkerById(identifier)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err, null);
+      });
+  }
 });
 
 // set-up the middlewares
@@ -180,6 +214,25 @@ const isLoggedIn = (req, res, next) => {
 //POST /api/clientSessions FOR LOGIN OF CLIENT
 app.post("/api/clientSessions", function (req, res, next) {
   passport.authenticate("client-local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).json(info);
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+//POST /api/warehouseWorkerSessions FOR LOGIN OF WAREHOUSE WORKER
+app.post("/api/warehouseWorkerSessions", function (req, res, next) {
+  passport.authenticate("warehouse-worker-local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
       // display wrong login messages
@@ -279,25 +332,26 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 });
 
 //POST /api/client/
-app.post(
-  "/api/client",
-  /*isLoggedIn,*/(req, res) => {
-    dao
-      .getClientByEmail(req.body.email)
-      .then((client) => {
-        if (client.id === -1) {
-          res.status(401).json(client);
-        } else {
-          res.status(200).json(client);
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({
-          errors: `Database errors: ${err}.`,
-        });
-      });
+app.post("/api/client", isLoggedIn, (req, res) => {
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res.status(422).json({ error: `Invalid email` });
   }
-);
+
+  dao
+    .getClientByEmail(req.body.email)
+    .then((client) => {
+      if (client.id === -1) {
+        res.status(401).json(client);
+      } else {
+        res.status(200).json(client);
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });
+});
 
 //GET /api/categories/
 
@@ -315,39 +369,36 @@ app.get("/api/categories", isLoggedIn, (req, res) => {
 });
 
 //POST /api/acknowledge
-app.post(
-  "/api/acknowledge",
-  /*isLoggedIn*/ async (req, res) => {
-    if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid farmer id, it must be positive` });
-    }
-
-    if (!validator.isEmail(`${req.body.email}`)) {
-      return res.status(422).json({ error: `Invalid farmer email` });
-    }
-
-    const ack = {
-      idFarmer: req.body.idFarmer,
-      email: req.body.email,
-      state: "NEW",
-    };
-
-    let ackId;
-
-    try {
-      ackId = await dao.createAcknowledge(ack);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json({ idAck: ackId });
+app.post("/api/acknowledge", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
   }
-);
+
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res.status(422).json({ error: `Invalid farmer email` });
+  }
+
+  const ack = {
+    idFarmer: req.body.idFarmer,
+    email: req.body.email,
+    state: "NEW",
+  };
+
+  let ackId;
+
+  try {
+    ackId = await dao.createAcknowledge(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idAck: ackId });
+});
 
 //POST /api/bookings
 app.post("/api/bookings", isLoggedIn, async (req, res) => {
@@ -367,7 +418,7 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
   try {
     bookingId = await dao.createBooking(booking);
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the creation of booking for client: ${booking.idClient}.`,
     });
   }
@@ -377,198 +428,358 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
 });
 
 //POST /api/newclient
-app.post(
-  "/api/newclient", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isEmail(req.body.email)) {
-      return res.status(422).json({ error: `Invalid client's email` });
-    }
-
-    if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
-      return res.status(422).json({ error: `Invalid client's name` });
-    }
-
-    if (!validator.isLength(req.body.surname, { min: 1, max: 100 })) {
-      return res.status(422).json({ error: `Invalid client's surname` });
-    }
-
-    if (!validator.isLength(req.body.password, { min: 60, max: 60 })) {
-      return res.status(422).json({ error: `Invalid client's password hash` });
-    }
-
-    const client = {
-      email: req.body.email,
-      name: req.body.name,
-      surname: req.body.surname,
-      password: req.body.password,
-    };
-
-    dao
-      .getClientByEmail(client.email)
-      .then((c) => {
-        if (c.id != -1) {
-          return res.status(503).json({
-            error: `Error: ${client.email} already used.`,
-          });
-        }
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          errors: `Database errors: ${err}.`,
-        });
-      });
-
-    let clientId;
-
-    try {
-      clientId = await dao.createClient(client);
-      await dao.createWallet(clientId);
-      res.status(201).json({ idClient: clientId });
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the creation of client: ${client.email}.`,
-      });
-    }
+app.post("/api/newclient", isLoggedIn, async (req, res) => {
+  if (!validator.isEmail(req.body.email)) {
+    return res.status(422).json({ error: `Invalid client's email` });
   }
-);
 
-//POST /api/bookingproduct
+  if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
+    return res.status(422).json({ error: `Invalid client's name` });
+  }
 
-app.post(
-  "/api/bookingproduct", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid booking id, it must be positive` });
+  if (!validator.isLength(req.body.surname, { min: 1, max: 100 })) {
+    return res.status(422).json({ error: `Invalid client's surname` });
+  }
+
+  if (!validator.isLength(req.body.password, { min: 60, max: 60 })) {
+    return res.status(422).json({ error: `Invalid client's password hash` });
+  }
+
+  const client = {
+    email: req.body.email,
+    name: req.body.name,
+    surname: req.body.surname,
+    password: req.body.password,
+  };
+
+  dao
+    .getClientByEmail(client.email)
+    .then((c) => {
+      if (c.id != -1) {
+        return res.status(503).json({
+          error: `Error: ${client.email} already used.`,
+        });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        errors: `Database errors: ${err}.`,
+      });
+    });
+
+  let clientId;
+
+  try {
+    clientId = await dao.createClient(client);
+    await dao.createWallet(clientId);
+    res.status(201).json({ idClient: clientId });
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of client: ${client.email}.`,
+    });
+  }
+});
+
+//POST /api/bookingproducts
+
+app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
+  let problems = 0;
+  if (
+    req.body &&
+    req.body.products &&
+    req.body.products.length > 0 &&
+    req.body.ID_Booking > 0
+  ) {
+    for (const i of req.body.products) {
+      if (
+        !i.id ||
+        !i.quantity ||
+        !validator.isInt(`${i.id}`, { min: 1 }) ||
+        !validator.isInt(
+          `${i.quantity}`,
+          { min: 1 } || i.id <= 0 || id.qty <= 0
+        )
+      ) {
+        return res.status(422).json({ error: `Invalid product data` });
+      }
+      let bookingProduct = {
+        ID_Booking: req.body.ID_Booking,
+        ID_Product: i.id,
+        Qty: i.quantity,
+      };
+      try {
+        await dao.createBookingProduct(bookingProduct);
+      } catch (err) {
+        problems++;
+      }
     }
-    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
+  } else {
+    return res.status(422).json({ error: `Bad request` });
+  }
 
-    if (!validator.isInt(`${req.body.Qty}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid qty id, it must be positive` });
-    }
+  if (problems == 0) {
+    //All went fine
+    res.status(201).json("Ok");
+  } else {
+    res.status(201).json({
+      error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+    });
+  }
+});
 
-    const bookingProduct = {
+//PUT /api/bookingproducts
+
+app.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
+  let problems = 0;
+  if (
+    req.body &&
+    req.body.ID_Product &&
+    req.body.ID_Booking > 0 &&
+    req.body.quantity > 0
+  ) {
+    let bookingProduct = {
       ID_Booking: req.body.ID_Booking,
       ID_Product: req.body.ID_Product,
-      Qty: req.body.Qty,
+      Qty: req.body.quantity,
     };
-
     try {
-      await dao.createBookingProduct(bookingProduct);
+      await dao.updateBookingProduct(bookingProduct);
     } catch (err) {
       res.status(503).json({
-        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
+        error: `fottiti stronzo.`,
       });
     }
 
-    //All went fine
-    res.status(201).json(bookingProduct);
+    if (problems == 0) {
+      //All went fine
+      res.status(201).json("Ok");
+    } else {
+      res.status(201).json({
+        error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+      });
+    }
   }
-);
+});
 
 //PUT /api/productqty
-app.put(
-  "/api/productqty", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid qty id, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const product = {
-      ID_Product: req.body.ID_Product,
-      Dec_Qty: req.body.Dec_Qty,
-    };
-
-    try {
-      await dao.editQtyProductWeek(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${product}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(product);
+app.put("/api/productqty", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid qty id, it must be positive` });
   }
-);
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  const product = {
+    ID_Product: req.body.ID_Product,
+    Dec_Qty: req.body.Dec_Qty,
+  };
+
+  try {
+    await dao.editQtyProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of bookingProduct: ${product}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(product);
+});
+
+//PUT /api/incrementProductQty
+app.put("/api/incrementProductQty", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.Inc_Qty}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid qty, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  const product = {
+    ID_Product: req.body.ID_Product,
+    Inc_Qty: req.body.Inc_Qty,
+  };
+  let updatedProduct;
+  try {
+    updatedProduct = await dao.IncrementQtyProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during incrementing product qty: ${product}.`,
+    });
+  }
+
+  //All went fine
+  res.status(200).json(updatedProduct);
+});
 
 //PUT /api/productstate
-app.put(
-  "/api/productstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
-      return res.status(422).json({ error: `Invalid state lenght` });
-    }
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const product = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    try {
-      await dao.editStateProductWeek(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of bookingProduct: ${product}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(product);
+app.put("/api/productstate", isLoggedIn, async (req, res) => {
+  if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid state lenght` });
   }
-);
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
 
-// POST /api/farmers/:farmerid/products 
-app.post(
-  "/api/farmers/:farmerid/products" /*, isLoggedIn*/,
-  async (req, res) => {
-    const product = {
-      name: req.body.name,
-      category_id: req.body.category,
-      price: req.body.price,
-      qty: req.body.qty,
-      farmer_id: req.params.farmerid,
-      state: "CONFIRMED",
-    };
+  const product = {
+    id: req.body.id,
+    state: req.body.state,
+  };
 
-    let productId;
+  try {
+    await dao.editStateProductWeek(product);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of bookingProduct: ${product}.`,
+    });
+  }
 
-    try {
-      productId = await dao.insertTupleProductWEEK(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during insertion into product_week table.`,
-      });
-    }
+  //All went fine
+  res.status(201).json(product);
+});
 
-    //All went fine
+//DELETE /api/products/{id}
+app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isInt(id, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+
+  try {
+    await dao.deleteProduct(id);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the deletation of productId: ${id}.`,
+    });
+  }
+
+  //All went fine
+  res.status(204).json();
+});
+
+//DELETE /api/bookingProduct
+app.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking id, it must be positive` });
+  }
+  try {
+    await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the deletation of booking product.`,
+    });
+  }
+
+  //All went fine
+  res.status(204).json();
+});
+
+// POST /api/farmers/:farmerid/products
+app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid category id, it must be positive` });
+  }
+  if (!validator.isFloat(`${req.body.price}`, { min: 0 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product price, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.farmerid}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid quantity, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid size, it must be positive` });
+  }
+  if (!validator.isLength(`${req.body.unit_of_measure}`, { max: 15 })) {
+    return res.status(422).json({
+      error: `Invalid unit of measure, it must be a string of max 15 length`,
+    });
+  }
+  const product = {
+    name: `${req.body.name}`,
+    category_id: req.body.category,
+    price: req.body.price,
+    qty: req.body.qty,
+    farmer_id: req.params.farmerid,
+    state: "CONFIRMED",
+    size: req.body.size,
+    unit_of_measure: `${req.body.unit_of_measure}`,
+  };
+
+  let productId;
+
+  try {
+    productId = await dao.insertTupleProductWEEK(product);
     res.status(201).json({ productId: productId });
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during insertion into product_week table.`,
+    });
   }
-);
+});
 
 // POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
 app.post(
-  "/api/farmers/:farmerid/productsExpected" /*, isLoggedIn*/,
+  "/api/farmers/:farmerid/productsExpected",
+  isLoggedIn,
   async (req, res) => {
+    if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid category id, it must be positive` });
+    }
+    if (!validator.isFloat(`${req.body.price}`, { min: 0 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product price, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.farmerid}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid farmer id, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid quantity, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid size, it must be positive` });
+    }
+    if (!validator.isLength(`${req.body.unit_of_measure}`, { max: 15 })) {
+      return res.status(422).json({
+        error: `Invalid unit of measure, it must be a string of max 15 length`,
+      });
+    }
     const product = {
       name: req.body.name,
       category_id: req.body.category,
@@ -576,6 +787,8 @@ app.post(
       qty: req.body.qty,
       farmer_id: req.params.farmerid,
       state: "EXPECTED",
+      size: req.body.size,
+      unit_of_measure: req.body.unit_of_measure,
     };
 
     let productId;
@@ -595,67 +808,61 @@ app.post(
 );
 
 //PUT /api/bookingstate
-app.put(
-  "/api/bookingstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product id, it must be positive` });
-    }
-
-    const booking = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    let result;
-
-    try {
-      result = await dao.editStateBooking(booking);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of booking state: ${result}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.put("/api/bookingstate", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product id, it must be positive` });
   }
-);
+
+  const booking = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  let result;
+
+  try {
+    result = await dao.editStateBooking(booking);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of booking state: ${result}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 //PUT /api/ackstate
-app.put(
-  "/api/ackstate", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid ack id, it must be positive` });
-    }
-
-    const ack = {
-      id: req.body.id,
-      state: req.body.state,
-    };
-
-    let result;
-
-    try {
-      result = await dao.editStateAck(ack);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the put of ack state: ${result}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.put("/api/ackstate", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid ack id, it must be positive` });
   }
-);
+
+  const ack = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  let result;
+
+  try {
+    result = await dao.editStateAck(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of ack state: ${result}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 // GET /api/acksNew to get all acks with NEW state
-app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
+app.get("/api/acksNew", isLoggedIn, async (req, res) => {
   dao
     .getAcksStateNew()
     .then((acks) => {
@@ -667,32 +874,35 @@ app.get("/api/acksNew" /*isLoggedIn,*/, async (req, res) => {
 });
 
 //POST /api/wallet
-app.post(
-  "/api/wallet", //isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid booking id, it must be positive` });
-    }
-
-    let result;
-
-    try {
-      result = await dao.getWallet(req.body.id);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
-      });
-    }
-
-    //All went fine
-    res.status(201).json(result);
+app.post("/api/wallet", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking id, it must be positive` });
   }
-);
+
+  let result;
+
+  try {
+    result = await dao.getWallet(req.body.id);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the post of bookingProduct: ${bookingProduct}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
 
 //GET /api/farmers/:farmerid/products_expected to get a list of all products
-app.get("/api/farmers/:farmerid/products_expected", (req, res) => {
+app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.farmerid}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
   dao
     .getAllProductsExpectedForFarmer(req.params.farmerid)
     .then((products) => {
@@ -704,7 +914,7 @@ app.get("/api/farmers/:farmerid/products_expected", (req, res) => {
 });
 
 //GET /api/products to get a list of all products
-app.get("/api/products", (req, res) => {
+app.get("/api/products", isLoggedIn, (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {
@@ -715,11 +925,40 @@ app.get("/api/products", (req, res) => {
     });
 });
 
+//GET /api/bookingModesPreparation
+app.get("/api/bookingModesPreparation", isLoggedIn, (req, res) => {
+  dao
+    .getbookingModesPreparation()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+// GET /api/bookingModesNew/pickup
+app.get("/api/bookingModesNew/pickup", isLoggedIn, (req, res) => {
+  dao
+    .getbookingModesNewPickup()
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
-app.get("/api/products/farmers/:id", (req, res) => {
+app.get("/api/products/farmers/:id", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
   const id = req.params.id;
   dao
-    .getAllConfirmedProductsForFarmer(id)
+    .getAllProductsConfirmedForFarmer(id)
     .then((product) => {
       res.status(200).json(product);
     })
@@ -729,7 +968,7 @@ app.get("/api/products/farmers/:id", (req, res) => {
 });
 
 //GET /api/bookings to get a list of all bookings
-app.get("/api/bookings", (req, res) => {
+app.get("/api/bookings", isLoggedIn, (req, res) => {
   dao
     .getAllBookings()
     .then((bookings) => {
@@ -741,7 +980,7 @@ app.get("/api/bookings", (req, res) => {
 });
 
 //GET /api/bookings/clients/{id} to get a list of all bookings for a particular cllient
-app.get("/api/bookings/clients/:id", (req, res) => {
+app.get("/api/bookings/clients/:id", isLoggedIn, (req, res) => {
   const id = req.params.id;
   dao
     .getAllBookingsForClient(id)
@@ -754,7 +993,7 @@ app.get("/api/bookings/clients/:id", (req, res) => {
 });
 
 //PUT /api/walletbalance to update wallet balance
-app.put("/api/walletbalance" /*isLoggedIn,*/, async (req, res) => {
+app.put("/api/walletbalance", isLoggedIn, async (req, res) => {
   if (!validator.isFloat(`${req.body.amount}`, { min: 0 })) {
     return res
       .status(422)
@@ -776,7 +1015,7 @@ app.put("/api/walletbalance" /*isLoggedIn,*/, async (req, res) => {
 });
 
 // GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
-app.get("/api/bookingsPendingCancelation" /*isLoggedIn,*/, async (req, res) => {
+app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
   dao
     .getBookingsStatePendingCancelation()
     .then((bookings) => {
@@ -789,7 +1028,7 @@ app.get("/api/bookingsPendingCancelation" /*isLoggedIn,*/, async (req, res) => {
 
 // POST /api/products_expected receive a vector of tuples of products expected
 
-app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
+app.post("/api/products_expected", isLoggedIn, async (req, res) => {
   var idProduct;
   var results = [];
   var problem = 0;
@@ -819,8 +1058,52 @@ app.post("/api/products_expected" /*isLoggedIn,*/, async (req, res) => {
   }
 });
 
+// put /api/clientsPreparation
+app.put("/api/clientsPreparation", isLoggedIn, async (req, res) => {
+  let result = [];
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      //do something with e.g. req.body[key]
+
+      if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
+        return res.status(422).json({
+          error: `Invalid product id of a element on the array, it must be positive`,
+        });
+      }
+    }
+  }
+  //All the product have valid body
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      const product = {
+        id: req.body[key].id,
+      };
+
+      try {
+        const clients = await dao.getClientsPreparation(product.id);
+
+        result = result.concat(clients);
+      } catch (e) {
+        res.status(503).json({
+          error: `Database error or undefined product during the put of the state of array product`,
+        });
+      }
+    }
+  }
+
+  //All went fine
+
+  // eliminare duplicati
+  result = result.filter(function (item, pos) {
+    return result.indexOf(item) == pos;
+  });
+  res.status(201).json(result);
+});
+
 //POST /api/bookings_mode
-app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
+app.post("/api/bookings_mode", isLoggedIn, async (req, res) => {
   const booking_mode = {
     idBooking: req.body.idBooking,
     delivery: req.body.delivery,
@@ -839,7 +1122,7 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   try {
     bookingModeId = await dao.createBookingMode(booking_mode);
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the creation of booking mode.`,
     });
   }
@@ -848,8 +1131,26 @@ app.post("/api/bookings_mode" /*, isLoggedIn*/, async (req, res) => {
   res.status(201).json({ idBookingMode: bookingModeId });
 });
 
+//PUT /api/bookings_mode/{id}
+app.put("/api/bookings_mode/:id", isLoggedIn, async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isInt(id, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid booking mode id, it must be positive` });
+  }
+  dao
+    .updateStateBookingMode(id)
+    .then(() => {
+      res.status(200).json({ bookingModeId: id });
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 //PUT  /api/products
-app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
+app.put("/api/products", isLoggedIn, async (req, res) => {
   var result;
   var problem = 0;
 
@@ -863,11 +1164,9 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
           .json({ error: `Invalid state lenght of a element on the array` });
       }
       if (!validator.isInt(`${req.body[key].id}`, { min: 1 })) {
-        return res
-          .status(422)
-          .json({
-            error: `Invalid product id of a element on the array, it must be positive`,
-          });
+        return res.status(422).json({
+          error: `Invalid product id of a element on the array, it must be positive`,
+        });
       }
     }
   }
@@ -898,9 +1197,9 @@ app.put("/api/products" /*, isLoggedIn*/, async (req, res) => {
   }
 });
 
-//////TODO: move clock to backend 
-//////SHORT-TERM: receive the day of the week we put 
-app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
+//////TODO: move clock to backend
+//////SHORT-TERM: receive the day of the week we put
+app.post("/api/clock", isLoggedIn, async (req, res) => {
   date = req.body.date;
 
   if (!date || date < 1 || date > 7)
@@ -912,20 +1211,21 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
       .getTotal()
       .then((booking) => {
         booking.map((c) => {
-          let wallet = dao
-            .getWallet(c.client)
-            .then((res) => res.balance);
-          if(wallet >= c.total){
+          let wallet = dao.getWallet(c.client).then((res) => res.balance);
+          if (wallet >= c.total) {
             dao
-            .updateWallet({amount: wallet-c.total, id: c.client })
-            .then((res) => res);
-          }
-          else{
+            .editStateBooking({id: c.id, state: "CONFIRMED"})
+            .then((res)=> res)
             dao
-            .editStateBooking({id: c.id, state: 'PENDINGCANCELATION'})
-            .then((res) => res);
+              .updateWallet({ amount: wallet - c.total, id: c.client })
+              .then((res) => res);
+          } else {
+            dao
+              .editStateBooking({ id: c.id, state: "PENDINGCANCELATION" })
+              .then((res) => res);
           }
-        })
+        });
+        
         //res.status(200).json(clients);
       })
       .catch((err) => {
@@ -939,7 +1239,45 @@ app.post("/api/clock" /*, isLoggedIn*/, async (req, res) => {
   res.status(201).json({ date: date });
 });
 
+//GET /api/bookings/booked/clients/:id
 
+app.get("/api/bookings/booked/clients/:id", isLoggedIn, (req, res) => {
+  const id = req.params.id;
+  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
+    return res.status(422).json({
+      error: `Invalid product id of a element on the array, it must be positive`,
+    });
+  }
+
+  dao
+    .getAllBookingsForClientBooked(id)
+    .then((bookings) => {
+      res.status(200).json(bookings);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+///GET /api/bookingProducts/:bookingId
+app.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
+  const id = req.params.bookingId;
+  console.log(req.params.bookingId);
+  if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
+    return res.status(422).json({
+      error: `Invalid product id of a element on the array, it must be positive`,
+    });
+  }
+
+  dao
+    .productsOfBooking(id)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 // activate the server
 const server = app.listen(port, () => {

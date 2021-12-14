@@ -11,7 +11,7 @@ export default function CheckPending(props) {
 
     function bookingActions() {
         let toPrint = props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION");
-        if (toPrint.length == 0) {
+        if (toPrint.length === 0) {
             return (<>No pending bookings present</>);
         }
         return toPrint.map((booking) => (
@@ -19,11 +19,17 @@ export default function CheckPending(props) {
                 <Card>
                     <Card.Body>
                         <Card.Text className="text-dark">
-                            Booking id: {booking.id} <br />
-                            Client: {booking.name + " " + booking.surname}<br />
-                            Client email: {booking.email} <br />
-                            Product: {booking.product}<br />
-                            Product quantity: {booking.qty}<br />
+                            <b>Booking id:</b> {booking.id} <br />
+                            <b>Client:</b> {booking.name + " " + booking.surname}<br />
+                            <b>Client email:</b> {booking.email} <br />
+                            <b>Product list:</b><br />
+                            {booking.products.map(p=>{
+                                return <>
+                                    Product: {p.product}<br />
+                                    Quantity: {p.qty}<br /><br />
+                                </>
+                            })}
+                            
                         </Card.Text>
                         <Link to="/emp/clientData">
                             <Button variant="warning" className="mr-2 ml-2 md-1 "> Check client data </Button>
@@ -35,7 +41,7 @@ export default function CheckPending(props) {
     }
 
     return (
-        <div className="below-nav">
+        <div className="below-nav no-flickr">
 
             <CardColumns xs={1} md={5}>
                 <>{props.bookings && props.bookings.length > 0 ? bookingActions() : <>No pending bookings present</>}</>

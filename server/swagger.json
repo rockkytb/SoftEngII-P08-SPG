@@ -1,0 +1,1413 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "SPG PROJECT APIs"
+    },
+    "host": "localhost:3001",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/newclient": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Create new client in system",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "description": "client that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/CreateClient"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New client is created",
+                        "schema": {
+                            "properties": {
+                                "idClient": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clientSessions": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Login of clients",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client",
+                        "schema": {
+                            "$ref": "#/definitions/Client"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get a client by mail",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client id if exists, -1 if not exists",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wallet": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get the balance of a client",
+                "parameters": [
+                    {
+                        "name": "client ID",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON with balance",
+                        "schema": {
+                            "properties": {
+                                "Balance": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/walletbalance": {
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Edit the wallet balance for a certain client",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON with id and new balance",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get all clients in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Clients"
+                        }
+                    }
+                }
+            }
+        },
+        "/managerSessions": {
+            "post": {
+                "tags": [
+                    "Manager"
+                ],
+                "summary": "Login of managers",
+                "parameters": [
+                    {
+                        "name": "manager",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the manager",
+                        "schema": {
+                            "$ref": "#/definitions/Client"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ackstate": {
+            "put": {
+                "tags": [
+                    "Manager"
+                ],
+                "summary": "Edit the state of an existing ack",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "state": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return ???",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/acksNew": {
+            "get": {
+                "tags": [
+                    "Manager"
+                ],
+                "summary": "Get all the acks with state = NEW",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Acks"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/acknowledge": {
+            "post": {
+                "tags": [
+                    "Manager"
+                ],
+                "summary": "Add new acknowledge for manager with state = NEW.",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "idFarmer": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Return a JSON with ack id",
+                        "schema": {
+                            "properties": {
+                                "idAck": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/farmerSessions": {
+            "post": {
+                "tags": [
+                    "Farmer"
+                ],
+                "summary": "Login of farmers",
+                "parameters": [
+                    {
+                        "name": "farmer",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the farmer",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/farmers/{farmerid}/products_expected": {
+            "parameters": [
+                {
+                    "name": "farmerid",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of farmer that we want to find his products",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Farmer"
+                ],
+                "summary": "Get all products from PRODUCT_WEEK with state = EXPECTED according to the id of a farmer",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            }
+        },
+        "/farmers/{farmerid}/products": {
+            "parameters": [
+                {
+                    "name": "farmerid",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of farmer that we want to add to his products",
+                    "type": "integer"
+                }
+            ],
+            "post": {
+                "tags": [
+                    "Farmer"
+                ],
+                "summary": "INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED ",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "category": {
+                                    "type": "integer"
+                                },
+                                "price": {
+                                    "type": "number"
+                                },
+                                "qty": {
+                                    "type": "number"
+                                },
+                                "size": {
+                                    "type": "integer"
+                                },
+                                "unit_of_measure": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "productId": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/farmers/{id}/products": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of farmer that we want to add to his products",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Farmer"
+                ],
+                "summary": "Get all products of a particular farmer in state= CONFIRMED from PRODUCT_WEEK table",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            }
+        },
+        "/farmers/{farmerid}/productsExpected": {
+            "parameters": [
+                {
+                    "name": "farmerid",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of farmer that we want to add to his products",
+                    "type": "integer"
+                }
+            ],
+            "post": {
+                "tags": [
+                    "Farmer"
+                ],
+                "summary": "INSERT into Product_WEEK by receiving a product confirmed by farmer with state = EXPECTED ",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "category": {
+                                    "type": "integer"
+                                },
+                                "price": {
+                                    "type": "number"
+                                },
+                                "qty": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "productId": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shopEmployeeSessions": {
+            "post": {
+                "tags": [
+                    "Shop Employee"
+                ],
+                "summary": "Login of shop employees",
+                "parameters": [
+                    {
+                        "name": "shop employee",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the shop employee",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Edit the state of all product in PRODUCT_WEEK by receiving an array of products with id and new state",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ProductStates"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return ???",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/products/farmers/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the farmer",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all CONFIRMED products for a particular farmer in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all product categories in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Categories"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookings": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Create new booking in system",
+                "parameters": [
+                    {
+                        "name": "Booking",
+                        "in": "body",
+                        "description": "booking that we want to create",
+                        "schema": {
+                            "properties": {
+                                "idClient": {
+                                    "type": "integer"
+                                },
+                                "qty": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New booking is created with STATE = BOOKED",
+                        "schema": {
+                            "properties": {
+                                "idBooking": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all bookings in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Bookings"
+                        }
+                    }
+                }
+            }
+        },
+        "/bookingstate": {
+            "put": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Edit the state of an existing booking",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "state": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return ???",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/bookings/clients/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of client that we want to find his bookings",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all bookings in system for a client",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Bookings"
+                        }
+                    }
+                }
+            }
+        },
+        "/bookings/booked/clients/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of client that we want to find his bookings that are in state = BOOKED ",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all bookings with state= booked in system for a client",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/bookedBookings"
+                        }
+                    }
+                }
+            }
+        },
+        "/bookingsPendingCancelation": {
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all the bookings with state = PENDINGCANCELATION",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Bookings"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookings_mode": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Create new booking mode in system",
+                "parameters": [
+                    {
+                        "name": "booking mode",
+                        "in": "body",
+                        "description": "booking mode that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/BookingMode"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New booking mode is created with state=NEW",
+                        "schema": {
+                            "properties": {
+                                "idBookingMode": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookings_mode/{id}": {
+            "put": {
+                "tags": [
+                    "Booking"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the booking mode to be updated",
+                        "type": "integer"
+                    }
+                ],
+                "summary": "updates a given booking_mode state to PREPERATION",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "updated booking mode state to PREPERATION",
+                        "schema": {
+                            "properties": {
+                                "bookingModeId": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "booking mode with the provided id was not found in system",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bookingproduct": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Create a new record of a product for a certain booking",
+                "parameters": [
+                    {
+                        "name": "product booking ",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Booking": {
+                                    "type": "integer"
+                                },
+                                "ID_Product": {
+                                    "type": "integer"
+                                },
+                                "Qty": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New product booking is created",
+                        "schema": {
+                            "properties": {
+                                "idBooking???": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a booking product record with the given booking id and product id",
+                "parameters": [
+                    {
+                        "name": "product booking ",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Booking": {
+                                    "type": "integer"
+                                },
+                                "ID_Product": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "tags": [
+                    "Booking"
+                ],
+                "responses": {
+                    "204": {}
+                }
+            }
+        },
+        "/bookingProducts/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of a specific booking product",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "GET all the product associated to a particular booking",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/abookingProducts"
+                        }
+                    }
+                }
+            }
+        },
+        "/productqty": {
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Decrements the qty of a product in product_week table",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Product": {
+                                    "type": "integer"
+                                },
+                                "Dec_Qty": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return ???",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/incrementProductQty": {
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Increments the qty of a product in product_week table",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "ID_Product": {
+                                    "type": "integer"
+                                },
+                                "Inc_Qty": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns updated product information",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            }
+        },
+        "/productstate": {
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Changes the state of a product in product_week table",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "state": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return ???",
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Client": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateClient": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Clients": {
+            "type": "array",
+            "$ref": "#/definitions/Client"
+        },
+        "Product": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "farmer_email": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "unit_of_measure": {
+                    "type": "string"
+                }
+            }
+        },
+        "Products": {
+            "type": "array",
+            "$ref": "#/definitions/Product"
+        },
+        "Category": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "measure": {
+                    "type": "string"
+                }
+            }
+        },
+        "Categories": {
+            "type": "array",
+            "$ref": "#/definitions/Category"
+        },
+        "BookingMode": {
+            "properties": {
+                "idBooking": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "delivery": {
+                    "type": "integer"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "province": {
+                    "type": "string"
+                },
+                "postal_code": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                },
+                "extra_fee": {
+                    "type": "number"
+                }
+            }
+        },
+        "Booking": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "state": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "Products": {
+                    "type": "array",
+                    "$ref": "#/definitions/bookingProduct"
+                }
+            }
+        },
+        "Bookings": {
+            "type": "array",
+            "$ref": "#/definitions/Booking"
+        },
+        "Ack": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "farmer": {
+                    "type": "string"
+                },
+                "farmerId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Acks": {
+            "type": "array",
+            "$ref": "#/definitions/Ack"
+        },
+        "ProductState": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "ProductStates": {
+            "type": "array",
+            "$ref": "#/definitions/ProductState"
+        },
+        "bookingProduct": {
+            "properties": {
+                "productID": {
+                    "type": "integer"
+                },
+                "product": {
+                    "type": "string"
+                },
+                "qty": {
+                    "type": "number"
+                }
+            }
+        },
+        "abookingProduct": {
+            "properties": {
+                "id_product": {
+                    "type": "integer"
+                },
+                "name_product": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "number"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "qty_booking": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "abookingProducts": {
+            "type": "array",
+            "$ref": "#/definitions/abookingProduct"
+        },
+        "bookedBooking": {
+            "properties": {
+                "id_booking": {
+                    "type": "integer"
+                },
+                "id_client": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "bookedBookings": {
+            "type": "array",
+            "$ref": "#/definitions/bookedBooking"
+        }
+    }
+}

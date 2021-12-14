@@ -15,7 +15,7 @@ describe("App.js", () => {
     await page.goto("http://localhost:3000/home");
     await page.waitForSelector("#title");
     const text = await page.$eval("#title", (e) => e.textContent);
-    expect(text).toContain("Le_Cose SPG s.p.a.");
+    expect(text).toContain("SPG");
   }, 10000);
 
   it("contains the clock", async () => {

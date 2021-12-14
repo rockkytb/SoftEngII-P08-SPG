@@ -55,7 +55,6 @@ exports.getCategories = () => {
             return {
               id: `${x.ID}`,
               name: x.NAME,
-              measure: x.MEASURE,
             };
           })
         );
@@ -120,6 +119,27 @@ exports.getClientByEmail = (email) => {
       } else {
         const user = { id: `C${row.ID}` };
         resolve(user);
+      }
+    });
+  });
+};
+
+//get warehouse worker
+exports.getWarehouseWorker = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM WAREHOUSE_WORKER WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
+
+        bcrypt.compare(password, row.PASSWORD).then((result) => {
+          if (result) resolve(user);
+          else resolve(false);
+        });
       }
     });
   });
@@ -244,6 +264,23 @@ exports.getManagerById = (id) => {
   });
 };
 
+//get Warehouse worker by Id
+exports.getWarehouseWorkerById = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM WAREHOUSE_WORKER WHERE ID = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
+        resolve(user);
+      }
+    });
+  });
+};
+
 // add a new acknowledge
 exports.createAcknowledge = (ack) => {
   return new Promise((resolve, reject) => {
@@ -289,6 +326,28 @@ exports.createBookingProduct = (bookingProduct) => {
         if (err) {
           reject(err);
         }
+        resolve(this.lastID);
+      }
+    );
+  });
+};
+
+// add a new bookingProduct
+exports.updateBookingProduct = (bookingProduct) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "UPDATE BOOKING_PRODUCTS SET QTY = ? WHERE ID_BOOKING = ? AND ID_PRODUCT = ?";
+    db.run(
+      sql,
+      [
+        bookingProduct.Qty,
+        bookingProduct.ID_Booking,
+        bookingProduct.ID_Product,
+      ],
+      function (err) {
+        if (err) {
+          reject(err);
+        }
         resolve(true);
       }
     );
@@ -312,6 +371,37 @@ exports.editQtyProductWeek = (product) => {
   });
 };
 
+// Increment the quantity of a product
+exports.IncrementQtyProductWeek = (product) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
+    db.run(sql, [product.Inc_Qty, product.ID_Product], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        let updatedProduct = getProduct(product.ID_Product);
+        resolve(updatedProduct);
+      }
+    });
+  });
+};
+
+// retrieve a product with a given id
+function getProduct(id) {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * from PRODUCT_WEEK WHERE ID = ?";
+    db.get(sql, [id], function (err, row) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(row);
+      }
+    });
+  });
+}
+
 // edit state of a product_week
 exports.editStateProductWeek = (product) => {
   return new Promise((resolve, reject) => {
@@ -327,29 +417,68 @@ exports.editStateProductWeek = (product) => {
   });
 };
 
+// delete a product from product_week
+exports.deleteProduct = (productId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE from PRODUCT_WEEK WHERE ID = ?";
+    db.run(sql, [productId], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+// delete a booking product from booking_product table!
+exports.deleteBookingProduct = (productId, bookingId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
+    db.run(sql, [bookingId, productId], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 exports.insertTupleProductWEEK = (product) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE) VALUES(?, ?, ?, ?, ?, ?)";
-    db.run(
-      sql,
-      [
-        product.name,
-        product.category_id,
-        product.price,
-        product.qty,
-        product.farmer_id,
-        product.state,
-      ],
-      function (err) {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(this.lastID);
+    const getUnity = "SELECT NAME FROM CATEGORY WHERE ID = ?";
+    db.get(getUnity, [product.category_id], (err, row) => {
+      if (err) reject(err);
+      else {
+        const sql =
+          "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        db.run(
+          sql,
+          [
+            product.name,
+            product.category_id,
+            product.price,
+            product.qty,
+            product.farmer_id,
+            product.state,
+            product.size,
+            product.unit_of_measure,
+          ],
+          function (err) {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(this.lastID);
+          }
+        );
       }
-    );
+    });
   });
 };
 
@@ -438,7 +567,7 @@ exports.createClient = (client) => {
 exports.getAllProducts = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -450,6 +579,8 @@ exports.getAllProducts = () => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
       resolve(products);
@@ -461,7 +592,7 @@ exports.getAllProducts = () => {
 exports.getAllProductsExpectedForFarmer = (idFarmer) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 
     db.all(sql, [idFarmer, "EXPECTED"], (err, rows) => {
       if (err) {
@@ -474,6 +605,8 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
         state: e.STATE,
       }));
@@ -483,11 +616,11 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
 };
 
 //get all products in state = CONFIRMED of a particular farmer from PRODUCT_WEEK table
-exports.getAllConfirmedProductsForFarmer = (farmerId) => {
+exports.getAllProductsConfirmedForFarmer = (farmerId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and p.STATE=?";
-    db.all(sql, [farmerId, "CONFIRMED"], (err, rows) => {
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and (p.STATE='CONFIRMED')";
+    db.all(sql, [farmerId], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -498,6 +631,8 @@ exports.getAllConfirmedProductsForFarmer = (farmerId) => {
         category: e.categoryName,
         price: e.PRICE,
         qty: e.QTY,
+        size: e.SIZE,
+        unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
       resolve(products);
@@ -509,13 +644,14 @@ exports.getAllConfirmedProductsForFarmer = (farmerId) => {
 exports.getAllBookings = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
-      const bookings = rows.map((e) => ({
+      const bookings = [];
+      const prenotazioni = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
@@ -523,8 +659,111 @@ exports.getAllBookings = () => {
         surname: e.SURNAME,
         qty: e.QTY,
         product: e.productName,
+        productID: e.productID,
+      }));
+      prenotazioni.forEach((p) => {
+        if (bookings[p.id]) {
+          bookings[p.id].products = [
+            ...bookings[p.id].products,
+            { productID: p.productID, product: p.product, qty: p.qty },
+          ];
+        } else {
+          bookings[p.id] = {
+            id: p.id,
+            state: p.state,
+            email: p.email,
+            name: p.name,
+            surname: p.surname,
+            products: [
+              {
+                productID: p.productID,
+                product: p.product,
+                qty: p.qty,
+              },
+            ],
+          };
+        }
+      });
+      const list = bookings.filter((b) => b !== null);
+      resolve(list);
+    });
+  });
+  //veloce
+};
+
+// GET /api/bookingModesNew/pickup
+exports.getbookingModesNewPickup = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=?  AND BM.STATE=? AND B.STATE!=?";
+    db.all(sql, [0, "NEW", "PENDINGCANCELATION"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        idBooking: e.ID_BOOKING,
+        idClient: e.CLIENT_ID,
+        state: e.STAT,
+        date: e.DATE,
+        time: e.TIME,
       }));
       resolve(bookings);
+    });
+  });
+};
+
+//get  booking Modes Preparation
+exports.getbookingModesPreparation = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID and P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+    db.all(sql, [0, "PREPARATION"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = [];
+      const prenotazioni = rows.map((e) => ({
+        id: e.ID_BOOKING,
+
+        email: e.EMAIL,
+        name: e.NAME,
+        surname: e.SURNAME,
+        qty: e.QTY,
+        state: e.STAT,
+        time: e.TIME,
+        date: e.DATE,
+        product: e.productName,
+        productID: e.productID,
+      }));
+      prenotazioni.forEach((p) => {
+        if (bookings[p.id]) {
+          bookings[p.id].products = [
+            ...bookings[p.id].products,
+            { productID: p.productID, product: p.product, qty: p.qty },
+          ];
+        } else {
+          bookings[p.id] = {
+            id: p.id,
+            state: p.state,
+            email: p.email,
+            name: p.name,
+            time: p.time,
+            date: p.date,
+            surname: p.surname,
+            products: [
+              {
+                productID: p.productID,
+                product: p.product,
+                qty: p.qty,
+              },
+            ],
+          };
+        }
+      });
+      const list = bookings.filter((b) => b !== null);
+      resolve(list);
     });
   });
 };
@@ -533,7 +772,7 @@ exports.getAllBookings = () => {
 exports.getAllBookingsForClient = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
+      "SELECT b.ID_BOOKING, bp.ID_PRODUCT, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
     db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);
@@ -541,6 +780,7 @@ exports.getAllBookingsForClient = (clientId) => {
       }
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
+        idProd: e.ID_PRODUCT,
         state: e.STATE,
         email: e.EMAIL,
         name: e.NAME,
@@ -661,11 +901,39 @@ exports.insertTupleProductExpected = (pdtExp) => {
     );
   });
 };
+
+//GET /api/clientsPreparation
+
+exports.getClientsPreparation = (productId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT DISTINCT(C.ID), C.EMAIL, C.NAME, C.SURNAME FROM BOOKING_PRODUCTS BP, BOOKING B, CLIENT C WHERE ID_PRODUCT=? AND BP.ID_BOOKING=B.ID_BOOKING AND B.CLIENT_ID=C.ID";
+    db.all(sql, [productId], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else if (rows === undefined) {
+        resolve(false);
+      } else {
+        resolve(
+          rows.map((x) => {
+            return {
+              id: `C${x.ID}`,
+              username: x.EMAIL,
+              name: x.NAME,
+              surname: x.SURNAME,
+            };
+          })
+        );
+      }
+    });
+  });
+};
+
 // Create a new booking mode
 exports.createBookingMode = (bookingMode) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee, state) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.run(
       sql,
       [
@@ -679,6 +947,7 @@ exports.createBookingMode = (bookingMode) => {
         bookingMode.date,
         bookingMode.time,
         bookingMode.extra_fee,
+        "NEW",
       ],
       function (err) {
         if (err) {
@@ -688,6 +957,77 @@ exports.createBookingMode = (bookingMode) => {
         resolve(this.lastID);
       }
     );
+  });
+};
+
+// edit state of a booking mode
+exports.updateStateBookingMode = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE BOOKING_MODE SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, ["PREPARATION", id], function (error) {
+      if (error) {
+        reject(error.message);
+        return;
+      } else if (this.changes === 0) {
+        reject({ error: "BOOKING MODE ID NOT FOUND" });
+        return;
+      } else {
+        resolve(id);
+      }
+    });
+  });
+};
+
+//get all the bookings of the client id that are in state booked
+
+exports.getAllBookingsForClientBooked = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";
+    db.all(sql, [id], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
+        resolve(false);
+      } else {
+        const bookings = rows.map((e) => ({
+          id_booking: e.ID_BOOKING,
+          id_client: e.CLIENT_ID,
+          state: e.STATE,
+        }));
+
+        resolve(bookings);
+      }
+    });
+  });
+};
+
+exports.productsOfBooking = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?";
+    db.all(sql, [id], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
+        resolve(false);
+      } else {
+        const products = rows.map((e) => ({
+          id_product: e.ID,
+          name_product: e.NAME,
+          category: e.CATEGORY_NAME,
+          price: e.PRICE,
+          qty_booking: e.QTY_BOOKING,
+          email: e.FARMER_EMAIL,
+          state: e.STATE,
+        }));
+
+        resolve(products);
+      }
+    });
   });
 };
 
@@ -709,13 +1049,19 @@ exports.cleanDb = async () => {
       }
     );
 
-    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING != ?", [1], (err) => {
+    await db.run("DELETE FROM BOOKING WHERE ID_BOOKING > ?", [2], (err) => {
       errTest(err);
     });
-    await db.run("DELETE FROM BOOKING_MODE ", (err) => {
+    await db.run("DELETE FROM BOOKING_MODE WHERE ID_BOOKING>? ", [2], (err) => {
       errTest(err);
     });
-
+    await db.run(
+      'UPDATE  BOOKING_MODE SET STATE="NEW" WHERE ID_BOOKING=? ',
+      [2],
+      (err) => {
+        errTest(err);
+      }
+    );
     await db.run(
       "DELETE FROM CLIENT_WALLET WHERE ID_CLIENT != ?",
       [1],
@@ -724,9 +1070,12 @@ exports.cleanDb = async () => {
       }
     );
 
+    await db.run("DELETE FROM PRODUCT_WEEK WHERE ID >= ?", [3], (err) => {
+      errTest(err);
+    });
     await db.run(
-      "DELETE FROM PRODUCT_WEEK WHERE ID >= ?",
-      [3],
+      "UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?",
+      [10, 1],
       (err) => {
         errTest(err);
       }
@@ -761,7 +1110,6 @@ exports.cleanDb = async () => {
     );
   }
 };
-
 
 //SHORT-TERM:
 exports.getTotal = () => {

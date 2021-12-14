@@ -14,15 +14,19 @@ function Farmer(props) {
                 <Col className="md-4 pr-0 pl-0 ">
 
                   <Link to="/addFutureproducts"> 
-                      <Button variant="warning" className="mr-2 ml-2 md-1 "> Report products </Button> 
+                      <Button variant="warning" className="m-3 ml-2 md-1 "> Report products </Button> 
                   </Link>
 
                   <Link to="/confirmBookingFarmer"> 
-                      <Button variant="warning" className="mr-2 ml-2 md-1 "> Confirm Booking </Button> 
+                      <Button variant="warning" className="m-3 ml-2 md-1 "> Confirm Booking </Button> 
                   </Link>
 
                   <Link to="/confirmDeliveryFarmer"> 
-                      <Button variant="warning" className="mr-2 ml-2 md-1 "> Confirm Delivery </Button> 
+                      <Button variant="warning" className="m-3 ml-2 md-1 "> Confirm Delivery </Button> 
+                  </Link>
+
+                  <Link to="/confirmPreparationFarmer"> 
+                      <Button variant="warning" className="m-3 ml-2 md-1 "> Confirm Preparation </Button> 
                   </Link>
 
                   

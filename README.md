@@ -6,15 +6,23 @@ Only with testmode disabled
 Password is always : <b> testpassword </b>
 
 ### Customer
+
 1. email: antonio.bianchi@mail.it
 
 ### Shop Employee
+
 1. email: susan@employee.spg.com
 
-### Manager
+### Warehouse Manager
+
 1. email: john@manager.spg.com
 
+### Warehouse Worker
+
+1. email: tim@worker.spg.com
+
 ### Farmer
+
 1. email: mark@farmer.spg.com
 2. email: sue@farmer.spg.com
 
@@ -48,6 +56,10 @@ Login of farmers
 #### POST /api/shopEmployeeSessions
 
 Login of shop employees
+
+#### POST /api/warehouseWorkerSessions
+
+Login of warehouse managers
 
 #### GET /api/clients
 
@@ -171,7 +183,7 @@ retrieves all the acks with state = NEW, return a JSON Vector
 
 #### POST /api/bookings_mode
 
-Create a new booking mode
+Create a new booking mode with state=NEW
 
 Receive a JSON object
 
@@ -259,19 +271,87 @@ Add new acknowledge for manager with state = NEW. Example:
 "email": "antonio.bianchi@mail.it"
 }
 
+#### PUT /api/clientsPreparation
+
+This API receives a vector of products_id and for every product received, retrieve the client id, name, surname, email and collect all the clients in an array without duplications. example:
+[
+{"ID":1,
+"Name":"Antonio",
+"Surname":"Bianchi",
+"Email":"antonio.bianchi@mail.com"},
+...]
+
+### GET /api/bookingModesPreparation
+
+Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION
+
+response example:
+[
+{"idBooking":3,
+"idClient":1,
+state:"PENDINGCANCELATION",
+"date":"22/11/2021",
+"time":"13:20",
+
+},...]
+
+### GET /api/bookingModesNew/pickup
+
+get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW. Furthermore the state of the booking must be != PENDINGCANCELATION
+
+response example:
+[
+{"idBooking":3,
+"idClient":1,
+state:"BOOKED",
+"date":"22/11/2021",
+"time":"13:20",
+},...]
+
 #### GET /api/bookings
 
 Retrieve the list of all bookings, return a JSON Vector
 
-    [{
-    	"id": 1,
-        "state": "PENDING",
-        "email": "client@gmail.com",
-        "name": "client1",
-        "surname": "clientSurname",
-        "qty": 3,
-        "product": "pro1"
-    },...]
+    [
+    {
+        "id": 1,
+        "state": "PENDINGCANCELATION",
+        "email": "marco.bianchi@mail.it",
+        "name": "Marco",
+        "surname": "Bianchi",
+        "products": [
+            {
+                "productID": 1,
+                "product": "Mele",
+                "qty": 3
+            },
+            {
+                "productID": 2,
+                "product": "Lamponi",
+                "qty": 1
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "state": "BOOKED",
+        "email": "marco.bianchi@mail.it",
+        "name": "Marco",
+        "surname": "Bianchi",
+        "products": [
+            {
+                "productID": 1,
+                "product": "Mele",
+                "qty": 2
+            },
+            {
+                "productID": 2,
+                "product": "Lamponi",
+                "qty": 2
+            }
+        ]
+    }
+    ]
 
 #### POST /api/bookingproduct
 
@@ -351,3 +431,96 @@ Receive a JSON Object with client ID and new balance
 
     {"id":1,
     "amount":19.99}
+
+#### NEW API
+
+#### GET /api/bookings/booked/clients/:id
+
+to get all the bookings of the client id that are
+in state = BOOKED (ONLY THE BOOKINGS, NOT THE PRODUCTS)
+json returned:
+
+[
+{
+"id_booking" : 1
+"id_client" : 1
+"state" : "BOOKED"
+},
+...]
+
+#### GET /api/bookingProducts/:bookingId
+
+GET all the product associated to a particular booking.
+json returned:
+
+[
+"id" = 1,
+"name" = "Mele"
+"category" =
+"price" = 14.0
+]
+
+##### GETALLBOOKINGS(app.get("/api/bookings"), GETALLBOOKINGFORCLIENT(app.get("/api/bookings/clients/:id"), getBookingsStatePendingCancelation(app.get("/api/bookingsPendingCancelation"), getTotal(app.post("/api/clock"): I DIDN'T CHANGE THESE FUNCTIONS FOR THE COLUMNS CHANGED IN THE PRODUCT_WEEK
+
+##### I CHANGED FOR THE ADD COLUMNS IN PRODUCT_WEEK THE app.post("/api/farmers/:farmerid/products"), app.get("/api/products"), app.get("/api/farmers/:farmerid/products_expected"), app.get("/api/products/farmers/:id"),
+
+#### DELETE /api/products/:id
+
+delete a product from product_week table with the given id
+
+#### DELETE /api/bookingProduct
+
+delete a booking product 
+request body :
+{
+    "ID_Product": 1,
+    "ID_Booking": 1
+}
+response status code is 204 (no content)
+
+#### PUT /api/bookings_mode/:id
+
+updates a given booking_mode state to PREPERATION
+returns
+{
+"error": "BOOKING MODE ID NOT FOUND"
+} with status code 500
+if booking mode id was not found.
+
+
+###### Now the api /api/products/farmers/:id return the elements with state confirmed or preparation 
+
+###### GET /api/bookingProducts/:bookingId GET all the product associated to a particular booking.
+
+    products = {
+          id_product: e.ID,
+          name_product: e.NAME,
+          category: e.CATEGORY_NAME, 
+          price: e.PRICE, 
+          qty_booking: e.QTY_BOOKING, 
+          email: e.FARMER_EMAIL, 
+          state: e.STATE
+    }
+    
+#### PUT /api/incrementProductQty
+
+Increments the qty of a product in product_week table
+
+Receive a JSON object
+
+    {
+    "ID_Product": 2,
+    "Inc_Qty": 3
+}
+return the updated product info:
+    "ID": 2,
+    "NAME": "Lamponi",
+    "CATEGORY_ID": 1,
+    "PRICE": 1.78,
+    "QTY": 4,
+    "FARMER_ID": 1,
+    "STATE": "CONFIRMED",
+    "SIZE": 1,
+    "UNIT_OF_MEASURE": "g"
+}
+   

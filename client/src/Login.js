@@ -20,7 +20,7 @@ function Login(props) {
   }
 
   return (
-    <div className="Login">
+    <div className="Login below-nav main-content">
 
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
@@ -28,6 +28,7 @@ function Login(props) {
           <Form.Control
             autoFocus
             type="email"
+            id="emailField"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -36,21 +37,23 @@ function Login(props) {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
+            id="pswField"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg">
           <Form.Label>Type of user</Form.Label>
-          <Form.Control as="select" defaultValue="C" onChange={e => setType(e.target.value)}>
+          <Form.Control as="select" defaultValue="C" id="userType" onChange={e => setType(e.target.value)}>
             <option value="C">Customer</option>
             <option value="F">Farmer</option>
             <option value="S">Employee</option>
-            <option value="M">Manager</option>
+            <option value="M">Warehouse Manager</option>
+            <option value="W">Warehouse Worker</option>
           </Form.Control>
         </Form.Group>
         <Form.Group size="lg">
-        <Button variant="warning" block size="lg" type="submit" disabled={!validateForm()}>
+        <Button variant="warning" block size="lg" id="submitLogin" type="submit" disabled={!validateForm()}>
           Login
         </Button>
         </Form.Group>

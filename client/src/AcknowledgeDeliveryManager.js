@@ -10,7 +10,7 @@ import {
 export default function AcknowledgeDeliveryFarmer(props) {
 
     function acknowledgeActions() {
-        if(props.acknowledges.length == 0){
+        if(props.acknowledges.length === 0){
             return (<>No deliveries to Acknowledge</>);
         }
         return props.acknowledges.map((ack) => (
@@ -23,6 +23,7 @@ export default function AcknowledgeDeliveryFarmer(props) {
                         </Card.Text>
                         <Button
                             variant="warning"
+                            id={"confirm"+ack.farmer}
                             onClick={() => {
                                 
                                 props.confirmAck(ack.id);

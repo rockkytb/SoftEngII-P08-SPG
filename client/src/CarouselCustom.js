@@ -2,6 +2,9 @@ import React from 'react';
 import { Carousel,  Button } from 'react-bootstrap';
 import { useState } from 'react';
 import  sfondo_cibo  from './immagini/sfondo_cibo.jpg';
+import  mobile1  from './immagini/mobile1.jpg';
+import  mobile2  from './immagini/mobile2.jpg';
+import  mobile3  from './immagini/mobile3.jpg';
 import  cibo2 from './immagini/cibo2.jpg';
 import  cibo3 from './immagini/cibo3.jpg';
 import { Link } from "react-router-dom";
@@ -15,13 +18,13 @@ function CarouselCustom(props) {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel activeIndex={index} id="Carousel" onSelect={handleSelect}>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
-          src={cibo3}
+          height="100vh"
+          src={window.innerWidth < 768 ? (mobile2):(cibo3)}
           alt="First slide"
         />
         <Carousel.Caption className="caption-middle">
@@ -37,10 +40,10 @@ function CarouselCustom(props) {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
-          src={cibo2}
+          height="100vh"
+          src={window.innerWidth < 768 ? (mobile3):(cibo2)}
           alt="Second slide"
         />
 
@@ -57,10 +60,10 @@ function CarouselCustom(props) {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block width100"
+          className="d-block width100 page"
           width="100vh"
-          height="720px"
-          src={sfondo_cibo}
+          height="100vh"
+          src={window.innerWidth < 768 ? (mobile1):(sfondo_cibo)}
           alt="Third slide"
         />
 

@@ -64,19 +64,28 @@ describe("Test suite Integration Server", () => {
   describe("Post booking mode success", () => {
     it("should create a new booking mode", async () => {
       const res = await request(app).post("/api/bookings_mode").send({
-        "idBooking": 100,
-        "delivery": 1,
-        "street": "via giovanni ribet",
-        "city": "turin",
-        "province": "TO",
-        "postal_code": "12345",
-        "country": "italy",
-        "date": "22/11/2021",
-        "time": "13:20",
-        "extra_fee": 24.5
-    });
+        idBooking: 100,
+        delivery: 1,
+        street: "via giovanni ribet",
+        city: "turin",
+        province: "TO",
+        postal_code: "12345",
+        country: "italy",
+        date: "22/11/2021",
+        time: "13:20",
+        extra_fee: 24.5,
+      });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toHaveProperty("idBookingMode");
+    });
+  });
+
+  //TEST update status of BOOKING MODE API
+  describe("updating booking mode status success", () => {
+    it("should update a booking mode status to PREPERATION", async () => {
+      const res = await request(app).put(`/api/bookings_mode/2`).send();
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual({ bookingModeId: "2" });
     });
   });
 
@@ -191,27 +200,25 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  describe("Put a row in the table BOOKING_PRODUCTS", () => {
-    it("send a invalid Booking id", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 0,
-        ID_Product: 2,
-        Qty: 3,
+  describe("increment product qty", () => {
+    it("send an invalid qty", async () => {
+      const res = await request(app).put("/api/incrementProductQty").send({
+        ID_Product: 3,
+        Dec_Qty: -1,
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
-        "Invalid booking id, it must be positive"
+        `Invalid qty, it must be positive`
       );
     });
   });
 
-  describe("Put a row in the table BOOKING_PRODUCTS", () => {
-    it("send a invalid product id", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 1,
+  describe("increment product qty", () => {
+    it("send an invalid id product", async () => {
+      const res = await request(app).put("/api/incrementProductQty").send({
         ID_Product: -1,
-        Qty: 3,
+        Inc_Qty: 2,
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
@@ -221,18 +228,457 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  describe("Put a row in the table BOOKING_PRODUCTS", () => {
-    it("send a invalid qty", async () => {
-      const res = await request(app).post("/api/bookingproduct").send({
-        ID_Booking: 1,
+  describe("increment product qty", () => {
+    it("send a valid request body", async () => {
+      const res = await request(app).put("/api/incrementProductQty").send({
         ID_Product: 1,
-        Qty: -1,
+        Inc_Qty: 2,
       });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual({
+        ID: 1,
+        NAME: "Mele",
+        CATEGORY_ID: 1,
+        PRICE: 14,
+        QTY: 12,
+        FARMER_ID: 1,
+        STATE: "EXPECTED",
+        SIZE: 1,
+        UNIT_OF_MEASURE: "kg",
+      });
+    });
+  });
+
+  describe("delete a product", () => {
+    it("send an invalid product id", async () => {
+      const res = await request(app).delete("/api/products/-1").send();
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
         "error",
-        `Invalid qty id, it must be positive`
+        `Invalid product id, it must be positive`
       );
+    });
+  });
+
+  //// test POST /api/farmers/:farmerid/products
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products success", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(201);
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong category id", async () => {
+      const product = {
+        name: "test",
+        category: -1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid category id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong price", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: -10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid product price, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong farmer id", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: -1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: -1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid quantity, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: -1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid size, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong unit of measure", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure:
+          "kgkajdlajlfafaljfafljfdafladjfldfldjafladjfaljfaljflj",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/products")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid unit of measure, it must be a string of max 15 length`
+      );
+    });
+  }, 10000);
+
+  //// test POST /api/farmers/:farmerid/products
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products success", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(201);
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong category id", async () => {
+      const product = {
+        name: "test",
+        category: -1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid category id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong price", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: -10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid product price, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong farmer id", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: -1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: -1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid quantity, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong quantity", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: -1,
+        unit_of_measure: "kg",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid size, it must be positive`
+      );
+    });
+  }, 10000);
+
+  describe("insert a product", () => {
+    it("POST /api/farmers/:farmerid/products fail for wrong unit of measure", async () => {
+      const product = {
+        name: "test",
+        category: 1,
+        price: 10,
+        qty: 1,
+        farmerid: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure:
+          "kgkajdlajlfafaljfafljfdafladjfldfldjafladjfaljfaljflj",
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(product);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        `Invalid unit of measure, it must be a string of max 15 length`
+      );
+    });
+  }, 10000);
+
+  ////
+  describe("delete a product", () => {
+    it("send a valid product id", async () => {
+      const product = {
+        name: "test",
+        category_id: 1,
+        price: 10,
+        qty: 1,
+        farmer_id: 1,
+        state: "CONFIRMED",
+        size: 1,
+        unit_of_measure: "kg",
+      };
+      // insert a test product
+
+      let productId = await dao.insertTupleProductWEEK(product);
+      const res = await request(app)
+        .delete(`/api/products/${productId}`)
+        .send();
+      expect(res.statusCode).toEqual(204);
+    });
+  });
+
+  describe("Put a row in the table BOOKING_PRODUCTS", () => {
+    it("send a invalid Booking id", async () => {
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send({
+          ID_Booking: -2,
+          products: [
+            { id: 1, quantity: 42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", `Bad request`);
+    });
+  });
+
+  describe("delete a booking product", () => {
+    it("send a valid product id and booking id", async () => {
+      let bookingProduct = {
+        ID_Booking: 101,
+        ID_Product: 121,
+        Qty: 15,
+      };
+      // insert a test booking product
+      dao.createBookingProduct(bookingProduct);
+      const res = await request(app).delete(`/api/bookingProduct`).send({
+        ID_Booking: 101,
+        ID_Product: 121,
+      });
+      expect(res.statusCode).toEqual(204);
+    });
+  });
+
+  describe("Put a row in the table BOOKING_PRODUCTS", () => {
+    it("send a invalid product id", async () => {
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send({
+          ID_Booking: 2,
+          products: [
+            { id: -1, quantity: 42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", `Invalid product data`);
+    });
+  });
+
+  describe("Put a row in the table BOOKING_PRODUCTS", () => {
+    it("send a invalid qty", async () => {
+      const res = await request(app)
+        .post("/api/bookingproducts")
+        .send({
+          ID_Booking: 2,
+          products: [
+            { id: 1, quantity: -42 },
+            { id: 2, quantity: 69 },
+          ],
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", `Invalid product data`);
     });
   });
 
@@ -276,8 +722,8 @@ describe("Test suite Integration Server", () => {
   describe("Get client by email fails", () => {
     it("don't send an email", async () => {
       const res = await request(app).post("/api/client");
-      expect(res.statusCode).toEqual(401);
-      expect(res.body).toHaveProperty("id", -1);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid email");
     });
   });
 
@@ -307,6 +753,24 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST PUT /api/clientsPreparation
+  describe("Get clients preparation success", () => {
+    it("ask the list of clients with products in preparation", async () => {
+      const res = await request(app)
+        .put("/api/clientsPreparation")
+        .send([{ id: 2 }]);
+      expect(res.statusCode).toEqual(201);
+      expect(res.body).toEqual([
+        {
+          id: "C1",
+          username: "marco.bianchi@mail.it",
+          name: "Marco",
+          surname: "Bianchi",
+        },
+      ]);
+    });
+  });
+
   //TEST GET /api/categories
   describe("Get categories success", () => {
     it("ask the list of categories", async () => {
@@ -316,17 +780,14 @@ describe("Test suite Integration Server", () => {
         {
           id: "1",
           name: "Fruit",
-          measure: "Kg",
         },
         {
           id: "2",
           name: "Spices",
-          measure: "Box",
         },
         {
           id: "3",
           name: "Vegetables",
-          measure: "Kg",
         },
       ]);
     });
@@ -384,20 +845,46 @@ describe("Test suite Integration Server", () => {
     });
   });
 
+  //TEST POST /api/warehouseWorkerSession
+  describe("Warehouse worker Session success", () => {
+    it("send a valid user", async () => {
+      const res = await request(app).post("/api/warehouseWorkerSessions").send({
+        username: "antonio.bianchi@mail.it",
+        password: "testpassword",
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty("id", `W1`);
+    });
+  });
+
+  describe("Warehouse worker Session fails", () => {
+    it("send a wrong psw", async () => {
+      const res = await request(app).post("/api/warehouseWorkerSessions").send({
+        username: "antonio.bianchi@mail.it",
+        password: "test",
+      });
+      expect(res.statusCode).toEqual(401);
+      expect(res.body).toHaveProperty(
+        "message",
+        `Incorrect username and/or password`
+      );
+    });
+  });
+
   describe("get all products success", () => {
     it("test get api/products endpoint", async () => {
       const response = await request(app).get("/api/products");
-      expect(response.body).toEqual(
-        [
-          {
-              "id": 1,
-              "name": "Mele",
-              "category": "Fruit",
-              "price": 14.0,
-              "qty": 5,
-              "farmer_email": "antonio.bianchi@mail.it"
-          }
-      
+      expect(response.body).toEqual([
+        {
+          id: 1,
+          name: "Mele",
+          category: "Fruit",
+          price: 14.0,
+          qty: 10,
+          farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "kg",
+        },
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
@@ -414,12 +901,40 @@ describe("Test suite Integration Server", () => {
           name: "Lamponi",
           category: "Fruit",
           price: 1.78,
-          qty: 1,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "g",
         },
       ]);
       expect(response.body).toHaveLength(1);
       expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe("get all CONFIRMED products for a particular farmer success", () => {
+    it("test //GET /api/products/farmers/:id fail", async () => {
+      const response = await request(app).get("/api/products/farmers/-1");
+
+      expect(response.statusCode).toBe(422);
+      expect(response.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
+    });
+  });
+
+  //test get /api/farmers/:farmerid/products_expected
+  describe("get all products expected by farmer id success", () => {
+    it("test get /api/farmers/:farmerid/products_expected endpoint fail", async () => {
+      const response = await request(app).get(
+        "/api/farmers/-1/products_expected"
+      );
+      expect(response.statusCode).toBe(422);
+      expect(response.body).toHaveProperty(
+        "error",
+        `Invalid farmer id, it must be positive`
+      );
     });
   });
 
@@ -434,9 +949,11 @@ describe("Test suite Integration Server", () => {
           name: "Mele",
           category: "Fruit",
           price: 14,
-          qty: 5,
+          qty: 10,
           farmer_email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "kg",
         },
       ]);
 
@@ -448,18 +965,18 @@ describe("Test suite Integration Server", () => {
   //POST /api/products/farmers/:id
   describe("get all confirmed products expected by farmer id success", () => {
     it("test get /api/products/farmers/1 endpoint", async () => {
-      const response = await request(app).get(
-        "/api/products/farmers/1"
-      );
+      const response = await request(app).get("/api/products/farmers/1");
       expect(response.body).toEqual([
         {
-          "id": 2,
-          "name": "Lamponi",
-          "category": "Fruit",
-          "price": 1.78,
-          "qty": 1,
-          "farmer_email": "antonio.bianchi@mail.it"
-        }
+          id: 2,
+          name: "Lamponi",
+          category: "Fruit",
+          price: 1.78,
+          qty: 10,
+          farmer_email: "antonio.bianchi@mail.it",
+          size: 1,
+          unit_of_measure: "g",
+        },
       ]);
 
       expect(response.body).toHaveLength(1);
@@ -467,10 +984,80 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-
   describe("get all bookings success", () => {
     it("test get api/bookings endpoint", async () => {
       const response = await request(app).get("/api/bookings");
+      expect(response.body).toEqual([
+        {
+          id: 1,
+          state: "PENDINGCANCELATION",
+          email: "marco.bianchi@mail.it",
+          name: "Marco",
+          surname: "Bianchi",
+          products: [
+            { qty: 3, productID: 1, product: "Mele" },
+            { product: "Lamponi", productID: 2, qty: 1 },
+          ],
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  //test get  booking Modes Preparation
+  describe("Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION", () => {
+    it("test GET /api/bookingModesPreparation", async () => {
+      const response = await request(app).get("/api/bookingModesPreparation");
+      expect(response.body).toEqual([
+        {
+          date: "2021-12-15",
+          email: "marco.bianchi@mail.it",
+          id: 1,
+          name: "Marco",
+          products: [
+            {
+              product: "Mele",
+              productID: 1,
+              qty: 3,
+            },
+            {
+              product: "Lamponi",
+              productID: 2,
+              qty: 1,
+            }
+          ],
+          state: "PENDINGCANCELATION",
+          surname: "Bianchi",
+          time: "18:07",
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  //test GET /api/bookingModesNew/pickup
+  describe("Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW", () => {
+    it("test /api/bookingModesNew/pickup", async () => {
+      const response = await request(app).get("/api/bookingModesNew/pickup");
+      expect(response.body).toEqual([
+        {
+          idBooking: 2,
+          idClient: 1,
+          state: "BOOKED",
+          date: "2021-12-15",
+          time: "14:20",
+        },
+      ]);
+      expect(response.body).toHaveLength(1);
+      expect(response.statusCode).toBe(200);
+    });
+  });
+
+  describe("get all bookings for a client success", () => {
+    it("test get api/bookings/clients/1 endpoint", async () => {
+      const response = await request(app).get("/api/bookings/clients/1");
       expect(response.body).toEqual([
         {
           id: 1,
@@ -489,35 +1076,7 @@ describe("Test suite Integration Server", () => {
           qty: 1,
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-        }
-      ]);
-      expect(response.body).toHaveLength(2);
-      expect(response.statusCode).toBe(200);
-    });
-  });
-
-  describe("get all bookings for a client success", () => {
-    it("test get api/bookings/clients/1 endpoint", async () => {
-      const response = await request(app).get("/api/bookings/clients/1");
-      expect(response.body).toEqual([
-        {
-          id: 1,
-          state: "PENDINGCANCELATION",
-          email: "marco.bianchi@mail.it",
-          name: "Marco",
-          surname: "Bianchi",
-          qty: 3,
-          product: "Mele",
         },
-       { 
-        email: "marco.bianchi@mail.it",
-        id: 1,
-        name: "Marco",
-        product: "Lamponi",
-        qty: 1,
-        state: "PENDINGCANCELATION",
-        surname: "Bianchi",
-      }
       ]);
       expect(response.body).toHaveLength(2);
       expect(response.statusCode).toBe(200);
@@ -618,14 +1177,14 @@ describe("Test suite Integration Server", () => {
           product: "Mele",
         },
         {
-         email: "marco.bianchi@mail.it",
+          email: "marco.bianchi@mail.it",
           id: 1,
           name: "Marco",
           product: "Lamponi",
           qty: 1,
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-        }
+        },
       ]);
       expect(res.body).toHaveLength(2);
       expect(res.statusCode).toBe(200);
@@ -791,23 +1350,90 @@ describe("Put products with new state", ()=>{
       );
     });
   });
-/*
-  describe("Put products with expected state", () => {
-    it("valid put", async () => {
-      const parameter = 
-        {
-          name: "Apple",
-          category: 2,
-          price: 1.99,
-          qty: 2
-          };
 
-      const res = await request(app).post("/api/farmers/1/productsExpected").send(parameter);
+  /* describe("Put products with expected state", () => {
+    it("valid put", async () => {
+      const parameter = {
+        name: "Apple",
+        category: 2,
+        price: 1.99,
+        qty: 2,
+      };
+
+      const res = await request(app)
+        .post("/api/farmers/1/productsExpected")
+        .send(parameter);
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual("productId", 13);
+    });
+  });*/
+
+  describe("get all bookings of a client with the booked state", () => {
+    it("get with a valid id", async () => {
+      const result = {
+        id_booking: 2,
+        id_client: 1,
+        state: "BOOKED",
+      };
+
+      const res = await request(app).get("/api/bookings/booked/clients/1");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual([result]);
     });
   });
-*/
+  describe("get all bookings of a client with the booked state", () => {
+    it("get with a invalid id", async () => {
+      const result = {
+        id_booking: 2,
+        id_client: 1,
+        state: "BOOKED",
+      };
+
+      const res = await request(app).get("/api/bookings/booked/clients/0");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
+  });
+
+  describe("get all products of a particular booking", () => {
+    it("get with a valid id", async () => {
+      const result = [
+        {
+          id_product: 1,
+          name_product: "Mele",
+          category: "Fruit",
+          price: 14.0,
+          qty_booking: 3,
+          email: "antonio.bianchi@mail.it",
+          state: "EXPECTED",
+        },
+        {
+          category: "Fruit",
+          email: "antonio.bianchi@mail.it",
+          id_product: 2,
+          name_product: "Lamponi",
+          price: 1.78,
+          qty_booking: 1,
+          state: "CONFIRMED",
+        },
+      ];
+
+      const res = await request(app).get("/api/bookingProducts/1");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual(result);
+    });
+  });
+
+  describe("get all products of a particular booking", () => {
+    it("get with a invalid id", async () => {
+      const res = await request(app).get("/api/bookingProducts/0");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id of a element on the array, it must be positive"
+      );
+    });
+  });
 });
-
-
