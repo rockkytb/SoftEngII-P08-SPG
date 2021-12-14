@@ -707,6 +707,15 @@ async function attaccoDoS(userdata) {
         return bookingList;
       }
     }
+    else if (userdata && userdata.id && userdata.id.charAt(0) === "W") {
+      const response = await fetch(
+        "/api/bookingModesNew/pickup"
+      );
+      const bookingList = await response.json();
+      if (response.ok) {
+        return bookingList;
+      }
+    }
   };
 
   const getClients = async () => {
