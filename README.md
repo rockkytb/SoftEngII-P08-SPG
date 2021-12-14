@@ -19,7 +19,7 @@ Password is always : <b> testpassword </b>
 
 ### Warehouse Worker
 
-1. email: tim@manager.spg.com
+1. email: tim@worker.spg.com
 
 ### Farmer
 
