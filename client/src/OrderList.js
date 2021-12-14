@@ -12,10 +12,9 @@ import {
   Alert
 } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
-import Dropdown from "react-bootstrap/Dropdown";
 import ImageFinder from "./ImageFinder.js";
 
-export default function ProductsList(props) {
+export default function OrderList(props) {
   const [showView, setShowView] = useState(false);
 
   const [productId, setProductId] = useState();
@@ -32,6 +31,8 @@ export default function ProductsList(props) {
         ID_Product: productId,
         quantity: orderQuantity,
       };
+
+      props.updateOrder(product);
 
     
     handleViewClose();
@@ -51,7 +52,7 @@ export default function ProductsList(props) {
   function productsActions() {
     //TOCHECK: problems into modifying a prop?
     //the product must be one from next week so it must be not already confirmed
-    props.bookings.map((book) => {
+    return (props.bookings.map((book) => {
       return (
         <Col>
           <Card className="text-dark">
@@ -105,8 +106,8 @@ export default function ProductsList(props) {
           </Card>
         </Col>
       );
-    });
-  }
+    })
+    )}
 
   return (
     <>
