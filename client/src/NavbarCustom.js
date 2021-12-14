@@ -37,7 +37,7 @@ if (firstTime && toPrint.length !== 0) {
   setFirstTime(false);
 }
 
-let toPrintConfirm = props.bookings && props.bookings>0 ? 
+let toPrintConfirm = props.bookings && props.bookings.lenght>0 ? 
 props.bookings.filter((bk) => bk.state === "CONFIRMED")
 :
 "";
