@@ -577,6 +577,45 @@ async function confirmPreparation(id) {
   });
 }
 
+async function confirmPreparationFarmer(productList) {
+  return new Promise((resolve, reject) => {
+    const preparationList = productList.map((product) => {
+      return {
+        id: product.id,
+        state: "PREPARATION",
+      };
+    });
+    fetch(url + "/products", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(preparationList),
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve(response.json());
+        } else {
+          response
+            .json()
+            .then((obj) => {
+              reject(obj);
+            }) // error msg in the response body
+            .catch((err) => {
+              reject({
+                errors: [
+                  { param: "Application", msg: "Cannot parse server response" },
+                ],
+              });
+            }); // something else
+        }
+      })
+      .catch((err) => {
+        reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+      }); // connection errors
+  });
+}
+
 async function updateOrder(product){
 
   const update = async () => {
@@ -766,6 +805,7 @@ const API = {
   setDate,
   attaccoDoS,
   confirmPreparation,
+  confirmPreparationFarmer,
   updateOrder,
 };
 export default API;
