@@ -696,10 +696,10 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {userdata.id && userdata.id.charAt(0) === "M" ? (
+                        {userdata.id && (userdata.id.charAt(0) === "M" || userdata.id.charAt(0) === "W") ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <PickupSchedule className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
+                            <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
                           <Redirect to="/home" />

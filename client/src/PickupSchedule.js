@@ -47,6 +47,8 @@ export default function PickupSchedule(props) {
                             Date: <b>{b.date + " "} </b> <br />
                             Time: <b>{b.time + " "} </b> <br />
                         </Card.Text>
+                        {userdata.id && userdata.id.charAt(0) === "W" ? (
+                          <>
                         <Button
                             variant="warning"
                             id={"confirmButton" + b.idBooking}
@@ -58,6 +60,7 @@ export default function PickupSchedule(props) {
                         >
                             Confirm preparation
                         </Button>
+                        </>):(<></>)}
                     </Card.Body>
                 </Card>
             </Col>
