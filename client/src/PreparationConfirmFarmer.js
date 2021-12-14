@@ -5,8 +5,11 @@ import {
     Card,
     Col,
     Button,
-    Alert
+    Alert,
+    Row
 } from "react-bootstrap";
+import ImageFinder from "./ImageFinder.js";
+import Image from "react-bootstrap/Image";
 
 export default function PreparationConfirmFarmer(props) {
 
@@ -25,10 +28,15 @@ export default function PreparationConfirmFarmer(props) {
                             <Card.Body>
                                 <Card.Text className="text-dark">
 
-                                    <>
+                                <Row>
+                                    <Col xs={7}>
                                         Product:<b> {product.name + "  "}</b><br />
                                         Quantity:<b> {product.qty}</b><br /><br />
-                                    </>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <Image src={ImageFinder(product.name.toLowerCase())} rounded fluid />
+                                    </Col>
+                                </Row>
                                 </Card.Text>
                                 <Button
                                     variant="warning"
