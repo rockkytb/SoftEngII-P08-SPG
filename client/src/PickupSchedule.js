@@ -47,7 +47,7 @@ export default function PickupSchedule(props) {
                             Date: <b>{b.date + " "} </b> <br />
                             Time: <b>{b.time + " "} </b> <br />
                         </Card.Text>
-                        {userdata.id && userdata.id.charAt(0) === "W" ? (
+                        {props.userdata.id && props.userdata.id.charAt(0) === "W" ? (
                           <>
                         <Button
                             variant="warning"
