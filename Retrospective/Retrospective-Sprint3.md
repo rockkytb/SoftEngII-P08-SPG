@@ -1,4 +1,4 @@
-TEMPLATE FOR RETROSPECTIVE (Team ##)
+TEMPLATE FOR RETROSPECTIVE (Team P08)
 =====================================
 
 The retrospective should include _at least_ the following
@@ -55,11 +55,11 @@ sections:
 - Technical Debt management:
   - Total hours estimated 
   - Total hours spent
-  - Hours estimated for remediation by SonarQube
-  - Hours estimated for remediation by SonarQube only for the selected and planned issues 
-  - Hours spent on remediation 
-  - debt ratio (as reported by SonarQube under "Measures-Maintainability")
-  - rating for each quality characteristic reported in SonarQube under "Measures" (namely reliability, security, maintainability )
+  - Hours estimated for remediation by SonarQube: 3d 7h
+  - Hours estimated for remediation by SonarQube only for the selected and planned issues: 2h 53min
+  - Hours spent on remediation: 3h
+  - debt ratio (as reported by SonarQube under "Measures-Maintainability"): 0.9%
+  - rating for each quality characteristic reported in SonarQube under "Measures" (namely reliability, security, maintainability ): RELIABILITY A, MAINTAINABILITY A, SECURITY A, SECURITY REVIEW A, COVERAGE 54.6%, DUPLICATIONS 16.6%. N.B. See sonar Readme for major informations
   
 
 
