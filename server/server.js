@@ -1239,6 +1239,48 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
   res.status(201).json({ date: date });
 });
 
+//VIRTUAL CLOCK
+let virtualTime = false;
+let clockDate = new Date();
+let timers = setInterval(() => {clockDate = new Date();
+  //TODO call a function clockActions that implements all the backend logic according to the date  
+}, 30000);
+
+//GET /api/time to get current time
+app.get("/api/time",  (req, res) => {
+      res.status(200).json(clockDate);
+});
+
+//GET /api/virtualTime to enable/disable virtual time
+app.get("/api/virtualTime",  async (req, res) => {
+  virtualTime = !virtualTime;
+  clearInterval(timers);
+    if (virtualTime) {
+      //Adds 12 hours every 5 seconds
+      timers=
+        setInterval(
+          () =>
+            {
+              let d = new Date(clockDate);
+              d.setHours(d.getHours() + 12);
+              clockDate = d;
+              //TODO call a function clockActions that implements all the backend logic according to the date
+            },
+          5000
+        )
+      
+    } else {
+      //Update date every 30 seconds if real time enabled
+      clockDate = new Date();
+      timers = setInterval(() => {clockDate = new Date();
+        //TODO call a function clockActions that implements all the backend logic according to the date  
+      }, 30000);
+    }
+
+  //All went fine
+  res.status(200).json(clockDate);
+});
+
 //GET /api/bookings/booked/clients/:id
 
 app.get("/api/bookings/booked/clients/:id", isLoggedIn, (req, res) => {

@@ -679,6 +679,23 @@ async function setDate(date) {
   );
 }
 
+//VIRTUAL CLOCK
+async function getTime(){
+  const response = await fetch("/api/time");
+      const time = await response.json();
+      if (response.ok) {
+        return time;
+      }
+}
+
+async function enableDisableVirtualClock(){
+  const response = await fetch("/api/virtualTime");
+      const time = await response.json();
+      if (response.ok) {
+        return time;
+      }
+}
+
 async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
@@ -807,5 +824,7 @@ const API = {
   confirmPreparation,
   confirmPreparationFarmer,
   updateOrder,
+  getTime,
+  enableDisableVirtualClock
 };
 export default API;

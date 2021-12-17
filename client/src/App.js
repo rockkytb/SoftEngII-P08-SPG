@@ -60,31 +60,37 @@ function App() {
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
 
-  //fake clock manager
-  useEffect(() => {
-    clearInterval(timers);
-    if (virtualTime) {
-      //Adds 12 hours every 3 seconds
+//fake clock manager
+useEffect(() => {
+  clearInterval(timers);
+  if (virtualTime) {
+    //Polling to server every 2 seconds
+    API.enableDisableVirtualClock().then(()=>{
       setTimers(
         setInterval(
-          () =>
-            setDate((oldDate) => {
-              let d = new Date(oldDate);
-              d.setHours(oldDate.getHours() + 12);
-              return d;
-            }),
-          3000
+          () =>{
+            API.getTime().then((serverDate)=>setDate(new Date(serverDate)));        
+          },
+          2000
         )
       );
-    } else {
-      //Update date every minute if real time enabled
-      setDate(new Date());
-      setTimers(setInterval(() => setDate(new Date()), 60000));
-    }
+    })
+    
+  } else {
+    //Update date every 20 seconds if real time enabled
+    API.enableDisableVirtualClock().then((date)=>{
+      setDate(new Date(date));
+      setTimers(setInterval(() => {
+        API.getTime().then((serverDate)=>setDate(new Date(serverDate)));
+      
+        }, 10000));
+    });
+    
+  }
 
-    //SHORT-TERM: sends date to server
-    //const resp = API.setDate(date.getDay());
-  }, [virtualTime]);
+  //SHORT-TERM: sends date to server
+  //const resp = API.setDate(date.getDay());
+}, [virtualTime]);
 
   //authenticator
   useEffect(() => {
