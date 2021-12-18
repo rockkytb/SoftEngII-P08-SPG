@@ -1111,7 +1111,7 @@ exports.cleanDb = async () => {
   }
 };
 
-//SHORT-TERM:
+//VIRTUAL CLOCK DAO FUNCTIONS
 exports.getTotal = () => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -1135,3 +1135,21 @@ exports.getTotal = () => {
     });
   });
 };
+
+
+// delete all products expected from bookings, to be called on tuesday
+exports.deleteBookingProductsExpected = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?)";
+    db.run(sql, ["EXPECTED"], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+//END OF VIRTUAL CLOCK DAO FUNCTIONS

@@ -1289,6 +1289,10 @@ async function clockActions(){
     CONFIRMED BY FARMERS */
 
     if(clockDate.getDay()==2){
+
+      //Delete from bookings all product still expected, so unconfirmed
+      await dao.deleteBookingProductsExpected();
+
       const bookings = await dao.getTotal();
       bookings.forEach(async (booking)=>{
         //Get the wallet  of the customer and put in variable wallet
