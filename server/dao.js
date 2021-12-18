@@ -1120,9 +1120,9 @@ exports.getTotal = () => {
     const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
-      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='BOOKED' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=?\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
-    db.all(sql, (err, rows) => {
+    db.all(sql,["BOOKED","CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -1173,6 +1173,33 @@ exports.getTotalPendingCancelation = () => {
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
         total: e.TOTAL,
+      }));
+
+      resolve(bookings);
+    });
+  });
+};
+
+
+//Get bookings in state EMPTY
+exports.getEmptyBookings = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+    "SELECT b.ID_BOOKING, b.CLIENT_ID \
+    FROM BOOKING b \
+    WHERE b.STATE = ? AND b.ID_BOOKING NOT IN \
+        (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 \
+          WHERE b1.ID_BOOKING = b2.ID_BOOKING \
+          GROUP BY b1.ID_BOOKING)";
+    db.all(sql,["BOOKED"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        client: e.CLIENT_ID
       }));
 
       resolve(bookings);

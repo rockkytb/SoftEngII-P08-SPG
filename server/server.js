@@ -1286,14 +1286,16 @@ async function clockActions(){
   try {
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
-    CONFIRMED BY FARMERS */
-
+    CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
+    and the client is notified. */
+    
     if(clockDate.getDay()===2){
 
       //Delete from bookings all product still expected, so unconfirmed
       await dao.deleteBookingProductsExpected();
 
       const bookings = await dao.getTotal();
+      
       bookings.forEach(async (booking)=>{
         //Get the wallet  of the customer and put in variable wallet
         const wallet = await dao.getWallet(booking.client);
@@ -1309,6 +1311,14 @@ async function clockActions(){
           await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
         }
 
+
+      });
+
+      //If empty bookings put in state EMPTY
+      const emptyBknings= await dao.getEmptyBookings();
+      console.log(emptyBknings);
+      emptyBknings.forEach(async (booking)=>{
+        await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
       });
     }
 
