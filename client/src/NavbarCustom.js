@@ -41,8 +41,14 @@ let toPrintConfirm = props.bookings && props.bookings.length>0 ?
 props.bookings.filter((bk) => bk.state === "CONFIRMED")
 :
 "";
-console.log(toPrintConfirm)
+//Total price
+let total =0;
+if(toPrintConfirm){
+toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = bk.qty * bk.price; return bk;});
+toPrintConfirm.forEach((bk)=>total += bk.total);}
 if (firstTime && toPrintConfirm.length !== 0) {
+  
+  
   setShowNotificationPreparation(true);
   setFirstTime(false);
 }
@@ -55,7 +61,11 @@ if (firstTime && toPrintConfirm.length !== 0) {
             <div className="notificationIcon" >
               <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {
                 showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }); 
-                showNotificationPreparation && toast.success("Your booking has been prepared", {position: "top-right"}) }
+                showNotificationPreparation && toast.success(<>
+                  <b>Purchase confirmation:</b><br/>
+                  {toPrintConfirm.map((bk)=>bk.qty +" " +bk.product+" from booking #"+bk.id)}<br/>
+                  <b>Total: {total} €</b></>
+                , {position: "top-right"}) }
                 } />
             
             {(showNotification || showNotificationPreparation) && <div className="notificationCounter"> </div>}

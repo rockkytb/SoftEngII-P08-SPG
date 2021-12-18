@@ -772,7 +772,7 @@ exports.getbookingModesPreparation = () => {
 exports.getAllBookingsForClient = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, bp.ID_PRODUCT, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
+      "SELECT b.ID_BOOKING, bp.ID_PRODUCT, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.PRICE,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
     db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);
@@ -786,6 +786,7 @@ exports.getAllBookingsForClient = (clientId) => {
         name: e.NAME,
         surname: e.SURNAME,
         qty: e.QTY,
+        price: e.PRICE,
         product: e.productName,
       }));
       resolve(bookings);
