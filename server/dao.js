@@ -1112,6 +1112,8 @@ exports.cleanDb = async () => {
 };
 
 //VIRTUAL CLOCK DAO FUNCTIONS
+
+//Get total of bookings in state BOOKED
 exports.getTotal = () => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -1148,6 +1150,31 @@ exports.deleteBookingProductsExpected = () => {
       } else {
         resolve(true);
       }
+    });
+  });
+};
+
+//Get total of bookings in state PENDING CANCELATION
+exports.getTotalPendingCancelation = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
+      FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        client: e.CLIENT_ID,
+        total: e.TOTAL,
+      }));
+
+      resolve(bookings);
     });
   });
 };

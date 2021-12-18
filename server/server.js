@@ -1288,7 +1288,7 @@ async function clockActions(){
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS */
 
-    if(clockDate.getDay()==2){
+    if(clockDate.getDay()===2){
 
       //Delete from bookings all product still expected, so unconfirmed
       await dao.deleteBookingProductsExpected();
@@ -1311,6 +1311,36 @@ async function clockActions(){
 
       });
     }
+
+    /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
+    in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
+    CONFIRMED state, otherwise they will be CANCELED. */
+    if(clockDate.getDay()===3){
+
+      const bookings = await dao.getTotalPendingCancelation();
+      bookings.forEach(async (booking)=>{
+        //Get the wallet  of the customer and put in variable wallet
+        const wallet = await dao.getWallet(booking.client);
+        if (wallet.balance >= booking.total) {
+          //PUT in state CONFIRMED
+          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Update amount
+          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+
+        } 
+        else {
+          //Put in state CANCELED
+          await dao.editStateBooking({ id: booking.id, state: "CANCELED" });
+        }
+
+      });
+
+
+
+    }
+
+
+
   }
 
   catch(err){
