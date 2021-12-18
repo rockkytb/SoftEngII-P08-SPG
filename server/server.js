@@ -1239,11 +1239,11 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
   res.status(201).json({ date: date });
 });
 
-//VIRTUAL CLOCK
+//VIRTUAL CLOCK MANAGEMENT
 let virtualTime = false;
 let clockDate = new Date();
-let timers = setInterval(() => {clockDate = new Date();
-  //TODO call a function clockActions that implements all the backend logic according to the date  
+let timers = setInterval(async () => {clockDate = new Date();
+  await clockActions();
 }, 30000);
 
 //GET /api/time to get current time
@@ -1259,12 +1259,12 @@ app.get("/api/virtualTime",  async (req, res) => {
       //Adds 12 hours every 5 seconds
       timers=
         setInterval(
-          () =>
+         async () =>
             {
               let d = new Date(clockDate);
               d.setHours(d.getHours() + 12);
               clockDate = d;
-              //TODO call a function clockActions that implements all the backend logic according to the date
+              await clockActions();
             },
           5000
         )
@@ -1272,14 +1272,52 @@ app.get("/api/virtualTime",  async (req, res) => {
     } else {
       //Update date every 30 seconds if real time enabled
       clockDate = new Date();
-      timers = setInterval(() => {clockDate = new Date();
-        //TODO call a function clockActions that implements all the backend logic according to the date  
+      timers = setInterval(async () => {clockDate = new Date();
+        await clockActions();
       }, 30000);
     }
 
   //All went fine
   res.status(200).json(clockDate);
 });
+
+//Function to manage flow of SPG according to days
+async function clockActions(){
+  try {
+    /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
+    BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
+    CONFIRMED BY FARMERS */
+
+    if(clockDate.getDay()==2){
+      const bookings = await dao.getTotal();
+      bookings.forEach(async (booking)=>{
+        //Get the wallet  of the customer and put in variable wallet
+        const wallet = await dao.getWallet(booking.client);
+        if (wallet.balance >= booking.total) {
+          //PUT in state CONFIRMED
+          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Update amount
+          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+
+        } 
+        else {
+          //Put in state PENDINGCANCELATION
+          await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
+        }
+
+      });
+    }
+  }
+
+  catch(err){
+    return err;
+  }
+  //TODO, what happens if quantity confirmed is less than expected? Handle this
+
+}
+
+
+// END OF VIRTUAL CLOCK
 
 //GET /api/bookings/booked/clients/:id
 

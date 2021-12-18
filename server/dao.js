@@ -1117,7 +1117,7 @@ exports.getTotal = () => {
     const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
-      WHERE b.ID_BOOKING = bp.ID_BOOKING AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='BOOKED' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     db.all(sql, (err, rows) => {
       if (err) {
