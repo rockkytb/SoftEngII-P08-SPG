@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 function NavbarCustom(props) {
 const [firstTime, setFirstTime] = useState(true);
 const [showNotification, setShowNotification] = useState(false);
+const [showNotificationEmpty, setShowNotificationEmpty] = useState(false);
 const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
 
 console.log("aaaaaaaaaaaaah");
@@ -37,6 +38,16 @@ if (firstTime && toPrint.length !== 0) {
   setFirstTime(false);
 }
 
+let toPrintEmpty = props.bookings && props.bookings.length>0 ? 
+props.bookings.filter((bk) => bk.state === "EMPTY") 
+:
+"";
+
+if (firstTime && toPrintEmpty.length !== 0) {
+  setShowNotificationEmpty(true);
+  setFirstTime(false);
+}
+
 let toPrintConfirm = props.bookings && props.bookings.length>0 ? 
 props.bookings.filter((bk) => bk.state === "CONFIRMED")
 :
@@ -44,7 +55,9 @@ props.bookings.filter((bk) => bk.state === "CONFIRMED")
 //Total price
 let total =0;
 if(toPrintConfirm){
-toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = bk.qty * bk.price; return bk;});
+toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = 0*1;
+ bk.total += bk.products.map((p) => p.qty * p.price ) * 1;
+  return bk;});
 toPrintConfirm.forEach((bk)=>total += bk.total);}
 if (firstTime && toPrintConfirm.length !== 0) {
   
@@ -60,15 +73,28 @@ if (firstTime && toPrintConfirm.length !== 0) {
           <Row>
             <div className="notificationIcon" >
               <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {
-                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }); 
-                showNotificationPreparation && toast.success(<>
-                  <b>Purchase confirmation:</b><br/>
-                  {toPrintConfirm.map((bk)=>bk.qty +" " +bk.product+" from booking #"+bk.id)}<br/>
-                  <b>Total: {total} €</b></>
-                , {position: "top-right"}) }
+                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" });
+                showNotificationEmpty && toast.error(<>
+                <b>Warning:</b><br/>
+                {toPrintEmpty.map((bk)=><><b>Booking {bk.id}</b> canceled because no products were confirmed from farmers.</>)}<br/>
+                </>, { position: "top-right" });  
+                showNotificationPreparation && 
+                toPrintConfirm.map((bk)=>
+                  toast.success(<>
+                    <b>Purchase confirmation, booking #{bk.id}:</b><br/>
+                    {bk.products.map((p)=>p.qty +" " +p.product)}<br/>
+                    <b>Total: {bk.total} €</b></>
+                    , {position: "top-right"})
+                )
+                 
+              
+              
+              }
+
+
                 } />
             
-            {(showNotification || showNotificationPreparation) && <div className="notificationCounter"> </div>}
+            {(showNotification || showNotificationPreparation || showNotificationEmpty) && <div className="notificationCounter"> </div>}
             </div>
 
             <Link to="/cust" style={{ color: 'white' }}>

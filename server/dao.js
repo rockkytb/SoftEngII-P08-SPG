@@ -772,23 +772,24 @@ exports.getbookingModesPreparation = () => {
 exports.getAllBookingsForClient = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, bp.ID_PRODUCT, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.PRICE,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
-    db.all(sql, [clientId], (err, rows) => {
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID where b.CLIENT_ID=?";
+    db.all(sql, [clientId], async (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
-        idProd: e.ID_PRODUCT,
         state: e.STATE,
         email: e.EMAIL,
         name: e.NAME,
         surname: e.SURNAME,
-        qty: e.QTY,
-        price: e.PRICE,
-        product: e.productName,
+        products: []
       }));
+
+      for (let booking of bookings)
+        booking.products = await this.productsOfBooking(booking.id);
+
       resolve(bookings);
     });
   });
@@ -1018,10 +1019,10 @@ exports.productsOfBooking = (id) => {
       } else {
         const products = rows.map((e) => ({
           id_product: e.ID,
-          name_product: e.NAME,
+          product: e.NAME,
           category: e.CATEGORY_NAME,
           price: e.PRICE,
-          qty_booking: e.QTY_BOOKING,
+          qty: e.QTY_BOOKING,
           email: e.FARMER_EMAIL,
           state: e.STATE,
         }));
