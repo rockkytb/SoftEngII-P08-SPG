@@ -985,7 +985,6 @@ app.get("/api/bookings/clients/:id", isLoggedIn, (req, res) => {
   dao
     .getAllBookingsForClient(id)
     .then((bookings) => {
-      console.log(bookings);
       res.status(200).json(bookings);
     })
     .catch((error) => {

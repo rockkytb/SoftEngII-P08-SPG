@@ -50,11 +50,16 @@ export default function OrderList(props) {
     setShowView(false);
   };
 
+  //ONLY Bookings in state == BOOKED
+  const bookings = props.bookings.filter((bk)=>bk.state === "BOOKED");
+
   //DEFAULT, SORTED IN ALPHABETIC ORDER
   function productsActions() {
     //TOCHECK: problems into modifying a prop?
     //the product must be one from next week so it must be not already confirmed
-    return (props.bookings.map((book) => {
+    
+    
+    return (bookings.map((book) => {
       return (
         <Col>
           <Card className="text-dark">
@@ -199,10 +204,10 @@ export default function OrderList(props) {
         </Modal>
         <CardColumns xs={1} md={5}>
           <>
-            {props.bookings && props.bookings.length > 0 ? (
+            {bookings && bookings.length > 0 ? (
               productsActions()
             ) : (
-              <>No products available</>
+              <>No bookings found</>
             )}
           </>
         </CardColumns>
