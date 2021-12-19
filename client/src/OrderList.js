@@ -26,12 +26,14 @@ export default function OrderList(props) {
 
   function handleAddToCart() {
 
+   
+
       let product = {
         ID_Booking: bookingId,
         ID_Product: productId,
         quantity: orderQuantity,
       };
-
+      console.log(product);
       props.updateOrder(product);
 
     
@@ -61,24 +63,28 @@ export default function OrderList(props) {
               <Card.Title>
                 <h4>Booking #{book.id}</h4>
               </Card.Title>
-              <Card.Text>
-                <Row>
+              
+                {book.products.map((p)=>{
+                  return(
+                  <>
+                  <Card.Text>
+                  <Row>
                   <Col xs={7}>
-                    <b>Product:</b> {book.product}
+                    <b>Product:</b> {p.product}
                     <br />
-                    <b>Quantity:</b> {book.qty}
+                    <b>Quantity:</b> {p.qty}
                     <br />
                   </Col>
                   <Col xs={5}>
                     <Image
-                      src={ImageFinder(book.product.toLowerCase())}
+                      src={ImageFinder(p.product.toLowerCase())}
                       rounded
                       fluid
                     />
                   </Col>
                 </Row>
-              </Card.Text>
-              <Button
+                </Card.Text>
+                <Button
                 variant="warning"
                 onClick={() => {
                     if (
@@ -87,11 +93,11 @@ export default function OrderList(props) {
                         (props.calendarday.getDay() === 0 &&
                           props.calendarday.getHours() < 23)
                       ) {
-                        setProductId(book.idProd);
+                        setProductId(p.id_product);
                         setBookingId(book.id);
-                        setOrderQuantity(book.qty);
-                        setName(book.product);
-                        let tmp = props.products.find((f) => f.id === book.idProd);
+                        setOrderQuantity(p.qty);
+                        setName(p.product);
+                        let tmp = props.products.find((f) => f.id === p.id_product);
                         setQuantity(tmp.qty);
                         setShowView(true);
                       } else {
@@ -102,6 +108,15 @@ export default function OrderList(props) {
               >
                 Update quantity
               </Button>
+              <br/><br/>
+              </>
+                
+                
+                );
+                })}
+                
+              
+              
             </Card.Body>
           </Card>
         </Col>
