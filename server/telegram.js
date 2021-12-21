@@ -1,3 +1,4 @@
+// username bot @spgpolitobot
 const Telegraf = require("telegraf");
 const bot = new Telegraf("5081840301:AAEk17sOGoPEQ24wNCh5pQ7-YSRcY1Usyss");
 bot.start((context) => {
