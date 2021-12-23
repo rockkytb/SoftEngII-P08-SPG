@@ -18,42 +18,40 @@ bot.command("quit", (ctx) => {
   ctx.leaveChat();
 });
 
-bot.start((ctx) => {
-  // await Dao.InsertChatId(ctx.message.chat.id, ctx.message.from.username);
+bot.start(async (ctx) => {
+  await Dao.SaveChatId(ctx.message.chat.id, ctx.message.from.username);
   console.log(ctx.message.chat.id);
-  ctx.reply(`Dear ${ctx.message.from.username} Welcome`);
-  ctx.reply(`Please send your number`);
+  ctx.reply(`Hi ${ctx.message.from.username}`);
+  ctx.reply(`Please send your credentials in this format email:password`);
 });
 
-bot.command("wallet", (ctx) => {
-  ctx.reply(`Please send your number`);
-});
-
-bot.command("notifications", (ctx) => {
-  ctx.reply(`you can see your wallet`);
+bot.command("balance", (ctx) => {
+  Dao.getWalletBalance(ctx.message.chat.id)
+    .then((wallet) => {
+      ctx.reply(`This is your balance:${wallet}`);
+    })
+    .catch((err) => ctx.reply(`${err}`));
 });
 
 bot.launch();
 // Enable graceful stop
-//process.once("SIGINT", () => bot.stop("SIGINT"));
-//process.once("SIGTERM", () => bot.stop("SIGTERM"));
-/*
+process.once("SIGINT", () => bot.stop("SIGINT"));
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
+
 bot.on("text", async (ctx) => {
   console.log(ctx.message.text);
-  if (ctx.message.text.length == 10) {
-    var x = await Dao.updateNumber(ctx.message.text, ctx.message.chat.id);
-    ctx.reply(
-      `Your Number is Saved, For Change it you can send phone number again in the chat`
-    );
-    ctx.replyWithHTML(
-      `Now You can change or send your password,attention: send your password with this template For Example:`
-    );
-    ctx.reply(`my password: mnbvcxz`);
-    return;
-  }
 
-  if (ctx.message.text.split(":")[0] === "my password") {
+  if (ctx.message.text.includes(":")) {
+    email = ctx.message.text.split(":")[0];
+    pasw = ctx.message.text.split(":")[1];
+    await UpdateCredentials(
+      ctx.ctx.message.chat.id,
+      ctx.message.from.username,
+      email,
+      pasw
+    );
     return;
+  } else {
+    ctx.reply(`The Command is worng please use the format email:password`);
   }
-  ctx.reply(`The Command is worng Please Use From Command To Help You`);
-});*/
+});
