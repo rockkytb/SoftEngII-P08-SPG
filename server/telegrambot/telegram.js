@@ -21,8 +21,9 @@ bot.command("quit", (ctx) => {
 bot.start(async (ctx) => {
   await Dao.SaveChatId(ctx.message.chat.id, ctx.message.from.username);
   console.log(ctx.message.chat.id);
-  ctx.reply(`Hi ${ctx.message.from.username}`);
-  ctx.reply(`Please send your credentials in this format email:password`);
+  ctx.reply(
+    `Hi ${ctx.message.from.username}, please send your credentials in this format email:password`
+  );
 });
 
 bot.command("balance", (ctx) => {
