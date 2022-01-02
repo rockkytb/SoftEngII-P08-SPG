@@ -26,7 +26,13 @@ bot.start(async (ctx) => {
 bot.command("balance", (ctx) => {
   Dao.getWalletBalance(ctx.message.chat.id)
     .then((wallet) => {
-      ctx.reply(`This is your balance:${wallet}`);
+      if (wallet == false) {
+        ctx.reply(
+          `Please before send your credentials in this format email:password`
+        );
+      } else {
+        ctx.reply(`This is your balance:${wallet}`);
+      }
     })
     .catch((err) => ctx.reply(`${err}`));
 });
