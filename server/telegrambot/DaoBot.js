@@ -9,12 +9,40 @@ const { Telegraf, Telegram } = require("telegraf");
 const testmode = true;
 
 // open the database
-const db = new sqlite.Database("testdatabase.db", (err) => {
-  if (err) throw err;
-});
+const db = new sqlite.Database(
+  testmode ? "testdatabase.db" : "database.db",
+  (err) => {
+    if (err) throw err;
+  }
+);
 //check password and email, if correct update the telegram table with the client id
 exports.UpdateCredentials = (chatId, username, email, password) => {
-  return new Promise((resolve, reject) => {});
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM CLIENT WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        bcrypt.compare(password, row.PASSWORD).then((result) => {
+          if (result) {
+            const sql2 =
+              "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=? AND USERNAME=? ";
+            db.run(sql2, [row.ID, chatId, username], function (err1) {
+              if (err1) {
+                reject(err1);
+                return;
+              }
+              resolve("OK");
+            });
+          } else {
+            resolve(false);
+          }
+        });
+      }
+    });
+  });
 };
 
 //check if the chatid has a client id int the table telegram then if all correct retrieve the balance
@@ -25,8 +53,7 @@ exports.getWalletBalance = (chatid) => {
 exports.SaveChatId = (chatId, userName) => {
   const bot = new Telegram(TOKEN);
   return new Promise((resolve, reject) => {
-    bot.sendMessage(chatId, "test riuscito");
-    let id = -1;
+    // bot.sendMessage(chatId, "test riuscito");
     const id_sql = "SELECT CHATID  FROM TELEGRAM Where CHATID=?";
     db.get(id_sql, [chatId], (err, row) => {
       if (err) {

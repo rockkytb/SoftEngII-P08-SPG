@@ -9,9 +9,6 @@ const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
 const bot = new Telegraf(TOKEN);
 
 const Dao = require("./DaoBot.js");
-const axios = require("axios");
-
-//bot.telegram.setWebhook(SERVER_URL);
 
 bot.command("quit", (ctx) => {
   ctx.telegram.leaveChat(ctx.message.chat.id);
@@ -45,12 +42,18 @@ bot.on("text", async (ctx) => {
   if (ctx.message.text.includes(":")) {
     email = ctx.message.text.split(":")[0];
     pasw = ctx.message.text.split(":")[1];
-    await UpdateCredentials(
+    UpdateCredentials(
       ctx.ctx.message.chat.id,
       ctx.message.from.username,
       email,
       pasw
-    );
+    )
+      .then((res) => {
+        if (res === false) {
+          ctx.reply(`Oh, seems there is a problem retry later`);
+        }
+      })
+      .catch(ctx.reply(`Oh, seems there is a problem retry later`));
     return;
   } else {
     ctx.reply(`The Command is worng please use the format email:password`);
