@@ -16,30 +16,17 @@ const db = new sqlite.Database(
   }
 );
 
-exports.SendMessage = (clientId) => {
+exports.SendMessage = (clientId, msg) => {
+  const bot = new Telegram(TOKEN);
   return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM CLIENT WHERE EMAIL = ?";
-    db.get(sql, [email], (err, row) => {
+    const sql = "SELECT CHATID FROM TELEGRAM WHERE CLIENT_ID = ?";
+    db.get(sql, [clientId], (err, row) => {
       if (err) {
         reject(err);
       } else if (row === undefined) {
         resolve(false);
       } else {
-        bcrypt.compare(password, row.PASSWORD).then((result) => {
-          if (result) {
-            const sql2 =
-              "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=? AND USERNAME=?";
-            db.run(sql2, [row.ID, chatId, username], function (err1) {
-              if (err1) {
-                reject(err1);
-                return;
-              }
-              resolve("OK");
-            });
-          } else {
-            resolve(false);
-          }
-        });
+        bot.sendMessage(row.CHATID, msg);
       }
     });
   });
@@ -106,7 +93,7 @@ exports.getWalletBalance = (chatid) => {
 };
 
 exports.SaveChatId = (chatId, userName) => {
-  const bot = new Telegram(TOKEN);
+  // const bot = new Telegram(TOKEN);
   return new Promise((resolve, reject) => {
     // bot.sendMessage(chatId, "test riuscito");
     const id_sql = "SELECT CHATID  FROM TELEGRAM Where CHATID=?";
