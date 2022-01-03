@@ -10,7 +10,7 @@ const testmode = true;
 
 // open the database
 const db = new sqlite.Database(
-  testmode ? "../testdatabase.db" : "database.db",
+  testmode ? "../testdatabase.db" : "../database.db",
   (err) => {
     if (err) throw err;
   }
