@@ -56,13 +56,13 @@ bot.on("text", async (ctx) => {
     )
       .then((res) => {
         if (res === false) {
-          ctx.reply(`Oh, seems there is a problem retry later 2`);
+          ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
           ctx.reply(`Authenticated!`);
         }
       })
       .catch(() => {
-        ctx.reply(`Oh, seems there is a problem retry later 2`);
+        ctx.reply(`Oh, seems there is a problem retry later`);
       });
     return;
   } else {
