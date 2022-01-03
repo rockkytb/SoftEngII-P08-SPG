@@ -31,7 +31,7 @@ bot.command("balance", (ctx) => {
           `Please before send your credentials in this format email:password`
         );
       } else {
-        ctx.reply(`This is your balance:${wallet}`);
+        ctx.reply(`This is your balance:${wallet.amount}`);
       }
     })
     .catch((err) => ctx.reply(`${err}`));
@@ -48,18 +48,22 @@ bot.on("text", async (ctx) => {
   if (ctx.message.text.includes(":")) {
     email = ctx.message.text.split(":")[0];
     pasw = ctx.message.text.split(":")[1];
-    UpdateCredentials(
-      ctx.ctx.message.chat.id,
+    Dao.UpdateCredentials(
+      ctx.message.chat.id,
       ctx.message.from.username,
       email,
       pasw
     )
       .then((res) => {
         if (res === false) {
-          ctx.reply(`Oh, seems there is a problem retry later`);
+          ctx.reply(`Oh, seems there is a problem retry later 2`);
+        } else {
+          ctx.reply(`Authenticated!`);
         }
       })
-      .catch(ctx.reply(`Oh, seems there is a problem retry later`));
+      .catch(() => {
+        ctx.reply(`Oh, seems there is a problem retry later 2`);
+      });
     return;
   } else {
     ctx.reply(`The Command is worng please use the format email:password`);

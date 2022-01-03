@@ -10,7 +10,7 @@ const testmode = true;
 
 // open the database
 const db = new sqlite.Database(
-  testmode ? "testdatabase.db" : "database.db",
+  testmode ? "../testdatabase.db" : "database.db",
   (err) => {
     if (err) throw err;
   }
@@ -50,8 +50,9 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
               if (err1) {
                 reject(err1);
                 return;
+              } else {
+                resolve("OK");
               }
-              resolve("OK");
             });
           } else {
             resolve(false);
@@ -65,7 +66,7 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
 //check if the chatid has a client id int the table telegram then if all correct retrieve the balance
 exports.getWalletBalance = (chatid) => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT CLIENTID  FROM TELEGRAM Where CHATID=?";
+    const sql = "SELECT CLIENT_ID  FROM TELEGRAM Where CHATID=?";
     db.get(sql, [chatid], (err, row) => {
       if (err) {
         reject(err);
@@ -74,11 +75,11 @@ exports.getWalletBalance = (chatid) => {
       if (row == null) {
         resolve(false);
       } else {
-        if (row.CLIENTID == -1) {
+        if (row.CLIENT_ID == -1) {
           resolve(false);
         } else {
           const sql2 = "SELECT AMOUNT  FROM CLIENT_WALLET Where ID_CLIENT=?";
-          db.get(sql2, [row.CLIENTID], function (err1, row1) {
+          db.get(sql2, [row.CLIENT_ID], function (err1, row1) {
             if (err1) {
               reject(err1);
               return;
