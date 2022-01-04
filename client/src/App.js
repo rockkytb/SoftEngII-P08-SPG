@@ -60,37 +60,37 @@ function App() {
   //const history = useHistory();
   //const [usedMail, setUsedMail] = useState();
 
-//fake clock manager
-useEffect(() => {
-  clearInterval(timers);
-  if (virtualTime) {
-    //Polling to server every 2 seconds
-    API.enableDisableVirtualClock().then(()=>{
-      setTimers(
-        setInterval(
-          () =>{
-            API.getTime().then((serverDate)=>setDate(new Date(serverDate)));        
-          },
-          2000
-        )
-      );
-    })
-    
-  } else {
-    //Update date every 20 seconds if real time enabled
-    API.enableDisableVirtualClock().then((date)=>{
-      setDate(new Date(date));
-      setTimers(setInterval(() => {
-        API.getTime().then((serverDate)=>setDate(new Date(serverDate)));
-      
-        }, 10000));
-    });
-    
-  }
+  //fake clock manager
+  useEffect(() => {
+    clearInterval(timers);
+    if (virtualTime) {
+      //Polling to server every 2 seconds
+      API.enableDisableVirtualClock().then(() => {
+        setTimers(
+          setInterval(
+            () => {
+              API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+            },
+            2000
+          )
+        );
+      })
 
-  //SHORT-TERM: sends date to server
-  //const resp = API.setDate(date.getDay());
-}, [virtualTime]);
+    } else {
+      //Update date every 20 seconds if real time enabled
+      API.enableDisableVirtualClock().then((date) => {
+        setDate(new Date(date));
+        setTimers(setInterval(() => {
+          API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+
+        }, 10000));
+      });
+
+    }
+
+    //SHORT-TERM: sends date to server
+    //const resp = API.setDate(date.getDay());
+  }, [virtualTime]);
 
   //authenticator
   useEffect(() => {
@@ -205,9 +205,9 @@ useEffect(() => {
     setClients(tmp.clients)
     setCategories(tmp.categories)
     if (userdata && userdata.id) {
-    setProductsExpectedFarmer( userdata.id.charAt(0) === "F" ? tmp.products[0] : "")
-    console.log(tmp.products)
-    setConfirmedProductsFarmer( userdata.id.charAt(0) === "F" ? tmp.products[1] : "")
+      setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products[0] : "")
+      console.log(tmp.products)
+      setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products[1] : "")
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
@@ -734,7 +734,7 @@ useEffect(() => {
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Farmer className="below-nav main-content" 
+                            <Farmer className="below-nav main-content"
                             />
                           </>
                         ) : (
@@ -786,7 +786,7 @@ useEffect(() => {
             )}
           />
 
-<Route
+          <Route
             path="/confirmPreparationFarmer"
             exact
             render={() => (
@@ -884,7 +884,7 @@ useEffect(() => {
             )}
           />
 
-<Route
+          <Route
             path="/cust/orders"
             exact
             render={() => (
@@ -897,13 +897,23 @@ useEffect(() => {
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <OrderList className="below-nav main-content" 
-                            bookings={bookings}
-                            products={products}
-                            updateOrder={async (product) =>{await API.updateOrder(product);
-                              toast.success("Booking updated", { position: "top-center" });
-                              setAttaccoDDOS(old => !old);}}
-                            calendarday={date}/>
+                            <OrderList className="below-nav main-content"
+                              bookings={bookings}
+                              products={products}
+
+                              updateOrder={async (product) => {
+                                await API.updateOrder(product);
+                                toast.success("Booking updated", { position: "top-center" });
+                                setAttaccoDDOS(old => !old);
+                              }}
+
+                              deleteProductBooking={async (product) => {
+                                await API.deleteProductBooking(product);
+                                toast.success("Product removed", { position: "top-center" });
+                                setAttaccoDDOS(old => !old);
+                              }}
+
+                              calendarday={date} />
                           </>
                         ) : (
                           <Redirect to="/home" />
