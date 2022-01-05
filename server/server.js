@@ -1026,30 +1026,16 @@ app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
     });
 });
 
-app.get("/api/bookingsUnretrieved",isLoggedIn, async (req, res) => {
+app.get("/api/bookingsUnretrieved",//isLoggedIn,
+ async (req, res) => {
   dao
     .getBookingsUnretrieved()
-    .then((bookings) => {
-      res.status(200).json(bookings);
+    .then((list) => {
+      res.status(200).json(list);
     })
     .catch((error) => {
       res.status(500).json(error);
     });
-});
-
-//DELETE /api/booking
-app.delete("/api/booking", //isLoggedIn,
- async (req, res) => {
-  try {
-    await dao.deleteBooking(1);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the deletation of booking product.`,
-    });
-  }
-
-  //All went fine
-  res.status(204).json();
 });
 
 

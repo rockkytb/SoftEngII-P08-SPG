@@ -1057,7 +1057,7 @@ exports.insertTupleBookingHistory = (booking) => {
 
 exports.getBookingsUnretrieved = () => {
   return new Promise((resolve, reject) => {
-    const sql ="SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING WHERE bh.STATE='UNRETRIEVED'";
+    const sql ="SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1066,20 +1066,43 @@ exports.getBookingsUnretrieved = () => {
         console.log("rows non è definito---------");
         resolve(false);
       } else {
-        const bookings = rows.map((e) => ({
+        const prenotazioni = rows.map((e) => ({
           idBooking: e.ID_BOOKING,
           idClient: e.CLIENT_ID,
-          products: e.ID_PRODUCT,
+          productID: e.ID_PRODUCT,
+          name: e.NAME,
+          qty: e.QTY
         }));
 
-        resolve(bookings);
+        const bookings=[];
+        prenotazioni.forEach((p) => {
+          if (bookings[p.idBooking]) {
+            bookings[p.idBooking].products = [
+              ...bookings[p.idBooking].products,
+              { productID: p.productID, product: p.name, qty: p.qty },
+            ];
+          } else {
+            bookings[p.idBooking] = {
+              idBooking: p.idBooking,
+              idClient: p.idClient,
+              products: [
+                {
+                  productID: p.productID,
+                  product: p.name,
+                  qty: p.qty,
+                },
+              ],
+            };
+          }
+        });
+        const list = bookings.filter((b) => b !== null);
+        resolve(list);
       }
     });
   });
 };
 
 exports.deleteBooking = (bookingId) => {
-  console.log("sono nella delete con id")
   return new Promise((resolve, reject) => {
     const sql =
       "DELETE from BOOKING WHERE ID_BOOKING = ?";
