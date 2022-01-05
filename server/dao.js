@@ -1033,6 +1033,67 @@ exports.productsOfBooking = (id) => {
   });
 };
 
+exports.insertTupleBookingHistory = (booking) => {
+  return new Promise((resolve, reject) => {
+    const sql ="INSERT INTO BOOKING_HISTORY (ID_BOOKING, CLIENT_ID, STATE, START_DATE, END_DATE) VALUES (?, ?, ?, ?, ?)"
+    db.run(sql, 
+      [
+        booking.ID_BOOKING, 
+        booking.CLIENT_ID, 
+        booking.STATE, 
+        booking.START_DATE, 
+        booking.END_DATE
+      ], (err) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+
+exports.getBookingsUnretrieved = () => {
+  return new Promise((resolve, reject) => {
+    const sql ="SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING WHERE bh.STATE='UNRETRIEVED'";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
+        resolve(false);
+      } else {
+        const bookings = rows.map((e) => ({
+          idBooking: e.ID_BOOKING,
+          idClient: e.CLIENT_ID,
+          products: e.ID_PRODUCT,
+        }));
+
+        resolve(bookings);
+      }
+    });
+  });
+};
+
+exports.deleteBooking = (bookingId) => {
+  console.log("sono nella delete con id")
+  return new Promise((resolve, reject) => {
+    const sql =
+      "DELETE from BOOKING WHERE ID_BOOKING = ?";
+    db.run(sql, [bookingId], function (err) {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 //USED ONLY FOR TESTS TO CLEAN DB
 exports.cleanDb = async () => {
   const errTest = (err) => {
