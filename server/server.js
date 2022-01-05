@@ -914,7 +914,7 @@ app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
 });
 
 //GET /api/products to get a list of all products
-app.get("/api/products", isLoggedIn, (req, res) => {
+app.get("/api/products", (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {

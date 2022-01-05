@@ -434,33 +434,24 @@ function App() {
             exact
             render={() => (
               <>
+              {setUpdate(true)}
                 {update ? (
                   <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
-                          <>
-                            {setAttaccoDDOS(true)}
-                            <ProductsList
-                              className="below-nav main-content"
-                              products={products}
-                              setProducts={setProducts}
-                              cart={cart}
-                              setCart={(val) => setCart(val)}
-                              categories={categories}
-                            //farmers = {farmers} //???
-                            />
-                          </>
-                        ) : (
-                          <Redirect to="/home" />
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}
+
+                    {setAttaccoDDOS(true)}
+                    <ProductsList
+                      className="below-nav main-content"
+                      products={products}
+                      setProducts={setProducts}
+                      cart={cart}
+                      setCart={(val) => setCart(val)}
+                      categories={categories}
+                      loggedIn={loggedIn}
+                    //farmers = {farmers} //???
+                    />
                   </>
+
+
                 ) : (
                   <></>
                 )}

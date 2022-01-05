@@ -721,17 +721,8 @@ async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
 
-    if (
-      userdata &&
-      userdata.id &&
-      (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")
-    ) {
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        return productList;
-      }
-    } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
+
+    if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
       let prodi = [];
       const getExpected = async (userdata) => {
         const response = await fetch(
@@ -756,6 +747,12 @@ async function attaccoDoS(userdata) {
       await getConfirmed(userdata);
 
       return prodi;
+    } else {
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
     }
   };
 
