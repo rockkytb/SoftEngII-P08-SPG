@@ -899,7 +899,7 @@ function App() {
                               deleteProductBooking={async (product) => {
                                 await API.deleteProductBooking(product);
                                 toast.success("Product removed", { position: "top-center" });
-                                setAttaccoDDOS(false);
+                                setAttaccoDDOS(old=>!old);
                               }}
 
                               calendarday={date} />

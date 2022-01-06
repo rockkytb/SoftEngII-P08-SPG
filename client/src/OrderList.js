@@ -40,10 +40,10 @@ export default function OrderList(props) {
     handleViewClose();
   }
 
-  function deleteProduct (){
+  function deleteProduct(pId, bId) {
     let product = {
-      ID_Booking: bookingId,
-      ID_Product: productId,
+      ID_Booking: bId,
+      ID_Product: pId,
     };
     console.log(product)
     props.deleteProductBooking(product);
@@ -60,7 +60,7 @@ export default function OrderList(props) {
   };
 
   //ONLY Bookings in state == BOOKED
-  const bookings = props.bookings ? props.bookings.filter((bk) => bk.state === "BOOKED"): [];
+  const bookings = props.bookings ? props.bookings.filter((bk) => bk.state === "BOOKED") : [];
 
   //DEFAULT, SORTED IN ALPHABETIC ORDER
   function productsActions() {
@@ -98,51 +98,56 @@ export default function OrderList(props) {
                         </Col>
                       </Row>
                     </Card.Text>
-                    <Button
-                      variant="warning"
-                      onClick={() => {
-                        if (
-                          (props.calendarday.getDay() === 6 &&
-                            props.calendarday.getHours() >= 10) ||
-                          (props.calendarday.getDay() === 0 &&
-                            props.calendarday.getHours() < 23)
-                        ) {
-                          setProductId(p.id_product);
-                          setBookingId(book.id);
-                          setOrderQuantity(p.qty);
-                          setName(p.product);
-                          let tmp = props.products.find((f) => f.id === p.id_product);
-                          setQuantity(tmp.qty);
-                          setShowView(true);
-                        } else {
-                          setShowAlertTime(true);
-                        }
 
-                      }}
-                    >
-                      Update quantity
-                    </Button>
+                    <Row className="justify-content-center">
+                      <Button
+                        variant="warning"
+                        onClick={() => {
+                          if (
+                            (props.calendarday.getDay() === 6 &&
+                              props.calendarday.getHours() >= 10) ||
+                            (props.calendarday.getDay() === 0 &&
+                              props.calendarday.getHours() < 23)
+                          ) {
+                            setProductId(p.id_product);
+                            setBookingId(book.id);
+                            setOrderQuantity(p.qty);
+                            setName(p.product);
+                            let tmp = props.products.find((f) => f.id === p.id_product);
+                            setQuantity(tmp.qty);
+                            setShowView(true);
+                          } else {
+                            setShowAlertTime(true);
+                          }
 
-                    <Button variant="danger" className="ml-1"
-                      onClick={() => {
-                        
-                        if (
-                          (props.calendarday.getDay() === 6 &&
-                            props.calendarday.getHours() >= 10) ||
-                          (props.calendarday.getDay() === 0 &&
-                            props.calendarday.getHours() < 23)
-                        ) {
-                          setProductId(p.id_product);
-                          setBookingId(book.id);
-                          deleteProduct()
-                        } else {
-                          setShowAlertTime(true);
-                        }
+                        }}
+                      >
+                        Update quantity
+                      </Button>
+                    </Row>
 
-                      }}
-                    >
-                      Remove product
-                    </Button>
+                    <Row className="justify-content-center">
+                      <Button variant="danger" className="mt-1"
+                        onClick={() => {
+
+                          if (
+                            (props.calendarday.getDay() === 6 &&
+                              props.calendarday.getHours() >= 10) ||
+                            (props.calendarday.getDay() === 0 &&
+                              props.calendarday.getHours() < 23)
+                          ) {
+                            setProductId(p.id_product);
+                            setBookingId(book.id);
+                            deleteProduct(p.id_product, book.id)
+                          } else {
+                            setShowAlertTime(true);
+                          }
+
+                        }}
+                      >
+                        Remove product
+                      </Button>
+                    </Row>
                     <br /><br />
                   </>
 
