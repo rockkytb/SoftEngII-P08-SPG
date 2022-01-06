@@ -730,7 +730,7 @@ async function attaccoDoS(userdata) {
         );
         const productList = await response.json();
         if (response.ok) {
-          prodi.push(productList);
+          productList.map((p)=> prodi.push(p))
         }
       };
       const getConfirmed = async (userdata) => {
@@ -739,7 +739,7 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          prodi.push(productList2);
+          productList2.map((p)=> prodi.push(p))
         }
       };
 
