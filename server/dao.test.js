@@ -632,7 +632,7 @@ test("edit state of a product receiving an array with id-state", () => {
 });
 
 test("increment qty of a product success", async () => {
-  product = {
+ const product = {
     ID_Product: 1,
     Inc_Qty: 2,
   };
