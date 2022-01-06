@@ -9,35 +9,25 @@ import {
 
 export default function PickupSchedule(props) {
     
-    let scheduled = props.bookings.sort(function (a, b) {
-       let tmpa = new Date(a.date);
-       let tmpb = new Date(b.date);
-
-
-
-        if ((tmpa > tmpb)) {
-            return -1;
-        }
-        if ((tmpb > tmpa)) {
-            return 1;
-        }
-        if (tmpa === tmpb) {
-            if (tmpa > tmpb) {
+    if(props.bookings)
+        props.bookings.sort((a, b) => {
+        let tmpa = new Date(a.date).getTime();
+        let tmpb = new Date(b.date).getTime();
+            if ((tmpa > tmpb)) {
                 return -1;
             }
-            if (b.time > a.time) {
+            if ((tmpb > tmpa)) {
                 return 1;
             }
-        }
-        return 0;
-    });
+            return 0;
+        });
 
 
     function pickupScheduleActions() {
-        if (scheduled.length === 0) {
+        if (props.bookings.length === 0) {
             return (<>No pick-up scheduled</>);
         }
-        return scheduled.map((b) => (
+        return props.bookings.map((b) => (
             <Col>
                 <Card>
                     <Card.Body>
@@ -71,7 +61,7 @@ export default function PickupSchedule(props) {
         <div className="below-nav">
 
             <CardColumns xs={1} md={5}>
-                <>{scheduled && scheduled.length > 0 ? pickupScheduleActions() : <>No pick-up scheduled</>}</>
+                <>{props.bookings && props.bookings.length > 0 ? pickupScheduleActions() : <>No pick-up scheduled</>}</>
             </CardColumns>
         </div>
     );
