@@ -199,15 +199,13 @@ function App() {
   useEffect(async () => {
 
     let tmp = await API.attaccoDoS(userdata);
-    console.log(tmp)
     setProducts(tmp.products)
     setBookings(tmp.bookings)
     setClients(tmp.clients)
     setCategories(tmp.categories)
     if (userdata && userdata.id) {
-      setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products[0] : "")
-      console.log(tmp.products)
-      setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products[1] : "")
+      setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state=="EXPECTED") : "")
+      setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state!=="EXPECTED") : "")
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
@@ -895,13 +893,13 @@ function App() {
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
                                 toast.success("Booking updated", { position: "top-center" });
-                                setAttaccoDDOS(old => !old);
+                                setAttaccoDDOS(false);
                               }}
 
                               deleteProductBooking={async (product) => {
                                 await API.deleteProductBooking(product);
                                 toast.success("Product removed", { position: "top-center" });
-                                setAttaccoDDOS(old => !old);
+                                setAttaccoDDOS(false);
                               }}
 
                               calendarday={date} />

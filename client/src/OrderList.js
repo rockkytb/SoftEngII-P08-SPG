@@ -60,7 +60,7 @@ export default function OrderList(props) {
   };
 
   //ONLY Bookings in state == BOOKED
-  const bookings = props.bookings.filter((bk) => bk.state === "BOOKED");
+  const bookings = props.bookings ? props.bookings.filter((bk) => bk.state === "BOOKED"): [];
 
   //DEFAULT, SORTED IN ALPHABETIC ORDER
   function productsActions() {
@@ -125,6 +125,7 @@ export default function OrderList(props) {
 
                     <Button variant="danger" className="ml-1"
                       onClick={() => {
+                        
                         if (
                           (props.calendarday.getDay() === 6 &&
                             props.calendarday.getHours() >= 10) ||
