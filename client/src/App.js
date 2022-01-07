@@ -435,18 +435,24 @@ function App() {
               {setUpdate(true)}
                 {update ? (
                   <>
-
-                    {setAttaccoDDOS(true)}
-                    <ProductsList
-                      className="below-nav main-content"
-                      products={products}
-                      setProducts={setProducts}
-                      cart={cart}
-                      setCart={(val) => setCart(val)}
-                      categories={categories}
-                      loggedIn={loggedIn}
-                    //farmers = {farmers} //???
-                    />
+                  {loggedIn && userdata.id &&
+                          (userdata.id.charAt(0) === "F" ||
+                            userdata.id.charAt(0) === "M" ||
+                            userdata.id.charAt(0) === "W") ? (<Redirect to="/home" />):(
+                              <>
+                              {setAttaccoDDOS(true)}
+                              <ProductsList
+                                className="below-nav main-content"
+                                products={products}
+                                setProducts={setProducts}
+                                cart={cart}
+                                setCart={(val) => setCart(val)}
+                                categories={categories}
+                                loggedIn={loggedIn}
+                              //farmers = {farmers} //???
+                              />
+                              </>
+                            )}
                   </>
 
 
