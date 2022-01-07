@@ -1215,7 +1215,7 @@ exports.getTotal = () => {
 // delete all products expected from bookings, to be called on tuesday
 exports.deleteBookingProductsExpected = () => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?)";
+    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?) AND ID_BOOKING NOT IN (SELECT ID_BOOKING FROM BOOKING_HISTORY)";
     db.run(sql, ["EXPECTED"], function (err) {
       if (err) {
         reject(err);
