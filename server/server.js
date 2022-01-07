@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
+const telegramBot = require("./telegrambot/DaoBot.js");
 //Per validazione aggiuntiva
 const validator = require("validator");
 let testmode = false;
@@ -1004,14 +1005,15 @@ app.put("/api/walletbalance", isLoggedIn, async (req, res) => {
     amount: req.body.amount,
   };
 
-  dao
-    .updateWallet(wallet)
-    .then(() => {
-      res.status(200).json(wallet);
-    })
-    .catch((error) => {
+  try{
+    await dao.updateWallet(wallet);
+    await telegramBot.SendMessage(wallet.id,`Your wallet was modified. New balance : ${wallet.amount} €`);
+    res.status(200).json(wallet);
+  }
+  catch(error){
       res.status(500).json(error);
-    });
+  }
+
 });
 
 // GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
