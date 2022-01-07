@@ -504,7 +504,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -539,7 +542,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -572,7 +578,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -598,7 +607,10 @@ function App() {
                       (userdata.id.charAt(0) === "C" ||
                         userdata.id.charAt(0) === "F" ||
                         userdata.id.charAt(0) === "M") ? (
-                      <Redirect to="/home" />
+                          <>
+                          {setAttaccoDDOS(old => !old)}
+                          <Redirect to="/home" />
+                          </>
                     ) : (
                       /** REGISTER */
                       <NewClientForm
@@ -631,7 +643,10 @@ function App() {
                             <WarehouseWorker className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -664,7 +679,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -693,7 +711,10 @@ function App() {
                             <WarehouseManager className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -722,7 +743,10 @@ function App() {
                             <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -751,7 +775,10 @@ function App() {
                             <Manager className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -781,7 +808,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -815,7 +845,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -849,7 +882,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -883,7 +919,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -913,7 +952,10 @@ function App() {
                             <Customer className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -959,7 +1001,10 @@ function App() {
                               calendarday={date} />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -994,7 +1039,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1029,7 +1077,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1062,7 +1113,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1107,7 +1161,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1141,7 +1198,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1171,7 +1231,10 @@ function App() {
                             <SidebarCustom className="below-nav" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1191,13 +1254,16 @@ function App() {
             render={() => (
 
               <div className="width100">
-                {setAttaccoDDOS(old => !old)}
+                
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
           />
 
-          <Route path="/*" render={() => <Redirect to="/home" />} />
+          <Route path="/*" render={() => <>
+                          {setAttaccoDDOS(old => !old)}
+                          <Redirect to="/home" />
+                          </>} />
         </Switch>
       </Router>
     </div>
