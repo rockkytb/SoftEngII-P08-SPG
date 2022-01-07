@@ -1266,7 +1266,7 @@ exports.getTotalPendingCancelation = () => {
 };
 
 
-//Get bookings in state EMPTY
+//Get bookings that we have to put in state EMPTY
 exports.getEmptyBookings = () => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -1287,6 +1287,26 @@ exports.getEmptyBookings = () => {
         client: e.CLIENT_ID
       }));
 
+      resolve(bookings);
+    });
+  });
+};
+
+//get all bookings without details about clients or products
+exports.getAllBookingsVC = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        idClient: e.CLIENT_ID
+      }));
       resolve(bookings);
     });
   });

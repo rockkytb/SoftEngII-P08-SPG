@@ -1026,7 +1026,7 @@ app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
     });
 });
 
-app.get("/api/bookingsUnretrieved",//isLoggedIn,
+app.get("/api/bookingsUnretrieved", isLoggedIn,
  async (req, res) => {
   dao
     .getBookingsUnretrieved()
@@ -1360,6 +1360,38 @@ async function clockActions(){
 
 
 
+    }
+
+    /* On SATURDAY MORNING a new week starts. So we move bookings from booking table to booking history
+    table. If a booking was in COMPLETED or EMPTY or CANCELED state, it will be saved in booking history as COMPLETED
+    or EMPTY or CANCELED. If it was in CONFIRMED state and Delivery Mode was pickup, it will be saved as
+    UNRETRIEVED. If it was CONFIRMED and Delivery mode was delivery, we just delete it from booking, we don't care
+    about this state now (it's for future stories). */
+    if(clockDate.getDay()===6){
+      
+      const startDate = new Date(clockDate);
+      //If this happens only on saturday, starday will be monday
+      startDate.setDate(startDate.getDate() - 5);
+      //Same for sunday
+      const endDate = new Date(clockDate);
+      endDate.setDate(endDate.getDate() +1);
+
+      const bookings = await dao.getAllBookingsVC ();
+      bookings.forEach(async (booking)=>{
+
+        if((booking.state==="EMPTY")||(booking.state==="COMPLETED")||(booking.state==="CANCELED")){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: booking.state,
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+
+        }
+
+      })
     }
 
 
