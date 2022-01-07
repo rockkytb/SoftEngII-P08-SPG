@@ -1417,7 +1417,10 @@ async function clockActions(){
         }
 
       })
-    
+
+      //Move all products in product_week to expected and increase qty by 10
+      await dao.resetProductWeekVC();
+
       once[6]=false;
     }
 
