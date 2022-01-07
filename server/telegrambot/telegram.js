@@ -32,7 +32,7 @@ bot.command("balance", (ctx) => {
           `Please before send your credentials in this format email:password`
         );
       } else {
-        ctx.reply(`This is your balance:${wallet.amount}`);
+        ctx.reply(`Your current balance is ${wallet.amount} €`);
       }
     })
     .catch((err) => ctx.reply(`${err}`));
@@ -59,7 +59,7 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Authenticated!`);
+          ctx.reply(`Authenticated as ${email}!\nCommand list:\n/balance to get your current balance\n/quit to exit`);
         }
       })
       .catch(() => {
