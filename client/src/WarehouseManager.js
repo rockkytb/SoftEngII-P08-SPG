@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Container } from "react-bootstrap";
 
-function Manager(props) {
+function WarehouseManager(props) {
 
 
   return (
@@ -33,4 +33,4 @@ function Manager(props) {
   );
 }
 
-export default Manager;
+export default WarehouseManager;

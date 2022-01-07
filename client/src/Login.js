@@ -50,6 +50,7 @@ function Login(props) {
             <option value="S">Employee</option>
             <option value="M">Warehouse Manager</option>
             <option value="W">Warehouse Worker</option>
+            <option value="A">Manager</option>
           </Form.Control>
         </Form.Group>
         <Form.Group size="lg">

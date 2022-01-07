@@ -221,8 +221,8 @@ exports.getShopEmployeeById = (id) => {
   });
 };
 
-//get Manager
-exports.getManager = (email, password) => {
+//get Warehouse Manager
+exports.getWarehouseManager = (email, password) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM MANAGER WHERE EMAIL = ?";
     db.get(sql, [email], (err, row) => {
@@ -247,8 +247,8 @@ exports.getManager = (email, password) => {
   });
 };
 
-//get Manager by Id
-exports.getManagerById = (id) => {
+//get Warehouse Manager by Id
+exports.getWarehouseManagerById = (id) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM MANAGER WHERE ID = ?";
     db.get(sql, [id], (err, row) => {

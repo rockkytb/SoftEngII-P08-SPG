@@ -116,7 +116,7 @@ if (firstTime && toPrintConfirm.length !== 0) {
     else if (props.user && props.user.id && props.user.id.charAt(0) == 'M') {
       return (
         <>
-          <Link to="/manager" style={{ color: 'white' }}>
+          <Link to="/warehouseManager" style={{ color: 'white' }}>
             <PersonCircle size={30} />
           </Link>
         </>

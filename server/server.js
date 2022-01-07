@@ -82,10 +82,10 @@ passport.use(
 );
 
 passport.use(
-  "manager-local",
+  "warehouse-manager-local",
   new LocalStrategy(function (username, password, done) {
     dao
-      .getManager(username, password)
+      .getWarehouseManager(username, password)
       .then((user) => {
         if (!user)
           return done(null, false, {
@@ -166,7 +166,7 @@ passport.deserializeUser((id, done) => {
   }
   if (type === "M") {
     dao
-      .getManagerById(identifier)
+      .getWarehouseManagerById(identifier)
       .then((user) => {
         done(null, user);
       })
@@ -250,9 +250,9 @@ app.post("/api/warehouseWorkerSessions", function (req, res, next) {
   })(req, res, next);
 });
 
-//POST /api/managerSessions FOR LOGIN OF CLIENT
-app.post("/api/managerSessions", function (req, res, next) {
-  passport.authenticate("manager-local", (err, user, info) => {
+//POST /api/warehouseManagerSessions FOR LOGIN OF WAREHOUSE MANGER
+app.post("/api/warehouseManagerSessions", function (req, res, next) {
+  passport.authenticate("warehouse-manager-local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
       // display wrong login messages

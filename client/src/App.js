@@ -19,7 +19,7 @@ import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
 import Farmer from "./Farmer";
-import Manager from "./Manager";
+import WarehouseManager from "./WarehouseManager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -417,7 +417,7 @@ function App() {
                             ) : (
                               <>
                                 {userdata.id.charAt(0) === "M" ? (
-                                  <Redirect to="/manager" />
+                                  <Redirect to="/warehouseManager" />
                                 ) : (
                                   <>
                                     {userdata.id.charAt(0) === "W" ? (
@@ -674,7 +674,7 @@ function App() {
           />
 
           <Route
-            path="/manager"
+            path="/warehouseManager"
             exact
             render={() => (
               <>
@@ -685,7 +685,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "M" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Manager className="below-nav main-content" />
+                            <WarehouseManager className="below-nav main-content" />
                           </>
                         ) : (
                           <Redirect to="/home" />

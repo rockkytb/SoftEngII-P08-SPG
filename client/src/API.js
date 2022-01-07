@@ -55,7 +55,7 @@ async function logIn(credentials, type) {
       });
       break;
     case "M":
-      response = await fetch(url + "/managerSessions", {
+      response = await fetch(url + "/warehouseManagerSessions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
