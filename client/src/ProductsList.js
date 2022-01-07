@@ -135,7 +135,7 @@ export default function ProductsList(props) {
                   </Col>
                 </Row>
               </Card.Text>
-              <Button
+              {props.loggedIn && <Button
                 variant="warning"
                 id={"addCart"+product.id}
                 onClick={() => {
@@ -149,7 +149,7 @@ export default function ProductsList(props) {
                 }}
               >
                 Add to Cart
-              </Button>
+              </Button>}
             </Card.Body>
           </Card>
         </Col>
@@ -224,7 +224,7 @@ export default function ProductsList(props) {
           </Col>
           <Col md={6} xs={4} className="text-left p-0">
             <Link to={"/newOrder"}>
-              <Button variant="warning" className="mr-2 md-2 ">View cart</Button>
+             {props.loggedIn && <Button variant="warning" className="mr-2 md-2 ">View cart</Button>}
             </Link>
           </Col>
         </Row>

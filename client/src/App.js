@@ -48,6 +48,7 @@ function App() {
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
+  const [firstTimeVc, setFirstTimeVc] = useState(true);
   const [timers, setTimers] = useState();
   const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
   const [deliveryState, setDeliveryState] = useState(true);
@@ -64,22 +65,40 @@ function App() {
   useEffect(() => {
     clearInterval(timers);
     if (virtualTime) {
-      //Adds 12 hours every 3 seconds
-      setTimers(
-        setInterval(
-          () =>
-            setDate((oldDate) => {
-              let d = new Date(oldDate);
-              d.setHours(oldDate.getHours() + 12);
-              return d;
-            }),
-          3000
-        )
-      );
+      //Polling to server every 2 seconds
+      API.enableDisableVirtualClock().then(() => {
+        setTimers(
+          setInterval(
+            () => {
+              API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+            },
+            2000
+          )
+        );
+      })
+
     } else {
-      //Update date every minute if real time enabled
-      setDate(new Date());
-      setTimers(setInterval(() => setDate(new Date()), 60000));
+      if(firstTimeVc){
+        setDate(new Date(date));
+        setTimers(setInterval(() => {
+          API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+
+          }, 10000));
+        setFirstTimeVc(false);
+
+      }
+      else{
+
+        //Update date every 20 seconds if real time enabled
+        API.enableDisableVirtualClock().then((date) => {
+        setDate(new Date(date));
+        setTimers(setInterval(() => {
+          API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+
+          }, 10000));
+        });
+
+      }
     }
 
     //SHORT-TERM: sends date to server
@@ -193,15 +212,13 @@ function App() {
   useEffect(async () => {
 
     let tmp = await API.attaccoDoS(userdata);
-    console.log(tmp)
     setProducts(tmp.products)
     setBookings(tmp.bookings)
     setClients(tmp.clients)
     setCategories(tmp.categories)
     if (userdata && userdata.id) {
-    setProductsExpectedFarmer( userdata.id.charAt(0) === "F" ? tmp.products[0] : "")
-    console.log(tmp.products)
-    setConfirmedProductsFarmer( userdata.id.charAt(0) === "F" ? tmp.products[1] : "")
+      setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state=="EXPECTED") : "")
+      setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state!=="EXPECTED") : "")
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
@@ -428,33 +445,30 @@ function App() {
             exact
             render={() => (
               <>
+              {setUpdate(true)}
                 {update ? (
                   <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
-                          <>
-                            {setAttaccoDDOS(true)}
-                            <ProductsList
-                              className="below-nav main-content"
-                              products={products}
-                              setProducts={setProducts}
-                              cart={cart}
-                              setCart={(val) => setCart(val)}
-                              categories={categories}
-                            //farmers = {farmers} //???
-                            />
-                          </>
-                        ) : (
-                          <Redirect to="/home" />
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}
+                  {loggedIn && userdata.id &&
+                          (userdata.id.charAt(0) === "F" ||
+                            userdata.id.charAt(0) === "M" ||
+                            userdata.id.charAt(0) === "W") ? (<Redirect to="/home" />):(
+                              <>
+                              {setAttaccoDDOS(true)}
+                              <ProductsList
+                                className="below-nav main-content"
+                                products={products}
+                                setProducts={setProducts}
+                                cart={cart}
+                                setCart={(val) => setCart(val)}
+                                categories={categories}
+                                loggedIn={loggedIn}
+                              //farmers = {farmers} //???
+                              />
+                              </>
+                            )}
                   </>
+
+
                 ) : (
                   <></>
                 )}
@@ -728,7 +742,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Farmer className="below-nav main-content" 
+                            <Farmer className="below-nav main-content"
                             />
                           </>
                         ) : (
@@ -780,7 +794,7 @@ function App() {
             )}
           />
 
-<Route
+          <Route
             path="/confirmPreparationFarmer"
             exact
             render={() => (
@@ -878,7 +892,7 @@ function App() {
             )}
           />
 
-<Route
+          <Route
             path="/cust/orders"
             exact
             render={() => (
@@ -891,13 +905,23 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <OrderList className="below-nav main-content" 
-                            bookings={bookings}
-                            products={products}
-                            updateOrder={async (product) =>{await API.updateOrder(product);
-                              toast.success("Booking updated", { position: "top-center" });
-                              setAttaccoDDOS(old => !old);}}
-                            calendarday={date}/>
+                            <OrderList className="below-nav main-content"
+                              bookings={bookings}
+                              products={products}
+
+                              updateOrder={async (product) => {
+                                await API.updateOrder(product);
+                                toast.success("Booking updated", { position: "top-center" });
+                                setAttaccoDDOS(false);
+                              }}
+
+                              deleteProductBooking={async (product) => {
+                                await API.deleteProductBooking(product);
+                                toast.success("Product removed", { position: "top-center" });
+                                setAttaccoDDOS(old=>!old);
+                              }}
+
+                              calendarday={date} />
                           </>
                         ) : (
                           <Redirect to="/home" />

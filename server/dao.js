@@ -772,22 +772,24 @@ exports.getbookingModesPreparation = () => {
 exports.getAllBookingsForClient = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, bp.ID_PRODUCT, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT where b.CLIENT_ID=?";
-    db.all(sql, [clientId], (err, rows) => {
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID where b.CLIENT_ID=?";
+    db.all(sql, [clientId], async (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
-        idProd: e.ID_PRODUCT,
         state: e.STATE,
         email: e.EMAIL,
         name: e.NAME,
         surname: e.SURNAME,
-        qty: e.QTY,
-        product: e.productName,
+        products: []
       }));
+
+      for (let booking of bookings)
+        booking.products = await this.productsOfBooking(booking.id);
+
       resolve(bookings);
     });
   });
@@ -1017,15 +1019,96 @@ exports.productsOfBooking = (id) => {
       } else {
         const products = rows.map((e) => ({
           id_product: e.ID,
-          name_product: e.NAME,
+          product: e.NAME,
           category: e.CATEGORY_NAME,
           price: e.PRICE,
-          qty_booking: e.QTY_BOOKING,
+          qty: e.QTY_BOOKING,
           email: e.FARMER_EMAIL,
           state: e.STATE,
         }));
 
         resolve(products);
+      }
+    });
+  });
+};
+
+exports.insertTupleBookingHistory = (booking) => {
+  return new Promise((resolve, reject) => {
+    const sql ="INSERT INTO BOOKING_HISTORY (ID_BOOKING, CLIENT_ID, STATE, START_DATE, END_DATE) VALUES (?, ?, ?, ?, ?)"
+    db.run(sql, 
+      [
+        booking.ID_BOOKING, 
+        booking.CLIENT_ID, 
+        booking.STATE, 
+        booking.START_DATE, 
+        booking.END_DATE
+      ], (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+
+exports.getBookingsUnretrieved = () => {
+  return new Promise((resolve, reject) => {
+    const sql ="SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else if (rows === undefined) {
+        console.log("rows non è definito---------");
+        resolve(false);
+      } else {
+        const prenotazioni = rows.map((e) => ({
+          idBooking: e.ID_BOOKING,
+          idClient: e.CLIENT_ID,
+          productID: e.ID_PRODUCT,
+          name: e.NAME,
+          qty: e.QTY
+        }));
+
+        const bookings=[];
+        prenotazioni.forEach((p) => {
+          if (bookings[p.idBooking]) {
+            bookings[p.idBooking].products = [
+              ...bookings[p.idBooking].products,
+              { productID: p.productID, product: p.name, qty: p.qty },
+            ];
+          } else {
+            bookings[p.idBooking] = {
+              idBooking: p.idBooking,
+              idClient: p.idClient,
+              products: [
+                {
+                  productID: p.productID,
+                  product: p.name,
+                  qty: p.qty,
+                },
+              ],
+            };
+          }
+        });
+        const list = bookings.filter((b) => b !== null);
+        resolve(list);
+      }
+    });
+  });
+};
+
+exports.deleteBooking = (bookingId) => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "DELETE from BOOKING WHERE ID_BOOKING = ?";
+    db.run(sql, [bookingId], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
       }
     });
   });
@@ -1111,20 +1194,23 @@ exports.cleanDb = async () => {
   }
 };
 
-//SHORT-TERM:
+//VIRTUAL CLOCK DAO FUNCTIONS
+
+//Get total of bookings in state BOOKED
 exports.getTotal = () => {
   return new Promise((resolve, reject) => {
     const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
-      WHERE b.ID_BOOKING = bp.ID_BOOKING AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=?\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
-    db.all(sql, (err, rows) => {
+    db.all(sql,["BOOKED","CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
 
+      /*
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
@@ -1132,6 +1218,122 @@ exports.getTotal = () => {
       }));
 
       resolve(bookings);
+      */
+     resolve(createBookingsFromQuery(rows));
     });
   });
 };
+
+
+// delete all products expected from bookings, to be called on tuesday
+exports.deleteBookingProductsExpected = () => {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?)";
+    db.run(sql, ["EXPECTED"], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+//Get total of bookings in state PENDING CANCELATION
+exports.getTotalPendingCancelation = () => {
+  return new Promise((resolve, reject) => {
+    /*
+    const sql =
+      "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
+      FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
+      WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
+      GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+      */
+     
+    const sql =
+    "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
+    "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
+    "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED' "+
+    "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      /*
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        client: e.CLIENT_ID,
+        total: e.TOTAL,
+      }));
+    */
+      resolve(createBookingsFromQuery(rows));
+    });
+  });
+};
+
+const createBookingsFromQuery = (rows) => {
+  const bookings = rows.map((tuples) => ({
+    id: tuples.ID_BOOKING,
+    client: tuples.CLIENT_ID,
+    total: tuples.TOTAL,
+  }));
+  return bookings;
+}
+
+//Get bookings that we have to put in state EMPTY
+exports.getEmptyBookings = () => {
+  return new Promise((resolve, reject) => {
+   /* const sql =
+    "SELECT b.ID_BOOKING, b.CLIENT_ID \
+    FROM BOOKING b \
+    WHERE b.STATE = ? AND b.ID_BOOKING NOT IN \
+        (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 \
+          WHERE b1.ID_BOOKING = b2.ID_BOOKING \
+          GROUP BY b1.ID_BOOKING)";
+    */
+          const sql =
+          "SELECT b.ID_BOOKING, b.CLIENT_ID " +
+          "FROM BOOKING b " +
+          "WHERE b.STATE = ? AND b.ID_BOOKING NOT IN " +
+             " (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 " +
+              "  WHERE b1.ID_BOOKING = b2.ID_BOOKING " +
+              "  GROUP BY b1.ID_BOOKING)";
+    db.all(sql,["BOOKED"], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        client: e.CLIENT_ID
+      }));
+
+      resolve(bookings);
+    });
+  });
+};
+
+//get all bookings without details about clients or products
+exports.getAllBookingsVC = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        idClient: e.CLIENT_ID
+      }));
+      resolve(bookings);
+    });
+  });
+};
+
+//END OF VIRTUAL CLOCK DAO FUNCTIONS

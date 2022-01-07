@@ -914,7 +914,7 @@ app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
 });
 
 //GET /api/products to get a list of all products
-app.get("/api/products", isLoggedIn, (req, res) => {
+app.get("/api/products", (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {
@@ -1025,6 +1025,19 @@ app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
       res.status(500).json(error);
     });
 });
+
+app.get("/api/bookingsUnretrieved", isLoggedIn,
+ async (req, res) => {
+  dao
+    .getBookingsUnretrieved()
+    .then((list) => {
+      res.status(200).json(list);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 
 // POST /api/products_expected receive a vector of tuples of products expected
 
@@ -1238,6 +1251,182 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
   //All went fine
   res.status(201).json({ date: date });
 });
+
+//VIRTUAL CLOCK MANAGEMENT
+let virtualTime = false;
+let clockDate = new Date();
+let timers = setInterval(async () => {clockDate = new Date();
+  await clockActions();
+}, 30000);
+
+//GET /api/time to get current time
+app.get("/api/time",  (req, res) => {
+      res.status(200).json(clockDate);
+});
+
+//GET /api/virtualTime to enable/disable virtual time
+app.get("/api/virtualTime",  async (req, res) => {
+  virtualTime = !virtualTime;
+  clearInterval(timers);
+    if (virtualTime) {
+      //Adds 4 hours every 5 seconds
+      timers=
+        setInterval(
+         async () =>
+            {
+              let d = new Date(clockDate);
+              d.setHours(d.getHours() + 4);
+              clockDate = d;
+              await clockActions();
+            },
+          5000
+        )
+      
+    } else {
+      //Update date every 30 seconds if real time enabled
+      clockDate = new Date();
+      timers = setInterval(async () => {clockDate = new Date();
+        await clockActions();
+      }, 30000);
+    }
+
+  //All went fine
+  res.status(200).json(clockDate);
+});
+
+//Function to manage flow of SPG according to days
+async function clockActions(){
+  try {
+    /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
+    BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
+    CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
+    and the client is notified. */
+    
+    if(clockDate.getDay()===2){
+
+      //Delete from bookings all product still expected, so unconfirmed
+      await dao.deleteBookingProductsExpected();
+
+      const bookings = await dao.getTotal();
+      
+      bookings.forEach(async (booking)=>{
+        //Get the wallet  of the customer and put in variable wallet
+        const wallet = await dao.getWallet(booking.client);
+        if (wallet.balance >= booking.total) {
+          //PUT in state CONFIRMED
+          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Update amount
+          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+
+        } 
+        else {
+          //Put in state PENDINGCANCELATION
+          await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
+        }
+
+
+      });
+
+      //If empty bookings put in state EMPTY
+      const emptyBknings= await dao.getEmptyBookings();
+      
+      emptyBknings.forEach(async (booking)=>{
+        await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
+      });
+    }
+
+    /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
+    in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
+    CONFIRMED state, otherwise they will be CANCELED. */
+    if(clockDate.getDay()===3){
+
+      const bookings = await dao.getTotalPendingCancelation();
+      bookings.forEach(async (booking)=>{
+        //Get the wallet  of the customer and put in variable wallet
+        const wallet = await dao.getWallet(booking.client);
+        if (wallet.balance >= booking.total) {
+          //PUT in state CONFIRMED
+          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Update amount
+          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+
+        } 
+        else {
+          //Put in state CANCELED
+          await dao.editStateBooking({ id: booking.id, state: "CANCELED" });
+        }
+
+      });
+
+
+
+    }
+
+    /* On SATURDAY MORNING a new week starts. So we move bookings from booking table to booking history
+    table. If a booking was in COMPLETED or EMPTY or CANCELED state, it will be saved in booking history as COMPLETED
+    or EMPTY or CANCELED. If it was in CONFIRMED state and Delivery Mode was pickup, it will be saved as
+    UNRETRIEVED. If it was CONFIRMED and Delivery mode was delivery, we just delete it from booking, we don't care
+    about this state now (it's for future stories). */
+    if(clockDate.getDay()===6){
+      
+      const startDate = new Date(clockDate);
+      //If this happens only on saturday, starday will be monday
+      startDate.setDate(startDate.getDate() - 5);
+      //Same for sunday
+      const endDate = new Date(clockDate);
+      endDate.setDate(endDate.getDate() +1);
+
+      const bookings = await dao.getAllBookingsVC ();
+      bookings.forEach(async (booking)=>{
+
+        if((booking.state==="EMPTY")||(booking.state==="COMPLETED")||(booking.state==="CANCELED")){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: booking.state,
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+        else if(booking.state==="CONFIRMED" && booking.delivery === 0){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "UNRETRIEVED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+        //Other cases, we delete the booking and we move in state canceled
+        else{
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "CANCELED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+
+      })
+    }
+
+
+
+  }
+
+  catch(err){
+    return err;
+  }
+  //TODO, what happens if quantity confirmed is less than expected? Handle this
+
+}
+
+
+// END OF VIRTUAL CLOCK
 
 //GET /api/bookings/booked/clients/:id
 

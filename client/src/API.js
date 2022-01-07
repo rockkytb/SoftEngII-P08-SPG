@@ -1,3 +1,5 @@
+import ProductImages from "./ProductImages";
+
 const url = "/api";
 
 function addUser(newUser) {
@@ -110,6 +112,8 @@ async function logIn(credentials, type) {
 async function logOut() {
   await fetch(url + "/logout", { method: "DELETE" });
 }
+
+
 
 async function getUserInfo() {
   const response = await fetch(url + "/userinfo");
@@ -551,7 +555,7 @@ async function confirmPreparation(id) {
       headers: {
         "Content-Type": "application/json",
       }
-      
+
     })
       .then((response) => {
         if (response.ok) {
@@ -616,7 +620,7 @@ async function confirmPreparationFarmer(productList) {
   });
 }
 
-async function updateOrder(product){
+async function updateOrder(product) {
 
   const update = async (product) => {
     const response = await fetch(url + "/bookingproducts", {
@@ -628,9 +632,9 @@ async function updateOrder(product){
     })
 
     const result = await response.json();
-    if(response.ok){
-      return result 
-    }else{
+    if (response.ok) {
+      return result
+    } else {
       return "error";
     }
   }
@@ -649,7 +653,7 @@ async function setDate(date) {
         headers: {
           "Content-Type": "application/json",
         },
-       
+
         body: JSON.stringify(date),
       })
         .then((response) => {
@@ -679,21 +683,46 @@ async function setDate(date) {
   );
 }
 
+//VIRTUAL CLOCK
+async function getTime() {
+  const response = await fetch("/api/time");
+  const time = await response.json();
+  if (response.ok) {
+    return time;
+  }
+}
+
+async function enableDisableVirtualClock() {
+  const response = await fetch("/api/virtualTime");
+  const time = await response.json();
+  if (response.ok) {
+    return time;
+  }
+}
+
+async function deleteProductBooking(product) {
+  // call: DELETE /api/bookingProduct
+  console.log("dentro api")
+  console.log(product)
+  await fetch(url + "/bookingProduct", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      ID_Product: product.ID_Product,
+      ID_Booking: product.ID_Booking
+    }),
+  });
+}
+
 async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
 
-    if (
-      userdata &&
-      userdata.id &&
-      (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")
-    ) {
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        return productList;
-      }
-    } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
+
+    if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
       let prodi = [];
       const getExpected = async (userdata) => {
         const response = await fetch(
@@ -701,7 +730,7 @@ async function attaccoDoS(userdata) {
         );
         const productList = await response.json();
         if (response.ok) {
-          prodi.push(productList);
+          productList.map((p)=> prodi.push(p))
         }
       };
       const getConfirmed = async (userdata) => {
@@ -710,7 +739,7 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          prodi.push(productList2);
+          productList2.map((p)=> prodi.push(p))
         }
       };
 
@@ -718,6 +747,12 @@ async function attaccoDoS(userdata) {
       await getConfirmed(userdata);
 
       return prodi;
+    } else {
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
     }
   };
 
@@ -785,6 +820,8 @@ async function attaccoDoS(userdata) {
   return { products, bookings, clients, categories };
 }
 
+
+
 const API = {
   addUser,
   newAck,
@@ -807,5 +844,8 @@ const API = {
   confirmPreparation,
   confirmPreparationFarmer,
   updateOrder,
+  getTime,
+  enableDisableVirtualClock,
+  deleteProductBooking
 };
 export default API;

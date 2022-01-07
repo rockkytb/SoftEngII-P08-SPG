@@ -26,16 +26,27 @@ export default function OrderList(props) {
 
   function handleAddToCart() {
 
-      let product = {
-        ID_Booking: bookingId,
-        ID_Product: productId,
-        quantity: orderQuantity,
-      };
 
-      props.updateOrder(product);
 
-    
+    let product = {
+      ID_Booking: bookingId,
+      ID_Product: productId,
+      quantity: orderQuantity,
+    };
+    console.log(product);
+    props.updateOrder(product);
+
+
     handleViewClose();
+  }
+
+  function deleteProduct(pId, bId) {
+    let product = {
+      ID_Booking: bId,
+      ID_Product: pId,
+    };
+    console.log(product)
+    props.deleteProductBooking(product);
   }
 
 
@@ -48,11 +59,16 @@ export default function OrderList(props) {
     setShowView(false);
   };
 
+  //ONLY Bookings in state == BOOKED
+  const bookings = props.bookings ? props.bookings.filter((bk) => bk.state === "BOOKED") : [];
+
   //DEFAULT, SORTED IN ALPHABETIC ORDER
   function productsActions() {
     //TOCHECK: problems into modifying a prop?
     //the product must be one from next week so it must be not already confirmed
-    return (props.bookings.map((book) => {
+
+
+    return (bookings.map((book) => {
       return (
         <Col>
           <Card className="text-dark">
@@ -61,75 +77,115 @@ export default function OrderList(props) {
               <Card.Title>
                 <h4>Booking #{book.id}</h4>
               </Card.Title>
-              <Card.Text>
-                <Row>
-                  <Col xs={7}>
-                    <b>Product:</b> {book.product}
-                    <br />
-                    <b>Quantity:</b> {book.qty}
-                    <br />
-                  </Col>
-                  <Col xs={5}>
-                    <Image
-                      src={ImageFinder(book.product.toLowerCase())}
-                      rounded
-                      fluid
-                    />
-                  </Col>
-                </Row>
-              </Card.Text>
-              <Button
-                variant="warning"
-                onClick={() => {
-                    if (
-                        (props.calendarday.getDay() === 6 &&
-                          props.calendarday.getHours() >= 10) ||
-                        (props.calendarday.getDay() === 0 &&
-                          props.calendarday.getHours() < 23)
-                      ) {
-                        setProductId(book.idProd);
-                        setBookingId(book.id);
-                        setOrderQuantity(book.qty);
-                        setName(book.product);
-                        let tmp = props.products.find((f) => f.id === book.idProd);
-                        setQuantity(tmp.qty);
-                        setShowView(true);
-                      } else {
-                        setShowAlertTime(true);
-                      }
 
-                }}
-              >
-                Update quantity
-              </Button>
+              {book.products.map((p) => {
+                return (
+                  <>
+                    <Card.Text>
+                      <Row>
+                        <Col xs={7}>
+                          <b>Product:</b> {p.product}
+                          <br />
+                          <b>Quantity:</b> {p.qty}
+                          <br />
+                        </Col>
+                        <Col xs={5}>
+                          <Image
+                            src={ImageFinder(p.product.toLowerCase())}
+                            rounded
+                            fluid
+                          />
+                        </Col>
+                      </Row>
+                    </Card.Text>
+
+                    <Row className="justify-content-center">
+                      <Button
+                        variant="warning"
+                        onClick={() => {
+                          if (
+                            (props.calendarday.getDay() === 6 &&
+                              props.calendarday.getHours() >= 10) ||
+                            (props.calendarday.getDay() === 0 &&
+                              props.calendarday.getHours() < 23)
+                          ) {
+                            setProductId(p.id_product);
+                            setBookingId(book.id);
+                            setOrderQuantity(p.qty);
+                            setName(p.product);
+                            let tmp = props.products.find((f) => f.id === p.id_product);
+                            setQuantity(tmp.qty);
+                            setShowView(true);
+                          } else {
+                            setShowAlertTime(true);
+                          }
+
+                        }}
+                      >
+                        Update quantity
+                      </Button>
+                    </Row>
+
+                    <Row className="justify-content-center">
+                      <Button variant="danger" className="mt-1"
+                        onClick={() => {
+
+                          if (
+                            (props.calendarday.getDay() === 6 &&
+                              props.calendarday.getHours() >= 10) ||
+                            (props.calendarday.getDay() === 0 &&
+                              props.calendarday.getHours() < 23)
+                          ) {
+                            setProductId(p.id_product);
+                            setBookingId(book.id);
+                            deleteProduct(p.id_product, book.id)
+                          } else {
+                            setShowAlertTime(true);
+                          }
+
+                        }}
+                      >
+                        Remove product
+                      </Button>
+                    </Row>
+                    <br /><br />
+                  </>
+
+
+                );
+              })}
+
+
+
             </Card.Body>
           </Card>
         </Col>
       );
     })
-    )}
+    )
+  }
 
   return (
     <>
       <div className="below-nav no-flickr">
 
         <Alert show={showAlertTime} variant="danger">
-        <Alert.Heading>You cannot update booking now</Alert.Heading>
-        <p>
-          Bookings must happen only from 10 am of Saturday until 23 pm of Sunday
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <Button
-            variant="warning"
-            onClick={() => {
-              setShowAlertTime(false);
-            }}
-          >
-            Close
-          </Button>
-        </div>
-      </Alert>
+          <Alert.Heading>You cannot update booking now</Alert.Heading>
+          <p>
+            Bookings must happen only from 10 am of Saturday until 23 pm of Sunday
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="warning"
+              onClick={() => {
+                setShowAlertTime(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </Alert>
 
         <Modal show={showView} onHide={handleViewClose}>
           <Modal.Header>
@@ -184,10 +240,10 @@ export default function OrderList(props) {
         </Modal>
         <CardColumns xs={1} md={5}>
           <>
-            {props.bookings && props.bookings.length > 0 ? (
+            {bookings && bookings.length > 0 ? (
               productsActions()
             ) : (
-              <>No products available</>
+              <>No bookings found</>
             )}
           </>
         </CardColumns>

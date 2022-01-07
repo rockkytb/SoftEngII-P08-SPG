@@ -37,9 +37,17 @@ Password is always : <b> testpassword </b>
 2. CONFIRMED = confirmed by farmer on monday
 3. DELIVERED = delivered by farmer on tuesday evening
 
-## LIST OF API SPRINT 1
+## LIST OF APIs (not updated anymore, use swagger: http://localhost:3001/api-docs )
 
 ### http://localhost:3000 is the default path
+
+#### GET /api/time
+
+Returns current time
+
+#### GET /api/virtualTime 
+
+Enable/disable virtual time
 
 #### POST /api/clientSessions
 
