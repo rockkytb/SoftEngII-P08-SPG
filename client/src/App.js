@@ -335,6 +335,7 @@ function App() {
       }
 
       setDeliveryState(true);
+      setAttaccoDDOS(true);
       toast.success("Products confirmed successfully", {
         position: "top-center",
       },{toastId: 18});
