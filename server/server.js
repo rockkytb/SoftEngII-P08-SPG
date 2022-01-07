@@ -1308,7 +1308,8 @@ async function clockActions(){
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
     and the client is notified. 
-    Periodic telegram message is sent*/
+    Periodic telegram message is sent if customer needs to top up
+    A message is sent if booking is confirmed*/
     
     if(clockDate.getDay()===2){
 
@@ -1326,7 +1327,9 @@ async function clockActions(){
             await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
             //Update amount
             await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
-
+            //Send telegram message
+            const bookingProducts = await dao.productsOfBooking(booking.id);
+            telegramBot.SendMessage(booking.client,`<b>Purchase confirmation, booking #${booking.id}:</b>\n${bookingProducts.products.map((p)=>p.qty +" " +p.product)}\n<b>Total: ${booking.total} €</b>`);
           } 
           else {
             //Put in state PENDINGCANCELATION
