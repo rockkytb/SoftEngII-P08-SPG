@@ -124,24 +124,24 @@ function App() {
   const doLogIn = async (credentials, type) => {
     try {
       const user = await API.logIn(credentials, type);
-      toast.success(`Welcome ${user.username}!`, { position: "top-center" });
+      toast.success(`Welcome ${user.username}!`, { position: "top-center" },{toastId: 1});
       setUserData(user);
       setLoggedIn(true);
     } catch (err) {
       toast.error("Wrong email or/and password, try again", {
         position: "top-center",
-      });
+      },{toastId: 10});
     }
   };
 
   //logout
   const doLogOut = async () => {
     await API.logOut()
-      .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
+      .then(() => toast.success("Logout Succeeded", { position: "top-center" },{toastId: 2}))
       .catch(() =>
         toast.error("Error during logout, try again", {
           position: "top-center",
-        })
+        },{toastId: 11})
       );
     setLoggedIn(false);
     setUserData();
@@ -170,13 +170,13 @@ function App() {
 
     add()
       .then(() => {
-        toast.success("Registration completed", { position: "top-center" });
+        toast.success("Registration completed", { position: "top-center" },{toastId: 3});
       })
       .catch((err) => {
         if (err.errors && err.errors[0]) {
-          toast.error(err.errors, { position: "top-center" });
+          toast.error(err.errors, { position: "top-center" },{toastId: 12});
         } else {
-          toast.error(err.error, { position: "top-center" });
+          toast.error(err.error, { position: "top-center" },{toastId: 13});
         }
       });
   };
@@ -195,9 +195,9 @@ function App() {
     };
     book()
       .then(() =>
-        toast.success("Booking completed", { position: "top-center" })
+        toast.success("Booking completed", { position: "top-center" },{toastId: 4})
       )
-      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+      .catch((err) => toast.error(err.errors, { position: "top-center" },{toastId: 5}));
   };
 
 
@@ -272,10 +272,10 @@ function App() {
   const setNewWallet = async (id, amount) => {
     try {
       const response = await API.setNewWallet(id.substring(1), amount);
-      toast.success("Wallet modified successfully", { position: "top-center" });
+      toast.success("Wallet modified successfully", { position: "top-center" },{toastId: 6});
       return response;
     } catch (err) {
-      toast.error("Error updating the wallet", { position: "top-center" });
+      toast.error("Error updating the wallet", { position: "top-center" },{toastId: 7});
       console.log(err);
     }
   };
@@ -286,9 +286,9 @@ function App() {
       await API.confirmBooking(id);
       toast.success("Booking completed successfully", {
         position: "top-center",
-      });
+      },{toastId: 8});
     } catch (err) {
-      toast.error("Error updating the booking", { position: "top-center" });
+      toast.error("Error updating the booking", { position: "top-center" },{toastId: 9});
       console.log(err);
     }
   };
@@ -299,10 +299,10 @@ function App() {
       setAckState(true);
       toast.success("Delivery acknowledge", {
         position: "top-center",
-      });
+      },{toastId: 14});
     } catch (err) {
       setAckState(true);
-      toast.error("Error updating the delivery", { position: "top-center" });
+      toast.error("Error updating the delivery", { position: "top-center" },{toastId: 15});
       console.log(err);
     }
   };
@@ -315,9 +315,9 @@ function App() {
       setAckState(true);
       toast.success("Delivery completed successfully", {
         position: "top-center",
-      });
+      },{toastId: 16});
     } catch (err) {
-      toast.error("Error updating the delivery", { position: "top-center" });
+      toast.error("Error updating the delivery", { position: "top-center" },{toastId: 17});
       console.log(err);
     }
   };
@@ -337,9 +337,9 @@ function App() {
       setDeliveryState(true);
       toast.success("Products confirmed successfully", {
         position: "top-center",
-      });
+      },{toastId: 18});
     } catch (err) {
-      toast.error("Error with the confirmation", { position: "top-center" });
+      toast.error("Error with the confirmation", { position: "top-center" },{toastId: 19});
       console.log(err);
     }
     /*finally{
@@ -354,10 +354,10 @@ function App() {
       setAttaccoDDOS(old => !old);
       toast.success("Preparation confirmed", {
         position: "top-center",
-      });
+      },{toastId: 20});
     } catch (err) {
       setAttaccoDDOS(old => !old);
-      toast.error("Error confirming preparation", { position: "top-center" });
+      toast.error("Error confirming preparation", { position: "top-center" },{toastId: 21});
       console.log(err);
     }
   };
@@ -368,10 +368,10 @@ function App() {
       setAttaccoDDOS(old => !old);
       toast.success("Preparation confirmed", {
         position: "top-center",
-      });
+      },{toastId: 22});
     } catch (err) {
       setAttaccoDDOS(old => !old);
-      toast.error("Error confirming preparation", { position: "top-center" });
+      toast.error("Error confirming preparation", { position: "top-center" },{toastId: 23});
       console.log(err);
     }
   };
@@ -911,13 +911,13 @@ function App() {
 
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
-                                toast.success("Booking updated", { position: "top-center" });
+                                toast.success("Booking updated", { position: "top-center" },{toastId: 24});
                                 setAttaccoDDOS(false);
                               }}
 
                               deleteProductBooking={async (product) => {
                                 await API.deleteProductBooking(product);
-                                toast.success("Product removed", { position: "top-center" });
+                                toast.success("Product removed", { position: "top-center" },{toastId: 25});
                                 setAttaccoDDOS(old=>!old);
                               }}
 

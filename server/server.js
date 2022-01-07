@@ -1352,9 +1352,7 @@ async function clockActions(){
         bookings.forEach(async (booking)=>{
           if(!alreadySent.includes(booking.client)){
             const wallet = await dao.getWallet(booking.client);
-            telegramBot.SendMessage(booking.client,`Your current balance (${wallet.balance} €) is insufficient 
-            to complete the order #${booking.id}. Please top-up at least ${booking.total-wallet.balance}€ 
-            to complete the order.`);
+            telegramBot.SendMessage(booking.client,`Your current balance (${wallet.balance} €) is insufficient to complete the order #${booking.id}. Please top-up at least ${booking.total-wallet.balance}€ to complete the order.`);
             alreadySent.push(booking.client);
           }
         })
