@@ -16,10 +16,11 @@ bot.command("quit", (ctx) => {
 });
 
 bot.start(async (ctx) => {
-  await Dao.SaveChatId(ctx.message.chat.id, ctx.message.from.username);
+  const username = ctx.message.from.username ? (ctx.message.from.username):(ctx.message.chat.first_name);
+  await Dao.SaveChatId(ctx.message.chat.id, username);
   console.log(ctx.message.chat.id);
   ctx.reply(
-    `Hi ${ctx.message.from.username}, please send your credentials in this format email:password`
+    `Hi ${username}, please send your credentials in this format email:password`
   );
 });
 
@@ -44,13 +45,13 @@ process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
 bot.on("text", async (ctx) => {
   console.log(ctx.message.text);
-
+  const username = ctx.message.from.username ? (ctx.message.from.username):(ctx.message.chat.first_name);
   if (ctx.message.text.includes(":")) {
     var email = ctx.message.text.split(":")[0];
     var pasw = ctx.message.text.split(":")[1];
     Dao.UpdateCredentials(
       ctx.message.chat.id,
-      ctx.message.from.username,
+      username,
       email,
       pasw
     )
