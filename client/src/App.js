@@ -157,7 +157,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setAttaccoDDOS(true);
+        setAttaccoDDOS(old => !old);
       }
       if (!loggedIn) {
         const credentials = {
@@ -344,7 +344,7 @@ function App() {
       console.log(err);
     }
     /*finally{
-      setAttaccoDDOS(true);
+      setAttaccoDDOS(old => !old);
     }*/
   };
 
@@ -454,7 +454,7 @@ function App() {
                             userdata.id.charAt(0) === "M" ||
                             userdata.id.charAt(0) === "W") ? (<Redirect to="/home" />):(
                               <>
-                              {setAttaccoDDOS(true)}
+                              {setAttaccoDDOS(old => !old)}
                               <ProductsList
                                 className="below-nav main-content"
                                 products={products}
@@ -524,7 +524,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                            {setAttaccoDDOS(true)}
+                            {setAttaccoDDOS(old => !old)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -872,7 +872,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -902,7 +902,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -913,7 +913,7 @@ function App() {
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
                                 toast.success("Booking updated", { position: "top-center" },{toastId: 24});
-                                setAttaccoDDOS(false);
+                                setAttaccoDDOS(old => !old);
                               }}
 
                               deleteProductBooking={async (product) => {
@@ -949,7 +949,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -1157,7 +1157,7 @@ function App() {
             render={() => (
 
               <div className="width100">
-                {setAttaccoDDOS(true)}
+                {setAttaccoDDOS(old => !old)}
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
