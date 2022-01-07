@@ -70,6 +70,19 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
   });
 };
 
+exports.logout = (chatid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=?";
+    db.run(sql, [-1, chatid], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
 exports.getUser = (chatid) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT CLIENT_ID  FROM TELEGRAM Where CHATID=?";

@@ -10,9 +10,15 @@ const bot = new Telegraf(TOKEN);
 
 const Dao = require("./DaoBot.js");
 
-bot.command("quit", (ctx) => {
-  ctx.telegram.leaveChat(ctx.message.chat.id);
-  ctx.leaveChat();
+bot.command("quit", async (ctx) => {
+  try{
+    await Dao.logout(ctx.message.chat.id);
+    ctx.reply("Logout successful. Type /start to restart bot");
+  }
+  catch (err){
+    console.log(err);
+  }
+  
 });
 
 bot.start(async (ctx) => {
@@ -22,7 +28,7 @@ bot.start(async (ctx) => {
   const user = await Dao.getUser(ctx.message.chat.id);
   if(user){
     ctx.reply(
-      `Welcome back ${user.name} ${user.surname}\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`
+      `Welcome back ${user.name} ${user.surname}\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`
     );
   }  
   else{
@@ -69,7 +75,7 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Login successfull!\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`);
+          ctx.reply(`Login successfull!\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`);
         }
       })
       .catch(() => {
