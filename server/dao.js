@@ -1046,7 +1046,6 @@ exports.insertTupleBookingHistory = (booking) => {
       ], (err) => {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1061,7 +1060,6 @@ exports.getBookingsUnretrieved = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       } else if (rows === undefined) {
         console.log("rows non è definito---------");
         resolve(false);
@@ -1109,7 +1107,6 @@ exports.deleteBooking = (bookingId) => {
     db.run(sql, [bookingId], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1222,7 +1219,7 @@ exports.getTotal = () => {
 
       resolve(bookings);
       */
-     resolve(createBookingsFromQuery(e));
+     resolve(createBookingsFromQuery(rows));
     });
   });
 };
@@ -1235,7 +1232,6 @@ exports.deleteBookingProductsExpected = () => {
     db.run(sql, ["EXPECTED"], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1246,11 +1242,19 @@ exports.deleteBookingProductsExpected = () => {
 //Get total of bookings in state PENDING CANCELATION
 exports.getTotalPendingCancelation = () => {
   return new Promise((resolve, reject) => {
+    /*
     const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
       WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+      */
+     
+    const sql =
+    "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
+    "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
+    "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED' "+
+    "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1304,11 +1308,11 @@ exports.getEmptyBookings = () => {
   });
 };
 
-//get all bookings plus deliveryMode without details about clients or products
+//get all bookings without details about clients or products
 exports.getAllBookingsVC = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID, bm.DELIVERY FROM BOOKING b, BOOKING_MODE bm WHERE b.ID_BOOKING = bm.ID_BOOKING";
+      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1317,8 +1321,7 @@ exports.getAllBookingsVC = () => {
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
-        idClient: e.CLIENT_ID,
-        delivery: e.DELIVERY
+        idClient: e.CLIENT_ID
       }));
       resolve(bookings);
     });
