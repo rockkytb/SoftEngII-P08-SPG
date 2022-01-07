@@ -1304,11 +1304,11 @@ exports.getEmptyBookings = () => {
   });
 };
 
-//get all bookings without details about clients or products
+//get all bookings plus deliveryMode without details about clients or products
 exports.getAllBookingsVC = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
+      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID, bm.DELIVERY FROM BOOKING b, BOOKING_MODE bm WHERE b.ID_BOOKING = bm.ID_BOOKING";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1317,7 +1317,8 @@ exports.getAllBookingsVC = () => {
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
-        idClient: e.CLIENT_ID
+        idClient: e.CLIENT_ID,
+        delivery: e.DELIVERY
       }));
       resolve(bookings);
     });

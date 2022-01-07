@@ -1388,7 +1388,27 @@ async function clockActions(){
             START_DATE: startDate.toISOString().split("T")[0],
             END_DATE: endDate.toISOString().split("T")[0]
           });
-
+        }
+        else if(booking.state==="CONFIRMED" && booking.delivery === 0){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "UNRETRIEVED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+        //Other cases, we delete the booking and we move in state canceled
+        else{
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "CANCELED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
         }
 
       })
