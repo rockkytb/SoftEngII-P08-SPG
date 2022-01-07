@@ -1285,13 +1285,21 @@ const createBookingsFromQuery = (rows) => {
 //Get bookings that we have to put in state EMPTY
 exports.getEmptyBookings = () => {
   return new Promise((resolve, reject) => {
-    const sql =
+   /* const sql =
     "SELECT b.ID_BOOKING, b.CLIENT_ID \
     FROM BOOKING b \
     WHERE b.STATE = ? AND b.ID_BOOKING NOT IN \
         (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 \
           WHERE b1.ID_BOOKING = b2.ID_BOOKING \
           GROUP BY b1.ID_BOOKING)";
+    */
+          const sql =
+          "SELECT b.ID_BOOKING, b.CLIENT_ID " +
+          "FROM BOOKING b " +
+          "WHERE b.STATE = ? AND b.ID_BOOKING NOT IN " +
+             " (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 " +
+              "  WHERE b1.ID_BOOKING = b2.ID_BOOKING " +
+              "  GROUP BY b1.ID_BOOKING)";
     db.all(sql,["BOOKED"], (err, rows) => {
       if (err) {
         reject(err);
