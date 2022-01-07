@@ -7,7 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
-const telegramBot = require("./telegrambot/DaoBot.js");
+const telegramBot = require("./telegrambot/SendMessage.js");
 //Per validazione aggiuntiva
 const validator = require("validator");
 let testmode = false;

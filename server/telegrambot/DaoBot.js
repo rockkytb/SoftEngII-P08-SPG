@@ -16,31 +16,6 @@ const db = new sqlite.Database(
   }
 );
 
-// open the database for sendMessage method
-const db2 = new sqlite.Database(
-  testmode ? "./testdatabase.db" : "./database.db",
-  (err) => {
-    if (err) throw err;
-  }
-);
-
-exports.SendMessage = (clientId, msg) => {
-  const bot = new Telegram(TOKEN);
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT CHATID FROM TELEGRAM WHERE CLIENT_ID = ?";
-    db2.get(sql, [clientId], (err, row) => {
-      if (err) {
-        reject(err);
-      } else if (row === undefined) {
-        resolve(false);
-      } else {
-        bot.sendMessage(row.CHATID, msg);
-        resolve(true);
-      }
-    });
-  });
-};
-
 //check password and email, if correct update the telegram table with the client id
 exports.UpdateCredentials = (chatId, username, email, password) => {
   return new Promise((resolve, reject) => {
