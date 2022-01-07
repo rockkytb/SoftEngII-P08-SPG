@@ -1329,7 +1329,7 @@ async function clockActions(){
             await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
             //Send telegram message
             const bookingProducts = await dao.productsOfBooking(booking.id);
-            telegramBot.SendMessage(booking.client,`<b>Purchase confirmation, booking #${booking.id}:</b>\n${bookingProducts.products.map((p)=>p.qty +" " +p.product)}\n<b>Total: ${booking.total} €</b>`);
+            telegramBot.SendMessage(booking.client,`<b>Purchase confirmation, booking #${booking.id}:</b>\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n<b>Total: ${booking.total} €</b>`);
           } 
           else {
             //Put in state PENDINGCANCELATION
