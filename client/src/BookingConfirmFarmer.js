@@ -36,7 +36,7 @@ export default function BookingConfirmFarmer(props) {
                                     id={"confirmButton"+product.name}
                                     onClick={() => {
                                         if (props.calendarday.getDay() === 1 && props.calendarday.getHours() >= 9) {
-                                            props.confirmProducts(props.expectedProducts);
+                                            props.confirmProducts(props.expectedProducts.filter((p)=>p.name===product.name));
                                         }
                                         else {
                                             setShowAlertTime(true);
