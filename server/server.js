@@ -1329,7 +1329,7 @@ async function clockActions(){
             await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
             //Send telegram message
             const bookingProducts = await dao.productsOfBooking(booking.id);
-            telegramBot.SendMessage(booking.client,`<b>Purchase confirmation, booking #${booking.id}:</b>\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n<b>Total: ${booking.total} €</b>`);
+            telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
           } 
           else {
             //Put in state PENDINGCANCELATION
@@ -1364,7 +1364,8 @@ async function clockActions(){
 
     /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
     in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
-    CONFIRMED state, otherwise they will be CANCELED. */
+    CONFIRMED state, otherwise they will be CANCELED. 
+    A message is sent if booking is confirmed*/
     if(clockDate.getDay()===3 && once[3]){
 
       const bookings = await dao.getTotalPendingCancelation();
@@ -1374,6 +1375,9 @@ async function clockActions(){
         if (wallet.balance >= booking.total) {
           //PUT in state CONFIRMED
           await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Send telegram message
+          const bookingProducts = await dao.productsOfBooking(booking.id);
+          telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
           //Update amount
           await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
 
