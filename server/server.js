@@ -1263,6 +1263,9 @@ let timers = setInterval(async () => {clockDate = new Date();
 //FLAG to execute queries once a day, resetted every sunday
 let once = [true,true,true,true,true,true,true];
 
+//For periodic remainder, every 4 hours
+let oldHours =0;
+
 //GET /api/time to get current time
 app.get("/api/time",  (req, res) => {
       res.status(200).json(clockDate);
@@ -1304,40 +1307,58 @@ async function clockActions(){
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
-    and the client is notified. */
+    and the client is notified. 
+    Periodic telegram message is sent*/
     
-    if(clockDate.getDay()===2 && once[2]){
+    if(clockDate.getDay()===2){
 
-      //Delete from bookings all product still expected, so unconfirmed
-      await dao.deleteBookingProductsExpected();
+      if(once[2]){
+        //Delete from bookings all product still expected, so unconfirmed
+        await dao.deleteBookingProductsExpected();
 
-      const bookings = await dao.getTotal();
-      
-      bookings.forEach(async (booking)=>{
-        //Get the wallet  of the customer and put in variable wallet
-        const wallet = await dao.getWallet(booking.client);
-        if (wallet.balance >= booking.total) {
-          //PUT in state CONFIRMED
-          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
-          //Update amount
-          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+        const bookings = await dao.getTotal();
+        
+        bookings.forEach(async (booking)=>{
+          //Get the wallet  of the customer and put in variable wallet
+          const wallet = await dao.getWallet(booking.client);
+          if (wallet.balance >= booking.total) {
+            //PUT in state CONFIRMED
+            await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+            //Update amount
+            await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
 
-        } 
-        else {
-          //Put in state PENDINGCANCELATION
-          await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
-        }
+          } 
+          else {
+            //Put in state PENDINGCANCELATION
+            await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
+          }
 
 
-      });
+        });
 
-      //If empty bookings put in state EMPTY
-      const emptyBknings= await dao.getEmptyBookings();
-      
-      emptyBknings.forEach(async (booking)=>{
-        await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
-      });
-      once[2]=false;
+        //If empty bookings put in state EMPTY
+        const emptyBknings= await dao.getEmptyBookings();
+        
+        emptyBknings.forEach(async (booking)=>{
+          await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
+        });
+        once[2]=false;
+      }
+      //Every 4 hour remember to top up to all clients that have bookings in pendingcancelation state
+      if(clockDate.getHours()-oldHours>=4){
+        oldHours=clockDate.getHours()-oldHours;
+        const bookings = await dao.getTotalPendingCancelation();
+        let alreadySent =[];
+        bookings.forEach(async (booking)=>{
+          if(!alreadySent.includes(booking.client)){
+            const wallet = await dao.getWallet(booking.client);
+            telegramBot.SendMessage(booking.client,`Your current balance (${wallet.balance} €) is insufficient 
+            to complete the order #${booking.id}. Please top-up at least ${booking.total-wallet.balance}€ 
+            to complete the order.`);
+            alreadySent.push(booking.client);
+          }
+        })
+      }
     }
 
     /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
