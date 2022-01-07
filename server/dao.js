@@ -281,6 +281,49 @@ exports.getWarehouseWorkerById = (id) => {
   });
 };
 
+//get Manager
+exports.getManager = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM ADMIN WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = {
+          id: `A${row.ID}`,
+          username: row.EMAIL,
+          name: row.NAME,
+          surname: row.SURNAME,
+        };
+
+        bcrypt.compare(password, row.PASSWORD).then((result) => {
+          if (result) resolve(user);
+          else resolve(false);
+        });
+      }
+    });
+  });
+};
+
+//get Manager by Id
+exports.getManagerById = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM ADMIN WHERE ID = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `A${row.ID}`, username: row.EMAIL };
+        resolve(user);
+      }
+    });
+  });
+};
+
 // add a new acknowledge
 exports.createAcknowledge = (ack) => {
   return new Promise((resolve, reject) => {
