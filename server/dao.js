@@ -1213,6 +1213,7 @@ exports.getTotal = () => {
         return;
       }
 
+      /*
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
@@ -1220,6 +1221,8 @@ exports.getTotal = () => {
       }));
 
       resolve(bookings);
+      */
+     resolve(createBookingsFromQuery(e));
     });
   });
 };
@@ -1254,17 +1257,26 @@ exports.getTotalPendingCancelation = () => {
         return;
       }
 
+      /*
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
         total: e.TOTAL,
       }));
-
-      resolve(bookings);
+    */
+      resolve(createBookingsFromQuery(e));
     });
   });
 };
 
+createBookingsFromQuery = (tuples) => {
+  const bookings = rows.map((tuples) => ({
+    id: tuples.ID_BOOKING,
+    client: tuples.CLIENT_ID,
+    total: tuples.TOTAL,
+  }));
+  return bookings;
+}
 
 //Get bookings that we have to put in state EMPTY
 exports.getEmptyBookings = () => {
