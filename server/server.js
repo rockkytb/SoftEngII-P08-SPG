@@ -1269,13 +1269,13 @@ app.get("/api/virtualTime",  async (req, res) => {
   virtualTime = !virtualTime;
   clearInterval(timers);
     if (virtualTime) {
-      //Adds 12 hours every 5 seconds
+      //Adds 4 hours every 5 seconds
       timers=
         setInterval(
          async () =>
             {
               let d = new Date(clockDate);
-              d.setHours(d.getHours() + 12);
+              d.setHours(d.getHours() + 4);
               clockDate = d;
               await clockActions();
             },

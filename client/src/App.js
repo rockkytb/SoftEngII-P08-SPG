@@ -48,6 +48,7 @@ function App() {
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(new Date());
   const [virtualTime, setVirtualTime] = useState(false);
+  const [firstTimeVc, setFirstTimeVc] = useState(true);
   const [timers, setTimers] = useState();
   const [confirmedProductsFarmer, setConfirmedProductsFarmer] = useState([]);
   const [deliveryState, setDeliveryState] = useState(true);
@@ -77,15 +78,27 @@ function App() {
       })
 
     } else {
-      //Update date every 20 seconds if real time enabled
-      API.enableDisableVirtualClock().then((date) => {
+      if(firstTimeVc){
         setDate(new Date(date));
         setTimers(setInterval(() => {
           API.getTime().then((serverDate) => setDate(new Date(serverDate)));
 
-        }, 10000));
-      });
+          }, 10000));
+        setFirstTimeVc(false);
 
+      }
+      else{
+
+        //Update date every 20 seconds if real time enabled
+        API.enableDisableVirtualClock().then((date) => {
+        setDate(new Date(date));
+        setTimers(setInterval(() => {
+          API.getTime().then((serverDate) => setDate(new Date(serverDate)));
+
+          }, 10000));
+        });
+
+      }
     }
 
     //SHORT-TERM: sends date to server
