@@ -59,7 +59,7 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Authenticated as ${email}!\nCommand list:\n/balance to get your current balance\n/quit to exit`);
+          ctx.reply(`Authenticated as ${email}!\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`);
         }
       })
       .catch(() => {
