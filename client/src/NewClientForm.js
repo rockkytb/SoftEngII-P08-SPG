@@ -32,7 +32,7 @@ function NewClientForm(props) {
             event.stopPropagation();
             if (usedMail == -1) {
                 setUsedMail("");
-                toast.error("Email already used", { position: "top-center" })
+                toast.error("Email already used", { position: "top-center" },{toastId: 32})
             }
 
         } else {

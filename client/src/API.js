@@ -721,17 +721,8 @@ async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
 
-    if (
-      userdata &&
-      userdata.id &&
-      (userdata.id.charAt(0) === "C" || userdata.id.charAt(0) === "S")
-    ) {
-      const response = await fetch("/api/products");
-      const productList = await response.json();
-      if (response.ok) {
-        return productList;
-      }
-    } else if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
+
+    if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
       let prodi = [];
       const getExpected = async (userdata) => {
         const response = await fetch(
@@ -739,7 +730,7 @@ async function attaccoDoS(userdata) {
         );
         const productList = await response.json();
         if (response.ok) {
-          prodi.push(productList);
+          productList.map((p)=> prodi.push(p))
         }
       };
       const getConfirmed = async (userdata) => {
@@ -748,7 +739,7 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          prodi.push(productList2);
+          productList2.map((p)=> prodi.push(p))
         }
       };
 
@@ -756,6 +747,12 @@ async function attaccoDoS(userdata) {
       await getConfirmed(userdata);
 
       return prodi;
+    } else {
+      const response = await fetch("/api/products");
+      const productList = await response.json();
+      if (response.ok) {
+        return productList;
+      }
     }
   };
 

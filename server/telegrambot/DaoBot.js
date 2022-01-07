@@ -8,29 +8,13 @@ const { Telegraf, Telegram } = require("telegraf");
 //Set to true to enable testdatabase
 const testmode = true;
 
-// open the database
+// open the database for bot methods
 const db = new sqlite.Database(
   testmode ? "../testdatabase.db" : "../database.db",
   (err) => {
     if (err) throw err;
   }
 );
-
-exports.SendMessage = (clientId, msg) => {
-  const bot = new Telegram(TOKEN);
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT CHATID FROM TELEGRAM WHERE CLIENT_ID = ?";
-    db.get(sql, [clientId], (err, row) => {
-      if (err) {
-        reject(err);
-      } else if (row === undefined) {
-        resolve(false);
-      } else {
-        bot.sendMessage(row.CHATID, msg);
-      }
-    });
-  });
-};
 
 //check password and email, if correct update the telegram table with the client id
 exports.UpdateCredentials = (chatId, username, email, password) => {
@@ -44,20 +28,69 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
       } else {
         bcrypt.compare(password, row.PASSWORD).then((result) => {
           if (result) {
-            const sql2 =
+            const clientId=row.ID;
+            const sql2 = "UPDATE TELEGRAM SET CLIENT_ID = ? WHERE CLIENT_ID=?";
+            const sql3 =
               "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=? AND USERNAME=?";
-            db.run(sql2, [row.ID, chatId, username], function (err1) {
+            db.run(sql2, [-1, clientId], function (err1) {
               if (err1) {
                 reject(err1);
-                return;
               } else {
-                resolve("OK");
+                db.run(sql3, [clientId, chatId, username], function (err2) {
+                  if (err2) {
+                    reject(err2);
+                  } else {
+                    resolve("OK");
+                  }
+                });
               }
             });
           } else {
             resolve(false);
           }
         });
+      }
+    });
+  });
+};
+
+exports.logout = (chatid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=?";
+    db.run(sql, [-1, chatid], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+};
+
+exports.getUser = (chatid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT CLIENT_ID  FROM TELEGRAM Where CHATID=?";
+    db.get(sql, [chatid], (err, row) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (row == null) {
+        resolve(false);
+      } else {
+        if (row.CLIENT_ID == -1) {
+          resolve(false);
+        } else {
+          const sql2 = "SELECT NAME,SURNAME FROM CLIENT Where ID=?";
+          db.get(sql2, [row.CLIENT_ID], function (err1, row1) {
+            if (err1) {
+              reject(err1);
+              return;
+            }
+            const result = { name: row1.NAME, surname: row1.SURNAME };
+            resolve(result);
+          });
+        }
       }
     });
   });

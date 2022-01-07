@@ -7,6 +7,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
+const telegramBot = require("./telegrambot/SendMessage.js");
 //Per validazione aggiuntiva
 const validator = require("validator");
 let testmode = false;
@@ -914,7 +915,7 @@ app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
 });
 
 //GET /api/products to get a list of all products
-app.get("/api/products", isLoggedIn, (req, res) => {
+app.get("/api/products", (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {
@@ -1004,14 +1005,15 @@ app.put("/api/walletbalance", isLoggedIn, async (req, res) => {
     amount: req.body.amount,
   };
 
-  dao
-    .updateWallet(wallet)
-    .then(() => {
-      res.status(200).json(wallet);
-    })
-    .catch((error) => {
+  try{
+    await dao.updateWallet(wallet);
+    await telegramBot.SendMessage(wallet.id,`Your wallet was modified. New balance : ${wallet.amount} €`);
+    res.status(200).json(wallet);
+  }
+  catch(error){
       res.status(500).json(error);
-    });
+  }
+
 });
 
 // GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
@@ -1026,7 +1028,7 @@ app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
     });
 });
 
-app.get("/api/bookingsUnretrieved",//isLoggedIn,
+app.get("/api/bookingsUnretrieved", isLoggedIn,
  async (req, res) => {
   dao
     .getBookingsUnretrieved()
@@ -1258,6 +1260,11 @@ let clockDate = new Date();
 let timers = setInterval(async () => {clockDate = new Date();
   await clockActions();
 }, 30000);
+//FLAG to execute queries once a day, resetted every sunday
+let once = [true,true,true,true,true,true,true];
+
+//For periodic remainder, every 4 hours
+let oldHours =0;
 
 //GET /api/time to get current time
 app.get("/api/time",  (req, res) => {
@@ -1269,13 +1276,13 @@ app.get("/api/virtualTime",  async (req, res) => {
   virtualTime = !virtualTime;
   clearInterval(timers);
     if (virtualTime) {
-      //Adds 12 hours every 5 seconds
+      //Adds 4 hours every 5 seconds
       timers=
         setInterval(
          async () =>
             {
               let d = new Date(clockDate);
-              d.setHours(d.getHours() + 12);
+              d.setHours(d.getHours() + 4);
               clockDate = d;
               await clockActions();
             },
@@ -1300,45 +1307,66 @@ async function clockActions(){
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
-    and the client is notified. */
+    and the client is notified. 
+    Periodic telegram message is sent if customer needs to top up
+    A message is sent if booking is confirmed*/
     
     if(clockDate.getDay()===2){
 
-      //Delete from bookings all product still expected, so unconfirmed
-      await dao.deleteBookingProductsExpected();
+      if(once[2]){
+        //Delete from bookings all product still expected, so unconfirmed
+        await dao.deleteBookingProductsExpected();
 
-      const bookings = await dao.getTotal();
-      
-      bookings.forEach(async (booking)=>{
-        //Get the wallet  of the customer and put in variable wallet
-        const wallet = await dao.getWallet(booking.client);
-        if (wallet.balance >= booking.total) {
-          //PUT in state CONFIRMED
-          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
-          //Update amount
-          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+        const bookings = await dao.getTotal();
+        
+        bookings.forEach(async (booking)=>{
+          //Get the wallet  of the customer and put in variable wallet
+          const wallet = await dao.getWallet(booking.client);
+          if (wallet.balance >= booking.total) {
+            //PUT in state CONFIRMED
+            await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+            //Update amount
+            await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+            //Send telegram message
+            const bookingProducts = await dao.productsOfBooking(booking.id);
+            telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
+          } 
+          else {
+            //Put in state PENDINGCANCELATION
+            await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
+          }
 
-        } 
-        else {
-          //Put in state PENDINGCANCELATION
-          await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
-        }
 
+        });
 
-      });
-
-      //If empty bookings put in state EMPTY
-      const emptyBknings= await dao.getEmptyBookings();
-      
-      emptyBknings.forEach(async (booking)=>{
-        await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
-      });
+        //If empty bookings put in state EMPTY
+        const emptyBknings= await dao.getEmptyBookings();
+        
+        emptyBknings.forEach(async (booking)=>{
+          await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
+        });
+        once[2]=false;
+      }
+      //Every 4 hour remember to top up to all clients that have bookings in pendingcancelation state
+      if(clockDate.getHours()-oldHours>=4){
+        oldHours=clockDate.getHours()-oldHours;
+        const bookings = await dao.getTotalPendingCancelation();
+        let alreadySent =[];
+        bookings.forEach(async (booking)=>{
+          if(!alreadySent.includes(booking.client)){
+            const wallet = await dao.getWallet(booking.client);
+            telegramBot.SendMessage(booking.client,`Your current balance (${wallet.balance} €) is insufficient to complete the order #${booking.id}. Please top-up at least ${booking.total-wallet.balance}€ to complete the order.`);
+            alreadySent.push(booking.client);
+          }
+        })
+      }
     }
 
     /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
     in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
-    CONFIRMED state, otherwise they will be CANCELED. */
-    if(clockDate.getDay()===3){
+    CONFIRMED state, otherwise they will be CANCELED. 
+    A message is sent if booking is confirmed*/
+    if(clockDate.getDay()===3 && once[3]){
 
       const bookings = await dao.getTotalPendingCancelation();
       bookings.forEach(async (booking)=>{
@@ -1347,6 +1375,9 @@ async function clockActions(){
         if (wallet.balance >= booking.total) {
           //PUT in state CONFIRMED
           await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          //Send telegram message
+          const bookingProducts = await dao.productsOfBooking(booking.id);
+          telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
           //Update amount
           await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
 
@@ -1359,10 +1390,81 @@ async function clockActions(){
       });
 
 
-
+      once[3]=false;
     }
 
+    /* On SATURDAY MORNING a new week starts. So we move bookings from booking table to booking history
+    table. If a booking was in COMPLETED or EMPTY or CANCELED state, it will be saved in booking history as COMPLETED
+    or EMPTY or CANCELED. If it was in CONFIRMED state and Delivery Mode was pickup, it will be saved as
+    UNRETRIEVED. If it was CONFIRMED and Delivery mode was delivery, we just delete it from booking, we don't care
+    about this state now (it's for future stories). 
+    
+    Moreover, we move all products to EXPECTED state and we add 10 to every quantity*/
+    if(clockDate.getDay()===6 && once[6]){
+      
+      const startDate = new Date(clockDate);
+      //If this happens only on saturday, starday will be monday
+      startDate.setDate(startDate.getDate() - 5);
+      //Same for sunday
+      const endDate = new Date(clockDate);
+      endDate.setDate(endDate.getDate() +1);
 
+      const bookings = await dao.getAllBookingsVC ();
+      bookings.forEach(async (booking)=>{
+
+        if((booking.state==="EMPTY")||(booking.state==="COMPLETED")||(booking.state==="CANCELED")){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: booking.state,
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+        else if(booking.state==="CONFIRMED" && booking.delivery === 0){
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "UNRETRIEVED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+        //Other cases, we delete the booking and we move in state canceled
+        else{
+          await dao.deleteBooking(booking.id);
+          await dao.insertTupleBookingHistory({
+            ID_BOOKING: booking.id,
+            CLIENT_ID: booking.idClient,
+            STATE: "CANCELED",
+            START_DATE: startDate.toISOString().split("T")[0],
+            END_DATE: endDate.toISOString().split("T")[0]
+          });
+        }
+
+      })
+
+      //Move all products in product_week to expected and increase qty by 10
+      await dao.resetProductWeekVC();
+
+      once[6]=false;
+      once[1]=true;
+    }
+
+    //On sunday set all once to true
+    if(clockDate.getDay()===0 && once[0]){
+      for (let i=1;i<7;i++){
+        once[i]=true;
+      }
+      const clients= await dao.getClients();
+      //Send a message to every customer on sunday morning
+      clients.forEach((c)=>{
+        telegramBot.SendMessage(c.id.substring(1),"Updated list of available products is now available on website.");
+      });
+      once[0]=false;
+    }
 
   }
 

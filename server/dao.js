@@ -378,7 +378,6 @@ exports.IncrementQtyProductWeek = (product) => {
     db.run(sql, [product.Inc_Qty, product.ID_Product], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         let updatedProduct = getProduct(product.ID_Product);
         resolve(updatedProduct);
@@ -394,7 +393,6 @@ function getProduct(id) {
     db.get(sql, [id], function (err, row) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(row);
       }
@@ -409,7 +407,6 @@ exports.editStateProductWeek = (product) => {
     db.run(sql, [product.state, product.id], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -424,7 +421,6 @@ exports.deleteProduct = (productId) => {
     db.run(sql, [productId], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -440,7 +436,6 @@ exports.deleteBookingProduct = (productId, bookingId) => {
     db.run(sql, [bookingId, productId], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -472,7 +467,6 @@ exports.insertTupleProductWEEK = (product) => {
           function (err) {
             if (err) {
               reject(err);
-              return;
             }
             resolve(this.lastID);
           }
@@ -571,7 +565,6 @@ exports.getAllProducts = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const products = rows.map((e) => ({
         id: e.ID,
@@ -597,7 +590,6 @@ exports.getAllProductsExpectedForFarmer = (idFarmer) => {
     db.all(sql, [idFarmer, "EXPECTED"], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const products = rows.map((e) => ({
         id: e.ID,
@@ -623,7 +615,6 @@ exports.getAllProductsConfirmedForFarmer = (farmerId) => {
     db.all(sql, [farmerId], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const products = rows.map((e) => ({
         id: e.ID,
@@ -648,7 +639,6 @@ exports.getAllBookings = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const bookings = [];
       const prenotazioni = rows.map((e) => ({
@@ -699,7 +689,6 @@ exports.getbookingModesNewPickup = () => {
     db.all(sql, [0, "NEW", "PENDINGCANCELATION"], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const bookings = rows.map((e) => ({
         idBooking: e.ID_BOOKING,
@@ -721,7 +710,6 @@ exports.getbookingModesPreparation = () => {
     db.all(sql, [0, "PREPARATION"], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
       const bookings = [];
       const prenotazioni = rows.map((e) => ({
@@ -802,7 +790,6 @@ exports.updateWallet = (wallet) => {
     db.run(sql, [wallet.amount, wallet.id], function (err) {
       if (err) {
         reject(err.message);
-        return;
       }
       if (wallet.id === undefined) {
         reject({ err: "CLIENT ID NOT PROVIDED" });
@@ -838,7 +825,6 @@ exports.getAcksStateNew = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
 
       const acks = rows.map((e) => ({
@@ -861,7 +847,6 @@ exports.getBookingsStatePendingCancelation = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       }
 
       const bookings = rows.map((e) => ({
@@ -896,7 +881,6 @@ exports.insertTupleProductExpected = (pdtExp) => {
       function (err) {
         if (err) {
           reject(false);
-          return;
         }
         resolve(this.lastID);
       }
@@ -954,7 +938,6 @@ exports.createBookingMode = (bookingMode) => {
       function (err) {
         if (err) {
           reject(err);
-          return;
         }
         resolve(this.lastID);
       }
@@ -988,7 +971,6 @@ exports.getAllBookingsForClientBooked = (id) => {
     db.all(sql, [id], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       } else if (rows === undefined) {
         console.log("rows non è definito---------");
         resolve(false);
@@ -1012,7 +994,6 @@ exports.productsOfBooking = (id) => {
     db.all(sql, [id], (err, rows) => {
       if (err) {
         reject(err);
-        return;
       } else if (rows === undefined) {
         console.log("rows non è definito---------");
         resolve(false);
@@ -1046,7 +1027,6 @@ exports.insertTupleBookingHistory = (booking) => {
       ], (err) => {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1061,7 +1041,6 @@ exports.getBookingsUnretrieved = () => {
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
-        return;
       } else if (rows === undefined) {
         console.log("rows non è definito---------");
         resolve(false);
@@ -1109,7 +1088,6 @@ exports.deleteBooking = (bookingId) => {
     db.run(sql, [bookingId], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1202,17 +1180,24 @@ exports.cleanDb = async () => {
 //Get total of bookings in state BOOKED
 exports.getTotal = () => {
   return new Promise((resolve, reject) => {
-    const sql =
+   /* const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
       WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=?\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+    */
+      const sql =
+      "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
+      "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
+      "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=? " +
+      "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     db.all(sql,["BOOKED","CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
 
+      /*
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
@@ -1220,6 +1205,8 @@ exports.getTotal = () => {
       }));
 
       resolve(bookings);
+      */
+     resolve(createBookingsFromQuery(rows));
     });
   });
 };
@@ -1228,11 +1215,10 @@ exports.getTotal = () => {
 // delete all products expected from bookings, to be called on tuesday
 exports.deleteBookingProductsExpected = () => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?)";
+    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?) AND ID_BOOKING NOT IN (SELECT ID_BOOKING FROM BOOKING_HISTORY)";
     db.run(sql, ["EXPECTED"], function (err) {
       if (err) {
         reject(err);
-        return;
       } else {
         resolve(true);
       }
@@ -1243,39 +1229,63 @@ exports.deleteBookingProductsExpected = () => {
 //Get total of bookings in state PENDING CANCELATION
 exports.getTotalPendingCancelation = () => {
   return new Promise((resolve, reject) => {
+    /*
     const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
       WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+      */
+     
+    const sql =
+    "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
+    "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
+    "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED' "+
+    "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
 
+      /*
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         client: e.CLIENT_ID,
         total: e.TOTAL,
       }));
-
-      resolve(bookings);
+    */
+      resolve(createBookingsFromQuery(rows));
     });
   });
 };
 
+const createBookingsFromQuery = (rows) => {
+  return  rows.map((tuples) => ({
+    id: tuples.ID_BOOKING,
+    client: tuples.CLIENT_ID,
+    total: tuples.TOTAL,
+  }));
+}
 
-//Get bookings in state EMPTY
+//Get bookings that we have to put in state EMPTY
 exports.getEmptyBookings = () => {
   return new Promise((resolve, reject) => {
-    const sql =
+   /* const sql =
     "SELECT b.ID_BOOKING, b.CLIENT_ID \
     FROM BOOKING b \
     WHERE b.STATE = ? AND b.ID_BOOKING NOT IN \
         (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 \
           WHERE b1.ID_BOOKING = b2.ID_BOOKING \
           GROUP BY b1.ID_BOOKING)";
+    */
+          const sql =
+          "SELECT b.ID_BOOKING, b.CLIENT_ID " +
+          "FROM BOOKING b " +
+          "WHERE b.STATE = ? AND b.ID_BOOKING NOT IN " +
+             " (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 " +
+              "  WHERE b1.ID_BOOKING = b2.ID_BOOKING " +
+              "  GROUP BY b1.ID_BOOKING)";
     db.all(sql,["BOOKED"], (err, rows) => {
       if (err) {
         reject(err);
@@ -1289,6 +1299,47 @@ exports.getEmptyBookings = () => {
 
       resolve(bookings);
     });
+  });
+};
+
+//get all bookings without details about clients or products
+exports.getAllBookingsVC = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
+    db.all(sql, (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const bookings = rows.map((e) => ({
+        id: e.ID_BOOKING,
+        state: e.STATE,
+        idClient: e.CLIENT_ID
+      }));
+      resolve(bookings);
+    });
+  });
+};
+
+// Add 10 to available quantity and put all products in state expected again
+exports.resetProductWeekVC = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "UPDATE PRODUCT_WEEK SET QTY=QTY+?, STATE=?";
+    db.run(
+      sql,
+      [
+        10,
+        "EXPECTED"
+      ],
+      function (err) {
+        if (err) {
+          reject(err);
+        }
+        resolve(true);
+      }
+    );
   });
 };
 

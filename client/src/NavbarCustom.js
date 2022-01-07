@@ -73,18 +73,18 @@ if (firstTime && toPrintConfirm.length !== 0) {
           <Row>
             <div className="notificationIcon" >
               <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {
-                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" });
+                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" },{toastId: 30});
                 showNotificationEmpty && toast.error(<>
                 <b>Warning:</b><br/>
                 {toPrintEmpty.map((bk)=><><b>Booking {bk.id}</b> canceled because no products were confirmed from farmers.</>)}<br/>
-                </>, { position: "top-right" });  
+                </>, { position: "top-right" },{toastId: 31});  
                 showNotificationPreparation && 
                 toPrintConfirm.map((bk)=>
                   toast.success(<>
                     <b>Purchase confirmation, booking #{bk.id}:</b><br/>
                     {bk.products.map((p)=>p.qty +" " +p.product)}<br/>
                     <b>Total: {bk.total} €</b></>
-                    , {position: "top-right"})
+                    , {position: "top-right"},{toastId: 28})
                 )
                  
               
