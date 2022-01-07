@@ -14,10 +14,10 @@ export default function PickupSchedule(props) {
         let tmpa = new Date(a.date).getTime();
         let tmpb = new Date(b.date).getTime();
             if ((tmpa > tmpb)) {
-                return -1;
+                return 1;
             }
             if ((tmpb > tmpa)) {
-                return 1;
+                return -1;
             }
             return 0;
         });
