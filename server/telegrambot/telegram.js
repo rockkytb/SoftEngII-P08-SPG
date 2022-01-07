@@ -46,8 +46,8 @@ bot.on("text", async (ctx) => {
   console.log(ctx.message.text);
 
   if (ctx.message.text.includes(":")) {
-    email = ctx.message.text.split(":")[0];
-    pasw = ctx.message.text.split(":")[1];
+    var email = ctx.message.text.split(":")[0];
+    var pasw = ctx.message.text.split(":")[1];
     Dao.UpdateCredentials(
       ctx.message.chat.id,
       ctx.message.from.username,
