@@ -17,11 +17,21 @@ bot.command("quit", (ctx) => {
 
 bot.start(async (ctx) => {
   const username = ctx.message.from.username ? (ctx.message.from.username):(ctx.message.chat.first_name);
+  /*We use the function getUser to check if chatid is associated to client
+  If yes, user is auto logged*/
+  const user = await Dao.getUser(ctx.message.chat.id);
+  if(user){
+    ctx.reply(
+      `Welcome back ${user.name} ${user.surname}\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`
+    );
+  }  
+  else{
   await Dao.SaveChatId(ctx.message.chat.id, username);
   console.log(ctx.message.chat.id);
   ctx.reply(
-    `Hi ${username}, please send your credentials in this format email:password`
+    `Hi ${username}, to login please send a message with your credentials in this format email:password`
   );
+}
 });
 
 bot.command("balance", (ctx) => {
@@ -59,7 +69,7 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Authenticated as ${email}!\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`);
+          ctx.reply(`Login successfull!\n\nCommand list:\n\n/balance to get your current balance\n/quit to exit`);
         }
       })
       .catch(() => {

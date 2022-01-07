@@ -70,6 +70,35 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
   });
 };
 
+exports.getUser = (chatid) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT CLIENT_ID  FROM TELEGRAM Where CHATID=?";
+    db.get(sql, [chatid], (err, row) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (row == null) {
+        resolve(false);
+      } else {
+        if (row.CLIENT_ID == -1) {
+          resolve(false);
+        } else {
+          const sql2 = "SELECT NAME,SURNAME FROM CLIENT Where ID=?";
+          db.get(sql2, [row.CLIENT_ID], function (err1, row1) {
+            if (err1) {
+              reject(err1);
+              return;
+            }
+            const result = { name: row1.NAME, surname: row1.SURNAME };
+            resolve(result);
+          });
+        }
+      }
+    });
+  });
+};
+
 //check if the chatid has a client id int the table telegram then if all correct retrieve the balance
 exports.getWalletBalance = (chatid) => {
   return new Promise((resolve, reject) => {
