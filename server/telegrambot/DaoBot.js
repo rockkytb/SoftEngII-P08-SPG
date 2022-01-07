@@ -44,13 +44,21 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
       } else {
         bcrypt.compare(password, row.PASSWORD).then((result) => {
           if (result) {
-            const sql2 =
+            const clientId=row.ID;
+            const sql2 = "UPDATE TELEGRAM SET CLIENT_ID = ? WHERE CLIENT_ID=?";
+            const sql3 =
               "UPDATE TELEGRAM SET CLIENT_ID=? WHERE CHATID=? AND USERNAME=?";
-            db.run(sql2, [row.ID, chatId, username], function (err1) {
+            db.run(sql2, [-1, clientId], function (err1) {
               if (err1) {
                 reject(err1);
               } else {
-                resolve("OK");
+                db.run(sql3, [clientId, chatId, username], function (err2) {
+                  if (err2) {
+                    reject(err2);
+                  } else {
+                    resolve("OK");
+                  }
+                });
               }
             });
           } else {
