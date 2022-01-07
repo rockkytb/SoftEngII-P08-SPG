@@ -1258,6 +1258,8 @@ let clockDate = new Date();
 let timers = setInterval(async () => {clockDate = new Date();
   await clockActions();
 }, 30000);
+//FLAG to execute queries once a day, resetted every sunday
+let once = [true,true,true,true,true,true,true];
 
 //GET /api/time to get current time
 app.get("/api/time",  (req, res) => {
@@ -1302,7 +1304,7 @@ async function clockActions(){
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
     and the client is notified. */
     
-    if(clockDate.getDay()===2){
+    if(clockDate.getDay()===2 && once[2]){
 
       //Delete from bookings all product still expected, so unconfirmed
       await dao.deleteBookingProductsExpected();
@@ -1333,12 +1335,13 @@ async function clockActions(){
       emptyBknings.forEach(async (booking)=>{
         await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
       });
+      once[2]=false;
     }
 
     /* Until WEDNESDAY customer have the possibility to top up their wallets if they have orders
     in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
     CONFIRMED state, otherwise they will be CANCELED. */
-    if(clockDate.getDay()===3){
+    if(clockDate.getDay()===3 && once[3]){
 
       const bookings = await dao.getTotalPendingCancelation();
       bookings.forEach(async (booking)=>{
@@ -1359,15 +1362,17 @@ async function clockActions(){
       });
 
 
-
+      once[3]=false;
     }
 
     /* On SATURDAY MORNING a new week starts. So we move bookings from booking table to booking history
     table. If a booking was in COMPLETED or EMPTY or CANCELED state, it will be saved in booking history as COMPLETED
     or EMPTY or CANCELED. If it was in CONFIRMED state and Delivery Mode was pickup, it will be saved as
     UNRETRIEVED. If it was CONFIRMED and Delivery mode was delivery, we just delete it from booking, we don't care
-    about this state now (it's for future stories). */
-    if(clockDate.getDay()===6){
+    about this state now (it's for future stories). 
+    
+    Moreover, we move all products to EXPECTED state and we add 10 to every quantity*/
+    if(clockDate.getDay()===6 && once[6]){
       
       const startDate = new Date(clockDate);
       //If this happens only on saturday, starday will be monday
@@ -1412,9 +1417,16 @@ async function clockActions(){
         }
 
       })
+    
+      once[6]=false;
     }
 
-
+    //On sunday set all once to true
+    if(clockDate.getDay()===0 && once[0]){
+      for (let i=1;i<7;i++){
+        once[i]=true;
+      }
+    }
 
   }
 

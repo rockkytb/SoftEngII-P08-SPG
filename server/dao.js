@@ -1336,4 +1336,25 @@ exports.getAllBookingsVC = () => {
   });
 };
 
+// Add 10 to available quantity and put all products in state expected again
+exports.resetProductWeekVC = () => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "UPDATE PRODUCT_WEEK SET QTY=QTY+?, STATE=?";
+    db.run(
+      sql,
+      [
+        10,
+        "EXPECTED"
+      ],
+      function (err) {
+        if (err) {
+          reject(err);
+        }
+        resolve(true);
+      }
+    );
+  });
+};
+
 //END OF VIRTUAL CLOCK DAO FUNCTIONS
