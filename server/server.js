@@ -1450,6 +1450,7 @@ async function clockActions(){
       await dao.resetProductWeekVC();
 
       once[6]=false;
+      once[1]=true;
     }
 
     //On sunday set all once to true
@@ -1457,6 +1458,12 @@ async function clockActions(){
       for (let i=1;i<7;i++){
         once[i]=true;
       }
+      const clients= await dao.getClients();
+      //Send a message to every customer on sunday morning
+      clients.forEach((c)=>{
+        telegramBot.SendMessage(c.id.substring(1),"Updated list of available products is now available on website.");
+      });
+      once[0]=false;
     }
 
   }
