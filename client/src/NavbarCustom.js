@@ -140,6 +140,15 @@ if (firstTime && toPrintConfirm.length !== 0) {
         </>
       )
     }
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'A') {
+      return (
+        <>
+          <Link to="/manager" style={{ color: 'white' }}>
+            <PersonCircle size={30} />
+          </Link>
+        </>
+      )
+    }
     else {
       return (
         <>

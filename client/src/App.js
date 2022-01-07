@@ -20,6 +20,7 @@ import BookingReview from "./BookingReview";
 import Customer from "./Customer";
 import Farmer from "./Farmer";
 import WarehouseManager from "./WarehouseManager";
+import Manager from "./Manager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -422,9 +423,13 @@ function App() {
                                   <>
                                     {userdata.id.charAt(0) === "W" ? (
                                       <Redirect to="/warehouseWorker" />
-                                    ) : (
-                                      <Redirect to="/" />
-                                    )}
+                                    ) : (<>
+                                            {userdata.id.charAt(0) === "A" ? (
+                                            <Redirect to="/manager" />
+                                              ) : (
+                                              <Redirect to="/" />
+                                            )}
+                                    </>)}
                                   </>
                                 )}
                               </>
@@ -715,6 +720,35 @@ function App() {
                           <>
                             {/*<SidebarCustom /> */}
                             <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
+                          </>
+                        ) : (
+                          <Redirect to="/home" />
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/manager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "A" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Manager className="below-nav main-content" />
                           </>
                         ) : (
                           <Redirect to="/home" />
