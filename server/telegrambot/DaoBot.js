@@ -49,7 +49,6 @@ exports.UpdateCredentials = (chatId, username, email, password) => {
             db.run(sql2, [row.ID, chatId, username], function (err1) {
               if (err1) {
                 reject(err1);
-                return;
               } else {
                 resolve("OK");
               }

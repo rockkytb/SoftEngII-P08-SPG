@@ -26,7 +26,7 @@ bot.start(async (ctx) => {
 bot.command("balance", (ctx) => {
   Dao.getWalletBalance(ctx.message.chat.id)
     .then((wallet) => {
-      if (wallet == false) {
+      if (!wallet) {
         ctx.reply(
           `Please before send your credentials in this format email:password`
         );
@@ -64,7 +64,6 @@ bot.on("text", async (ctx) => {
       .catch(() => {
         ctx.reply(`Oh, seems there is a problem retry later`);
       });
-    return;
   } else {
     ctx.reply(`The Command is worng please use the format email:password`);
   }
