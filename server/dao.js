@@ -1269,7 +1269,7 @@ exports.getTotalPendingCancelation = () => {
   });
 };
 
-createBookingsFromQuery = (tuples) => {
+const createBookingsFromQuery = (tuples) => {
   const bookings = rows.map((tuples) => ({
     id: tuples.ID_BOOKING,
     client: tuples.CLIENT_ID,
