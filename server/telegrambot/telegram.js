@@ -12,8 +12,14 @@ const Dao = require("./DaoBot.js");
 
 bot.command("quit", async (ctx) => {
   try{
-    await Dao.logout(ctx.message.chat.id);
-    ctx.reply("Logout successful. Type /start to restart bot");
+    const user = await Dao.getUser(ctx.message.chat.id);
+    if(user){
+      await Dao.logout(ctx.message.chat.id);
+      ctx.reply("Logout successful. Type /start to restart bot");
+    }
+    else{
+      ctx.reply("You are not logged in!");
+    }
   }
   catch (err){
     console.log(err);
@@ -75,7 +81,7 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Login successfull!\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`);
+          ctx.reply(`Login successful!\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`);
         }
       })
       .catch(() => {
