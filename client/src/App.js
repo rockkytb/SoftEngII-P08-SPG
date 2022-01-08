@@ -1215,12 +1215,11 @@ function App() {
             )}
           />
 
-          <Route //TODO: payment page
+          <Route 
             path="/emp/pagah"
             exact
             render={() => (
-              /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              //<>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              
               <>
                 {update ? (
                   <>

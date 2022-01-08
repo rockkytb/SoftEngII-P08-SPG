@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, Navbar, Button, Col, Row } from "react-bootstrap";
+import React, { useState } from 'react';
+import { NavLink, Navbar, Col, Row } from "react-bootstrap";
 import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill, ClockFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Clock from "./Clock.js"
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 function NavbarCustom(props) {

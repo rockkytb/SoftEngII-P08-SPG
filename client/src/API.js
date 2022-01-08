@@ -1,4 +1,3 @@
-import ProductImages from "./ProductImages";
 
 const url = "/api";
 
@@ -652,8 +651,7 @@ async function updateOrder(product) {
   return mrTorgue;
 }
 
-//TODO: move clock to backend
-//SHORT-TERM: post to server to receive date-time
+
 async function setDate(date) {
   return new Promise(
     (resolve, reject) =>

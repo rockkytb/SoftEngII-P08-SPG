@@ -1,18 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { act } from "react-dom/test-utils";
 import API from "./API";
-import {
-  Modal,
-  Form,
-  Col,
-  Alert,
-  Card,
-  Button,
-  CardColumns,
-} from "react-bootstrap";
 
-import Enzyme, { shallow, render, mount } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 const mockFetch = Promise.resolve({ json: () => Promise.resolve(true) });

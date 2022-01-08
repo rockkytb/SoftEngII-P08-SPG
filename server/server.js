@@ -1259,7 +1259,7 @@ app.put("/api/products", isLoggedIn, async (req, res) => {
   }
 });
 
-//////TODO: move clock to backend
+
 //////SHORT-TERM: receive the day of the week we put
 app.post("/api/clock", isLoggedIn, async (req, res) => {
   date = req.body.date;
