@@ -262,8 +262,6 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  /*
-
   describe("Post new client", () => {
     it("create a new client but the client email already used", async () => {
       const hash = bcrypt.hashSync("testpassword", 10);
@@ -1614,5 +1612,5 @@ describe("Test suite Integration Server", () => {
       );
     });
   });
-  */
+  
 });

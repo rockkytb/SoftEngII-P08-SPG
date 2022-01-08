@@ -23,7 +23,7 @@ describe("Test suite DAO", () => {
       19
     );
   });
-/*
+
   test("the creation of a new booking fails because state is missing", () => {
     const booking = {
       idClient: 2,
@@ -727,5 +727,5 @@ test("GET all the product associated to a particular booking", () => {
   ];
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
 });
-*/
+
 });
