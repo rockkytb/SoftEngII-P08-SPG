@@ -20,19 +20,16 @@ function NewClientForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
+        let usedMail = props.getClientbyEmail(email);
+        if(!usedMail)
+            {
+                usedMail=-1;
+            }
         console.log("valore setUsedMail " + usedMail);
-        let val = props.getClientbyEmail(email);
-        if(val){
-            setUsedMail(val.id);
-        }
-        else{
-            setUsedMail(-1);
-        }
-        console.log("valore setUsedMail " + usedMail);
-        if (form.checkValidity() === false || usedMail == -1 ) {
+        if (form.checkValidity() === false || usedMail != -1 ) {
             event.stopPropagation();
-            if (usedMail == -1) {
-                setUsedMail("");
+            if (usedMail != -1) {
+                usedMail=-1;
                 toast.error("Email already used", { position: "top-center" },{toastId: 32})
             }
 
@@ -49,8 +46,8 @@ function NewClientForm(props) {
 
             props.addUser(newUser);
             setUsedMail("");
-            setValidated(true);
         }
+        setValidated(true);
     };
 
 
@@ -171,7 +168,7 @@ function NewClientForm(props) {
                 <Row>
                     <Col md={7} xs={6}/>
                     <Col md={1} xs={1}>
-                        <Button id="clearButton" onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                        <Button id="clearButton" onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setPhone(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
                     <Col md={2} xs={3} className="pl-5">
                         <Button variant="warning" color="black" id="submitButton" type="submit" className="float-right ">Register</Button>

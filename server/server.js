@@ -476,7 +476,7 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
 });
 
 //POST /api/newclient
-app.post("/api/newclient", isLoggedIn, async (req, res) => {
+app.post("/api/newclient", async (req, res) => {
   if (!validator.isEmail(req.body.email)) {
     return res.status(422).json({ error: `Invalid client's email` });
   }
