@@ -1431,6 +1431,38 @@ async function clockActions(){
             START_DATE: startDate.toISOString().split("T")[0],
             END_DATE: endDate.toISOString().split("T")[0]
           });
+
+          // get the clientId based on the bookingId
+          const client = await dao.findClientbyBooking(booking.id);
+
+          // get the client suspension date if exists
+          var suspension = await dao.getLatestSuspensionDate(client.id)
+
+          if(suspension.date)  suspension = suspension.date;
+          else suspension = '2000-01-01';
+          // check the number of missed pickups
+          const missedPikcups = await dao.countMissedPickupsForACustomer(client.id, suspension)
+
+          //update the client table
+          await dao.updateClientMissedCount(client.id, missedPikcups.total)
+           
+          // check the number of missed pickups
+          if(missedPikcups.total>2 || missedPikcups.total <5){
+          //Send telegram message
+          telegramBot.SendMessage(booking.client,`This is a reminder to inform you that you have missed picking up your order for ${missedPikcups.total} times!
+          \nYour account will be susspended on the 5th time.`);
+          } else if(missedPikcups.total == 5){// susspend the client
+            // Calculate NOW date
+            var now = new Date(clockDate);
+            now = now.toISOString().split("T")[0]
+
+            //update the susspensionDate column of CLIENT table
+            await dao.updateClientSusspensionDate(client.id,now)
+
+            //set the number of missed pickups to zero
+            await dao.updateClientMissedCount(client.id, 0)
+          }
+
         }
         //Other cases, we delete the booking and we move in state canceled
         else{
