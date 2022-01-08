@@ -80,7 +80,7 @@ function ClientData(props) {
                   <Col md={5} />
                 </Row>
               </Form.Group>
-              <Button variant="warning" id={"clientButton"+client.id} onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet.toFixed(2)); }}>
+              <Button variant="warning" id={"clientButton"+client.id} onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
                 Submit
               </Button>
             </Form>
