@@ -158,7 +158,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setAttaccoDDOS(true);
+        
       }
       if (!loggedIn) {
         const credentials = {
@@ -171,6 +171,7 @@ function App() {
 
     add()
       .then(() => {
+        setAttaccoDDOS(true);
         toast.success("Registration completed", { position: "top-center" },{toastId: 3});
       })
       .catch((err) => {
