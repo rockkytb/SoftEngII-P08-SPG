@@ -1,4 +1,3 @@
-
 const url = "/api";
 
 function addUser(newUser) {
@@ -829,12 +828,24 @@ async function attaccoDoS(userdata) {
     }
   };
 
+  const getAllBookings = async ()=>{
+    // call: GET /api/clients
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/bookings");
+      const bookings = await response.json();
+      if (response.ok) {
+        return bookings;
+      }
+    }
+  }
+
   let products = await getProducts();
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
+  let allBookings = await getAllBookings();
 
-  return { products, bookings, clients, categories };
+  return { products, bookings, clients, categories, allBookings };
 }
 
 

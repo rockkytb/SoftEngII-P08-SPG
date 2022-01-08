@@ -41,6 +41,7 @@ function App() {
   const [deliveries, setDeliveries] = useState([]);
   const [clients, setClients] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [allBookings, setAllBookings] = useState([]);
   const [bookingsState, setBookingsState] = useState(true);
   const [attaccoDDOS, setAttaccoDDOS] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -221,6 +222,9 @@ function App() {
     if (userdata && userdata.id) {
       setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state=="EXPECTED") : "")
       setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state!=="EXPECTED") : "")
+    }
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S"){
+      setAllBookings(tmp.allBookings);
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
@@ -1086,10 +1090,12 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            {/* <SidebarCustom /> */}
+                            {/* <SidebarCustom /> */
+                            
+                            console.log(allBookings)}
                             <CheckPending
                               className="below-nav main-content"
-                              bookings={bookings}
+                              bookings={allBookings}
                               products={futureProducts}
                             />
                           </>
