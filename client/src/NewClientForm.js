@@ -18,6 +18,7 @@ function NewClientForm(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setValidated(true);
         const form = event.currentTarget;
         usedMail = await props.getClientbyEmail(email);
         console.log("valore setUsedMail " + usedMail);
@@ -39,8 +40,14 @@ function NewClientForm(props) {
             };
 
             props.addUser(newUser);
+            setName(""); 
+            setSurname(""); 
+            setEmail(""); 
+            setPassword(""); 
+            setPhone(""); 
+            setValidated(false);
         }
-        setValidated(true);
+        
     };
 
 
