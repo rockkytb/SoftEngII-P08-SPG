@@ -12,14 +12,14 @@ function NewClientForm(props) {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const bcrypt = require('bcryptjs');
-
+    let usedMail;
     const regex =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        let usedMail = await props.getClientbyEmail(email);
+        usedMail = await props.getClientbyEmail(email);
         console.log("valore setUsedMail " + usedMail);
         if (form.checkValidity() === false || usedMail !== -1 ) {
             event.stopPropagation();

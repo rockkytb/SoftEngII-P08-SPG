@@ -508,7 +508,7 @@ app.post("/api/newclient", async (req, res) => {
   dao
     .getClientByEmail(client.email)
     .then((c) => {
-      if (c.id != -1) {
+      if (c !== -1) {
         return res.status(503).json({
           error: `Error: ${client.email} already used.`,
         });
