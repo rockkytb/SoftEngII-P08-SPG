@@ -14,8 +14,8 @@ function ClientData(props) {
         // call: GET /api/clients
         const response = await props.getWallet(client.id);
         
-        setWallet(response);
-        setNewWallet(response);
+        setWallet(response.toFixed(2));
+        setNewWallet(response.toFixed(2));
         console.log(wallet);
       };
       getWallet();
@@ -80,7 +80,7 @@ function ClientData(props) {
                   <Col md={5} />
                 </Row>
               </Form.Group>
-              <Button variant="warning" id={"clientButton"+client.id} onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet); }}>
+              <Button variant="warning" id={"clientButton"+client.id} onClick={() => { props.changeWallet(client.id, newWallet); setWallet(newWallet.toFixed(2)); }}>
                 Submit
               </Button>
             </Form>
