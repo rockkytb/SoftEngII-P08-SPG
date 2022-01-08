@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="136"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="9"/>
   </file>
   <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="111"/>
+    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="125"/>
     <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="9"/>
-    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="152"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="159"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="17"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="13"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="156"/>
+    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="180"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="138"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="14"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="7"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="136"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="142"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="6"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="6"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="6"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="5"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="6"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="8"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="9"/>
+    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="10"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="124"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="7"/>
   </file>
 </testExecutions>
