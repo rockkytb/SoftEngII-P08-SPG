@@ -658,6 +658,9 @@ async function updateOrder(product) {
 }
 
 
+
+//TODO: move clock to backend
+//SHORT-TERM: post to server to receive date-time
 async function setDate(date) {
   return new Promise(
     (resolve, reject) =>
@@ -725,7 +728,8 @@ async function deleteProductBooking(product) {
 
     body: JSON.stringify({
       ID_Product: product.ID_Product,
-      ID_Booking: product.ID_Booking
+      ID_Booking: product.ID_Booking,
+      Inc_Qty: product.Inc_Qty
     }),
   });
 }

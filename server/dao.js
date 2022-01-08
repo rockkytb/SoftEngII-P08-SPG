@@ -416,14 +416,14 @@ exports.editQtyProductWeek = (product) => {
 };
 
 // Increment the quantity of a product
-exports.IncrementQtyProductWeek = (product) => {
+exports.IncrementQtyProductWeek = (Inc_Qty, ID_Product) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
-    db.run(sql, [product.Inc_Qty, product.ID_Product], function (err) {
+    db.run(sql, [Inc_Qty, ID_Product], function (err) {
       if (err) {
         reject(err);
       } else {
-        let updatedProduct = getProduct(product.ID_Product);
+        let updatedProduct = getProduct(ID_Product);
         resolve(updatedProduct);
       }
     });
