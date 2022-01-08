@@ -19,6 +19,7 @@ import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
 import Farmer from "./Farmer";
+import WarehouseManager from "./WarehouseManager";
 import Manager from "./Manager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
@@ -124,24 +125,24 @@ function App() {
   const doLogIn = async (credentials, type) => {
     try {
       const user = await API.logIn(credentials, type);
-      toast.success(`Welcome ${user.username}!`, { position: "top-center" });
+      toast.success(`Welcome ${user.username}!`, { position: "top-center" },{toastId: 1});
       setUserData(user);
       setLoggedIn(true);
     } catch (err) {
       toast.error("Wrong email or/and password, try again", {
         position: "top-center",
-      });
+      },{toastId: 10});
     }
   };
 
   //logout
   const doLogOut = async () => {
     await API.logOut()
-      .then(() => toast.success("Logout Succeeded", { position: "top-center" }))
+      .then(() => toast.success("Logout Succeeded", { position: "top-center" },{toastId: 2}))
       .catch(() =>
         toast.error("Error during logout, try again", {
           position: "top-center",
-        })
+        },{toastId: 11})
       );
     setLoggedIn(false);
     setUserData();
@@ -157,7 +158,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setAttaccoDDOS(true);
+        setAttaccoDDOS(old => !old);
       }
       if (!loggedIn) {
         const credentials = {
@@ -170,13 +171,13 @@ function App() {
 
     add()
       .then(() => {
-        toast.success("Registration completed", { position: "top-center" });
+        toast.success("Registration completed", { position: "top-center" },{toastId: 3});
       })
       .catch((err) => {
         if (err.errors && err.errors[0]) {
-          toast.error(err.errors, { position: "top-center" });
+          toast.error(err.errors, { position: "top-center" },{toastId: 12});
         } else {
-          toast.error(err.error, { position: "top-center" });
+          toast.error(err.error, { position: "top-center" },{toastId: 13});
         }
       });
   };
@@ -195,9 +196,9 @@ function App() {
     };
     book()
       .then(() =>
-        toast.success("Booking completed", { position: "top-center" })
+        toast.success("Booking completed", { position: "top-center" },{toastId: 4})
       )
-      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+      .catch((err) => toast.error(err.errors, { position: "top-center" },{toastId: 5}));
   };
 
 
@@ -272,10 +273,10 @@ function App() {
   const setNewWallet = async (id, amount) => {
     try {
       const response = await API.setNewWallet(id.substring(1), amount);
-      toast.success("Wallet modified successfully", { position: "top-center" });
+      toast.success("Wallet modified successfully", { position: "top-center" },{toastId: 6});
       return response;
     } catch (err) {
-      toast.error("Error updating the wallet", { position: "top-center" });
+      toast.error("Error updating the wallet", { position: "top-center" },{toastId: 7});
       console.log(err);
     }
   };
@@ -286,9 +287,9 @@ function App() {
       await API.confirmBooking(id);
       toast.success("Booking completed successfully", {
         position: "top-center",
-      });
+      },{toastId: 8});
     } catch (err) {
-      toast.error("Error updating the booking", { position: "top-center" });
+      toast.error("Error updating the booking", { position: "top-center" },{toastId: 9});
       console.log(err);
     }
   };
@@ -299,10 +300,10 @@ function App() {
       setAckState(true);
       toast.success("Delivery acknowledge", {
         position: "top-center",
-      });
+      },{toastId: 14});
     } catch (err) {
       setAckState(true);
-      toast.error("Error updating the delivery", { position: "top-center" });
+      toast.error("Error updating the delivery", { position: "top-center" },{toastId: 15});
       console.log(err);
     }
   };
@@ -315,9 +316,9 @@ function App() {
       setAckState(true);
       toast.success("Delivery completed successfully", {
         position: "top-center",
-      });
+      },{toastId: 16});
     } catch (err) {
-      toast.error("Error updating the delivery", { position: "top-center" });
+      toast.error("Error updating the delivery", { position: "top-center" },{toastId: 17});
       console.log(err);
     }
   };
@@ -335,15 +336,16 @@ function App() {
       }
 
       setDeliveryState(true);
+      setAttaccoDDOS(old => !old);
       toast.success("Products confirmed successfully", {
         position: "top-center",
-      });
+      },{toastId: 18});
     } catch (err) {
-      toast.error("Error with the confirmation", { position: "top-center" });
+      toast.error("Error with the confirmation", { position: "top-center" },{toastId: 19});
       console.log(err);
     }
     /*finally{
-      setAttaccoDDOS(true);
+      setAttaccoDDOS(old => !old);
     }*/
   };
 
@@ -354,10 +356,10 @@ function App() {
       setAttaccoDDOS(old => !old);
       toast.success("Preparation confirmed", {
         position: "top-center",
-      });
+      },{toastId: 20});
     } catch (err) {
       setAttaccoDDOS(old => !old);
-      toast.error("Error confirming preparation", { position: "top-center" });
+      toast.error("Error confirming preparation", { position: "top-center" },{toastId: 21});
       console.log(err);
     }
   };
@@ -368,10 +370,10 @@ function App() {
       setAttaccoDDOS(old => !old);
       toast.success("Preparation confirmed", {
         position: "top-center",
-      });
+      },{toastId: 22});
     } catch (err) {
       setAttaccoDDOS(old => !old);
-      toast.error("Error confirming preparation", { position: "top-center" });
+      toast.error("Error confirming preparation", { position: "top-center" },{toastId: 23});
       console.log(err);
     }
   };
@@ -416,14 +418,18 @@ function App() {
                             ) : (
                               <>
                                 {userdata.id.charAt(0) === "M" ? (
-                                  <Redirect to="/manager" />
+                                  <Redirect to="/warehouseManager" />
                                 ) : (
                                   <>
                                     {userdata.id.charAt(0) === "W" ? (
                                       <Redirect to="/warehouseWorker" />
-                                    ) : (
-                                      <Redirect to="/" />
-                                    )}
+                                    ) : (<>
+                                            {userdata.id.charAt(0) === "A" ? (
+                                            <Redirect to="/manager" />
+                                              ) : (
+                                              <Redirect to="/" />
+                                            )}
+                                    </>)}
                                   </>
                                 )}
                               </>
@@ -453,7 +459,7 @@ function App() {
                             userdata.id.charAt(0) === "M" ||
                             userdata.id.charAt(0) === "W") ? (<Redirect to="/home" />):(
                               <>
-                              {setAttaccoDDOS(true)}
+                              {setAttaccoDDOS(old => !old)}
                               <ProductsList
                                 className="below-nav main-content"
                                 products={products}
@@ -498,7 +504,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -523,7 +532,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                            {setAttaccoDDOS(true)}
+                            {setAttaccoDDOS(old => !old)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -533,7 +542,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -566,7 +578,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -592,7 +607,10 @@ function App() {
                       (userdata.id.charAt(0) === "C" ||
                         userdata.id.charAt(0) === "F" ||
                         userdata.id.charAt(0) === "M") ? (
-                      <Redirect to="/home" />
+                          <>
+                          {setAttaccoDDOS(old => !old)}
+                          <Redirect to="/home" />
+                          </>
                     ) : (
                       /** REGISTER */
                       <NewClientForm
@@ -625,7 +643,10 @@ function App() {
                             <WarehouseWorker className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -658,7 +679,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -673,7 +697,7 @@ function App() {
           />
 
           <Route
-            path="/manager"
+            path="/warehouseManager"
             exact
             render={() => (
               <>
@@ -684,10 +708,13 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "M" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Manager className="below-nav main-content" />
+                            <WarehouseManager className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -716,7 +743,42 @@ function App() {
                             <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/manager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "A" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Manager className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
+                          <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -746,7 +808,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -780,7 +845,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -814,7 +882,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -848,7 +919,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -871,14 +945,17 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
                             <Customer className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -901,7 +978,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -911,20 +988,23 @@ function App() {
 
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
-                                toast.success("Booking updated", { position: "top-center" });
-                                setAttaccoDDOS(false);
+                                toast.success("Booking updated", { position: "top-center" },{toastId: 24});
+                                setAttaccoDDOS(old => !old);
                               }}
 
                               deleteProductBooking={async (product) => {
                                 await API.deleteProductBooking(product);
-                                toast.success("Product removed", { position: "top-center" });
+                                toast.success("Product removed", { position: "top-center" },{toastId: 25});
                                 setAttaccoDDOS(old=>!old);
                               }}
 
                               calendarday={date} />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -948,7 +1028,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(old => !old)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -959,7 +1039,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -994,7 +1077,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1027,7 +1113,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1072,7 +1161,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1106,7 +1198,10 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1136,7 +1231,10 @@ function App() {
                             <SidebarCustom className="below-nav" />
                           </>
                         ) : (
+                          <>
+                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1156,13 +1254,16 @@ function App() {
             render={() => (
 
               <div className="width100">
-                {setAttaccoDDOS(true)}
+                
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
           />
 
-          <Route path="/*" render={() => <Redirect to="/home" />} />
+          <Route path="/*" render={() => <>
+                          {setAttaccoDDOS(old => !old)}
+                          <Redirect to="/home" />
+                          </>} />
         </Switch>
       </Router>
     </div>

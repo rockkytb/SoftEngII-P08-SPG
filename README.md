@@ -13,9 +13,13 @@ Password is always : <b> testpassword </b>
 
 1. email: susan@employee.spg.com
 
+### Manager
+
+1. email: mike@manager.spg.com
+
 ### Warehouse Manager
 
-1. email: john@manager.spg.com
+1. email: john@whmanager.spg.com
 
 ### Warehouse Worker
 
@@ -65,9 +69,13 @@ Login of farmers
 
 Login of shop employees
 
-#### POST /api/warehouseWorkerSessions
+#### POST /api/warehouseManagerSessions
 
 Login of warehouse managers
+
+#### POST /api/warehouseWorkerSessions
+
+Login of warehouse workers
 
 #### GET /api/clients
 

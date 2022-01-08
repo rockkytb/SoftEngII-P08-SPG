@@ -10,28 +10,51 @@ const bot = new Telegraf(TOKEN);
 
 const Dao = require("./DaoBot.js");
 
-bot.command("quit", (ctx) => {
-  ctx.telegram.leaveChat(ctx.message.chat.id);
-  ctx.leaveChat();
+bot.command("quit", async (ctx) => {
+  try{
+    const user = await Dao.getUser(ctx.message.chat.id);
+    if(user){
+      await Dao.logout(ctx.message.chat.id);
+      ctx.reply("Logout successful. Type /start to restart bot");
+    }
+    else{
+      ctx.reply("You are not logged in!");
+    }
+  }
+  catch (err){
+    console.log(err);
+  }
+  
 });
 
 bot.start(async (ctx) => {
-  await Dao.SaveChatId(ctx.message.chat.id, ctx.message.from.username);
+  const username = ctx.message.from.username ? (ctx.message.from.username):(ctx.message.chat.first_name);
+  /*We use the function getUser to check if chatid is associated to client
+  If yes, user is auto logged*/
+  const user = await Dao.getUser(ctx.message.chat.id);
+  if(user){
+    ctx.reply(
+      `Welcome back ${user.name} ${user.surname}\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`
+    );
+  }  
+  else{
+  await Dao.SaveChatId(ctx.message.chat.id, username);
   console.log(ctx.message.chat.id);
   ctx.reply(
-    `Hi ${ctx.message.from.username}, please send your credentials in this format email:password`
+    `Hi ${username}, to login please send a message with your credentials in this format email:password`
   );
+}
 });
 
 bot.command("balance", (ctx) => {
   Dao.getWalletBalance(ctx.message.chat.id)
     .then((wallet) => {
-      if (wallet == false) {
+      if (!wallet) {
         ctx.reply(
           `Please before send your credentials in this format email:password`
         );
       } else {
-        ctx.reply(`This is your balance:${wallet.amount}`);
+        ctx.reply(`Your current balance is ${wallet.amount} €`);
       }
     })
     .catch((err) => ctx.reply(`${err}`));
@@ -44,13 +67,13 @@ process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
 bot.on("text", async (ctx) => {
   console.log(ctx.message.text);
-
+  const username = ctx.message.from.username ? (ctx.message.from.username):(ctx.message.chat.first_name);
   if (ctx.message.text.includes(":")) {
     var email = ctx.message.text.split(":")[0];
     var pasw = ctx.message.text.split(":")[1];
     Dao.UpdateCredentials(
       ctx.message.chat.id,
-      ctx.message.from.username,
+      username,
       email,
       pasw
     )
@@ -58,13 +81,12 @@ bot.on("text", async (ctx) => {
         if (res === false) {
           ctx.reply(`Oh, seems there is a problem retry later`);
         } else {
-          ctx.reply(`Authenticated!`);
+          ctx.reply(`Login successful!\n\nCommand list:\n\n/balance to get your current balance\n/quit to logout`);
         }
       })
       .catch(() => {
         ctx.reply(`Oh, seems there is a problem retry later`);
       });
-    return;
   } else {
     ctx.reply(`The Command is worng please use the format email:password`);
   }

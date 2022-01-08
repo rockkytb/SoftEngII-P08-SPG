@@ -85,10 +85,10 @@ function BookingReview(props) {
         });
         props.setBookingsState(true);
         props.setCart([]);
-        toast.success("Booking completed", { position: "top-center" });
+        toast.success("Booking completed", { position: "top-center" },{toastId: 26});
         handleClose();
       })
-      .catch((err) => toast.error(err.errors, { position: "top-center" }));
+      .catch((err) => toast.error(err.errors, { position: "top-center" },{toastId: 27}));
   }
 
   const handleClose = () => {

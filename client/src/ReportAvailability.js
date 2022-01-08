@@ -49,7 +49,7 @@ function ReportAvailability(props) {
 
             props.addFutureProducts(props.id, product);
             setValidated(true);
-            toast.success("Succesfully added", { position: "top-center" });
+            toast.success("Succesfully added", { position: "top-center" },{toastId: 29});
         }
     };
 

@@ -55,6 +55,15 @@ async function logIn(credentials, type) {
       });
       break;
     case "M":
+      response = await fetch(url + "/warehouseManagerSessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      break;
+    case "A":
       response = await fetch(url + "/managerSessions", {
         method: "POST",
         headers: {
