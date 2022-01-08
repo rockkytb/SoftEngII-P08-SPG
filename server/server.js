@@ -1317,9 +1317,7 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
 //VIRTUAL CLOCK MANAGEMENT
 let virtualTime = false;
 let clockDate = new Date();
-clockDate.setDate(clockDate.getDate()+4);
 let timers = setInterval(async () => {clockDate = new Date();
-  clockDate.setDate(clockDate.getDate()+4);
   await clockActions();
 }, 30000);
 //FLAG to execute queries once a day, resetted every sunday
