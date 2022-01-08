@@ -12,6 +12,7 @@ describe("Test suite DAO", () => {
     await dao.cleanDb();
   });
 
+  
   //TEST DAO FUNCTION CREATE BOOKING
   test("the creation of a new booking fails because id client is missing", () => {
     const booking = {
@@ -22,7 +23,7 @@ describe("Test suite DAO", () => {
       19
     );
   });
-
+/*
   test("the creation of a new booking fails because state is missing", () => {
     const booking = {
       idClient: 2,
@@ -340,7 +341,7 @@ describe("Test suite DAO", () => {
       dao.getWarehouseWorker(email, "testpassword")
     ).resolves.toHaveProperty("id", "W1");
   }, 10000);
-});
+
 
 //TEST GET ALL PRODUCTS
 test("get all products success", async () => {
@@ -593,18 +594,6 @@ test("Insert a new Product expected without a field category", () => {
     false
   );
 });
-/*
-//sistemare clear DB per poter rendere il test ripetibile
-test("Insert a new Product expected", () => {
-  const parameter = {
-    name: "Apple",
-    category: 2,
-    price: 1.99,
-    qty: 2,
-    farmer_id: 3,
-  };
-  return expect(dao.insertTupleProductExpected(parameter)).resolves.toEqual(11);
-});*/
 
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
 test("INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success", () => {
@@ -737,4 +726,6 @@ test("GET all the product associated to a particular booking", () => {
     },
   ];
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
+});
+*/
 });
