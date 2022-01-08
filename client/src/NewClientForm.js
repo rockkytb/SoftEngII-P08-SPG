@@ -17,10 +17,10 @@ function NewClientForm(props) {
     const regex =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
-        let usedMail = props.getClientbyEmail(email);
+        let usedMail = await props.getClientbyEmail(email);
         console.log("valore setUsedMail " + usedMail);
         if(usedMail===undefined)
             {

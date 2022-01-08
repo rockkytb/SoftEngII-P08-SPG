@@ -135,19 +135,24 @@ async function getUserInfo() {
 }
 
 async function getClientByEmail(email) {
-  //Not very secure, should send also employee data to verify identity
-  const response = await fetch(url + "/client", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email }),
+  return new Promise((resolve, reject) => {
+    //Not very secure, should send also employee data to verify identity
+    fetch(url + "/client", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    }).then((response)=>{
+
+      if (response.ok) {
+        resolve (response.json());
+      } else {
+        resolve (-1);
+      }
+    })
+    
   });
-  if (response.ok) {
-    resolve (response.json());
-  } else {
-    reject (response.json());
-  }
 }
 
 async function getWalletById(id) {

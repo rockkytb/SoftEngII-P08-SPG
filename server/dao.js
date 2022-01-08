@@ -116,8 +116,7 @@ exports.getClientByEmail = (email) => {
       if (err) {
         reject(err);
       } else if (row === undefined) {
-        const user = { id: -1 };
-        resolve(user);
+        resolve(-1);
       } else {
         const user = { id: `C${row.ID}` };
         resolve(user);
