@@ -22,10 +22,9 @@ function NewClientForm(props) {
         const form = event.currentTarget;
         let usedMail = await props.getClientbyEmail(email);
         console.log("valore setUsedMail " + usedMail);
-        console.log("valore setUsedMail " + usedMail);
-        if (form.checkValidity() === false || usedMail != -1 ) {
+        if (form.checkValidity() === false || usedMail !== -1 ) {
             event.stopPropagation();
-            if (usedMail != -1) {
+            if (usedMail !== -1) {
                 toast.error("Email already used", { position: "top-center" },{toastId: 32})
             }
 
