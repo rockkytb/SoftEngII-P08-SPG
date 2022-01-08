@@ -144,9 +144,9 @@ async function getClientByEmail(email) {
     body: JSON.stringify({ email: email }),
   });
   if (response.ok) {
-    return await response.json();
+    return response.json();
   } else {
-    throw await response.json();
+    throw response.json();
   }
 }
 
