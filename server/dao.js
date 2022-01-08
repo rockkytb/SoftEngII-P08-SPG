@@ -1387,4 +1387,79 @@ exports.resetProductWeekVC = () => {
   });
 };
 
+// Counting missed pickups for a customer
+exports.countMissedPickupsForACustomer = (customerId,preSuspensionDate) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
+    db.all(sql, [customerId,preSuspensionDate], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(rows[0])
+      }
+    });
+  });
+};
+
+// find clientId with bookingId
+exports.findClientbyBooking = (bookingId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT CLIENT_ID as id FROM BOOKING WHERE ID_BOOKING=?";
+    db.all(sql, [bookingId], (err, rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(rows[0])
+      }
+    });
+  });
+};
+
+// update the client missed pickups count
+exports.updateClientMissedCount = (clientId, count) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE CLIENT set missedCount=? where ID=?";
+    db.all(sql, [count, clientId], (err) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true)
+      }
+    });
+  });
+};
+
+// update the client susspensionDate
+exports.updateClientSusspensionDate = (clientId, date) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE CLIENT set susspensionDate=? where ID=?";
+    db.all(sql, [date, clientId], (err) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(true)
+      }
+    });
+  });
+};
+
+// get a client suspension date
+exports.getLatestSuspensionDate = (clientId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "select suspenssionDate as date from CLIENT where ID=?";
+    db.all(sql, [clientId], (err,rows) => {
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(rows[0])
+      }
+    });
+  });
+};
+
 //END OF VIRTUAL CLOCK DAO FUNCTIONS
