@@ -734,7 +734,8 @@ app.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
       .json({ error: `Invalid booking id, it must be positive` });
   }
   try {
-    await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking);
+    await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking)
+    .then(await dao.IncrementQtyProductWeek( req.body.Inc_Qty, req.body.ID_Product ));
   } catch (err) {
     res.status(503).json({
       error: `Database error during the deletation of booking product.`,

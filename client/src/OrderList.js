@@ -40,10 +40,11 @@ export default function OrderList(props) {
     handleViewClose();
   }
 
-  function deleteProduct(pId, bId) {
+  function deleteProduct(pId, bId, qty) {
     let product = {
       ID_Booking: bId,
       ID_Product: pId,
+      Inc_Qty: qty,
     };
     console.log(product)
     props.deleteProductBooking(product);
@@ -138,7 +139,7 @@ export default function OrderList(props) {
                           ) {
                             setProductId(p.id_product);
                             setBookingId(book.id);
-                            deleteProduct(p.id_product, book.id)
+                            deleteProduct(p.id_product, book.id,p.qty)
                           } else {
                             setShowAlertTime(true);
                           }
