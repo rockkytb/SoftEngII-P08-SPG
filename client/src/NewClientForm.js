@@ -9,6 +9,7 @@ function NewClientForm(props) {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [usedMail, setUsedMail] = useState("");
     const bcrypt = require('bcryptjs');
@@ -41,7 +42,8 @@ function NewClientForm(props) {
                 name: name,
                 surname: surname,
                 password: bcrypt.hashSync(password, 10),
-                clearpsw: password
+                clearpsw: password,
+                phone: phone
 
             };
 
@@ -92,6 +94,26 @@ function NewClientForm(props) {
                                 onChange={ev => setSurname(ev.target.value)} />
                             <Form.Control.Feedback type="invalid">
                                 Please insert a surname.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                </Row>
+
+                <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                        <Form.Group controlId='text'>
+                            <Form.Label>Phone:</Form.Label>
+                            <Form.Control
+                                type='text'
+                                id="phoneField"
+                                value={phone}
+                                numbersOnly
+                                required
+                                onChange={ev => setPhone(ev.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Please insert a phone.
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Col>

@@ -481,6 +481,10 @@ app.post("/api/newclient", isLoggedIn, async (req, res) => {
     return res.status(422).json({ error: `Invalid client's email` });
   }
 
+  if (!validator.isLength(req.body.phone, { min: 1, max: 15 })) {
+    return res.status(422).json({ error: `Invalid client's phone` });
+  }
+
   if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
     return res.status(422).json({ error: `Invalid client's name` });
   }
@@ -498,6 +502,7 @@ app.post("/api/newclient", isLoggedIn, async (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     password: req.body.password,
+    phone: req.body.phone
   };
 
   dao

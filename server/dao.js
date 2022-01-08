@@ -32,6 +32,7 @@ exports.getClients = () => {
               username: x.EMAIL,
               name: x.NAME,
               surname: x.SURNAME,
+              phone: x.PHONE
             };
           })
         );
@@ -78,6 +79,7 @@ exports.getClient = (email, password) => {
           username: row.EMAIL,
           name: row.NAME,
           surname: row.SURNAME,
+          phone: row.PHONE
         };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
@@ -585,10 +587,10 @@ exports.getWallet = (id) => {
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD) VALUES(?, ?, ?, ?)";
+      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
     db.run(
       sql,
-      [client.email, client.name, client.surname, client.password],
+      [client.email, client.name, client.surname, client.password, client.phone],
       function (err) {
         if (err) {
           reject(err);
@@ -949,7 +951,7 @@ exports.getClientsPreparation = (productId) => {
               id: `C${x.ID}`,
               username: x.EMAIL,
               name: x.NAME,
-              surname: x.SURNAME,
+              surname: x.SURNAME
             };
           })
         );

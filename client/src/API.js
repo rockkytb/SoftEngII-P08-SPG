@@ -14,6 +14,7 @@ function addUser(newUser) {
         name: newUser.name,
         surname: newUser.surname,
         password: newUser.password,
+        phone: newUser.phone
       }),
     })
       .then((response) => {
