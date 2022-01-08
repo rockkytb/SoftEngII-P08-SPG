@@ -106,6 +106,162 @@ describe("Test suite Integration Server", () => {
   });
 
   
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid category", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: -1,
+        price: 20,
+        qty: 11,
+        farmerid: 1,
+        state: "EXPECTED",
+        size: 1,
+        unit_of_measure: "g",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid category id, it must be positive");
+    });
+  });
+  
+  
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid price", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: 1,
+        price: -1,
+        qty: 11,
+        farmerid: 1,
+        state: "EXPECTED",
+        size: 1,
+        unit_of_measure: "g",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid product price, it must be positive");
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid farmer id", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: 1,
+        price: 1,
+        qty: 11,
+        farmerid: -1,
+        state: "EXPECTED",
+        size: 1,
+        unit_of_measure: "g",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid farmer id, it must be positive");
+    });
+  });
+  
+  
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid qty", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: 1,
+        price: 1,
+        qty: -1,
+        farmerid: 1,
+        state: "EXPECTED",
+        size: 1,
+        unit_of_measure: "g",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid quantity, it must be positive");
+    });
+  });
+
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid size", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: 1,
+        price: 1,
+        qty: 1,
+        farmerid: 1,
+        state: "EXPECTED",
+        size: -1,
+        unit_of_measure: "g",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid size, it must be positive");
+    });
+  });
+
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid size", async () => {
+      const res = await request(app).post("/api/farmers/:farmerid/productsExpected").send({
+        name: "Lamponi",
+        category: 1,
+        price: 1,
+        qty: 1,
+        farmerid: 1,
+        state: "EXPECTED",
+        size: 1,
+        unit_of_measure: "ghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid unit of measure, it must be a string of max 15 length");
+    });
+  });
+
+  
+  describe("edit state of a ack", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/ackstate").send({
+        id: 1,
+        state: "NEW"  
+      });
+      expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  
+  describe("edit state of a ack", () => {
+    it("send a invalid id", async () => {
+      const res = await request(app).put("/api/ackstate").send({
+        id: -1,
+        state: "NEW"  
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid ack id, it must be positive");
+
+    });
+  });
+
+  
+  describe("get all bookings of a client", () => {
+    it("rigth get", async () => {
+      const res = await request(app).get("/api/bookings/clients/1");
+      expect(res.statusCode).toEqual(200);
+
+    });
+  });
+
+
+  describe("update the state of booking mode", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/bookings_mode/1")
+      expect(res.statusCode).toEqual(200);
+    });
+  });
+
+  
+  describe("update the state of booking mode", () => {
+    it("send a invalid id", async () => {
+      const res = await request(app).put("/api/bookings_mode/-1")
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid booking mode id, it must be positive");
+    });
+  });
+
   /*
 
   describe("Post new client", () => {
