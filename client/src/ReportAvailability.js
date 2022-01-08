@@ -16,7 +16,7 @@ function ReportAvailability(props) {
     const [price, setPrice] = useState(0.0);
     const [qty, setQty] = useState(0);
     const [size, setSize] = useState(0);
-    const [unitOfMeasure, setUnitOfMeasure] = useState("");
+    const [unitOfMeasure, setUnitOfMeasure] = useState("kg");
 
     //const [measure, setMeasure] = useState("");
     //const [state, setState] = useState("");
@@ -48,9 +48,11 @@ function ReportAvailability(props) {
             console.log(product);
 
             props.addFutureProducts(props.id, product);
-            setValidated(true);
             toast.success("Succesfully added", { position: "top-center" },{toastId: 29});
+            setName(""); setCategory(props.categories[0].id); 
+            setPrice(0.0); setQty(0); setUnitOfMeasure("kg"); setValidated(false);
         }
+        setValidated(true);
     };
 
     return (
