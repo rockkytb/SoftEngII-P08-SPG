@@ -11,7 +11,6 @@ function NewClientForm(props) {
     const [surname, setSurname] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [usedMail, setUsedMail] = useState("");
     const bcrypt = require('bcryptjs');
 
     const regex =
@@ -40,7 +39,6 @@ function NewClientForm(props) {
             };
 
             props.addUser(newUser);
-            setUsedMail("");
         }
         setValidated(true);
     };
