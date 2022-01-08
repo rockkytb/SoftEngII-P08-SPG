@@ -1342,7 +1342,7 @@ app.get("/api/virtualTime",  async (req, res) => {
          async () =>
             {
               let d = new Date(clockDate);
-              d.setHours(d.getHours() + 4);
+              d.setHours(d.getHours() + 2);
               clockDate = d;
               await clockActions();
             },
