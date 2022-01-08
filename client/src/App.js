@@ -1175,6 +1175,7 @@ function App() {
                           <>
                             {/*<SidebarCustom />*/
                             setAttaccoDDOS("update13")}
+                            {console.log(bookings)}
                             <BookingAcceptance
                               className="below-nav main-content"
                               bookings={bookings}
