@@ -735,6 +735,7 @@ function App() {
                         {userdata.id && (userdata.id.charAt(0) === "M" || userdata.id.charAt(0) === "W") ? (
                           <>
                             {/*<SidebarCustom /> */}
+                            {setAttaccoDDOS("update15")}
                             <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
