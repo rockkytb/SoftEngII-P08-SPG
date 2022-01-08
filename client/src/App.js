@@ -158,7 +158,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setAttaccoDDOS(old => !old);
+        setAttaccoDDOS(true);
       }
       if (!loggedIn) {
         const credentials = {
@@ -342,7 +342,7 @@ function App() {
       console.log(err);
     }
     /*finally{
-      setAttaccoDDOS(old => !old);
+      setAttaccoDDOS(true);
     }*/
   };
 
@@ -456,7 +456,7 @@ function App() {
                             userdata.id.charAt(0) === "M" ||
                             userdata.id.charAt(0) === "W") ? (<Redirect to="/home" />):(
                               <>
-                              {setAttaccoDDOS(old => !old)}
+                              {setAttaccoDDOS(true)}
                               <ProductsList
                                 className="below-nav main-content"
                                 products={products}
@@ -502,7 +502,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -529,7 +528,7 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "F" ? (
                           <>
-                            {setAttaccoDDOS(old => !old)}
+                            {setAttaccoDDOS(true)}
                             <ReportAvailability
                               className="below-nav main-content"
                               addFutureProducts={addFutureProducts}
@@ -540,7 +539,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -576,7 +574,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -605,7 +602,6 @@ function App() {
                         userdata.id.charAt(0) === "F" ||
                         userdata.id.charAt(0) === "M") ? (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                     ) : (
@@ -641,7 +637,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -677,7 +672,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -709,7 +703,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -741,7 +734,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -773,7 +765,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -806,7 +797,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -843,7 +833,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -880,7 +869,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -917,7 +905,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -942,7 +929,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(old => !old)}
+                        {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -950,7 +937,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -975,7 +961,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(old => !old)}
+                        {setAttaccoDDOS(false)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -999,7 +985,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1025,7 +1010,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(old => !old)}
+                        {setAttaccoDDOS(true)}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -1037,7 +1022,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1075,7 +1059,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1111,7 +1094,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1159,7 +1141,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1196,7 +1177,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1228,7 +1208,6 @@ function App() {
                           </>
                         ) : (
                           <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>
                         )}
@@ -1257,7 +1236,6 @@ function App() {
           />
 
           <Route path="/*" render={() => <>
-                          {setAttaccoDDOS(old => !old)}
                           <Redirect to="/home" />
                           </>} />
         </Switch>
