@@ -100,13 +100,12 @@ function NewClientForm(props) {
                 <Row>
                     <Col xs={2} />
                     <Col xs={8}>
-                        <Form.Group controlId='text'>
+                        <Form.Group controlId='number'>
                             <Form.Label>Phone:</Form.Label>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 id="phoneField"
                                 value={phone}
-                                numbersOnly
                                 required
                                 onChange={ev => setPhone(ev.target.value)} />
                             <Form.Control.Feedback type="invalid">
