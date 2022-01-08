@@ -1336,7 +1336,7 @@ app.get("/api/virtualTime",  async (req, res) => {
   virtualTime = !virtualTime;
   clearInterval(timers);
     if (virtualTime) {
-      //Adds 4 hours every 5 seconds
+      //Adds 4 hours every 7 seconds
       timers=
         setInterval(
          async () =>
@@ -1346,7 +1346,7 @@ app.get("/api/virtualTime",  async (req, res) => {
               clockDate = d;
               await clockActions();
             },
-          5000
+          7000
         )
       
     } else {
