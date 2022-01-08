@@ -45,7 +45,7 @@ function NewClientForm(props) {
 
             };
 
-            props.addUser(newUser);
+            await props.addUser(newUser);
             setUsedMail("");
         }
         setValidated(true);
