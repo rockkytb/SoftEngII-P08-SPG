@@ -198,7 +198,7 @@ function App() {
     };
     book()
       .then(() =>
-        setAttaccoDDOS("update4");
+        setAttaccoDDOS("update4")
       )
       .catch((err) => toast.error(err.errors, { position: "top-center" },{toastId: 5}));
   };
