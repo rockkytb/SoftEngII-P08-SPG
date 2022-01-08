@@ -1,14 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { act } from "react-dom/test-utils";
 import {
-  Modal,
-  Form,
-  Col,
-  Alert,
-  Card,
-  Button,
-  CardColumns,
+  Modal
 } from "react-bootstrap";
 
 import Enzyme, { shallow, render, mount } from 'enzyme';
@@ -36,7 +28,6 @@ import Clock from './Clock.js';
 import ReportAvailability from './ReportAvailability.js';
 import PickupSchedule from './PickupSchedule.js';
 import PreparationConfirmFarmer from './PreparationConfirmFarmer.js';
-import { CloudHaze1, JustifyLeft } from 'react-bootstrap-icons';
 Enzyme.configure({ adapter: new Adapter() })
 
 //IF SOMETHING IS WRONG, TEST WILL FAIL

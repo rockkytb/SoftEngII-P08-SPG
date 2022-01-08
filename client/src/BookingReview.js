@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Modal,
   Form,
@@ -11,8 +11,7 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import API from "./API";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "react-bootstrap/Image";
 import ImageFinder from "./ImageFinder.js";

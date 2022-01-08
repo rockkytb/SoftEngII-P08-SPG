@@ -19,6 +19,7 @@ import ProductsList from "./ProductsList";
 import BookingReview from "./BookingReview";
 import Customer from "./Customer";
 import Farmer from "./Farmer";
+import WarehouseManager from "./WarehouseManager";
 import Manager from "./Manager";
 import ClientData from "./ClientData";
 import { ToastContainer, toast } from "react-toastify";
@@ -157,7 +158,7 @@ function App() {
       const res = await API.addUser(newUser);
       if (res && res.idClient) {
         newUser.id = res.idClient;
-        setAttaccoDDOS(true);
+        
       }
       if (!loggedIn) {
         const credentials = {
@@ -170,6 +171,7 @@ function App() {
 
     add()
       .then(() => {
+        setAttaccoDDOS("update1");
         toast.success("Registration completed", { position: "top-center" },{toastId: 3});
       })
       .catch((err) => {
@@ -250,11 +252,8 @@ function App() {
     }
   }, [ackState, loggedIn]);
 
-  const getSingleClientByEmail = (email) => {
-    let client;
-    if (clients) {
-      client = clients.find((c) => c.username == email);
-    }
+  const getSingleClientByEmail = async (email) => {
+    const client = await API.getClientByEmail(email);
     return client;
   };
 
@@ -417,14 +416,18 @@ function App() {
                             ) : (
                               <>
                                 {userdata.id.charAt(0) === "M" ? (
-                                  <Redirect to="/manager" />
+                                  <Redirect to="/warehouseManager" />
                                 ) : (
                                   <>
                                     {userdata.id.charAt(0) === "W" ? (
                                       <Redirect to="/warehouseWorker" />
-                                    ) : (
-                                      <Redirect to="/" />
-                                    )}
+                                    ) : (<>
+                                            {userdata.id.charAt(0) === "A" ? (
+                                            <Redirect to="/manager" />
+                                              ) : (
+                                              <Redirect to="/" />
+                                            )}
+                                    </>)}
                                   </>
                                 )}
                               </>
@@ -499,7 +502,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -534,7 +539,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -567,7 +574,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -593,7 +602,9 @@ function App() {
                       (userdata.id.charAt(0) === "C" ||
                         userdata.id.charAt(0) === "F" ||
                         userdata.id.charAt(0) === "M") ? (
-                      <Redirect to="/home" />
+                          <>
+                          <Redirect to="/home" />
+                          </>
                     ) : (
                       /** REGISTER */
                       <NewClientForm
@@ -626,7 +637,9 @@ function App() {
                             <WarehouseWorker className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -659,7 +672,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -674,7 +689,7 @@ function App() {
           />
 
           <Route
-            path="/manager"
+            path="/warehouseManager"
             exact
             render={() => (
               <>
@@ -685,10 +700,12 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "M" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Manager className="below-nav main-content" />
+                            <WarehouseManager className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -717,7 +734,40 @@ function App() {
                             <PickupSchedule userdata={userdata} className="below-nav main-content" bookings={bookings} confirmPreparation={confirmPreparation} />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <Redirect to="/login" />
+                    )}{" "}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+
+          <Route
+            path="/manager"
+            exact
+            render={() => (
+              <>
+                {update ? (
+                  <>
+                    {loggedIn ? (
+                      <>
+                        {userdata.id && userdata.id.charAt(0) === "A" ? (
+                          <>
+                            {/*<SidebarCustom /> */}
+                            <Manager className="below-nav main-content" />
+                          </>
+                        ) : (
+                          <>
+                          <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -747,7 +797,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -781,7 +833,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -815,7 +869,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -849,7 +905,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -879,7 +937,9 @@ function App() {
                             <Customer className="below-nav main-content" />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -902,7 +962,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS(false)}
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -913,7 +973,7 @@ function App() {
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
                                 toast.success("Booking updated", { position: "top-center" },{toastId: 24});
-                                setAttaccoDDOS(false);
+                                setAttaccoDDOS(old => !old);
                               }}
 
                               deleteProductBooking={async (product) => {
@@ -925,7 +985,9 @@ function App() {
                               calendarday={date} />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -960,7 +1022,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -995,7 +1059,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1028,7 +1094,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1073,7 +1141,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1107,7 +1177,9 @@ function App() {
                             />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1121,12 +1193,11 @@ function App() {
             )}
           />
 
-          <Route //TODO: payment page
+          <Route 
             path="/emp/pagah"
             exact
             render={() => (
-              /** Employee payment page da poter includere nel componente employee con path='{$path}/pagah'*/
-              //<>{loggedIn ? <SidebarCustom className="below-nav" /> : <Redirect to="/home" />}</>
+              
               <>
                 {update ? (
                   <>
@@ -1137,7 +1208,9 @@ function App() {
                             <SidebarCustom className="below-nav" />
                           </>
                         ) : (
+                          <>
                           <Redirect to="/home" />
+                          </>
                         )}
                       </>
                     ) : (
@@ -1157,13 +1230,15 @@ function App() {
             render={() => (
 
               <div className="width100">
-                {setAttaccoDDOS(true)}
+                
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}
           />
 
-          <Route path="/*" render={() => <Redirect to="/home" />} />
+          <Route path="/*" render={() => <>
+                          <Redirect to="/home" />
+                          </>} />
         </Switch>
       </Router>
     </div>

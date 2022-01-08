@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, Navbar, Button, Col, Row } from "react-bootstrap";
+import React, { useState } from 'react';
+import { NavLink, Navbar, Col, Row } from "react-bootstrap";
 import { PersonCircle, DoorOpenFill, HouseDoorFill, BellFill, ClockFill } from "react-bootstrap-icons"
 import { Link } from "react-router-dom";
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Clock from "./Clock.js"
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 function NavbarCustom(props) {
@@ -116,7 +116,7 @@ if (firstTime && toPrintConfirm.length !== 0) {
     else if (props.user && props.user.id && props.user.id.charAt(0) == 'M') {
       return (
         <>
-          <Link to="/manager" style={{ color: 'white' }}>
+          <Link to="/warehouseManager" style={{ color: 'white' }}>
             <PersonCircle size={30} />
           </Link>
         </>
@@ -135,6 +135,15 @@ if (firstTime && toPrintConfirm.length !== 0) {
       return (
         <>
           <Link to="/warehouseWorker" style={{ color: 'white' }}>
+            <PersonCircle size={30} />
+          </Link>
+        </>
+      )
+    }
+    else if (props.user && props.user.id && props.user.id.charAt(0) == 'A') {
+      return (
+        <>
+          <Link to="/manager" style={{ color: 'white' }}>
             <PersonCircle size={30} />
           </Link>
         </>

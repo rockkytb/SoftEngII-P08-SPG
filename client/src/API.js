@@ -1,4 +1,3 @@
-import ProductImages from "./ProductImages";
 
 const url = "/api";
 
@@ -15,6 +14,7 @@ function addUser(newUser) {
         name: newUser.name,
         surname: newUser.surname,
         password: newUser.password,
+        phone: newUser.phone
       }),
     })
       .then((response) => {
@@ -55,6 +55,15 @@ async function logIn(credentials, type) {
       });
       break;
     case "M":
+      response = await fetch(url + "/warehouseManagerSessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      break;
+    case "A":
       response = await fetch(url + "/managerSessions", {
         method: "POST",
         headers: {
@@ -126,19 +135,24 @@ async function getUserInfo() {
 }
 
 async function getClientByEmail(email) {
-  //Not very secure, should send also employee data to verify identity
-  const response = await fetch(url + "/client", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email }),
+  return new Promise((resolve, reject) => {
+    //Not very secure, should send also employee data to verify identity
+    fetch(url + "/client", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    }).then((response)=>{
+
+      if (response.ok) {
+        resolve (response.json());
+      } else {
+        resolve (-1);
+      }
+    })
+    
   });
-  if (response.ok) {
-    return await response.json();
-  } else {
-    throw await response.json();
-  }
 }
 
 async function getWalletById(id) {
@@ -643,8 +657,7 @@ async function updateOrder(product) {
   return mrTorgue;
 }
 
-//TODO: move clock to backend
-//SHORT-TERM: post to server to receive date-time
+
 async function setDate(date) {
   return new Promise(
     (resolve, reject) =>

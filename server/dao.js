@@ -32,6 +32,7 @@ exports.getClients = () => {
               username: x.EMAIL,
               name: x.NAME,
               surname: x.SURNAME,
+              phone: x.PHONE
             };
           })
         );
@@ -78,6 +79,7 @@ exports.getClient = (email, password) => {
           username: row.EMAIL,
           name: row.NAME,
           surname: row.SURNAME,
+          phone: row.PHONE
         };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
@@ -114,8 +116,7 @@ exports.getClientByEmail = (email) => {
       if (err) {
         reject(err);
       } else if (row === undefined) {
-        const user = { id: -1 };
-        resolve(user);
+        resolve(-1);
       } else {
         const user = { id: `C${row.ID}` };
         resolve(user);
@@ -221,8 +222,8 @@ exports.getShopEmployeeById = (id) => {
   });
 };
 
-//get Manager
-exports.getManager = (email, password) => {
+//get Warehouse Manager
+exports.getWarehouseManager = (email, password) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM MANAGER WHERE EMAIL = ?";
     db.get(sql, [email], (err, row) => {
@@ -247,8 +248,8 @@ exports.getManager = (email, password) => {
   });
 };
 
-//get Manager by Id
-exports.getManagerById = (id) => {
+//get Warehouse Manager by Id
+exports.getWarehouseManagerById = (id) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM MANAGER WHERE ID = ?";
     db.get(sql, [id], (err, row) => {
@@ -275,6 +276,49 @@ exports.getWarehouseWorkerById = (id) => {
         resolve(false);
       } else {
         const user = { id: `W${row.ID}`, username: row.EMAIL };
+        resolve(user);
+      }
+    });
+  });
+};
+
+//get Manager
+exports.getManager = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM ADMIN WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = {
+          id: `A${row.ID}`,
+          username: row.EMAIL,
+          name: row.NAME,
+          surname: row.SURNAME,
+        };
+
+        bcrypt.compare(password, row.PASSWORD).then((result) => {
+          if (result) resolve(user);
+          else resolve(false);
+        });
+      }
+    });
+  });
+};
+
+//get Manager by Id
+exports.getManagerById = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM ADMIN WHERE ID = ?";
+    db.get(sql, [id], (err, row) => {
+      if (err) {
+        reject(err);
+      } else if (row === undefined) {
+        resolve(false);
+      } else {
+        const user = { id: `A${row.ID}`, username: row.EMAIL };
         resolve(user);
       }
     });
@@ -542,10 +586,10 @@ exports.getWallet = (id) => {
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD) VALUES(?, ?, ?, ?)";
+      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
     db.run(
       sql,
-      [client.email, client.name, client.surname, client.password],
+      [client.email, client.name, client.surname, client.password, client.phone],
       function (err) {
         if (err) {
           reject(err);
@@ -906,7 +950,7 @@ exports.getClientsPreparation = (productId) => {
               id: `C${x.ID}`,
               username: x.EMAIL,
               name: x.NAME,
-              surname: x.SURNAME,
+              surname: x.SURNAME
             };
           })
         );

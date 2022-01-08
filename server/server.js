@@ -82,6 +82,24 @@ passport.use(
 );
 
 passport.use(
+  "warehouse-manager-local",
+  new LocalStrategy(function (username, password, done) {
+    dao
+      .getWarehouseManager(username, password)
+      .then((user) => {
+        if (!user)
+          return done(null, false, {
+            message: "Incorrect username and/or password",
+          });
+        return done(null, user);
+      })
+      .catch((err) => {
+        return done(err);
+      });
+  })
+);
+
+passport.use(
   "manager-local",
   new LocalStrategy(function (username, password, done) {
     dao
@@ -165,6 +183,16 @@ passport.deserializeUser((id, done) => {
       });
   }
   if (type === "M") {
+    dao
+      .getWarehouseManagerById(identifier)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err, null);
+      });
+  }
+  if (type === "A") {
     dao
       .getManagerById(identifier)
       .then((user) => {
@@ -250,7 +278,26 @@ app.post("/api/warehouseWorkerSessions", function (req, res, next) {
   })(req, res, next);
 });
 
-//POST /api/managerSessions FOR LOGIN OF CLIENT
+//POST /api/warehouseManagerSessions FOR LOGIN OF WAREHOUSE MANGER
+app.post("/api/warehouseManagerSessions", function (req, res, next) {
+  passport.authenticate("warehouse-manager-local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).json(info);
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+//POST /api/warehouseManagerSessions FOR LOGIN OF MANGER
 app.post("/api/managerSessions", function (req, res, next) {
   passport.authenticate("manager-local", (err, user, info) => {
     if (err) return next(err);
@@ -333,7 +380,7 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 });
 
 //POST /api/client/
-app.post("/api/client", isLoggedIn, (req, res) => {
+app.post("/api/client", (req, res) => {
   if (!validator.isEmail(`${req.body.email}`)) {
     return res.status(422).json({ error: `Invalid email` });
   }
@@ -429,9 +476,13 @@ app.post("/api/bookings", isLoggedIn, async (req, res) => {
 });
 
 //POST /api/newclient
-app.post("/api/newclient", isLoggedIn, async (req, res) => {
+app.post("/api/newclient", async (req, res) => {
   if (!validator.isEmail(req.body.email)) {
     return res.status(422).json({ error: `Invalid client's email` });
+  }
+
+  if (!validator.isLength(req.body.phone, { min: 1, max: 15 })) {
+    return res.status(422).json({ error: `Invalid client's phone` });
   }
 
   if (!validator.isLength(req.body.name, { min: 1, max: 100 })) {
@@ -451,12 +502,13 @@ app.post("/api/newclient", isLoggedIn, async (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     password: req.body.password,
+    phone: req.body.phone
   };
 
   dao
     .getClientByEmail(client.email)
     .then((c) => {
-      if (c.id != -1) {
+      if (c !== -1) {
         return res.status(503).json({
           error: `Error: ${client.email} already used.`,
         });
@@ -1212,7 +1264,7 @@ app.put("/api/products", isLoggedIn, async (req, res) => {
   }
 });
 
-//////TODO: move clock to backend
+
 //////SHORT-TERM: receive the day of the week we put
 app.post("/api/clock", isLoggedIn, async (req, res) => {
   date = req.body.date;

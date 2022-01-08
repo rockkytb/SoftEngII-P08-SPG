@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { toast } from "react-toastify";
 
 function ReportAvailability(props) {
-    //TODO: for now send only one product at a time, needs change to server api
+    
 
     const [toSend, setToSend] = useState(false);
     const [validated, setValidated] = useState(false);
