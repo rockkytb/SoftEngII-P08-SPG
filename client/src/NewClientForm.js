@@ -21,7 +21,8 @@ function NewClientForm(props) {
         event.preventDefault();
         const form = event.currentTarget;
         let usedMail = props.getClientbyEmail(email);
-        if(!usedMail)
+        console.log("valore setUsedMail " + usedMail);
+        if(usedMail===undefined)
             {
                 usedMail=-1;
             }

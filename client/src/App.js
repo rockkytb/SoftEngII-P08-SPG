@@ -251,11 +251,8 @@ function App() {
     }
   }, [ackState, loggedIn]);
 
-  const getSingleClientByEmail = (email) => {
-    let client;
-    if (clients) {
-      client = clients.find((c) => c.username == email);
-    }
+  const getSingleClientByEmail = async (email) => {
+    const client = await API.getClientByEmail(email);
     return client;
   };
 
