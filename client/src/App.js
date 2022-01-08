@@ -1091,8 +1091,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/* <SidebarCustom /> */
-                            
-                            console.log(allBookings)}
+                            setAttaccoDDOS("update3")}
                             <CheckPending
                               className="below-nav main-content"
                               bookings={allBookings}
