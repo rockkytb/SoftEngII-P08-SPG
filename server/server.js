@@ -562,8 +562,8 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
       };
 
       const product = {
-        ID_Product: req.body.ID_Product,
-        Dec_Qty: req.body.Dec_Qty,
+        ID_Product: i.id,
+        Dec_Qty: i.quantity,
       };
         
       try {
