@@ -1314,7 +1314,7 @@ let timers = setInterval(async () => {clockDate = new Date();
   await clockActions();
 }, 30000);
 //FLAG to execute queries once a day, resetted every sunday
-let once = [true,true,true,true,true,true,false];
+let once = [true,true,true,true,true,true,true];
 
 //For periodic remainder, every 4 hours
 let oldHours =0;
