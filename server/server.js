@@ -1248,7 +1248,7 @@ app.put("/api/products", isLoggedIn, async (req, res) => {
       };
 
       try {
-        result = await dao.editStateProductWeek(product);
+       await dao.editStateProductWeek(product);
       } catch (err) {
         problem = 1;
         break;
