@@ -1015,7 +1015,7 @@ function App() {
                   <>
                     {loggedIn ? (
                       <>
-                        {setAttaccoDDOS(true)}
+                        {setAttaccoDDOS("update12")}
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom /> */}
@@ -1173,7 +1173,8 @@ function App() {
                       <>
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
-                            {/*<SidebarCustom />*/}
+                            {/*<SidebarCustom />*/
+                            setAttaccoDDOS("update13")}
                             <BookingAcceptance
                               className="below-nav main-content"
                               bookings={bookings}
