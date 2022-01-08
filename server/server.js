@@ -560,8 +560,15 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
         ID_Product: i.id,
         Qty: i.quantity,
       };
+
+      const product = {
+        ID_Product: req.body.ID_Product,
+        Dec_Qty: req.body.Dec_Qty,
+      };
+        
       try {
         await dao.createBookingProduct(bookingProduct);
+        await dao.editQtyProductWeek(product);
       } catch (err) {
         problems++;
       }
