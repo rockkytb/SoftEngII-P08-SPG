@@ -88,6 +88,7 @@ export default function ProductsList(props) {
     setProductId();
     setName("");
     setQuantity(1);
+    setOrderQuantity(1);
     setSize(0);
     setUnitOfMeasure("");
   };
