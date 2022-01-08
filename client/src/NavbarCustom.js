@@ -27,8 +27,10 @@ const popover = (
   </Popover>
 );
 
+let toPrint,toPrintConfirm,toPrintEmpty;
+
 if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
-  let toPrint = props.bookings && props.bookings.length>0 ? 
+  toPrint = props.bookings && props.bookings.length>0 ? 
   props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION") 
   :
   "";
@@ -38,7 +40,7 @@ if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
     setFirstTime(false);
   }
 
-  let toPrintEmpty = props.bookings && props.bookings.length>0 ? 
+  toPrintEmpty = props.bookings && props.bookings.length>0 ? 
   props.bookings.filter((bk) => bk.state === "EMPTY") 
   :
   "";
@@ -48,7 +50,7 @@ if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
     setFirstTime(false);
   }
 
-  let toPrintConfirm = props.bookings && props.bookings.length>0 ? 
+  toPrintConfirm = props.bookings && props.bookings.length>0 ? 
   props.bookings.filter((bk) => bk.state === "CONFIRMED")
   :
   "";
