@@ -171,7 +171,7 @@ function App() {
 
     add()
       .then(() => {
-        setAttaccoDDOS(true);
+        setAttaccoDDOS("update1");
         toast.success("Registration completed", { position: "top-center" },{toastId: 3});
       })
       .catch((err) => {
@@ -221,9 +221,6 @@ function App() {
     if (userdata && userdata.id) {
       setProductsExpectedFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state=="EXPECTED") : "")
       setConfirmedProductsFarmer(userdata.id.charAt(0) === "F" ? tmp.products.filter((f)=> f.state!=="EXPECTED") : "")
-    }
-    if(attaccoDDOS === true){
-      setAttaccoDDOS(false);
     }
 
   }, [bookingsState, attaccoDDOS, loggedIn, userdata]);
