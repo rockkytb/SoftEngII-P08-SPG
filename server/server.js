@@ -380,7 +380,7 @@ app.get("/api/clients", isLoggedIn, (req, res) => {
 });
 
 //POST /api/client/
-app.post("/api/client", isLoggedIn, (req, res) => {
+app.post("/api/client", (req, res) => {
   if (!validator.isEmail(`${req.body.email}`)) {
     return res.status(422).json({ error: `Invalid email` });
   }
