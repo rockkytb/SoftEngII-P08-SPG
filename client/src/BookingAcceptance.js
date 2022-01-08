@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from "react";
 import {
     CardColumns,
     Card,
@@ -9,13 +8,6 @@ import {
 
 export default function BookingAcceptance(props) {
 
-    /*function productsView(){
-        //TODO
-        return(
-            <>            
-            </>
-        );
-    }*/
 
     function bookingActions() {
         //FIX il filtro prende tutto quello che non è completed

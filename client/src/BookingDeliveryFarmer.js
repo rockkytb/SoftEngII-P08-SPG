@@ -34,7 +34,7 @@ export default function BookingDeliveryFarmer(props) {
                             id="deliveryButton"
                             onClick={() => {
                                 if(props.calendarday.getDay() === 2){
-                                //TODO, confirm delivery
+                                
                                 props.confirmDelivery(props.confirmedProducts);}
                                 else{
                                     setShowAlertTime(true);
