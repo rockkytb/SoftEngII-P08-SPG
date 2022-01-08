@@ -1228,9 +1228,9 @@ function App() {
             exact
             path="/home"
             render={() => (
-
+              
               <div className="width100">
-                
+                {setAttaccoDDOS("update2")}
                 <CarouselCustom className="customCarousel" logged={loggedIn} />
               </div>
             )}

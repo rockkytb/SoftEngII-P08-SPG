@@ -13,9 +13,9 @@ function ReportAvailability(props) {
 
     const [productname, setName] = useState("");
     const [category, setCategory] = useState(props.categories && props.categories[0] && props.categories[0].id ? props.categories[0].id : -1);
-    const [price, setPrice] = useState(0.0);
-    const [qty, setQty] = useState(0);
-    const [size, setSize] = useState(0);
+    const [price, setPrice] = useState(0.01);
+    const [qty, setQty] = useState(1);
+    const [size, setSize] = useState(1);
     const [unitOfMeasure, setUnitOfMeasure] = useState("kg");
 
     //const [measure, setMeasure] = useState("");
@@ -33,6 +33,7 @@ function ReportAvailability(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.currentTarget;
+        setValidated(true);
         if (form.checkValidity() === false || !props.id || category == -1) {
             event.stopPropagation();
         } else {
@@ -46,13 +47,18 @@ function ReportAvailability(props) {
                 farmerid: props.id.substring(1),
             };
             console.log(product);
-
+            
             props.addFutureProducts(props.id, product);
             toast.success("Succesfully added", { position: "top-center" },{toastId: 29});
-            setName(""); setCategory(props.categories[0].id); 
-            setPrice(0.0); setQty(0); setUnitOfMeasure("kg"); setValidated(false);
+            setName(""); 
+            setCategory(props.categories[0].id); 
+            setPrice(0.01); 
+            setQty(1);
+            setSize(1); 
+            setUnitOfMeasure("kg"); 
+            setValidated(false);
         }
-        setValidated(true);
+        
     };
 
     return (
@@ -110,7 +116,7 @@ function ReportAvailability(props) {
                         <Col xs={8}>
                             <Form.Group>
                                 <Form.Label>Price per item:</Form.Label>
-                                <Form.Control type="number" min="0" step="0.01" id="priceField" value={price} onChange={ev => setPrice(ev.target.value)} />
+                                <Form.Control type="number" min="0.01" step="0.01" id="priceField" value={price} onChange={ev => setPrice(ev.target.value)} />
                                 {price <= 0.0 && <Form.Control.Feedback type="invalid">
                                     Please insert a valid price.
                                 </Form.Control.Feedback>}
@@ -124,7 +130,7 @@ function ReportAvailability(props) {
                         <Col xs={8}>
                             <Form.Group controlId='text'>
                                 <Form.Label>Quantity:</Form.Label>
-                                <Form.Control type="number" min="0" step="1" id="quantityField" value={qty} onChange={ev => setQty(ev.target.value)} />
+                                <Form.Control type="number" min="1" step="1" id="quantityField" value={qty} onChange={ev => setQty(ev.target.value)} />
                                 {qty <= 0 && <Form.Control.Feedback type="invalid">
                                     Please insert a quantity.
                                 </Form.Control.Feedback>}
@@ -138,7 +144,7 @@ function ReportAvailability(props) {
                         <Col xs={8}>
                             <Form.Group controlId='text'>
                                 <Form.Label>Size:</Form.Label>
-                                <Form.Control type="number" min="0" step="1" value={size} id="sizeField" onChange={ev => setSize(ev.target.value)} />
+                                <Form.Control type="number" min="1" step="1" value={size} id="sizeField" onChange={ev => setSize(ev.target.value)} />
                                 {qty <= 0 && <Form.Control.Feedback type="invalid">
                                     Please insert the size of a single product.
                                 </Form.Control.Feedback>}
@@ -172,7 +178,7 @@ function ReportAvailability(props) {
                     <Row>
                         <Col xs={8} />
                         <Col xs={1}>
-                            <Button id="clearButton" onClick={() => { setName(""); setCategory(props.categories[0].id); setPrice(0.0); setQty(0); setUnitOfMeasure(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                            <Button id="clearButton" onClick={() => { setName(""); setCategory(props.categories[0].id); setPrice(0.01); setQty(1); setUnitOfMeasure(""); setSize(1); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                         </Col>
                         <Col xs={1} className="pl-5">
                             <Button type="submit" id="submitButton" variant="warning" className="float-right ">Add</Button>
