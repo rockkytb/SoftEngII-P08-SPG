@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for dao.js</title>
+    <title>Code coverage report for server/dao.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="prettify.css" />
-    <link rel="stylesheet" href="base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> dao.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">server</a> dao.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.48% </span>
+                <span class="strong">60.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>92/594</span>
+                <span class='fraction'>385/634</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">2.6% </span>
+                <span class="strong">42.07% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/192</span>
+                <span class='fraction'>85/202</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.91% </span>
+                <span class="strong">63.79% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/217</span>
+                <span class='fraction'>148/232</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.19% </span>
+                <span class="strong">62% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>92/568</span>
+                <span class='fraction'>377/608</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -1447,36 +1447,111 @@
 <a name='L1388'></a><a href='#L1388'>1388</a>
 <a name='L1389'></a><a href='#L1389'>1389</a>
 <a name='L1390'></a><a href='#L1390'>1390</a>
-<a name='L1391'></a><a href='#L1391'>1391</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L1391'></a><a href='#L1391'>1391</a>
+<a name='L1392'></a><a href='#L1392'>1392</a>
+<a name='L1393'></a><a href='#L1393'>1393</a>
+<a name='L1394'></a><a href='#L1394'>1394</a>
+<a name='L1395'></a><a href='#L1395'>1395</a>
+<a name='L1396'></a><a href='#L1396'>1396</a>
+<a name='L1397'></a><a href='#L1397'>1397</a>
+<a name='L1398'></a><a href='#L1398'>1398</a>
+<a name='L1399'></a><a href='#L1399'>1399</a>
+<a name='L1400'></a><a href='#L1400'>1400</a>
+<a name='L1401'></a><a href='#L1401'>1401</a>
+<a name='L1402'></a><a href='#L1402'>1402</a>
+<a name='L1403'></a><a href='#L1403'>1403</a>
+<a name='L1404'></a><a href='#L1404'>1404</a>
+<a name='L1405'></a><a href='#L1405'>1405</a>
+<a name='L1406'></a><a href='#L1406'>1406</a>
+<a name='L1407'></a><a href='#L1407'>1407</a>
+<a name='L1408'></a><a href='#L1408'>1408</a>
+<a name='L1409'></a><a href='#L1409'>1409</a>
+<a name='L1410'></a><a href='#L1410'>1410</a>
+<a name='L1411'></a><a href='#L1411'>1411</a>
+<a name='L1412'></a><a href='#L1412'>1412</a>
+<a name='L1413'></a><a href='#L1413'>1413</a>
+<a name='L1414'></a><a href='#L1414'>1414</a>
+<a name='L1415'></a><a href='#L1415'>1415</a>
+<a name='L1416'></a><a href='#L1416'>1416</a>
+<a name='L1417'></a><a href='#L1417'>1417</a>
+<a name='L1418'></a><a href='#L1418'>1418</a>
+<a name='L1419'></a><a href='#L1419'>1419</a>
+<a name='L1420'></a><a href='#L1420'>1420</a>
+<a name='L1421'></a><a href='#L1421'>1421</a>
+<a name='L1422'></a><a href='#L1422'>1422</a>
+<a name='L1423'></a><a href='#L1423'>1423</a>
+<a name='L1424'></a><a href='#L1424'>1424</a>
+<a name='L1425'></a><a href='#L1425'>1425</a>
+<a name='L1426'></a><a href='#L1426'>1426</a>
+<a name='L1427'></a><a href='#L1427'>1427</a>
+<a name='L1428'></a><a href='#L1428'>1428</a>
+<a name='L1429'></a><a href='#L1429'>1429</a>
+<a name='L1430'></a><a href='#L1430'>1430</a>
+<a name='L1431'></a><a href='#L1431'>1431</a>
+<a name='L1432'></a><a href='#L1432'>1432</a>
+<a name='L1433'></a><a href='#L1433'>1433</a>
+<a name='L1434'></a><a href='#L1434'>1434</a>
+<a name='L1435'></a><a href='#L1435'>1435</a>
+<a name='L1436'></a><a href='#L1436'>1436</a>
+<a name='L1437'></a><a href='#L1437'>1437</a>
+<a name='L1438'></a><a href='#L1438'>1438</a>
+<a name='L1439'></a><a href='#L1439'>1439</a>
+<a name='L1440'></a><a href='#L1440'>1440</a>
+<a name='L1441'></a><a href='#L1441'>1441</a>
+<a name='L1442'></a><a href='#L1442'>1442</a>
+<a name='L1443'></a><a href='#L1443'>1443</a>
+<a name='L1444'></a><a href='#L1444'>1444</a>
+<a name='L1445'></a><a href='#L1445'>1445</a>
+<a name='L1446'></a><a href='#L1446'>1446</a>
+<a name='L1447'></a><a href='#L1447'>1447</a>
+<a name='L1448'></a><a href='#L1448'>1448</a>
+<a name='L1449'></a><a href='#L1449'>1449</a>
+<a name='L1450'></a><a href='#L1450'>1450</a>
+<a name='L1451'></a><a href='#L1451'>1451</a>
+<a name='L1452'></a><a href='#L1452'>1452</a>
+<a name='L1453'></a><a href='#L1453'>1453</a>
+<a name='L1454'></a><a href='#L1454'>1454</a>
+<a name='L1455'></a><a href='#L1455'>1455</a>
+<a name='L1456'></a><a href='#L1456'>1456</a>
+<a name='L1457'></a><a href='#L1457'>1457</a>
+<a name='L1458'></a><a href='#L1458'>1458</a>
+<a name='L1459'></a><a href='#L1459'>1459</a>
+<a name='L1460'></a><a href='#L1460'>1460</a>
+<a name='L1461'></a><a href='#L1461'>1461</a>
+<a name='L1462'></a><a href='#L1462'>1462</a>
+<a name='L1463'></a><a href='#L1463'>1463</a>
+<a name='L1464'></a><a href='#L1464'>1464</a>
+<a name='L1465'></a><a href='#L1465'>1465</a>
+<a name='L1466'></a><a href='#L1466'>1466</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1491,18 +1566,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1514,16 +1589,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1531,9 +1606,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1541,54 +1616,54 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1596,20 +1671,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1617,20 +1692,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1638,41 +1713,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1698,7 +1773,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1715,24 +1790,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1758,7 +1833,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1775,40 +1850,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1816,17 +1891,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1848,15 +1923,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1865,15 +1940,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1881,71 +1956,71 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1958,10 +2033,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1970,35 +2045,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2016,7 +2091,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2032,17 +2107,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2051,15 +2126,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2069,22 +2144,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2095,21 +2170,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2119,22 +2194,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2144,9 +2219,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2167,45 +2242,45 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2218,9 +2293,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2243,23 +2318,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2268,81 +2343,81 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2352,17 +2427,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2372,10 +2447,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2383,17 +2458,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2409,11 +2484,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2429,26 +2504,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2458,40 +2533,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2501,13 +2576,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2528,7 +2603,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2574,7 +2649,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2589,80 +2664,80 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">1801x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">163x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">163x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">163x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">164x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2671,7 +2746,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2706,7 +2781,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2720,7 +2795,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2753,7 +2828,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2762,7 +2837,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2796,7 +2871,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -2816,17 +2891,92 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -2855,18 +3005,18 @@ const db = new sqlite.Database(
 );
 &nbsp;
 //get Clients
-exports.getClients = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM CLIENT";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getClients = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM CLIENT";
+    db.all(sql, [], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (rows === undefined) {</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (rows === undefined) {
 <span class="cstat-no" title="statement not covered" >        resolve(false);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(</span>
-          rows.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; {
-<span class="cstat-no" title="statement not covered" >            return {</span>
+        resolve(
+          rows.map((x) =&gt; {
+            return {
               id: `C${x.ID}`,
               username: x.EMAIL,
               name: x.NAME,
@@ -2881,18 +3031,18 @@ exports.getClients = <span class="fstat-no" title="function not covered" >()</sp
 };
 &nbsp;
 //get Categories
-exports.getCategories = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM CATEGORY";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getCategories = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM CATEGORY";
+    db.all(sql, [], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (rows === undefined) {</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (rows === undefined) {
 <span class="cstat-no" title="statement not covered" >        resolve(false);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(</span>
-          rows.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; {
-<span class="cstat-no" title="statement not covered" >            return {</span>
+        resolve(
+          rows.map((x) =&gt; {
+            return {
               id: `${x.ID}`,
               name: x.NAME,
             };
@@ -2904,16 +3054,16 @@ exports.getCategories = <span class="fstat-no" title="function not covered" >()<
 };
 &nbsp;
 //get Client
-exports.getClient = <span class="fstat-no" title="function not covered" >(e</span>mail, password) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM CLIENT WHERE EMAIL = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [email], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getClient = (email, password) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM CLIENT WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{</span>
+        const user = {
           id: `C${row.ID}`,
           username: row.EMAIL,
           name: row.NAME,
@@ -2921,9 +3071,9 @@ exports.getClient = <span class="fstat-no" title="function not covered" >(e</spa
           phone: row.PHONE
         };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        bcrypt.compare(password, row.PASSWORD).then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          if (result) <span class="cstat-no" title="statement not covered" >resolve(user);</span></span>
-          else <span class="cstat-no" title="statement not covered" >resolve(false);</span>
+        bcrypt.compare(password, row.PASSWORD).then((result) =&gt; {
+          if (result) resolve(user);
+          else resolve(false);
         });
       }
     });
@@ -2931,54 +3081,54 @@ exports.getClient = <span class="fstat-no" title="function not covered" >(e</spa
 };
 &nbsp;
 //get Client by Id
-exports.getClientById = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM CLIENT WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getClientById = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM CLIENT WHERE ID = ?";
+    db.get(sql, [id], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `C${row.ID}`, username: row.EMAIL };</span>
-<span class="cstat-no" title="statement not covered" >        resolve(user);</span>
+        const user = { id: `C${row.ID}`, username: row.EMAIL };
+        resolve(user);
       }
     });
   });
 };
 &nbsp;
 //get Client by Email
-exports.getClientByEmail = <span class="fstat-no" title="function not covered" >(e</span>mail) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM CLIENT WHERE EMAIL = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [email], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getClientByEmail = (email) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM CLIENT WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(-1);</span>
+      } else if (row === undefined) {
+        resolve(-1);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `C${row.ID}` };</span>
-<span class="cstat-no" title="statement not covered" >        resolve(user);</span>
+        const user = { id: `C${row.ID}` };
+        resolve(user);
       }
     });
   });
 };
 &nbsp;
 //get warehouse worker
-exports.getWarehouseWorker = <span class="fstat-no" title="function not covered" >(e</span>mail, password) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM WAREHOUSE_WORKER WHERE EMAIL = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [email], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getWarehouseWorker = (email, password) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM WAREHOUSE_WORKER WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `W${row.ID}`, username: row.EMAIL };</span>
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        bcrypt.compare(password, row.PASSWORD).then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          if (result) <span class="cstat-no" title="statement not covered" >resolve(user);</span></span>
-          else <span class="cstat-no" title="statement not covered" >resolve(false);</span>
+        bcrypt.compare(password, row.PASSWORD).then((result) =&gt; {
+          if (result) resolve(user);
+          else resolve(false);
         });
       }
     });
@@ -2986,20 +3136,20 @@ exports.getWarehouseWorker = <span class="fstat-no" title="function not covered"
 };
 &nbsp;
 //get Farmer
-exports.getFarmer = <span class="fstat-no" title="function not covered" >(e</span>mail, password) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM FARMER WHERE EMAIL = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [email], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getFarmer = (email, password) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM FARMER WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `F${row.ID}`, username: row.EMAIL };</span>
+        const user = { id: `F${row.ID}`, username: row.EMAIL };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        bcrypt.compare(password, row.PASSWORD).then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          if (result) <span class="cstat-no" title="statement not covered" >resolve(user);</span></span>
-          else <span class="cstat-no" title="statement not covered" >resolve(false);</span>
+        bcrypt.compare(password, row.PASSWORD).then((result) =&gt; {
+          if (result) resolve(user);
+          else resolve(false);
         });
       }
     });
@@ -3007,20 +3157,20 @@ exports.getFarmer = <span class="fstat-no" title="function not covered" >(e</spa
 };
 &nbsp;
 //get Shop Employee
-exports.getShopEmployee = <span class="fstat-no" title="function not covered" >(e</span>mail, password) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM SHOP_EMPLOYEE WHERE EMAIL = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [email], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getShopEmployee = (email, password) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM SHOP_EMPLOYEE WHERE EMAIL = ?";
+    db.get(sql, [email], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `S${row.ID}`, username: row.EMAIL };</span>
+        const user = { id: `S${row.ID}`, username: row.EMAIL };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        bcrypt.compare(password, row.PASSWORD).then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          if (result) <span class="cstat-no" title="statement not covered" >resolve(user);</span></span>
-          else <span class="cstat-no" title="statement not covered" >resolve(false);</span>
+        bcrypt.compare(password, row.PASSWORD).then((result) =&gt; {
+          if (result) resolve(user);
+          else resolve(false);
         });
       }
     });
@@ -3028,34 +3178,34 @@ exports.getShopEmployee = <span class="fstat-no" title="function not covered" >(
 };
 &nbsp;
 //get Farmer by Id
-exports.getFarmerById = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM FARMER WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getFarmerById = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM FARMER WHERE ID = ?";
+    db.get(sql, [id], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `F${row.ID}`, username: row.EMAIL };</span>
-<span class="cstat-no" title="statement not covered" >        resolve(user);</span>
+        const user = { id: `F${row.ID}`, username: row.EMAIL };
+        resolve(user);
       }
     });
   });
 };
 &nbsp;
 //get ShopEmployee by Id
-exports.getShopEmployeeById = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM SHOP_EMPLOYEE WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getShopEmployeeById = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM SHOP_EMPLOYEE WHERE ID = ?";
+    db.get(sql, [id], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `S${row.ID}`, username: row.EMAIL };</span>
-<span class="cstat-no" title="statement not covered" >        resolve(user);</span>
+        const user = { id: `S${row.ID}`, username: row.EMAIL };
+        resolve(user);
       }
     });
   });
@@ -3105,17 +3255,17 @@ exports.getWarehouseManagerById = <span class="fstat-no" title="function not cov
 };
 &nbsp;
 //get Warehouse worker by Id
-exports.getWarehouseWorkerById = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM WAREHOUSE_WORKER WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getWarehouseWorkerById = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM WAREHOUSE_WORKER WHERE ID = ?";
+    db.get(sql, [id], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
+      } else if (row === undefined) {
+        resolve(false);
       } else {
-        const user = <span class="cstat-no" title="statement not covered" >{ id: `W${row.ID}`, username: row.EMAIL };</span>
-<span class="cstat-no" title="statement not covered" >        resolve(user);</span>
+        const user = { id: `W${row.ID}`, username: row.EMAIL };
+        resolve(user);
       }
     });
   });
@@ -3165,16 +3315,16 @@ exports.getManagerById = <span class="fstat-no" title="function not covered" >(i
 };
 &nbsp;
 // add a new acknowledge
-exports.createAcknowledge = <span class="fstat-no" title="function not covered" >(a</span>ck) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.createAcknowledge = (ack) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [ack.idFarmer, ack.email, ack.state], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "INSERT INTO MANAGER_ACKNOWLEDGE (FARMER_ID,FARMER, STATUS) VALUES(?, ?, ?)";
+    db.run(sql, [ack.idFarmer, ack.email, ack.state], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-<span class="cstat-no" title="statement not covered" >      resolve(this.lastID);</span>
+      resolve(this.lastID);
     });
   });
 };
@@ -3188,28 +3338,28 @@ exports.createBooking = (booking) =&gt; {
         reject(err);
         return;
       }
-<span class="cstat-no" title="statement not covered" >      resolve(this.lastID);</span>
+      resolve(this.lastID);
     });
   });
 };
 &nbsp;
 // add a new bookingProduct
-exports.createBookingProduct = <span class="fstat-no" title="function not covered" >(b</span>ookingProduct) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.createBookingProduct = (bookingProduct) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(</span>
+      "INSERT INTO BOOKING_PRODUCTS (ID_BOOKING, ID_PRODUCT, QTY) VALUES(?, ?, ?)";
+    db.run(
       sql,
       [
         bookingProduct.ID_Booking,
         bookingProduct.ID_Product,
         bookingProduct.Qty,
       ],
-<span class="fstat-no" title="function not covered" >      fu</span>nction (err) {
-<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+      function (err) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >          reject(err);</span>
         }
-<span class="cstat-no" title="statement not covered" >        resolve(this.lastID);</span>
+        resolve(this.lastID);
       }
     );
   });
@@ -3238,16 +3388,16 @@ exports.updateBookingProduct = <span class="fstat-no" title="function not covere
 };
 &nbsp;
 // edit qty of a product_week
-exports.editQtyProductWeek = <span class="fstat-no" title="function not covered" >(p</span>roduct) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE PRODUCT_WEEK SET QTY = QTY - ? WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [product.Dec_Qty, product.ID_Product], <span class="fstat-no" title="function not covered" >fu</span>nction (err, row) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.editQtyProductWeek = (product) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY - ? WHERE ID = ?";
+    db.run(sql, [product.Dec_Qty, product.ID_Product], function (err, row) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
-      } else <span class="cstat-no" title="statement not covered" >if (row === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        resolve(false);</span>
-      } else {
+      } else if (row === undefined) {
+        resolve(false);
+      } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        resolve(true);</span>
       }
     });
@@ -3255,87 +3405,87 @@ exports.editQtyProductWeek = <span class="fstat-no" title="function not covered"
 };
 &nbsp;
 // Increment the quantity of a product
-exports.IncrementQtyProductWeek = <span class="fstat-no" title="function not covered" >(p</span>roduct) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [product.Inc_Qty, product.ID_Product], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.IncrementQtyProductWeek = (Inc_Qty, ID_Product) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
+    db.run(sql, [Inc_Qty, ID_Product], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-        let updatedProduct = <span class="cstat-no" title="statement not covered" >getProduct(product.ID_Product);</span>
-<span class="cstat-no" title="statement not covered" >        resolve(updatedProduct);</span>
+        let updatedProduct = getProduct(ID_Product);
+        resolve(updatedProduct);
       }
     });
   });
 };
 &nbsp;
 // retrieve a product with a given id
-function <span class="fstat-no" title="function not covered" >getProduct(</span>id) {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * from PRODUCT_WEEK WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(sql, [id], <span class="fstat-no" title="function not covered" >fu</span>nction (err, row) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+function getProduct(id) {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * from PRODUCT_WEEK WHERE ID = ?";
+    db.get(sql, [id], function (err, row) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(row);</span>
+        resolve(row);
       }
     });
   });
 }
 &nbsp;
 // edit state of a product_week
-exports.editStateProductWeek = <span class="fstat-no" title="function not covered" >(p</span>roduct) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE PRODUCT_WEEK SET STATE = ? WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [product.state, product.id], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.editStateProductWeek = (product) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE PRODUCT_WEEK SET STATE = ? WHERE ID = ?";
+    db.run(sql, [product.state, product.id], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(true);</span>
+        resolve(true);
       }
     });
   });
 };
 &nbsp;
 // delete a product from product_week
-exports.deleteProduct = <span class="fstat-no" title="function not covered" >(p</span>roductId) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"DELETE from PRODUCT_WEEK WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [productId], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.deleteProduct = (productId) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "DELETE from PRODUCT_WEEK WHERE ID = ?";
+    db.run(sql, [productId], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(true);</span>
+        resolve(true);
       }
     });
   });
 };
 &nbsp;
 // delete a booking product from booking_product table!
-exports.deleteBookingProduct = <span class="fstat-no" title="function not covered" >(p</span>roductId, bookingId) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.deleteBookingProduct = (productId, bookingId) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [bookingId, productId], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
+    db.run(sql, [bookingId, productId], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(true);</span>
+        resolve(true);
       }
     });
   });
 };
 &nbsp;
 // INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED
-exports.insertTupleProductWEEK = <span class="fstat-no" title="function not covered" >(p</span>roduct) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const getUnity = <span class="cstat-no" title="statement not covered" >"SELECT NAME FROM CATEGORY WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.get(getUnity, [product.category_id], <span class="fstat-no" title="function not covered" >(e</span>rr, row) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) <span class="cstat-no" title="statement not covered" >reject(err);</span></span>
+exports.insertTupleProductWEEK = (product) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const getUnity = "SELECT NAME FROM CATEGORY WHERE ID = ?";
+    db.get(getUnity, [product.category_id], (err, row) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) <span class="cstat-no" title="statement not covered" >reject(err);</span>
       else {
         const sql =
-<span class="cstat-no" title="statement not covered" >          "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >        db.run(</span>
+          "INSERT INTO PRODUCT_WEEK (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID, STATE, SIZE, UNIT_OF_MEASURE) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        db.run(
           sql,
           [
             product.name,
@@ -3347,11 +3497,11 @@ exports.insertTupleProductWEEK = <span class="fstat-no" title="function not cove
             product.size,
             product.unit_of_measure,
           ],
-<span class="fstat-no" title="function not covered" >          fu</span>nction (err) {
-<span class="cstat-no" title="statement not covered" >            if (err) {</span>
+          function (err) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >              reject(err);</span>
             }
-<span class="cstat-no" title="statement not covered" >            resolve(this.lastID);</span>
+            resolve(this.lastID);
           }
         );
       }
@@ -3360,28 +3510,28 @@ exports.insertTupleProductWEEK = <span class="fstat-no" title="function not cove
 };
 &nbsp;
 // edit state of a booking
-exports.editStateBooking = <span class="fstat-no" title="function not covered" >(b</span>ooking) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [booking.state, booking.id], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.editStateBooking = (booking) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE BOOKING SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, [booking.state, booking.id], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(true);</span>
+        resolve(true);
       }
     });
   });
 };
 &nbsp;
 // edit state of an ack
-exports.editStateAck = <span class="fstat-no" title="function not covered" >(a</span>ck) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE MANAGER_ACKNOWLEDGE SET STATUS = ? WHERE ID = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [ack.state, ack.id], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.editStateAck = (ack) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE MANAGER_ACKNOWLEDGE SET STATUS = ? WHERE ID = ?";
+    db.run(sql, [ack.state, ack.id], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(true);</span>
+        resolve(true);
       }
     });
   });
@@ -3422,17 +3572,17 @@ exports.getWallet = <span class="fstat-no" title="function not covered" >(i</spa
   });
 };
 // add a new client
-exports.createClient = <span class="fstat-no" title="function not covered" >(c</span>lient) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.createClient = (client) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(</span>
+      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
+    db.run(
       sql,
       [client.email, client.name, client.surname, client.password, client.phone],
-<span class="fstat-no" title="function not covered" >      fu</span>nction (err) {
-<span class="cstat-no" title="statement not covered" >        if (err) {</span>
-<span class="cstat-no" title="statement not covered" >          reject(err);</span>
-<span class="cstat-no" title="statement not covered" >          return;</span>
+      function (err) {
+        if (err) {
+          reject(err);
+          return;
         }
 <span class="cstat-no" title="statement not covered" >        resolve(this.lastID);</span>
       }
@@ -3441,15 +3591,15 @@ exports.createClient = <span class="fstat-no" title="function not covered" >(c</
 };
 &nbsp;
 //get all products
-exports.getAllProducts = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAllProducts = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.STATE ='EXPECTED'";
+    db.all(sql, (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const products = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const products = rows.map((e) =&gt; ({
         id: e.ID,
         name: e.NAME,
         category: e.categoryName,
@@ -3459,22 +3609,22 @@ exports.getAllProducts = <span class="fstat-no" title="function not covered" >()
         unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
-<span class="cstat-no" title="statement not covered" >      resolve(products);</span>
+      resolve(products);
     });
   });
 };
 &nbsp;
 // get products from PRODUCT_WEEK with EXPECTED STATE according to the id of a farmer
-exports.getAllProductsExpectedForFarmer = <span class="fstat-no" title="function not covered" >(i</span>dFarmer) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAllProductsExpectedForFarmer = (idFarmer) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";</span>
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,p.STATE,c.name as categoryName FROM PRODUCT_WEEK p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID WHERE p.FARMER_ID=? AND p.STATE=?";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [idFarmer, "EXPECTED"], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+    db.all(sql, [idFarmer, "EXPECTED"], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const products = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const products = rows.map((e) =&gt; ({
         id: e.ID,
         name: e.NAME,
         category: e.categoryName,
@@ -3485,21 +3635,21 @@ exports.getAllProductsExpectedForFarmer = <span class="fstat-no" title="function
         farmer_email: e.EMAIL,
         state: e.STATE,
       }));
-<span class="cstat-no" title="statement not covered" >      resolve(products);</span>
+      resolve(products);
     });
   });
 };
 &nbsp;
 //get all products in state = CONFIRMED of a particular farmer from PRODUCT_WEEK table
-exports.getAllProductsConfirmedForFarmer = <span class="fstat-no" title="function not covered" >(f</span>armerId) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAllProductsConfirmedForFarmer = (farmerId) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and (p.STATE='CONFIRMED')";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [farmerId], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT p.SIZE, p.UNIT_OF_MEASURE, f.email,p.ID,p.NAME,p.PRICE,p.QTY,c.name as categoryName FROM product_week p join farmer f on f.ID=p.FARMER_ID join category c on c.ID=p.CATEGORY_ID where p.FARMER_ID=? and (p.STATE='CONFIRMED')";
+    db.all(sql, [farmerId], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const products = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const products = rows.map((e) =&gt; ({
         id: e.ID,
         name: e.NAME,
         category: e.categoryName,
@@ -3509,22 +3659,22 @@ exports.getAllProductsConfirmedForFarmer = <span class="fstat-no" title="functio
         unit_of_measure: e.UNIT_OF_MEASURE,
         farmer_email: e.EMAIL,
       }));
-<span class="cstat-no" title="statement not covered" >      resolve(products);</span>
+      resolve(products);
     });
   });
 };
 &nbsp;
 //get all bookings
-exports.getAllBookings = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAllBookings = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME,bp.QTY,p.NAME as productName,p.ID as productID FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK p on p.ID=bp.ID_PRODUCT";
+    db.all(sql, (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const bookings = <span class="cstat-no" title="statement not covered" >[];</span>
-      const prenotazioni = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const bookings = [];
+      const prenotazioni = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
@@ -3534,7 +3684,7 @@ exports.getAllBookings = <span class="fstat-no" title="function not covered" >()
         product: e.productName,
         productID: e.productID,
       }));
-<span class="cstat-no" title="statement not covered" >      prenotazioni.forEach(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; {</span>
+      prenotazioni.forEach(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >        if (bookings[p.id]) {</span>
 <span class="cstat-no" title="statement not covered" >          bookings[p.id].products = [</span>
             ...bookings[p.id].products,
@@ -3557,45 +3707,45 @@ exports.getAllBookings = <span class="fstat-no" title="function not covered" >()
           };
         }
       });
-      const list = <span class="cstat-no" title="statement not covered" >bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >b !== null)</span>;</span>
-<span class="cstat-no" title="statement not covered" >      resolve(list);</span>
+      const list = bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >b !== null)</span>;
+      resolve(list);
     });
   });
   //veloce
 };
 &nbsp;
 // GET /api/bookingModesNew/pickup
-exports.getbookingModesNewPickup = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getbookingModesNewPickup = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=?  AND BM.STATE=? AND B.STATE!=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [0, "NEW", "PENDINGCANCELATION"], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT FROM BOOKING_MODE BM, BOOKING B WHERE B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=?  AND BM.STATE=? AND B.STATE!=?";
+    db.all(sql, [0, "NEW", "PENDINGCANCELATION"], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const bookings = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const bookings = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         idBooking: e.ID_BOOKING,
         idClient: e.CLIENT_ID,
         state: e.STAT,
         date: e.DATE,
         time: e.TIME,
       }));
-<span class="cstat-no" title="statement not covered" >      resolve(bookings);</span>
+      resolve(bookings);
     });
   });
 };
 &nbsp;
 //get  booking Modes Preparation
-exports.getbookingModesPreparation = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getbookingModesPreparation = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID and P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [0, "PREPARATION"], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT C.EMAIL,C.NAME,C.SURNAME,B.ID_BOOKING,B.CLIENT_ID,BM.DATE,BM.TIME,B.STATE AS STAT ,BP.QTY,P.NAME as productName,P.ID as productID FROM CLIENT C, BOOKING_MODE BM, BOOKING B, BOOKING_PRODUCTS BP, PRODUCT_WEEK P  WHERE C.ID=B.CLIENT_ID and P.ID=BP.ID_PRODUCT AND BP.ID_BOOKING=B.ID_BOOKING AND B.ID_BOOKING=BM.ID_BOOKING AND BM.DELIVERY=? AND BM.STATE=?";
+    db.all(sql, [0, "PREPARATION"], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
-      const bookings = <span class="cstat-no" title="statement not covered" >[];</span>
-      const prenotazioni = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const bookings = [];
+      const prenotazioni = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         id: e.ID_BOOKING,
 &nbsp;
         email: e.EMAIL,
@@ -3608,7 +3758,7 @@ exports.getbookingModesPreparation = <span class="fstat-no" title="function not 
         product: e.productName,
         productID: e.productID,
       }));
-<span class="cstat-no" title="statement not covered" >      prenotazioni.forEach(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; {</span>
+      prenotazioni.forEach(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >        if (bookings[p.id]) {</span>
 <span class="cstat-no" title="statement not covered" >          bookings[p.id].products = [</span>
             ...bookings[p.id].products,
@@ -3633,23 +3783,23 @@ exports.getbookingModesPreparation = <span class="fstat-no" title="function not 
           };
         }
       });
-      const list = <span class="cstat-no" title="statement not covered" >bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >b !== null)</span>;</span>
-<span class="cstat-no" title="statement not covered" >      resolve(list);</span>
+      const list = bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >b !== null)</span>;
+      resolve(list);
     });
   });
 };
 &nbsp;
 //get all bookings for a particular client
-exports.getAllBookingsForClient = <span class="fstat-no" title="function not covered" >(c</span>lientId) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAllBookingsForClient = (clientId) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID where b.CLIENT_ID=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [clientId], <span class="fstat-no" title="function not covered" >as</span>ync (err, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT b.ID_BOOKING, b.STATE,c.EMAIL,c.NAME,c.SURNAME FROM BOOKING b join CLIENT c on b.CLIENT_ID=c.ID where b.CLIENT_ID=?";
+    db.all(sql, [clientId], async (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      const bookings = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const bookings = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
@@ -3658,81 +3808,81 @@ exports.getAllBookingsForClient = <span class="fstat-no" title="function not cov
         products: []
       }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      for (let booking of bookings)</span>
+      for (let booking of bookings)
 <span class="cstat-no" title="statement not covered" >        booking.products = await this.productsOfBooking(booking.id);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      resolve(bookings);</span>
+      resolve(bookings);
     });
   });
 };
 &nbsp;
 // Edit the wallet balance for a certain client
-exports.updateWallet = <span class="fstat-no" title="function not covered" >(w</span>allet) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [wallet.amount, wallet.id], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.updateWallet = (wallet) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE CLIENT_WALLET SET AMOUNT=?  WHERE ID_CLIENT=?";
+    db.run(sql, [wallet.amount, wallet.id], function (err) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err.message);</span>
       }
-<span class="cstat-no" title="statement not covered" >      if (wallet.id === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >        reject({ err: "CLIENT ID NOT PROVIDED" });</span>
-<span class="cstat-no" title="statement not covered" >        return;</span>
+      if (wallet.id === undefined) {
+        reject({ err: "CLIENT ID NOT PROVIDED" });
+        return;
       }
-<span class="cstat-no" title="statement not covered" >      if (this.changes === 0) {</span>
-<span class="cstat-no" title="statement not covered" >        reject({ err: "CLIENT NOT FOUND" });</span>
-<span class="cstat-no" title="statement not covered" >        return;</span>
-      } else <span class="cstat-no" title="statement not covered" >resolve(wallet);</span>
+      if (this.changes === 0) {
+        reject({ err: "CLIENT NOT FOUND" });
+        return;
+      } else resolve(wallet);
     });
   });
 };
 &nbsp;
 // Create a new wallet
-exports.createWallet = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, [id, 0.0], <span class="fstat-no" title="function not covered" >fu</span>nction (err) {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
-<span class="cstat-no" title="statement not covered" >        reject(false);</span>
-<span class="cstat-no" title="statement not covered" >        return;</span>
+exports.createWallet = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "INSERT INTO CLIENT_WALLET(ID_CLIENT,AMOUNT ) VALUES(?, ?)";
+    db.run(sql, [id, 0.0], function (err) {
+      if (err) {
+        reject(false);
+        return;
       }
-<span class="cstat-no" title="statement not covered" >      resolve(true);</span>
+      resolve(true);
     });
   });
 };
 &nbsp;
 // Get all ACK with new state
-exports.getAcksStateNew = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getAcksStateNew = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT ID,FARMER_ID,FARMER,STATUS FROM MANAGER_ACKNOWLEDGE WHERE STATUS = 'NEW'";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT ID,FARMER_ID,FARMER,STATUS FROM MANAGER_ACKNOWLEDGE WHERE STATUS = 'NEW'";
+    db.all(sql, (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
 &nbsp;
-      const acks = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const acks = rows.map((e) =&gt; ({
         id: e.ID,
         state: e.STATUS,
         farmer: e.FARMER,
         farmerId: e.FARMER_ID,
       }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      resolve(acks);</span>
+      resolve(acks);
     });
   });
 };
 &nbsp;
 // Get all bookings with PendingCancelation state
-exports.getBookingsStatePendingCancelation = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getBookingsStatePendingCancelation = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE b.STATE = 'PENDINGCANCELATION'";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT b.ID_BOOKING, b.STATE, c.EMAIL, c.NAME as nameClient, c.SURNAME, bp.QTY, pw.NAME as nameProduct FROM BOOKING b join CLIENT c on c.ID=b.CLIENT_ID join BOOKING_PRODUCTS bp on b.ID_BOOKING=bp.ID_BOOKING join PRODUCT_WEEK pw on bp.ID_PRODUCT=pw.ID WHERE b.STATE = 'PENDINGCANCELATION'";
+    db.all(sql, (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
       }
 &nbsp;
-      const bookings = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      const bookings = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         id: e.ID_BOOKING,
         state: e.STATE,
         email: e.EMAIL,
@@ -3742,17 +3892,17 @@ exports.getBookingsStatePendingCancelation = <span class="fstat-no" title="funct
         product: e.nameProduct,
       }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      resolve(bookings);</span>
+      resolve(bookings);
     });
   });
 };
 &nbsp;
 // INSERT a new tuple into PRODUCT_EXPECTED
-exports.insertTupleProductExpected = <span class="fstat-no" title="function not covered" >(p</span>dtExp) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.insertTupleProductExpected = (pdtExp) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "INSERT INTO PRODUCT_EXPECTED (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID) VALUES (?,?,?,?,?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(</span>
+      "INSERT INTO PRODUCT_EXPECTED (NAME, CATEGORY_ID, PRICE, QTY, FARMER_ID) VALUES (?,?,?,?,?)";
+    db.run(
       sql,
       [
         pdtExp.name,
@@ -3761,11 +3911,11 @@ exports.insertTupleProductExpected = <span class="fstat-no" title="function not 
         pdtExp.qty,
         pdtExp.farmer_id,
       ],
-<span class="fstat-no" title="function not covered" >      fu</span>nction (err) {
-<span class="cstat-no" title="statement not covered" >        if (err) {</span>
-<span class="cstat-no" title="statement not covered" >          reject(false);</span>
+      function (err) {
+        if (err) {
+          reject(false);
         }
-<span class="cstat-no" title="statement not covered" >        resolve(this.lastID);</span>
+        resolve(this.lastID);
       }
     );
   });
@@ -3773,17 +3923,17 @@ exports.insertTupleProductExpected = <span class="fstat-no" title="function not 
 &nbsp;
 //GET /api/clientsPreparation
 &nbsp;
-exports.getClientsPreparation = <span class="fstat-no" title="function not covered" >(p</span>roductId) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.getClientsPreparation = (productId) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT DISTINCT(C.ID), C.EMAIL, C.NAME, C.SURNAME FROM BOOKING_PRODUCTS BP, BOOKING B, CLIENT C WHERE ID_PRODUCT=? AND BP.ID_BOOKING=B.ID_BOOKING AND B.CLIENT_ID=C.ID";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [productId], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT DISTINCT(C.ID), C.EMAIL, C.NAME, C.SURNAME FROM BOOKING_PRODUCTS BP, BOOKING B, CLIENT C WHERE ID_PRODUCT=? AND BP.ID_BOOKING=B.ID_BOOKING AND B.CLIENT_ID=C.ID";
+    db.all(sql, [productId], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (rows === undefined) {</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (rows === undefined) {
 <span class="cstat-no" title="statement not covered" >        resolve(false);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        resolve(</span>
+        resolve(
           rows.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >            return {</span>
               id: `C${x.ID}`,
@@ -3799,11 +3949,11 @@ exports.getClientsPreparation = <span class="fstat-no" title="function not cover
 };
 &nbsp;
 // Create a new booking mode
-exports.createBookingMode = <span class="fstat-no" title="function not covered" >(b</span>ookingMode) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.createBookingMode = (bookingMode) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee, state) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(</span>
+      "INSERT INTO BOOKING_MODE (id_booking ,delivery, street, city, province, postal_code, country, date, time, extra_fee, state) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.run(
       sql,
       [
         bookingMode.idBooking,
@@ -3818,28 +3968,28 @@ exports.createBookingMode = <span class="fstat-no" title="function not covered" 
         bookingMode.extra_fee,
         "NEW",
       ],
-<span class="fstat-no" title="function not covered" >      fu</span>nction (err) {
-<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+      function (err) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >          reject(err);</span>
         }
-<span class="cstat-no" title="statement not covered" >        resolve(this.lastID);</span>
+        resolve(this.lastID);
       }
     );
   });
 };
 &nbsp;
 // edit state of a booking mode
-exports.updateStateBookingMode = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE BOOKING_MODE SET STATE = ? WHERE ID_BOOKING = ?";</span>
-<span class="cstat-no" title="statement not covered" >    db.run(sql, ["PREPARATION", id], <span class="fstat-no" title="function not covered" >fu</span>nction (error) {</span>
-<span class="cstat-no" title="statement not covered" >      if (error) {</span>
+exports.updateStateBookingMode = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "UPDATE BOOKING_MODE SET STATE = ? WHERE ID_BOOKING = ?";
+    db.run(sql, ["PREPARATION", id], function (error) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
 <span class="cstat-no" title="statement not covered" >        reject(error.message);</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
-      } else <span class="cstat-no" title="statement not covered" >if (this.changes === 0) {</span>
-<span class="cstat-no" title="statement not covered" >        reject({ error: "BOOKING MODE ID NOT FOUND" });</span>
-<span class="cstat-no" title="statement not covered" >        return;</span>
-      } else {
+      } else if (this.changes === 0) {
+        reject({ error: "BOOKING MODE ID NOT FOUND" });
+        return;
+      } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        resolve(id);</span>
       }
     });
@@ -3848,40 +3998,40 @@ exports.updateStateBookingMode = <span class="fstat-no" title="function not cove
 &nbsp;
 //get all the bookings of the client id that are in state booked
 &nbsp;
-exports.getAllBookingsForClientBooked = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-    const sql = <span class="cstat-no" title="statement not covered" >"SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+exports.getAllBookingsForClientBooked = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const sql = "SELECT * FROM BOOKING WHERE CLIENT_ID=? AND STATE='BOOKED'";
+    db.all(sql, [id], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (rows === undefined) {</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (rows === undefined) {
 <span class="cstat-no" title="statement not covered" >        console.log("rows non è definito---------");</span>
 <span class="cstat-no" title="statement not covered" >        resolve(false);</span>
       } else {
-        const bookings = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+        const bookings = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
           id_booking: e.ID_BOOKING,
           id_client: e.CLIENT_ID,
           state: e.STATE,
         }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        resolve(bookings);</span>
+        resolve(bookings);
       }
     });
   });
 };
 &nbsp;
-exports.productsOfBooking = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+exports.productsOfBooking = (id) =&gt; {
+  return new Promise((resolve, reject) =&gt; {
     const sql =
-<span class="cstat-no" title="statement not covered" >      "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?";</span>
-<span class="cstat-no" title="statement not covered" >    db.all(sql, [id], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+      "SELECT p.ID, p.NAME, c.NAME as CATEGORY_NAME, p.PRICE, bp.QTY as QTY_BOOKING, f.EMAIL as FARMER_EMAIL, p.STATE FROM BOOKING_PRODUCTS bp join PRODUCT_WEEK p on bp.ID_PRODUCT=p.ID join CATEGORY c on p.CATEGORY_ID=c.ID join FARMER f on p.FARMER_ID=f.ID WHERE bp.ID_BOOKING=?";
+    db.all(sql, [id], (err, rows) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >        reject(err);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (rows === undefined) {</span>
+      } else <span class="missing-if-branch" title="if path not taken" >I</span>if (rows === undefined) {
 <span class="cstat-no" title="statement not covered" >        console.log("rows non è definito---------");</span>
 <span class="cstat-no" title="statement not covered" >        resolve(false);</span>
       } else {
-        const products = <span class="cstat-no" title="statement not covered" >rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+        const products = rows.map(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
           id_product: e.ID,
           product: e.NAME,
           category: e.CATEGORY_NAME,
@@ -3891,7 +4041,7 @@ exports.productsOfBooking = <span class="fstat-no" title="function not covered" 
           state: e.STATE,
         }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        resolve(products);</span>
+        resolve(products);
       }
     });
   });
@@ -4023,8 +4173,8 @@ exports.cleanDb = async () =&gt; {
     await db.run(
       "UPDATE  PRODUCT_WEEK SET QTY=? WHERE ID = ?",
       [10, 1],
-<span class="fstat-no" title="function not covered" >      (e</span>rr) =&gt; {
-<span class="cstat-no" title="statement not covered" >        errTest(err);</span>
+      (err) =&gt; {
+        errTest(err);
       }
     );
 &nbsp;
@@ -4051,8 +4201,8 @@ exports.cleanDb = async () =&gt; {
     await db.run(
       "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ? OR name = ?",
       [1, "CLIENT", "BOOKING", "MANAGER_ACKNOWLEDGE"],
-<span class="fstat-no" title="function not covered" >      (e</span>rr) =&gt; {
-<span class="cstat-no" title="statement not covered" >        errTest(err);</span>
+      (err) =&gt; {
+        errTest(err);
       }
     );
   }
@@ -4226,6 +4376,81 @@ exports.resetProductWeekVC = <span class="fstat-no" title="function not covered"
   });
 };
 &nbsp;
+// Counting missed pickups for a customer
+exports.countMissedPickupsForACustomer = <span class="fstat-no" title="function not covered" >(c</span>ustomerId,preSuspensionDate) =&gt; {
+<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+    const sql = <span class="cstat-no" title="statement not covered" >"SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) &gt; date(?, '+30 day')";</span>
+<span class="cstat-no" title="statement not covered" >    db.all(sql, [customerId,preSuspensionDate], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        reject(err);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        resolve(rows[0])</span>
+      }
+    });
+  });
+};
+&nbsp;
+// find clientId with bookingId
+exports.findClientbyBooking = <span class="fstat-no" title="function not covered" >(b</span>ookingId) =&gt; {
+<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+    const sql = <span class="cstat-no" title="statement not covered" >"SELECT CLIENT_ID as id FROM BOOKING WHERE ID_BOOKING=?";</span>
+<span class="cstat-no" title="statement not covered" >    db.all(sql, [bookingId], <span class="fstat-no" title="function not covered" >(e</span>rr, rows) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        reject(err);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        resolve(rows[0])</span>
+      }
+    });
+  });
+};
+&nbsp;
+// update the client missed pickups count
+exports.updateClientMissedCount = <span class="fstat-no" title="function not covered" >(c</span>lientId, count) =&gt; {
+<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE CLIENT set missedCount=? where ID=?";</span>
+<span class="cstat-no" title="statement not covered" >    db.all(sql, [count, clientId], <span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        reject(err);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        resolve(true)</span>
+      }
+    });
+  });
+};
+&nbsp;
+// update the client susspensionDate
+exports.updateClientSusspensionDate = <span class="fstat-no" title="function not covered" >(c</span>lientId, date) =&gt; {
+<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+    const sql = <span class="cstat-no" title="statement not covered" >"UPDATE CLIENT set susspensionDate=? where ID=?";</span>
+<span class="cstat-no" title="statement not covered" >    db.all(sql, [date, clientId], <span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        reject(err);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        resolve(true)</span>
+      }
+    });
+  });
+};
+&nbsp;
+// get a client suspension date
+exports.getLatestSuspensionDate = <span class="fstat-no" title="function not covered" >(c</span>lientId) =&gt; {
+<span class="cstat-no" title="statement not covered" >  return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+    const sql = <span class="cstat-no" title="statement not covered" >"select suspenssionDate as date from CLIENT where ID=?";</span>
+<span class="cstat-no" title="statement not covered" >    db.all(sql, [clientId], <span class="fstat-no" title="function not covered" >(e</span>rr,rows) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        reject(err);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        resolve(rows[0])</span>
+      }
+    });
+  });
+};
+&nbsp;
 //END OF VIRTUAL CLOCK DAO FUNCTIONS
 &nbsp;</pre></td></tr></table></pre>
 
@@ -4234,17 +4459,17 @@ exports.resetProductWeekVC = <span class="fstat-no" title="function not covered"
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jan 08 2022 13:33:29 GMT+0100 (Ora standard dell’Europa centrale)
+                at Sat Jan 08 2022 22:04:08 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
-        <script src="prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="sorter.js"></script>
-        <script src="block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

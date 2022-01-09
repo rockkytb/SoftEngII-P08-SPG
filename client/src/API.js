@@ -1,4 +1,3 @@
-
 const url = "/api";
 
 function addUser(newUser) {
@@ -14,6 +13,7 @@ function addUser(newUser) {
         name: newUser.name,
         surname: newUser.surname,
         password: newUser.password,
+        phone: newUser.phone
       }),
     })
       .then((response) => {
@@ -134,19 +134,24 @@ async function getUserInfo() {
 }
 
 async function getClientByEmail(email) {
-  //Not very secure, should send also employee data to verify identity
-  const response = await fetch(url + "/client", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email }),
+  return new Promise((resolve, reject) => {
+    //Not very secure, should send also employee data to verify identity
+    fetch(url + "/client", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    }).then((response)=>{
+
+      if (response.ok) {
+        resolve (response.json());
+      } else {
+        resolve (-1);
+      }
+    })
+    
   });
-  if (response.ok) {
-    return await response.json();
-  } else {
-    throw await response.json();
-  }
 }
 
 async function getWalletById(id) {
@@ -652,6 +657,9 @@ async function updateOrder(product) {
 }
 
 
+
+//TODO: move clock to backend
+//SHORT-TERM: post to server to receive date-time
 async function setDate(date) {
   return new Promise(
     (resolve, reject) =>
@@ -719,7 +727,8 @@ async function deleteProductBooking(product) {
 
     body: JSON.stringify({
       ID_Product: product.ID_Product,
-      ID_Booking: product.ID_Booking
+      ID_Booking: product.ID_Booking,
+      Inc_Qty: product.Inc_Qty
     }),
   });
 }
@@ -819,12 +828,24 @@ async function attaccoDoS(userdata) {
     }
   };
 
+  const getAllBookings = async ()=>{
+    // call: GET /api/clients
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await fetch("/api/bookings");
+      const bookings = await response.json();
+      if (response.ok) {
+        return bookings;
+      }
+    }
+  }
+
   let products = await getProducts();
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
+  let allBookings = await getAllBookings();
 
-  return { products, bookings, clients, categories };
+  return { products, bookings, clients, categories, allBookings };
 }
 
 

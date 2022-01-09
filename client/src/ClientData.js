@@ -14,8 +14,8 @@ function ClientData(props) {
         // call: GET /api/clients
         const response = await props.getWallet(client.id);
         
-        setWallet(response);
-        setNewWallet(response);
+        setWallet(response.toFixed(2));
+        setNewWallet(response.toFixed(2));
         console.log(wallet);
       };
       getWallet();
@@ -67,6 +67,7 @@ function ClientData(props) {
             <p>Client id: {client.id}</p>
             <p>Name: {client.name + " " + client.surname}</p>
             <p>Email: {client.username}</p>
+            <p>Phone: {client.phone}</p>
             <p>Wallet: {wallet}€</p>
             <Form>
               <Form.Group>

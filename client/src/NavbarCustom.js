@@ -27,43 +27,46 @@ const popover = (
   </Popover>
 );
 
-  
-let toPrint = props.bookings && props.bookings.length>0 ? 
-props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION") 
-:
-"";
+let toPrint,toPrintConfirm,toPrintEmpty;
 
-if (firstTime && toPrint.length !== 0) {
-  setShowNotification(true);
-  setFirstTime(false);
-}
+if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
+  toPrint = props.bookings && props.bookings.length>0 ? 
+  props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION") 
+  :
+  "";
 
-let toPrintEmpty = props.bookings && props.bookings.length>0 ? 
-props.bookings.filter((bk) => bk.state === "EMPTY") 
-:
-"";
+  if (firstTime && toPrint.length !== 0) {
+    setShowNotification(true);
+    setFirstTime(false);
+  }
 
-if (firstTime && toPrintEmpty.length !== 0) {
-  setShowNotificationEmpty(true);
-  setFirstTime(false);
-}
+  toPrintEmpty = props.bookings && props.bookings.length>0 ? 
+  props.bookings.filter((bk) => bk.state === "EMPTY") 
+  :
+  "";
 
-let toPrintConfirm = props.bookings && props.bookings.length>0 ? 
-props.bookings.filter((bk) => bk.state === "CONFIRMED")
-:
-"";
-//Total price
-let total =0;
-if(toPrintConfirm){
-toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = 0*1;
- bk.total += bk.products.map((p) => p.qty * p.price ) * 1;
-  return bk;});
-toPrintConfirm.forEach((bk)=>total += bk.total);}
-if (firstTime && toPrintConfirm.length !== 0) {
-  
-  
-  setShowNotificationPreparation(true);
-  setFirstTime(false);
+  if (firstTime && toPrintEmpty.length !== 0) {
+    setShowNotificationEmpty(true);
+    setFirstTime(false);
+  }
+
+  toPrintConfirm = props.bookings && props.bookings.length>0 ? 
+  props.bookings.filter((bk) => bk.state === "CONFIRMED")
+  :
+  "";
+  //Total price
+  let total =0;
+  if(toPrintConfirm){
+  toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = 0*1;
+  bk.total += bk.products.map((p) => p.qty * p.price ) * 1;
+    return bk;});
+  toPrintConfirm.forEach((bk)=>total += bk.total);}
+  if (firstTime && toPrintConfirm.length !== 0) {
+    
+    
+    setShowNotificationPreparation(true);
+    setFirstTime(false);
+  }
 }
 
   function checkType() {

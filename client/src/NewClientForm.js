@@ -9,29 +9,22 @@ function NewClientForm(props) {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [usedMail, setUsedMail] = useState("");
     const bcrypt = require('bcryptjs');
-
+    let usedMail;
     const regex =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        setValidated(true);
         const form = event.currentTarget;
+        usedMail = await props.getClientbyEmail(email);
         console.log("valore setUsedMail " + usedMail);
-        let val = props.getClientbyEmail(email);
-        if(val){
-            setUsedMail(val.id);
-        }
-        else{
-            setUsedMail(-1);
-        }
-        console.log("valore setUsedMail " + usedMail);
-        if (form.checkValidity() === false || usedMail == -1 ) {
+        if (form.checkValidity() === false || usedMail !== -1 ) {
             event.stopPropagation();
-            if (usedMail == -1) {
-                setUsedMail("");
+            if (usedMail !== -1) {
                 toast.error("Email already used", { position: "top-center" },{toastId: 32})
             }
 
@@ -41,14 +34,20 @@ function NewClientForm(props) {
                 name: name,
                 surname: surname,
                 password: bcrypt.hashSync(password, 10),
-                clearpsw: password
+                clearpsw: password,
+                phone: phone
 
             };
 
             props.addUser(newUser);
-            setUsedMail("");
-            setValidated(true);
+            setName(""); 
+            setSurname(""); 
+            setEmail(""); 
+            setPassword(""); 
+            setPhone(""); 
+            setValidated(false);
         }
+        
     };
 
 
@@ -92,6 +91,25 @@ function NewClientForm(props) {
                                 onChange={ev => setSurname(ev.target.value)} />
                             <Form.Control.Feedback type="invalid">
                                 Please insert a surname.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                    <Col xs={2} />
+                </Row>
+
+                <Row>
+                    <Col xs={2} />
+                    <Col xs={8}>
+                        <Form.Group controlId='number'>
+                            <Form.Label>Phone:</Form.Label>
+                            <Form.Control
+                                type='number'
+                                id="phoneField"
+                                value={phone}
+                                required
+                                onChange={ev => setPhone(ev.target.value)} />
+                            <Form.Control.Feedback type="invalid">
+                                Please insert a phone.
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Col>
@@ -149,7 +167,7 @@ function NewClientForm(props) {
                 <Row>
                     <Col md={7} xs={6}/>
                     <Col md={1} xs={1}>
-                        <Button id="clearButton" onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
+                        <Button id="clearButton" onClick={() => { setName(""); setSurname(""); setEmail(""); setPassword(""); setPhone(""); setValidated(false); }} type="button" variant="secondary" className="float-right">Clear</Button>
                     </Col>
                     <Col md={2} xs={3} className="pl-5">
                         <Button variant="warning" color="black" id="submitButton" type="submit" className="float-right ">Register</Button>

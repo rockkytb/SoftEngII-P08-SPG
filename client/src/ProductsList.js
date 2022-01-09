@@ -63,6 +63,8 @@ export default function ProductsList(props) {
             name: p.name,
             category: p.category,
             qty: p.qty - orderQuantity * 1,
+            size: p.size,
+            unit_of_measure : p.unit_of_measure,
             price: p.price,
             farmer_email: p.farmer_email,
           };
@@ -88,6 +90,7 @@ export default function ProductsList(props) {
     setProductId();
     setName("");
     setQuantity(1);
+    setOrderQuantity(1);
     setSize(0);
     setUnitOfMeasure("");
   };

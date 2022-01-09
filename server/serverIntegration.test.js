@@ -23,6 +23,300 @@ describe("Test suite Integration Server", () => {
   });
 
   //TEST API POST BOOKING
+  describe("Get id Client by email", () => {
+    it("get with a valid email", async () => {
+      const res = await request(app).post("/api/client").send({
+        email: "marco.bianchi@mail.it",
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty("id", "C1");
+    });
+  });
+  describe("Get id Client by email", () => {
+    it("get with an invalid email", async () => {
+      const res = await request(app).post("/api/client").send({
+        email: "marco.bianchi",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid email");
+    });
+  });
+
+  describe("Create a Acknowledge", () => {
+    it("send a invalid id farmer", async () => {
+      const res = await request(app).post("/api/acknowledge").send({
+        email: "marco.bianchi@mail.it",
+        idFarmer: 0,
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid farmer id, it must be positive"
+      );
+    });
+  });
+
+  describe("Decrement the qty of a product", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/productqty").send({
+        ID_Product: 1,
+        Dec_Qty: 1,
+      });
+      expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  describe("edit the state of a product", () => {
+    it("send a invalid state", async () => {
+      const res = await request(app).put("/api/productstate").send({
+        id: 1,
+        state: "",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid state lenght");
+    });
+  });
+
+  describe("edit the state of a product", () => {
+    it("send a invalid id product", async () => {
+      const res = await request(app).put("/api/productstate").send({
+        id: -1,
+        state: "EXPECTED",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product id, it must be positive"
+      );
+    });
+  });
+
+  describe("edit the state of a product", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/productstate").send({
+        id: 1,
+        state: "EXPECTED",
+      });
+      expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a valid body", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: 20,
+          qty: 11,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid category", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: -1,
+          price: 20,
+          qty: 11,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid category id, it must be positive"
+      );
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid price", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: -1,
+          qty: 11,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid product price, it must be positive"
+      );
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid farmer id", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: 1,
+          qty: 11,
+          farmerid: -1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid farmer id, it must be positive"
+      );
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid qty", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: 1,
+          qty: -1,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid quantity, it must be positive"
+      );
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid size", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: 1,
+          qty: 1,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: -1,
+          unit_of_measure: "g",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid size, it must be positive"
+      );
+    });
+  });
+
+  describe("insert tuples in PRODUCT_WEEK", () => {
+    it("send a invalid size", async () => {
+      const res = await request(app)
+        .post("/api/farmers/:farmerid/productsExpected")
+        .send({
+          name: "Lamponi",
+          category: 1,
+          price: 1,
+          qty: 1,
+          farmerid: 1,
+          state: "EXPECTED",
+          size: 1,
+          unit_of_measure:
+            "ghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+        });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid unit of measure, it must be a string of max 15 length"
+      );
+    });
+  });
+
+  describe("edit state of a ack", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/ackstate").send({
+        id: 1,
+        state: "NEW",
+      });
+      expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  describe("edit state of a ack", () => {
+    it("send a invalid id", async () => {
+      const res = await request(app).put("/api/ackstate").send({
+        id: -1,
+        state: "NEW",
+      });
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid ack id, it must be positive"
+      );
+    });
+  });
+
+  describe("get all bookings of a client", () => {
+    it("rigth get", async () => {
+      const res = await request(app).get("/api/bookings/clients/1");
+      expect(res.statusCode).toEqual(200);
+    });
+  });
+
+  describe("update the state of booking mode", () => {
+    it("send a valid body", async () => {
+      const res = await request(app).put("/api/bookings_mode/1");
+      expect(res.statusCode).toEqual(200);
+    });
+  });
+
+  describe("update the state of booking mode", () => {
+    it("send a invalid id", async () => {
+      const res = await request(app).put("/api/bookings_mode/-1");
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty(
+        "error",
+        "Invalid booking mode id, it must be positive"
+      );
+    });
+  });
+
+  describe("Post new client", () => {
+    it("create a new client but the client email already used", async () => {
+      const hash = bcrypt.hashSync("testpassword", 10);
+      const res = await request(app).post("/api/newclient").send({
+        email: "antonio.bianchi@mail.it",
+        name: "Antonio",
+        surname: "Bianchi",
+        password: hash,
+      });
+      expect(res.statusCode).toEqual(503);
+      expect(res.body).toHaveProperty(
+        "error",
+        "antonio.bianchi@mail.it already used"
+      );
+    });
+  });
 
   describe("Post booking fail", () => {
     it("create a new booking fails due to idClient = 0", async () => {
@@ -1025,7 +1319,7 @@ describe("Test suite Integration Server", () => {
               product: "Lamponi",
               productID: 2,
               qty: 1,
-            }
+            },
           ],
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
@@ -1211,47 +1505,6 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  /*
-  //DA SISTEMARE LA CLEAN DB PER POTER RENDERE RIPETIBILE IL TEST
-  describe("post a vector of product expected", () => {
-    it("test with a valid body", async () => {
-      const res = await request(app)
-        .post("/api/products_expected")
-        .send([
-          {
-            name: "Apple",
-            category: 2,
-            price: 1.99,
-            qty: 2,
-            farmer_id: 3,
-          },
-          {
-            name: "Banana",
-            category: 3,
-            price: 3.99,
-            qty: 6,
-            farmer_id: 3,
-          },
-        ]);
-      expect(res.statusCode).toEqual(201);
-      expect(res.body).toHaveLength(2);
-      /* expect(res.body).toEqual(
-      [
-        {
-          id: 3,
-          nameProduct: "Apple"
-        },
-        {
-          id: 4,
-          nameProduct: "Banana"
-        }
-      ]
-    )
-    });
-  });
-});
-*/
-
   describe("Post ack success", () => {
     it("should create a new ack", async () => {
       const res = await request(app).post("/api/acknowledge").send({
@@ -1313,22 +1566,6 @@ describe("Test suite Integration Server", () => {
       );
     });
   });
-  /* TEST NON FUNZIONANTE, NON RIESCE A VEDERE CHE MANCA IL CAMPO STATE E LA PRENDE PER BUONA
-describe("Put products with new state", ()=>{
-  it("wrong put with a element without state field", async () =>{
-    const parameter = [
-      {
-        id: 1
-      },
-      {
-        id: 2,
-      }
-    ];
-
-    const res = await request(app).put("/api/products").send(parameter);
-    expect(res.statusCode).toEqual(422);
-    expect(res.body).toHaveProperty("error", "Invalid state lenght of a element on the array");
-  })*/
 
   describe("Put products with new state", () => {
     it("wrong put with a invalid id", async () => {
@@ -1350,22 +1587,6 @@ describe("Put products with new state", ()=>{
       );
     });
   });
-
-  /* describe("Put products with expected state", () => {
-    it("valid put", async () => {
-      const parameter = {
-        name: "Apple",
-        category: 2,
-        price: 1.99,
-        qty: 2,
-      };
-
-      const res = await request(app)
-        .post("/api/farmers/1/productsExpected")
-        .send(parameter);
-      expect(res.statusCode).toEqual(201);
-    });
-  });*/
 
   describe("get all bookings of a client with the booked state", () => {
     it("get with a valid id", async () => {
