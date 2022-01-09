@@ -81,6 +81,13 @@ passport.use(
             });
           }
         }else{
+          // count the number of missed pickups and send message if it is 3 or 4
+          if (user.missedCount == 3 || user.missedCount == 4) {
+            return done(null, user, {
+              message: `You have ${user.missedCount} missed pickups!\n
+               You will be suspeneded for 30 days on the 5th time.`,
+            });
+          }
           return done(null, user);
         }
       })
