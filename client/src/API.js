@@ -839,13 +839,25 @@ async function attaccoDoS(userdata) {
     }
   }
 
+  const getBookingsUnretrieved = async () =>{
+    // call: GET /api/bookingsUnretrieved
+    if (userdata && userdata.id && userdata.id.charAt(0) === "M") {
+      const response = await fetch("/api/bookingsUnretrieved");
+      const bookingsUnretrieved = await response.json();
+      if (response.ok) {
+        return bookingsUnretrieved;
+      }
+    }
+  }
+  
   let products = await getProducts();
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
   let allBookings = await getAllBookings();
+  let bookingsUnretrieved = await getBookingsUnretrieved();
 
-  return { products, bookings, clients, categories, allBookings };
+  return { products, bookings, clients, categories, allBookings, bookingsUnretrieved };
 }
 
 
