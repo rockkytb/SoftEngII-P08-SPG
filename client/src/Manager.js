@@ -13,7 +13,9 @@ function Manager(props) {
             
             <Row md={12}>
                 <Col className="md-4 pr-0 pl-0 ">
-                
+                <Link to="/bookingsUnretrieved"> 
+                    <Button variant="warning" className="m-3 ml-2 md-1 "> Unretrieved bookings </Button> 
+                </Link>
               </Col>
             </Row>
 
