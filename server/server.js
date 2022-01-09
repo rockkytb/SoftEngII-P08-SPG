@@ -8,6 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const dao = require("./dao"); // module for accessing the DB
 const telegramBot = require("./telegrambot/SendMessage.js");
+const products = require("./products.js");
 //Per validazione aggiuntiva
 const validator = require("validator");
 let testmode = false;
@@ -502,7 +503,7 @@ app.post("/api/newclient", async (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     password: req.body.password,
-    phone: req.body.phone
+    phone: req.body.phone,
   };
 
   dao
@@ -536,91 +537,36 @@ app.post("/api/newclient", async (req, res) => {
 //POST /api/bookingproducts
 
 app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
-  let problems = 0;
-  if (
-    req.body &&
-    req.body.products &&
-    req.body.products.length > 0 &&
-    req.body.ID_Booking > 0
-  ) {
-    for (const i of req.body.products) {
-      if (
-        !i.id ||
-        !i.quantity ||
-        !validator.isInt(`${i.id}`, { min: 1 }) ||
-        !validator.isInt(
-          `${i.quantity}`,
-          { min: 1 } || i.id <= 0 || id.qty <= 0
-        )
-      ) {
-        return res.status(422).json({ error: `Invalid product data` });
-      }
-      let bookingProduct = {
-        ID_Booking: req.body.ID_Booking,
-        ID_Product: i.id,
-        Qty: i.quantity,
-      };
+  let value = products.postBookingProducts(req);
 
-      const product = {
-        ID_Product: i.id,
-        Dec_Qty: i.quantity,
-      };
-        
-      try {
-        await dao.createBookingProduct(bookingProduct);
-        await dao.editQtyProductWeek(product);
-      } catch (err) {
-        problems++;
-      }
-    }
-  } else {
-    return res.status(422).json({ error: `Bad request` });
-  }
-
-  if (problems == 0) {
-    //All went fine
-    res.status(201).json("Ok");
-  } else {
-    res.status(201).json({
-      error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
+  if (value == 1) {
+    res.status(422).json({ error: `Bad request` });
+  } else if (value > 1) {
+    res.status(500).json({
+      error: `Database error during the post of bookingProduct: ${value} wrong data.`,
     });
+  } else {
+    res.status(201).json();
   }
 });
 
 //PUT /api/bookingproducts
 
 app.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
-  let problems = 0;
-  if (
-    req.body &&
-    req.body.ID_Product &&
-    req.body.ID_Booking > 0 &&
-    req.body.quantity > 0
-  ) {
-    let bookingProduct = {
-      ID_Booking: req.body.ID_Booking,
-      ID_Product: req.body.ID_Product,
-      Qty: req.body.quantity,
-    };
-    try {
-      await dao.updateBookingProduct(bookingProduct);
-    } catch (err) {
-      res.status(503).json({
-        error: `fottiti stronzo.`,
-      });
-    }
+  let value = products.putBookingProduct(req);
 
-    if (problems == 0) {
-      //All went fine
-      res.status(201).json("Ok");
-    } else {
-      res.status(201).json({
-        error: `Database error during the post of bookingProduct: ${problems} wrong data.`,
-      });
-    }
+  if (value == 1) {
+    res.status(422).json({ error: `Bad request` });
+  } else if (value > 1) {
+    res.status(500).json({
+      error: `Database error during the post of bookingProduct: ${value} wrong data.`,
+    });
+  } else {
+    res.status(201).json();
   }
 });
 
+//unused in frontend
 //PUT /api/productqty
 app.put("/api/productqty", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.Dec_Qty}`, { min: 1 })) {
@@ -681,30 +627,17 @@ app.put("/api/incrementProductQty", isLoggedIn, async (req, res) => {
 
 //PUT /api/productstate
 app.put("/api/productstate", isLoggedIn, async (req, res) => {
-  if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
-    return res.status(422).json({ error: `Invalid state lenght` });
-  }
-  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid product id, it must be positive` });
-  }
+  let value = products.putProductsState(req);
 
-  const product = {
-    id: req.body.id,
-    state: req.body.state,
-  };
-
-  try {
-    await dao.editStateProductWeek(product);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the put of bookingProduct: ${product}.`,
+  if (value == 1) {
+    res.status(422).json({ error: `Bad request` });
+  } else if (value > 1) {
+    res.status(500).json({
+      error: `Database error during the post of bookingProduct: ${value} wrong data.`,
     });
+  } else {
+    res.status(201).json();
   }
-
-  //All went fine
-  res.status(201).json(product);
 });
 
 //DELETE /api/products/{id}
@@ -730,27 +663,17 @@ app.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 
 //DELETE /api/bookingProduct
 app.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
-  if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid product id, it must be positive` });
-  }
-  if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid booking id, it must be positive` });
-  }
-  try {
-    await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking)
-    .then(await dao.IncrementQtyProductWeek( req.body.Inc_Qty, req.body.ID_Product ));
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the deletation of booking product.`,
-    });
-  }
+  let value = products.deleteBookingProducts(req);
 
-  //All went fine
-  res.status(204).json();
+  if (value == 1) {
+    res.status(422).json({ error: `Bad request` });
+  } else if (value > 1) {
+    res.status(500).json({
+      error: `Database error during the post of bookingProduct: ${value} wrong data.`,
+    });
+  } else {
+    res.status(201).json();
+  }
 });
 
 // POST /api/farmers/:farmerid/products
@@ -1065,15 +988,16 @@ app.put("/api/walletbalance", isLoggedIn, async (req, res) => {
     amount: req.body.amount,
   };
 
-  try{
+  try {
     await dao.updateWallet(wallet);
-    await telegramBot.SendMessage(wallet.id,`Your wallet was modified. New balance : ${wallet.amount} €`);
+    await telegramBot.SendMessage(
+      wallet.id,
+      `Your wallet was modified. New balance : ${wallet.amount} €`
+    );
     res.status(200).json(wallet);
+  } catch (error) {
+    res.status(500).json(error);
   }
-  catch(error){
-      res.status(500).json(error);
-  }
-
 });
 
 // GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
@@ -1088,8 +1012,7 @@ app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
     });
 });
 
-app.get("/api/bookingsUnretrieved", isLoggedIn,
- async (req, res) => {
+app.get("/api/bookingsUnretrieved", isLoggedIn, async (req, res) => {
   dao
     .getBookingsUnretrieved()
     .then((list) => {
@@ -1099,7 +1022,6 @@ app.get("/api/bookingsUnretrieved", isLoggedIn,
       res.status(500).json(error);
     });
 });
-
 
 // POST /api/products_expected receive a vector of tuples of products expected
 
@@ -1255,7 +1177,7 @@ app.put("/api/products", isLoggedIn, async (req, res) => {
       };
 
       try {
-       await dao.editStateProductWeek(product);
+        await dao.editStateProductWeek(product);
       } catch (err) {
         problem = 1;
         break;
@@ -1271,7 +1193,6 @@ app.put("/api/products", isLoggedIn, async (req, res) => {
     });
   }
 });
-
 
 //////SHORT-TERM: receive the day of the week we put
 app.post("/api/clock", isLoggedIn, async (req, res) => {
@@ -1289,8 +1210,8 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
           let wallet = dao.getWallet(c.client).then((res) => res.balance);
           if (wallet >= c.total) {
             dao
-            .editStateBooking({id: c.id, state: "CONFIRMED"})
-            .then((res)=> res)
+              .editStateBooking({ id: c.id, state: "CONFIRMED" })
+              .then((res) => res);
             dao
               .updateWallet({ amount: wallet - c.total, id: c.client })
               .then((res) => res);
@@ -1300,7 +1221,7 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
               .then((res) => res);
           }
         });
-        
+
         //res.status(200).json(clients);
       })
       .catch((err) => {
@@ -1317,52 +1238,48 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
 //VIRTUAL CLOCK MANAGEMENT
 let virtualTime = false;
 let clockDate = new Date();
-let timers = setInterval(async () => {clockDate = new Date();
+let timers = setInterval(async () => {
+  clockDate = new Date();
   await clockActions();
 }, 30000);
 //FLAG to execute queries once a day, resetted every sunday
-let once = [true,true,true,true,true,true,true];
+let once = [true, true, true, true, true, true, true];
 
 //For periodic remainder, every 4 hours
-let oldHours =0;
+let oldHours = 0;
 
 //GET /api/time to get current time
-app.get("/api/time",  (req, res) => {
-      res.status(200).json(clockDate);
+app.get("/api/time", (req, res) => {
+  res.status(200).json(clockDate);
 });
 
 //GET /api/virtualTime to enable/disable virtual time
-app.get("/api/virtualTime",  async (req, res) => {
+app.get("/api/virtualTime", async (req, res) => {
   virtualTime = !virtualTime;
   clearInterval(timers);
-    if (virtualTime) {
-      //Adds 2 hours every 7 seconds
-      timers=
-        setInterval(
-         async () =>
-            {
-              let d = new Date(clockDate);
-              d.setHours(d.getHours() + 2);
-              clockDate = d;
-              await clockActions();
-            },
-          7000
-        )
-      
-    } else {
-      //Update date every 30 seconds if real time enabled
+  if (virtualTime) {
+    //Adds 2 hours every 7 seconds
+    timers = setInterval(async () => {
+      let d = new Date(clockDate);
+      d.setHours(d.getHours() + 2);
+      clockDate = d;
+      await clockActions();
+    }, 7000);
+  } else {
+    //Update date every 30 seconds if real time enabled
+    clockDate = new Date();
+    timers = setInterval(async () => {
       clockDate = new Date();
-      timers = setInterval(async () => {clockDate = new Date();
-        await clockActions();
-      }, 30000);
-    }
+      await clockActions();
+    }, 30000);
+  }
 
   //All went fine
   res.status(200).json(clockDate);
 });
 
 //Function to manage flow of SPG according to days
-async function clockActions(){
+async function clockActions() {
   try {
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
@@ -1370,55 +1287,73 @@ async function clockActions(){
     and the client is notified. 
     Periodic telegram message is sent if customer needs to top up
     A message is sent if booking is confirmed*/
-    
-    if(clockDate.getDay()===2){
 
-      if(once[2]){
+    if (clockDate.getDay() === 2) {
+      if (once[2]) {
         //Delete from bookings all product still expected, so unconfirmed
         await dao.deleteBookingProductsExpected();
 
         const bookings = await dao.getTotal();
-        
-        bookings.forEach(async (booking)=>{
+
+        bookings.forEach(async (booking) => {
           //Get the wallet  of the customer and put in variable wallet
           const wallet = await dao.getWallet(booking.client);
           if (wallet.balance >= booking.total) {
             //PUT in state CONFIRMED
-            await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+            await dao.editStateBooking({ id: booking.id, state: "CONFIRMED" });
             //Update amount
-            await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
+            await dao.updateWallet({
+              amount: wallet.balance - booking.total,
+              id: booking.client,
+            });
             //Send telegram message
             const bookingProducts = await dao.productsOfBooking(booking.id);
-            telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
-          } 
-          else {
+            telegramBot.SendMessage(
+              booking.client,
+              `Purchase confirmation, booking #${
+                booking.id
+              }:\n\n${bookingProducts.map(
+                (p) => p.qty + " " + p.product
+              )}\n\nTotal: ${booking.total} €`
+            );
+          } else {
             //Put in state PENDINGCANCELATION
-            await dao.editStateBooking({ id: booking.id, state: "PENDINGCANCELATION" });
+            await dao.editStateBooking({
+              id: booking.id,
+              state: "PENDINGCANCELATION",
+            });
           }
-
-
         });
 
         //If empty bookings put in state EMPTY
-        const emptyBknings= await dao.getEmptyBookings();
-        
-        emptyBknings.forEach(async (booking)=>{
+        const emptyBknings = await dao.getEmptyBookings();
+
+        emptyBknings.forEach(async (booking) => {
           await dao.editStateBooking({ id: booking.id, state: "EMPTY" });
         });
-        once[2]=false;
+        once[2] = false;
       }
       //Every 4 hour remember to top up to all clients that have bookings in pendingcancelation state
-      if(clockDate.getHours()-oldHours>=4){
-        oldHours=clockDate.getHours()-oldHours;
+      if (clockDate.getHours() - oldHours >= 4) {
+        oldHours = clockDate.getHours() - oldHours;
         const bookings = await dao.getTotalPendingCancelation();
-        let alreadySent =[];
-        bookings.forEach(async (booking)=>{
-          if(!alreadySent.includes(booking.client)){
+        let alreadySent = [];
+        bookings.forEach(async (booking) => {
+          if (!alreadySent.includes(booking.client)) {
             const wallet = await dao.getWallet(booking.client);
-            telegramBot.SendMessage(booking.client,`Your current balance (${wallet.balance} €) is insufficient to complete the order #${booking.id}. Please top-up at least ${booking.total-wallet.balance}€ to complete the order.`);
+            telegramBot.SendMessage(
+              booking.client,
+              `Your current balance (${
+                wallet.balance
+              } €) is insufficient to complete the order #${
+                booking.id
+              }. Please top-up at least ${
+                booking.total - wallet.balance
+              }€ to complete the order.`
+            );
             alreadySent.push(booking.client);
           }
-        })
+        });
       }
     }
 
@@ -1426,31 +1361,36 @@ async function clockActions(){
     in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
     CONFIRMED state, otherwise they will be CANCELED. 
     A message is sent if booking is confirmed*/
-    if(clockDate.getDay()===3 && once[3]){
-
+    if (clockDate.getDay() === 3 && once[3]) {
       const bookings = await dao.getTotalPendingCancelation();
-      bookings.forEach(async (booking)=>{
+      bookings.forEach(async (booking) => {
         //Get the wallet  of the customer and put in variable wallet
         const wallet = await dao.getWallet(booking.client);
         if (wallet.balance >= booking.total) {
           //PUT in state CONFIRMED
-          await dao.editStateBooking({id: booking.id, state: "CONFIRMED"});
+          await dao.editStateBooking({ id: booking.id, state: "CONFIRMED" });
           //Send telegram message
           const bookingProducts = await dao.productsOfBooking(booking.id);
-          telegramBot.SendMessage(booking.client,`Purchase confirmation, booking #${booking.id}:\n\n${bookingProducts.map((p)=>p.qty +" " +p.product)}\n\nTotal: ${booking.total} €`);
+          telegramBot.SendMessage(
+            booking.client,
+            `Purchase confirmation, booking #${
+              booking.id
+            }:\n\n${bookingProducts.map(
+              (p) => p.qty + " " + p.product
+            )}\n\nTotal: ${booking.total} €`
+          );
           //Update amount
-          await dao.updateWallet({ amount: wallet.balance - booking.total, id: booking.client });
-
-        } 
-        else {
+          await dao.updateWallet({
+            amount: wallet.balance - booking.total,
+            id: booking.client,
+          });
+        } else {
           //Put in state CANCELED
           await dao.editStateBooking({ id: booking.id, state: "CANCELED" });
         }
-
       });
 
-
-      once[3]=false;
+      once[3] = false;
     }
 
     /* On SATURDAY MORNING a new week starts. So we move bookings from booking table to booking history
@@ -1460,113 +1400,117 @@ async function clockActions(){
     about this state now (it's for future stories). 
     
     Moreover, we move all products to EXPECTED state and we add 10 to every quantity*/
-    if(clockDate.getDay()===6 && once[6]){
-      
+    if (clockDate.getDay() === 6 && once[6]) {
       const startDate = new Date(clockDate);
       //If this happens only on saturday, starday will be monday
       startDate.setDate(startDate.getDate() - 5);
       //Same for sunday
       const endDate = new Date(clockDate);
-      endDate.setDate(endDate.getDate() +1);
+      endDate.setDate(endDate.getDate() + 1);
 
-      const bookings = await dao.getAllBookingsVC ();
-      bookings.forEach(async (booking)=>{
-
-        if((booking.state==="EMPTY")||(booking.state==="COMPLETED")||(booking.state==="CANCELED")){
+      const bookings = await dao.getAllBookingsVC();
+      bookings.forEach(async (booking) => {
+        if (
+          booking.state === "EMPTY" ||
+          booking.state === "COMPLETED" ||
+          booking.state === "CANCELED"
+        ) {
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
             CLIENT_ID: booking.idClient,
             STATE: booking.state,
             START_DATE: startDate.toISOString().split("T")[0],
-            END_DATE: endDate.toISOString().split("T")[0]
+            END_DATE: endDate.toISOString().split("T")[0],
           });
-        }
-        else if(booking.state==="CONFIRMED" && booking.delivery === 0){
+        } else if (booking.state === "CONFIRMED" && booking.delivery === 0) {
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
             CLIENT_ID: booking.idClient,
             STATE: "UNRETRIEVED",
             START_DATE: startDate.toISOString().split("T")[0],
-            END_DATE: endDate.toISOString().split("T")[0]
+            END_DATE: endDate.toISOString().split("T")[0],
           });
 
           // get the clientId based on the bookingId
           const client = await dao.findClientbyBooking(booking.id);
 
           // get the client suspension date if exists
-          var suspension = await dao.getLatestSuspensionDate(client.id)
+          var suspension = await dao.getLatestSuspensionDate(client.id);
 
-          if(suspension.date)  suspension = suspension.date;
-          else suspension = '2000-01-01';
+          if (suspension.date) suspension = suspension.date;
+          else suspension = "2000-01-01";
           // check the number of missed pickups
-          const missedPikcups = await dao.countMissedPickupsForACustomer(client.id, suspension)
+          const missedPikcups = await dao.countMissedPickupsForACustomer(
+            client.id,
+            suspension
+          );
 
           //update the client table
-          await dao.updateClientMissedCount(client.id, missedPikcups.total)
-           
+          await dao.updateClientMissedCount(client.id, missedPikcups.total);
+
           // check the number of missed pickups
-          if(missedPikcups.total>2 || missedPikcups.total <5){
-          //Send telegram message
-          telegramBot.SendMessage(booking.client,`This is a reminder to inform you that you have missed picking up your order for ${missedPikcups.total} times!
-          \nYour account will be susspended on the 5th time.`);
-          } else if(missedPikcups.total == 5){// susspend the client
+          if (missedPikcups.total > 2 || missedPikcups.total < 5) {
+            //Send telegram message
+            telegramBot.SendMessage(
+              booking.client,
+              `This is a reminder to inform you that you have missed picking up your order for ${missedPikcups.total} times!
+          \nYour account will be susspended on the 5th time.`
+            );
+          } else if (missedPikcups.total == 5) {
+            // susspend the client
             // Calculate NOW date
             var now = new Date(clockDate);
-            now = now.toISOString().split("T")[0]
+            now = now.toISOString().split("T")[0];
 
             //update the susspensionDate column of CLIENT table
-            await dao.updateClientSusspensionDate(client.id,now)
+            await dao.updateClientSusspensionDate(client.id, now);
 
             //set the number of missed pickups to zero
-            await dao.updateClientMissedCount(client.id, 0)
+            await dao.updateClientMissedCount(client.id, 0);
           }
-
         }
         //Other cases, we delete the booking and we move in state canceled
-        else{
+        else {
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
             CLIENT_ID: booking.idClient,
             STATE: "CANCELED",
             START_DATE: startDate.toISOString().split("T")[0],
-            END_DATE: endDate.toISOString().split("T")[0]
+            END_DATE: endDate.toISOString().split("T")[0],
           });
         }
-
-      })
+      });
 
       //Move all products in product_week to expected and increase qty by 10
       await dao.resetProductWeekVC();
 
-      once[6]=false;
-      once[1]=true;
+      once[6] = false;
+      once[1] = true;
     }
 
     //On sunday set all once to true
-    if(clockDate.getDay()===0 && once[0]){
-      for (let i=1;i<7;i++){
-        once[i]=true;
+    if (clockDate.getDay() === 0 && once[0]) {
+      for (let i = 1; i < 7; i++) {
+        once[i] = true;
       }
-      const clients= await dao.getClients();
+      const clients = await dao.getClients();
       //Send a message to every customer on sunday morning
-      clients.forEach((c)=>{
-        telegramBot.SendMessage(c.id.substring(1),"Updated list of available products is now available on website.");
+      clients.forEach((c) => {
+        telegramBot.SendMessage(
+          c.id.substring(1),
+          "Updated list of available products is now available on website."
+        );
       });
-      once[0]=false;
+      once[0] = false;
     }
-
-  }
-
-  catch(err){
+  } catch (err) {
     return err;
   }
   //TODO, what happens if quantity confirmed is less than expected? Handle this
-
 }
-
 
 // END OF VIRTUAL CLOCK
 

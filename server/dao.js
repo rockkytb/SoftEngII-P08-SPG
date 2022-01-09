@@ -32,7 +32,7 @@ exports.getClients = () => {
               username: x.EMAIL,
               name: x.NAME,
               surname: x.SURNAME,
-              phone: x.PHONE
+              phone: x.PHONE,
             };
           })
         );
@@ -79,7 +79,7 @@ exports.getClient = (email, password) => {
           username: row.EMAIL,
           name: row.NAME,
           surname: row.SURNAME,
-          phone: row.PHONE
+          phone: row.PHONE,
         };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
@@ -376,25 +376,78 @@ exports.createBookingProduct = (bookingProduct) => {
   });
 };
 
-// add a new bookingProduct
-exports.updateBookingProduct = (bookingProduct) => {
+// update bookingProduct
+
+function getCurrentQty(bookingProduct) {
   return new Promise((resolve, reject) => {
-    const sql =
+    const sql1 =
+      "SELECT QTY FROM BOOKING_PRODUCTS WHERE ID_BOOKING = ? AND ID_PRODUCT = ?";
+    db.get(
+      sql1,
+      [bookingProduct.ID_Booking, bookingProduct.ID_Product],
+      function (err, row) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row.QTY);
+        }
+      }
+    );
+  });
+}
+
+function getWeekQty(bookingProduct) {
+  return new Promise((resolve, reject) => {
+    const sql1 = "SELECT QTY FROM PRODUCT_WEEK WHERE ID = ?";
+    db.get(sql1, [bookingProduct.ID_Product], function (err, row) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row.QTY);
+      }
+    });
+  });
+}
+
+exports.updateBookingProduct = async (bookingProduct) => {
+  let current = await getCurrentQty(bookingProduct);
+  let week = await getWeekQty(bookingProduct);
+
+  return new Promise((resolve, reject) => {
+    const sql2 =
       "UPDATE BOOKING_PRODUCTS SET QTY = ? WHERE ID_BOOKING = ? AND ID_PRODUCT = ?";
-    db.run(
-      sql,
-      [
-        bookingProduct.Qty,
-        bookingProduct.ID_Booking,
-        bookingProduct.ID_Product,
-      ],
-      function (err) {
+    const sql3 = "UPDATE PRODUCT_WEEK SET QTY = QTY + ? WHERE ID = ?";
+
+    let update = 0;
+
+    update = current - bookingProduct.Qty;
+
+    console.log(update);
+
+    if (week + update >= 0) {
+      db.run(
+        sql2,
+        [
+          bookingProduct.Qty,
+          bookingProduct.ID_Booking,
+          bookingProduct.ID_Product,
+        ],
+        function (err) {
+          if (err) {
+            reject(err);
+          }
+        }
+      );
+
+      db.run(sql3, [update, bookingProduct.ID_Product], function (err) {
         if (err) {
           reject(err);
         }
         resolve(true);
-      }
-    );
+      });
+    } else {
+      reject(false);
+    }
   });
 };
 
@@ -473,7 +526,27 @@ exports.deleteProduct = (productId) => {
 };
 
 // delete a booking product from booking_product table!
-exports.deleteBookingProduct = (productId, bookingId) => {
+
+function getCurrentProducts(productId, bookingId) {
+  return new Promise((resolve, reject) => {
+    const sql1 =
+      "SELECT COUNT(*) AS E FROM BOOKING_PRODUCTS BP, BOOKING B WHERE BP.ID_BOOKING = ? AND BP.ID_PRODUCT <> ? AND B.ID_BOOKING = BP.ID_BOOKING ";
+    db.get(sql1, [bookingId, productId], function (err, row) {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(row)
+        resolve(row.E);
+      }
+    });
+  });
+}
+
+exports.deleteBookingProduct = async (productId, bookingId) => {
+
+  let current = await getCurrentProducts(productId, bookingId);
+  const sql2 = "DELETE from BOOKING WHERE ID_BOOKING = ?";
+  console.log(current);
   return new Promise((resolve, reject) => {
     const sql =
       "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
@@ -481,7 +554,14 @@ exports.deleteBookingProduct = (productId, bookingId) => {
       if (err) {
         reject(err);
       } else {
-        resolve(true);
+        if (current == 0)
+          db.run(sql2, [bookingId], function (err) {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(true);
+            }
+          });
       }
     });
   });
@@ -589,7 +669,13 @@ exports.createClient = (client) => {
       "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
     db.run(
       sql,
-      [client.email, client.name, client.surname, client.password, client.phone],
+      [
+        client.email,
+        client.name,
+        client.surname,
+        client.password,
+        client.phone,
+      ],
       function (err) {
         if (err) {
           reject(err);
@@ -816,7 +902,7 @@ exports.getAllBookingsForClient = (clientId) => {
         email: e.EMAIL,
         name: e.NAME,
         surname: e.SURNAME,
-        products: []
+        products: [],
       }));
 
       for (let booking of bookings)
@@ -950,7 +1036,7 @@ exports.getClientsPreparation = (productId) => {
               id: `C${x.ID}`,
               username: x.EMAIL,
               name: x.NAME,
-              surname: x.SURNAME
+              surname: x.SURNAME,
             };
           })
         );
@@ -1060,28 +1146,32 @@ exports.productsOfBooking = (id) => {
 
 exports.insertTupleBookingHistory = (booking) => {
   return new Promise((resolve, reject) => {
-    const sql ="INSERT INTO BOOKING_HISTORY (ID_BOOKING, CLIENT_ID, STATE, START_DATE, END_DATE) VALUES (?, ?, ?, ?, ?)"
-    db.run(sql, 
+    const sql =
+      "INSERT INTO BOOKING_HISTORY (ID_BOOKING, CLIENT_ID, STATE, START_DATE, END_DATE) VALUES (?, ?, ?, ?, ?)";
+    db.run(
+      sql,
       [
-        booking.ID_BOOKING, 
-        booking.CLIENT_ID, 
-        booking.STATE, 
-        booking.START_DATE, 
-        booking.END_DATE
-      ], (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(true);
+        booking.ID_BOOKING,
+        booking.CLIENT_ID,
+        booking.STATE,
+        booking.START_DATE,
+        booking.END_DATE,
+      ],
+      (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
       }
-    });
+    );
   });
 };
 
-
 exports.getBookingsUnretrieved = () => {
   return new Promise((resolve, reject) => {
-    const sql ="SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
+    const sql =
+      "SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1094,10 +1184,10 @@ exports.getBookingsUnretrieved = () => {
           idClient: e.CLIENT_ID,
           productID: e.ID_PRODUCT,
           name: e.NAME,
-          qty: e.QTY
+          qty: e.QTY,
         }));
 
-        const bookings=[];
+        const bookings = [];
         prenotazioni.forEach((p) => {
           if (bookings[p.idBooking]) {
             bookings[p.idBooking].products = [
@@ -1127,8 +1217,7 @@ exports.getBookingsUnretrieved = () => {
 
 exports.deleteBooking = (bookingId) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "DELETE from BOOKING WHERE ID_BOOKING = ?";
+    const sql = "DELETE from BOOKING WHERE ID_BOOKING = ?";
     db.run(sql, [bookingId], function (err) {
       if (err) {
         reject(err);
@@ -1224,18 +1313,18 @@ exports.cleanDb = async () => {
 //Get total of bookings in state BOOKED
 exports.getTotal = () => {
   return new Promise((resolve, reject) => {
-   /* const sql =
+    /* const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL\
       FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p \
       WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=?\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     */
-      const sql =
+    const sql =
       "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
       "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
       "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE=? AND bp.ID_PRODUCT = p.ID AND p.STATE=? " +
       "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
-    db.all(sql,["BOOKED","CONFIRMED"], (err, rows) => {
+    db.all(sql, ["BOOKED", "CONFIRMED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -1250,16 +1339,16 @@ exports.getTotal = () => {
 
       resolve(bookings);
       */
-     resolve(createBookingsFromQuery(rows));
+      resolve(createBookingsFromQuery(rows));
     });
   });
 };
 
-
 // delete all products expected from bookings, to be called on tuesday
 exports.deleteBookingProductsExpected = () => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?) AND ID_BOOKING NOT IN (SELECT ID_BOOKING FROM BOOKING_HISTORY)";
+    const sql =
+      "DELETE FROM BOOKING_PRODUCTS WHERE ID_PRODUCT = (SELECT ID FROM PRODUCT_WEEK WHERE STATE=?) AND ID_BOOKING NOT IN (SELECT ID_BOOKING FROM BOOKING_HISTORY)";
     db.run(sql, ["EXPECTED"], function (err) {
       if (err) {
         reject(err);
@@ -1280,12 +1369,12 @@ exports.getTotalPendingCancelation = () => {
       WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED'\
       GROUP BY b.ID_BOOKING, b.CLIENT_ID";
       */
-     
+
     const sql =
-    "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
-    "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
-    "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED' "+
-    "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
+      "SELECT b.ID_BOOKING, b.CLIENT_ID, SUM(p.PRICE * bp.QTY) AS TOTAL " +
+      "FROM BOOKING b, BOOKING_PRODUCTS bp, PRODUCT_WEEK p " +
+      "WHERE b.ID_BOOKING = bp.ID_BOOKING AND b.STATE='PENDINGCANCELATION' AND bp.ID_PRODUCT = p.ID AND p.STATE='CONFIRMED' " +
+      "GROUP BY b.ID_BOOKING, b.CLIENT_ID";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1305,17 +1394,17 @@ exports.getTotalPendingCancelation = () => {
 };
 
 const createBookingsFromQuery = (rows) => {
-  return  rows.map((tuples) => ({
+  return rows.map((tuples) => ({
     id: tuples.ID_BOOKING,
     client: tuples.CLIENT_ID,
     total: tuples.TOTAL,
   }));
-}
+};
 
 //Get bookings that we have to put in state EMPTY
 exports.getEmptyBookings = () => {
   return new Promise((resolve, reject) => {
-   /* const sql =
+    /* const sql =
     "SELECT b.ID_BOOKING, b.CLIENT_ID \
     FROM BOOKING b \
     WHERE b.STATE = ? AND b.ID_BOOKING NOT IN \
@@ -1323,14 +1412,14 @@ exports.getEmptyBookings = () => {
           WHERE b1.ID_BOOKING = b2.ID_BOOKING \
           GROUP BY b1.ID_BOOKING)";
     */
-          const sql =
-          "SELECT b.ID_BOOKING, b.CLIENT_ID " +
-          "FROM BOOKING b " +
-          "WHERE b.STATE = ? AND b.ID_BOOKING NOT IN " +
-             " (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 " +
-              "  WHERE b1.ID_BOOKING = b2.ID_BOOKING " +
-              "  GROUP BY b1.ID_BOOKING)";
-    db.all(sql,["BOOKED"], (err, rows) => {
+    const sql =
+      "SELECT b.ID_BOOKING, b.CLIENT_ID " +
+      "FROM BOOKING b " +
+      "WHERE b.STATE = ? AND b.ID_BOOKING NOT IN " +
+      " (SELECT b1.ID_BOOKING FROM BOOKING b1, BOOKING_PRODUCTS b2 " +
+      "  WHERE b1.ID_BOOKING = b2.ID_BOOKING " +
+      "  GROUP BY b1.ID_BOOKING)";
+    db.all(sql, ["BOOKED"], (err, rows) => {
       if (err) {
         reject(err);
         return;
@@ -1338,7 +1427,7 @@ exports.getEmptyBookings = () => {
 
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
-        client: e.CLIENT_ID
+        client: e.CLIENT_ID,
       }));
 
       resolve(bookings);
@@ -1349,8 +1438,7 @@ exports.getEmptyBookings = () => {
 //get all bookings without details about clients or products
 exports.getAllBookingsVC = () => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
+    const sql = "SELECT b.ID_BOOKING, b.STATE, b.CLIENT_ID FROM BOOKING b";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1359,7 +1447,7 @@ exports.getAllBookingsVC = () => {
       const bookings = rows.map((e) => ({
         id: e.ID_BOOKING,
         state: e.STATE,
-        idClient: e.CLIENT_ID
+        idClient: e.CLIENT_ID,
       }));
       resolve(bookings);
     });
@@ -1369,34 +1457,27 @@ exports.getAllBookingsVC = () => {
 // Add 10 to available quantity and put all products in state expected again
 exports.resetProductWeekVC = () => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "UPDATE PRODUCT_WEEK SET QTY=QTY+?, STATE=?";
-    db.run(
-      sql,
-      [
-        10,
-        "EXPECTED"
-      ],
-      function (err) {
-        if (err) {
-          reject(err);
-        }
-        resolve(true);
+    const sql = "UPDATE PRODUCT_WEEK SET QTY=QTY+?, STATE=?";
+    db.run(sql, [10, "EXPECTED"], function (err) {
+      if (err) {
+        reject(err);
       }
-    );
+      resolve(true);
+    });
   });
 };
 
 // Counting missed pickups for a customer
-exports.countMissedPickupsForACustomer = (customerId,preSuspensionDate) => {
+exports.countMissedPickupsForACustomer = (customerId, preSuspensionDate) => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
-    db.all(sql, [customerId,preSuspensionDate], (err, rows) => {
+    const sql =
+      "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
+    db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
       if (err) {
         reject(err);
         return;
       } else {
-        resolve(rows[0])
+        resolve(rows[0]);
       }
     });
   });
@@ -1411,7 +1492,7 @@ exports.findClientbyBooking = (bookingId) => {
         reject(err);
         return;
       } else {
-        resolve(rows[0])
+        resolve(rows[0]);
       }
     });
   });
@@ -1426,7 +1507,7 @@ exports.updateClientMissedCount = (clientId, count) => {
         reject(err);
         return;
       } else {
-        resolve(true)
+        resolve(true);
       }
     });
   });
@@ -1441,7 +1522,7 @@ exports.updateClientSusspensionDate = (clientId, date) => {
         reject(err);
         return;
       } else {
-        resolve(true)
+        resolve(true);
       }
     });
   });
@@ -1451,12 +1532,12 @@ exports.updateClientSusspensionDate = (clientId, date) => {
 exports.getLatestSuspensionDate = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql = "select suspenssionDate as date from CLIENT where ID=?";
-    db.all(sql, [clientId], (err,rows) => {
+    db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);
         return;
       } else {
-        resolve(rows[0])
+        resolve(rows[0]);
       }
     });
   });
