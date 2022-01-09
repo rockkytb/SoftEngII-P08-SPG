@@ -80,6 +80,8 @@ passport.use(
               message: `You are Suspended for ${freeDate.getDate() - now.getDate()} more days`,
             });
           }
+        }else{
+          return done(null, user);
         }
       })
       .catch((err) => {
