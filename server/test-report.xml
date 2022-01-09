@@ -1,1104 +1,258 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="13"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="6"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="2"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="55"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="56"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="56"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="1"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="54">
-      <failure message="Error: expect(received).resolves.toBeGreaterThanOrEqual()"><![CDATA[Error: expect(received).resolves.toBeGreaterThanOrEqual()
+  <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\dao.test.js">
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="16"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="5"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="214"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="402"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="114"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="108"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="3"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="194"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="242"/>
+    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="2"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="508"/>
+    <testCase name="Test suite DAO get client return success" duration="113"/>
+    <testCase name="Test suite DAO get client return -1 because no email provided" duration="6">
+      <failure message="Error: expect(received).resolves.toHaveProperty(path)"><![CDATA[Error: expect(received).resolves.toHaveProperty(path)
 
-Received promise rejected instead of resolved
-Rejected to value: [Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: CLIENT.PHONE]
-    at expect (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:178:15)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:95:12)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
+Matcher error: expected path must be a string or array
+
+Expected has type:  number
+Expected has value: -1
+    at C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\expect\build\index.js:245:75]]></failure>
     </testCase>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="2"/>
-    <testCase name="Test suite DAO get client return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="55">
-      <failure message="Error: expect(received).resolves.toBeGreaterThanOrEqual()"><![CDATA[Error: expect(received).resolves.toBeGreaterThanOrEqual()
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="2">
+      <failure message="Error: expect(received).resolves.toHaveProperty(path)"><![CDATA[Error: expect(received).resolves.toHaveProperty(path)
 
-Received promise rejected instead of resolved
-Rejected to value: [Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: CLIENT.PHONE]
-    at expect (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:178:15)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:118:5)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
+Matcher error: expected path must be a string or array
+
+Expected has type:  number
+Expected has value: -1
+    at C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\expect\build\index.js:245:75]]></failure>
     </testCase>
-    <testCase name="Test suite DAO get client return success" duration="56"/>
-    <testCase name="Test suite DAO get client return -1 because no email provided" duration="1">
-      <failure message="Error: expect(received).resolves.toHaveProperty(path, value)"><![CDATA[Error: expect(received).resolves.toHaveProperty(path, value)
-
-Expected path: "id"
-Received path: []
-
-Expected value: -1
-Received value: -1
-    at Object.toHaveProperty (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:134:52)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="1">
-      <failure message="Error: expect(received).resolves.toHaveProperty(path, value)"><![CDATA[Error: expect(received).resolves.toHaveProperty(path, value)
-
-Expected path: "id"
-Received path: []
-
-Expected value: -1
-Received value: -1
-    at Object.toHaveProperty (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:139:57)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get client return success" duration="1"/>
-    <testCase name="Test suite DAO get client return success" duration="3">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 0
-+ Received  + 1
-
-  Array [
-    Object {
-      "id": "C1",
-      "name": "Marco",
-+     "phone": "3331231212",
-      "surname": "Bianchi",
-      "username": "marco.bianchi@mail.it",
-    },
-  ]
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:156:46)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get clients preparation return success" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 8
-+ Received  + 1
-
-- Array [
--   Object {
--     "id": "C1",
--     "name": "Marco",
--     "surname": "Bianchi",
--     "username": "marco.bianchi@mail.it",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:169:58)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get categories return success" duration="1"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get client by id return success" duration="1"/>
-    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="0"/>
-    <testCase name="Test suite DAO get products expected by farmer return success" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 13
-+ Received  +  1
-
-- Array [
--   Object {
--     "category": "Fruit",
--     "farmer_email": "antonio.bianchi@mail.it",
--     "id": 1,
--     "name": "Mele",
--     "price": 14,
--     "qty": 10,
--     "size": 1,
--     "state": "EXPECTED",
--     "unit_of_measure": "kg",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:217:68)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="0"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="52"/>
-    <testCase name="Test suite DAO get farmer return success" duration="55"/>
-    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="2"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="55"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="54"/>
-    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="1"/>
-    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="0"/>
-    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="0"/>
-    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="1"/>
-    <testCase name="Test suite DAO get warehouse worker return false because wrong psw" duration="53"/>
-    <testCase name="Test suite DAO get warehouse worker return success" duration="54"/>
-    <testCase name="Test suite DAO get all products success" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 12
-+ Received  +  1
-
-- Array [
--   Object {
--     "category": "Fruit",
--     "farmer_email": "antonio.bianchi@mail.it",
--     "id": 1,
--     "name": "Mele",
--     "price": 14,
--     "qty": 10,
--     "size": 1,
--     "unit_of_measure": "kg",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:361:48)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all all CONFIRMED products for a particular farmer success" duration="8">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 12
-+ Received  +  1
-
-- Array [
--   Object {
--     "category": "Fruit",
--     "farmer_email": "antonio.bianchi@mail.it",
--     "id": 2,
--     "name": "Lamponi",
--     "price": 1.78,
--     "qty": 10,
--     "size": 1,
--     "unit_of_measure": "g",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:379:67)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all bookings success" duration="5">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 21
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "products": Array [
--       Object {
--         "product": "Mele",
--         "productID": 1,
--         "qty": 3,
--       },
--       Object {
--         "product": "Lamponi",
--         "productID": 2,
--         "qty": 1,
--       },
--     ],
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:402:48)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all bookings modes in preparation success" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 23
-+ Received  +  1
-
-- Array [
--   Object {
--     "date": "2021-12-15",
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "products": Array [
--       Object {
--         "product": "Mele",
--         "productID": 1,
--         "qty": 3,
--       },
--       Object {
--         "product": "Lamponi",
--         "productID": 2,
--         "qty": 1,
--       },
--     ],
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--     "time": "18:07",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:430:60)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 9
-+ Received  + 1
-
-- Array [
--   Object {
--     "date": "2021-12-15",
--     "idBooking": 2,
--     "idClient": 1,
--     "state": "BOOKED",
--     "time": "14:20",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:444:58)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all bookings for a client success" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Mele",
--     "qty": 3,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Lamponi",
--     "qty": 1,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:470:58)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all bookings for a non-existing client success" duration="1"/>
-    <testCase name="Test suite DAO the creation of a new booking mode success" duration="3"/>
-    <testCase name="Test suite DAO updating the wallet failed bacause client was not found" duration="1"/>
-    <testCase name="Test suite DAO updating the wallet failed bacause client id was not provided" duration="0"/>
-    <testCase name="Test suite DAO update of wallet balance was successfull" duration="1"/>
-    <testCase name="Test suite DAO Creation of wallet with balance= 0.0 was successfull" duration="2"/>
-    <testCase name="Test suite DAO Creation of wallet fails,id 1 already exists" duration="1"/>
-    <testCase name="Test suite DAO Edit the state of a booking with a valid request" duration="1"/>
-    <testCase name="Test suite DAO create a row in the booking product table" duration="1">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-Expected: 3
-Received: 1
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:555:68)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO get all bookings with pendingcancelation state" duration="3">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Mele",
--     "qty": 3,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Lamponi",
--     "qty": 1,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:581:68)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO Insert a new Product expected without a field category" duration="1"/>
-    <testCase name="Test suite DAO INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success" duration="4"/>
-    <testCase name="Test suite DAO edit state of a product receiving an array with id-state" duration="3"/>
-    <testCase name="Test suite DAO increment qty of a product success" duration="0"/>
+    <testCase name="Test suite DAO get client return success" duration="3"/>
+    <testCase name="Test suite DAO get client return success" duration="4"/>
+    <testCase name="Test suite DAO get clients preparation return success" duration="5"/>
+    <testCase name="Test suite DAO get categories return success" duration="4"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="4"/>
+    <testCase name="Test suite DAO get client by id return success" duration="2"/>
+    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get products expected by farmer return success" duration="2"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="1"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="128"/>
+    <testCase name="Test suite DAO get farmer return success" duration="143"/>
+    <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="4"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="3"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="3"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="7"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="118"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="128"/>
+    <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="4"/>
+    <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="2"/>
+    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="2"/>
+    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="2"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="2"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="3"/>
+    <testCase name="Test suite DAO get warehouse worker return false because wrong psw" duration="108"/>
+    <testCase name="Test suite DAO get warehouse worker return success" duration="109"/>
+    <testCase name="Test suite DAO get all products success" duration="3"/>
+    <testCase name="Test suite DAO get all all CONFIRMED products for a particular farmer success" duration="3"/>
+    <testCase name="Test suite DAO get all bookings success" duration="4"/>
+    <testCase name="Test suite DAO get all bookings modes in preparation success" duration="3"/>
+    <testCase name="Test suite DAO get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW" duration="3"/>
+    <testCase name="Test suite DAO get all bookings for a client success" duration="3"/>
+    <testCase name="Test suite DAO get all bookings for a non-existing client success" duration="2"/>
+    <testCase name="Test suite DAO the creation of a new booking mode success" duration="354"/>
+    <testCase name="Test suite DAO updating the wallet failed bacause client was not found" duration="2"/>
+    <testCase name="Test suite DAO updating the wallet failed bacause client id was not provided" duration="2"/>
+    <testCase name="Test suite DAO update of wallet balance was successfull" duration="95"/>
+    <testCase name="Test suite DAO Creation of wallet with balance= 0.0 was successfull" duration="126"/>
+    <testCase name="Test suite DAO Creation of wallet fails,id 1 already exists" duration="98"/>
+    <testCase name="Test suite DAO Edit the state of a booking with a valid request" duration="4"/>
+    <testCase name="Test suite DAO create a row in the booking product table" duration="108"/>
+    <testCase name="Test suite DAO get all bookings with pendingcancelation state" duration="101"/>
+    <testCase name="Test suite DAO Insert a new Product expected without a field category" duration="3"/>
+    <testCase name="Test suite DAO INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success" duration="141"/>
+    <testCase name="Test suite DAO edit state of a product receiving an array with id-state" duration="138"/>
+    <testCase name="Test suite DAO increment qty of a product success" duration="1"/>
     <testCase name="Test suite DAO delete a product with a given id success" duration="1"/>
-    <testCase name="Test suite DAO delete a booking product success" duration="0"/>
-    <testCase name="Test suite DAO get all acks with NEW state success" duration="3"/>
-    <testCase name="Test suite DAO the creation of ack success" duration="3">
+    <testCase name="Test suite DAO delete a booking product success" duration="2"/>
+    <testCase name="Test suite DAO get all acks with NEW state success" duration="256"/>
+    <testCase name="Test suite DAO the creation of ack success" duration="299">
       <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
 
 Expected: {"CATEGORY_ID": 1, "FARMER_ID": 1, "ID": 1, "NAME": "Mele", "PRICE": 14, "QTY": 12, "SIZE": 1, "STATE": "EXPECTED", "UNIT_OF_MEASURE": "kg"}
 Received: undefined
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:628:57)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
+    at Object.toEqual (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\expect\build\index.js:242:22)
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\dao.test.js:645:57)
+    at Promise.then.completed (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:390:28)
     at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
+    at callAsyncCircusFn (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\utils.js:315:10)
+    at _callCircusTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:218:40)
+    at _runTest (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:155:3)
+    at _runTestsForDescribeBlock (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:66:9)
+    at _runTestsForDescribeBlock (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:60:9)
+    at run (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\node_modules\jest-circus\build\run.js:25:3)]]></failure>
     </testCase>
-    <testCase name="Test suite DAO get all bookings for a particular client with the booked state " duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 7
-+ Received  + 1
-
-- Array [
--   Object {
--     "id_booking": 2,
--     "id_client": 1,
--     "state": "BOOKED",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:702:65)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
-    <testCase name="Test suite DAO GET all the product associated to a particular booking" duration="2">
-      <failure message="Error: expect(received).resolves.toEqual(expected) // deep equality"><![CDATA[Error: expect(received).resolves.toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "category": "Fruit",
--     "email": "antonio.bianchi@mail.it",
--     "id_product": 1,
--     "name_product": "Mele",
--     "price": 14,
--     "qty_booking": 3,
--     "state": "EXPECTED",
--   },
--   Object {
--     "category": "Fruit",
--     "email": "antonio.bianchi@mail.it",
--     "id_product": 2,
--     "name_product": "Lamponi",
--     "price": 1.78,
--     "qty_booking": 1,
--     "state": "CONFIRMED",
--   },
-- ]
-+ Array []
-    at Object.toEqual (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/expect/build/index.js:242:22)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/dao.test.js:728:53)
-    at Promise.then.completed (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:390:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/utils.js:315:10)
-    at _callCircusTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:218:40)
-    at _runTest (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:155:3)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:66:9)
-    at _runTestsForDescribeBlock (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:60:9)
-    at run (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/run.js:25:3)]]></failure>
-    </testCase>
+    <testCase name="Test suite DAO get all bookings for a particular client with the booked state " duration="300"/>
+    <testCase name="Test suite DAO GET all the product associated to a particular booking" duration="3"/>
   </file>
-  <file path="/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="75"/>
-    <testCase name="Test suite Integration Server Get id Client by email get with an invalid email" duration="5"/>
-    <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="3"/>
-    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="4"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="4"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="4"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="3"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="3"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="4"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="2"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="3"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="2"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="3"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="2"/>
-    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="2"/>
-    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="2"/>
-    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="3"/>
-    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="4">
+  <file path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js">
+    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="147"/>
+    <testCase name="Test suite Integration Server Get id Client by email get with an invalid email" duration="15"/>
+    <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="16"/>
+    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="146"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="158">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-Expected: 200
-Received: 500
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:289:30)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 422
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:75:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="3"/>
-    <testCase name="Test suite Integration Server Post new client create a new client but the client email already used" duration="5001">
-      <failure message="TypeError: Expected a string but received a undefined"><![CDATA[TypeError: Expected a string but received a undefined
-    at assertString (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/util/assertString.js:17:11)
-    at Object.isLength (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/isLength.js:16:29)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js:484:18
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:137:13)
-    at Route.dispatch (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:112:3)
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:281:22
-    at Function.process_params (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:335:12)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:275:10)]]></failure>
-      <failure message="Error: thrown: &quot;Exceeded timeout of 5000 ms for a test."><![CDATA[Error: thrown: "Exceeded timeout of 5000 ms for a test.
-Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:305:5
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:304:3
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:12:1)
-    at Runtime._execModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1646:24)
-    at Runtime._loadModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1185:12)
-    at Runtime.requireModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1009:12)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="7"/>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="4"/>
-    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="4"/>
-    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="3"/>
-    <testCase name="Test suite Integration Server updating booking mode status success should update a booking mode status to PREPERATION" duration="3">
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="6">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-Expected: 200
-Received: 500
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:381:30)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 422
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:86:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="2"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="5002">
-      <failure message="TypeError: Expected a string but received a undefined"><![CDATA[TypeError: Expected a string but received a undefined
-    at assertString (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/util/assertString.js:17:11)
-    at Object.isLength (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/isLength.js:16:29)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js:484:18
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:137:13)
-    at Route.dispatch (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:112:3)
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:281:22
-    at Function.process_params (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:335:12)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:275:10)]]></failure>
-      <failure message="Error: thrown: &quot;Exceeded timeout of 5000 ms for a test."><![CDATA[Error: thrown: "Exceeded timeout of 5000 ms for a test.
-Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:401:5
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:400:3
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:12:1)
-    at Runtime._execModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1646:24)
-    at Runtime._loadModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1185:12)
-    at Runtime.requireModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1009:12)]]></failure>
+    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="13"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="207"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="104"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="8"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="7"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="7"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="8"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="11"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="8"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="5"/>
+    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="7"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="8"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="7"/>
+    <testCase name="Test suite Integration Server Post new client create a new client but the client email already used" duration="797">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 503
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:314:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="5002">
-      <failure message="TypeError: Expected a string but received a undefined"><![CDATA[TypeError: Expected a string but received a undefined
-    at assertString (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/util/assertString.js:17:11)
-    at Object.isLength (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/isLength.js:16:29)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js:484:18
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:137:13)
-    at Route.dispatch (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:112:3)
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:281:22
-    at Function.process_params (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:335:12)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:275:10)]]></failure>
-      <failure message="Error: thrown: &quot;Exceeded timeout of 5000 ms for a test."><![CDATA[Error: thrown: "Exceeded timeout of 5000 ms for a test.
-Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:413:5
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:412:3
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:12:1)
-    at Runtime._execModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1646:24)
-    at Runtime._loadModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1185:12)
-    at Runtime.requireModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1009:12)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="5006">
-      <failure message="TypeError: Expected a string but received a undefined"><![CDATA[TypeError: Expected a string but received a undefined
-    at assertString (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/util/assertString.js:17:11)
-    at Object.isLength (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/isLength.js:16:29)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js:484:18
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:137:13)
-    at Route.dispatch (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:112:3)
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:281:22
-    at Function.process_params (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:335:12)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:275:10)]]></failure>
-      <failure message="Error: thrown: &quot;Exceeded timeout of 5000 ms for a test."><![CDATA[Error: thrown: "Exceeded timeout of 5000 ms for a test.
-Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:426:5
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:425:3
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:12:1)
-    at Runtime._execModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1646:24)
-    at Runtime._loadModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1185:12)
-    at Runtime.requireModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1009:12)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="5002">
-      <failure message="TypeError: Expected a string but received a undefined"><![CDATA[TypeError: Expected a string but received a undefined
-    at assertString (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/util/assertString.js:17:11)
-    at Object.isLength (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/validator/lib/isLength.js:16:29)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/server.js:484:18
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:137:13)
-    at Route.dispatch (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/route.js:112:3)
-    at Layer.handle [as handle_request] (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/layer.js:95:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:281:22
-    at Function.process_params (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:335:12)
-    at next (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/express/lib/router/index.js:275:10)]]></failure>
-      <failure message="Error: thrown: &quot;Exceeded timeout of 5000 ms for a test."><![CDATA[Error: thrown: "Exceeded timeout of 5000 ms for a test.
-Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:443:5
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at /Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:442:3
-    at _dispatchDescribe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:97:26)
-    at describe (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-circus/build/index.js:60:5)
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:12:1)
-    at Runtime._execModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1646:24)
-    at Runtime._loadModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1185:12)
-    at Runtime.requireModule (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/node_modules/jest-runtime/build/index.js:1009:12)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="7"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="4"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="4"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="2"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="3"/>
-    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="4">
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="352"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="8"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="124"/>
+    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="308"/>
+    <testCase name="Test suite Integration Server updating booking mode status success should update a booking mode status to PREPERATION" duration="222"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="155"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="5"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="6"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="9"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="614"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="370"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="9"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="9"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="9"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="9"/>
+    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="16">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
 Expected: {"CATEGORY_ID": 1, "FARMER_ID": 1, "ID": 1, "NAME": "Mele", "PRICE": 14, "QTY": 12, "SIZE": 1, "STATE": "EXPECTED", "UNIT_OF_MEASURE": "kg"}
 Received: ""
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:532:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:537:24)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="4"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="2"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="2"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="2"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="3"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="2"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="2"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="2"/>
-    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="4"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="2"/>
-    <testCase name="Test suite Integration Server delete a booking product send a valid product id and booking id" duration="4"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="3"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="2"/>
-    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="62"/>
-    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="56"/>
-    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="3"/>
-    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="2"/>
-    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="3">
+    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="6"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="119"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="105"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="19"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="13"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="12"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="20"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="28"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="145"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="127"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="10"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="12"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="10"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="8"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="12"/>
+    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="366"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="21">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-Expected: 401
-Received: 200
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1029:30)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 422
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:930:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="4">
+    <testCase name="Test suite Integration Server delete a booking product send a valid product id and booking id" duration="183">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-- Expected  - 0
-+ Received  + 1
-
-  Array [
-    Object {
-      "id": "C1",
-      "name": "Marco",
-+     "phone": "3331231212",
-      "surname": "Bianchi",
-      "username": "marco.bianchi@mail.it",
-    },
-  ]
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1039:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 204
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:948:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="3">
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="98">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-- Expected  - 8
-+ Received  + 1
-
-- Array [
--   Object {
--     "id": "C1",
--     "name": "Marco",
--     "surname": "Bianchi",
--     "username": "marco.bianchi@mail.it",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1057:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 422
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:963:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="2"/>
-    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="59"/>
-    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="54"/>
-    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="57"/>
-    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="61"/>
-    <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="58"/>
-    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="57"/>
-    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="4">
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="10">
       <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
 
-- Expected  - 3
-+ Received  + 3
-
-  Array [
-    Object {
--     "category": "Fruit",
-+     "category": "Spices",
-      "farmer_email": "antonio.bianchi@mail.it",
-      "id": 1,
--     "name": "Mele",
--     "price": 14,
-+     "name": "Apple",
-+     "price": 1.99,
-      "qty": 10,
-      "size": 1,
-      "unit_of_measure": "kg",
-    },
-  ]
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1171:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
+Expected: 422
+Received: 201
+    at Object.<anonymous> (C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\serverIntegration.test.js:979:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
     </testCase>
-    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="3">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 4
-+ Received  + 4
-
-  Array [
-    Object {
-      "category": "Fruit",
-      "farmer_email": "antonio.bianchi@mail.it",
-      "id": 2,
--     "name": "Lamponi",
--     "price": 1.78,
--     "qty": 10,
-+     "name": "test",
-+     "price": 10,
-+     "qty": 1,
-      "size": 1,
--     "unit_of_measure": "g",
-+     "unit_of_measure": "kg",
-    },
-  ]
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1192:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id fail" duration="2"/>
-    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint fail" duration="3"/>
-    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="3">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 3
-+ Received  + 3
-
-@@ -1,12 +1,12 @@
-  Array [
-    Object {
--     "category": "Fruit",
-+     "category": "Spices",
-      "farmer_email": "antonio.bianchi@mail.it",
-      "id": 1,
--     "name": "Mele",
--     "price": 14,
-+     "name": "Apple",
-+     "price": 1.99,
-      "qty": 10,
-      "size": 1,
-      "state": "EXPECTED",
-      "unit_of_measure": "kg",
-    },
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1240:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="2">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 4
-+ Received  + 4
-
-  Array [
-    Object {
-      "category": "Fruit",
-      "farmer_email": "antonio.bianchi@mail.it",
-      "id": 2,
--     "name": "Lamponi",
--     "price": 1.78,
--     "qty": 10,
-+     "name": "test",
-+     "price": 10,
-+     "qty": 1,
-      "size": 1,
--     "unit_of_measure": "g",
-+     "unit_of_measure": "kg",
-    },
-  ]
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1263:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="2">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 21
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "products": Array [
--       Object {
--         "product": "Mele",
--         "productID": 1,
--         "qty": 3,
--       },
--       Object {
--         "product": "Lamponi",
--         "productID": 2,
--         "qty": 1,
--       },
--     ],
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1284:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="3">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 23
-+ Received  +  1
-
-- Array [
--   Object {
--     "date": "2021-12-15",
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "products": Array [
--       Object {
--         "product": "Mele",
--         "productID": 1,
--         "qty": 3,
--       },
--       Object {
--         "product": "Lamponi",
--         "productID": 2,
--         "qty": 1,
--       },
--     ],
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--     "time": "18:07",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1306:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="4">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 9
-+ Received  + 1
-
-- Array [
--   Object {
--     "date": "2021-12-15",
--     "idBooking": 2,
--     "idClient": 1,
--     "state": "BOOKED",
--     "time": "14:20",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1338:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="2">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Mele",
--     "qty": 3,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Lamponi",
--     "qty": 1,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1355:29)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="2"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="3"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="2"/>
-    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="3"/>
-    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="16"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="3"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="3"/>
-    <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="3">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Mele",
--     "qty": 3,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
--   Object {
--     "email": "marco.bianchi@mail.it",
--     "id": 1,
--     "name": "Marco",
--     "product": "Lamponi",
--     "qty": 1,
--     "state": "PENDINGCANCELATION",
--     "surname": "Bianchi",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1463:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="3"/>
-    <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="3"/>
-    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="4"/>
-    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="2"/>
-    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="2"/>
-    <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="2"/>
-    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a valid id" duration="3">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 7
-+ Received  + 1
-
-- Array [
--   Object {
--     "id_booking": 2,
--     "id_client": 1,
--     "state": "BOOKED",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1601:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="2"/>
-    <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="4">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-- Expected  - 20
-+ Received  +  1
-
-- Array [
--   Object {
--     "category": "Fruit",
--     "email": "antonio.bianchi@mail.it",
--     "id_product": 1,
--     "name_product": "Mele",
--     "price": 14,
--     "qty_booking": 3,
--     "state": "EXPECTED",
--   },
--   Object {
--     "category": "Fruit",
--     "email": "antonio.bianchi@mail.it",
--     "id_product": 2,
--     "name_product": "Lamponi",
--     "price": 1.78,
--     "qty_booking": 1,
--     "state": "CONFIRMED",
--   },
-- ]
-+ Array []
-    at Object.<anonymous> (/Users/pippo/Desktop/Software Engineering II/SoftEngII-P08-SPG/server/serverIntegration.test.js:1640:24)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)]]></failure>
-    </testCase>
-    <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="2"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="117"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="162"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="6"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="5"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="5"/>
+    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="6"/>
+    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="6"/>
+    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="6"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="111"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="107"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="116"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="115"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="113"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="105"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="8"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="6"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id fail" duration="7"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint fail" duration="7"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="9"/>
+    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="7"/>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="8"/>
+    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="5"/>
+    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="6"/>
+    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="5"/>
+    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="5"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="6"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="6"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="5"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="314"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="11"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="8"/>
+    <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="9"/>
+    <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="7"/>
+    <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="335"/>
+    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="282"/>
+    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="16"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="13"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="6"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a valid id" duration="8"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="16"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="6"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="5"/>
   </file>
 </testExecutions>

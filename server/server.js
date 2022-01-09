@@ -540,7 +540,7 @@ app.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
   let value = products.postBookingProducts(req);
 
   if (value == 1) {
-    res.status(422).json({ error: `Bad request` });
+    return res.status(422).json({ error: `Bad request` });
   } else if (value > 1) {
     res.status(500).json({
       error: `Database error during the post of bookingProduct: ${value} wrong data.`,
@@ -556,9 +556,9 @@ app.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
   let value = products.putBookingProduct(req);
 
   if (value == 1) {
-    res.status(422).json({ error: `Bad request` });
+    return res.status(422).json({ error: `Bad request` });
   } else if (value > 1) {
-    res.status(500).json({
+    return res.status(500).json({
       error: `Database error during the post of bookingProduct: ${value} wrong data.`,
     });
   } else {
@@ -630,9 +630,9 @@ app.put("/api/productstate", isLoggedIn, async (req, res) => {
   let value = products.putProductsState(req);
 
   if (value == 1) {
-    res.status(422).json({ error: `Bad request` });
+    return res.status(422).json({ error: `Bad request` });
   } else if (value > 1) {
-    res.status(500).json({
+    return res.status(500).json({
       error: `Database error during the post of bookingProduct: ${value} wrong data.`,
     });
   } else {
