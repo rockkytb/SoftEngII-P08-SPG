@@ -56,7 +56,31 @@ passport.use(
           return done(null, false, {
             message: "Incorrect username and/or password",
           });
-        return done(null, user);
+
+        // check if the user is suspended or not
+        if (user.suspensionDate != null) //mighe be suspended
+        {
+          // check the date
+          let suspensionDate = new Date(user.suspensionDate)
+          let now = new Date(clockDate);
+          let freeDate = new Date(suspensionDate);
+          freeDate.setDate(suspensionDate.getDate() + 30);
+          if (now >= freeDate && user.missedCount < 5) // user is not suspended
+          { // count the number of missed pickups and send message if it is 3 or 4
+            if (user.missedCount == 3 || user.missedCount == 4) {
+              return done(null, user, {
+                message: `You have ${user.missedCount} missed pickups!\n
+                 You will be suspeneded for 30 days on the 5th time.`,
+              });
+            }
+            return done(null, user);
+          }
+          else {
+            return done(null, false, {
+              message: `You are Suspended for ${freeDate.getDate() - now.getDate()} more days`,
+            });
+          }
+        }
       })
       .catch((err) => {
         return done(err);

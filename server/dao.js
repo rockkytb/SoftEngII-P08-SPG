@@ -80,6 +80,8 @@ exports.getClient = (email, password) => {
           name: row.NAME,
           surname: row.SURNAME,
           phone: row.PHONE,
+          missedCount: row.MISSEDCOUNT,
+          suspensionDate: row.SUSPENSIONDATE
         };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
