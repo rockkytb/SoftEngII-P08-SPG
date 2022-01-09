@@ -22,7 +22,7 @@ exports.postBookingProducts = async (req) => {
           { min: 1 } || i.id <= 0 || id.qty <= 0
         )
       ) {
-        return res.status(422).json({ error: `Invalid product data` });
+        return 1;
       }
       let bookingProduct = {
         ID_Booking: req.body.ID_Booking,
