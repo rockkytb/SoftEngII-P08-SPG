@@ -458,7 +458,7 @@ async function confirmDeliveryProducts(productList) {
 
 async function confirmProductsFarmer(product) {
   return new Promise((resolve, reject) => {
-    fetch(url + "/productstate", {
+    fetch(url + "/products", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

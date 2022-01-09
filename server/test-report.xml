@@ -254,5 +254,136 @@ Received: 201
     <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="16"/>
     <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="6"/>
     <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="5"/>
+  <file path="C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\serverIntegration.test.js">
+    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="0"/>
+    <testCase name="Test suite Integration Server Get id Client by email get with an invalid email" duration="0"/>
+    <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="0"/>
+    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="0"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="0"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="0"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="0"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="0"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client create a new client but the client email already used" duration="0"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="0"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="0"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="0"/>
+    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="0"/>
+    <testCase name="Test suite Integration Server updating booking mode status success should update a booking mode status to PREPERATION" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="0"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="0"/>
+    <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="0"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="0"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="0"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="0"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="0"/>
+    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="0"/>
+    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="0"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="0"/>
+    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="0"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="195">
+      <failure message="Error: listen EADDRINUSE: address already in use :::3001"><![CDATA[Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+    at listenInCluster (net.js:1379:12)
+    at Server.listen (net.js:1465:7)
+    at Function.listen (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\server.js:1578:20)
+    at Runtime._execModule (c:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\node_modules\jest-runtime\build\index.js:1646:24)
+    at Runtime._loadModule (c:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\node_modules\jest-runtime\build\index.js:1185:12)
+    at Runtime.requireModule (c:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\node_modules\jest-runtime\build\index.js:1009:12)
+    at Runtime.require [as requireModuleOrMock] (c:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\node_modules\jest-runtime\build\index.js:1210:21)
+    at Object.<anonymous> (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\serverIntegration.test.js:4:16)]]></failure>
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 422
+Received: 401
+    at Object.<anonymous> (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\serverIntegration.test.js:925:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server delete a booking product send a valid product id and booking id" duration="0"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="15">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 422
+Received: 401
+    at Object.<anonymous> (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\serverIntegration.test.js:958:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="14">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 422
+Received: 401
+    at Object.<anonymous> (C:\Users\Ale\Documents\Scuola\Softeng2\SoftEngII-P08-SPG\server\serverIntegration.test.js:974:30)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)]]></failure>
+    </testCase>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="0"/>
+    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="0"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="0"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="0"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="0"/>
+    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="0"/>
+    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="0"/>
+    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="0"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="0"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="0"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="0"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="0"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="0"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="0"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="0"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id fail" duration="0"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint fail" duration="0"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="0"/>
+    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="0"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="0"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="0"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="0"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="0"/>
+    <testCase name="Test suite Integration Server post a vector of product expected test with a no valid body, without a name field" duration="0"/>
+    <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="0"/>
+    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="0"/>
+    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="0"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="0"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a valid id" duration="0"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="0"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="0"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="0"/>
   </file>
 </testExecutions>
