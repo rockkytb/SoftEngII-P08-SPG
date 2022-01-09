@@ -5,6 +5,7 @@ const express = require("express");
 const products = express.Router();
 const dao = require("./dao");
 const validator = require("validator");
+const sessions = require("./session.js")
 
 let testmode = false;
 
@@ -141,6 +142,26 @@ products.delete("/api/products/:id", isLoggedIn, async (req, res) => {
   res.status(204).json();
 });
 
+///GET /api/bookingProducts/:bookingId
+products.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
+  const id = req.params.bookingId;
+  console.log(req.params.bookingId);
+  if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
+    return res.status(422).json({
+      error: `Invalid product id of a element on the array, it must be positive`,
+    });
+  }
+
+  dao
+    .productsOfBooking(id)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
 products.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
   let problems = 0;
   if (
@@ -236,5 +257,134 @@ products.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
     return 2;
   }
 });
+
+//GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
+products.get("/api/products/farmers/:id", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+  const id = req.params.id;
+  dao
+    .getAllProductsConfirmedForFarmer(id)
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+//GET /api/farmers/:farmerid/products_expected to get a list of all products
+products.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
+  if (!validator.isInt(`${req.params.farmerid}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
+  dao
+    .getAllProductsExpectedForFarmer(req.params.farmerid)
+    .then((products) => {
+      res.status(200).json(products);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+products.post("/api/products_expected", isLoggedIn, async (req, res) => {
+  var idProduct;
+  var results = [];
+  var problem = 0;
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      //do something with e.g. req.body[key]
+      try {
+        idProduct = await dao.insertTupleProductExpected(req.body[key]);
+      } catch (err) {
+        problem = 1;
+        break;
+      }
+      const product = {
+        id: idProduct,
+        nameProduct: req.body[key].name,
+      };
+      results.push(product);
+    }
+  }
+  if (problem == 0) {
+    //All went fine
+    res.status(201).json(results);
+  } else {
+    res.status(503).json({
+      error: `Database error during the post of ProductExpected`,
+    });
+  }
+});
+
+// POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
+products.post(
+  "/api/farmers/:farmerid/productsExpected",
+  isLoggedIn,
+  async (req, res) => {
+    if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid category id, it must be positive` });
+    }
+    if (!validator.isFloat(`${req.body.price}`, { min: 0 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid product price, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.farmerid}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid farmer id, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid quantity, it must be positive` });
+    }
+    if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
+      return res
+        .status(422)
+        .json({ error: `Invalid size, it must be positive` });
+    }
+    if (!validator.isLength(`${req.body.unit_of_measure}`, { max: 15 })) {
+      return res.status(422).json({
+        error: `Invalid unit of measure, it must be a string of max 15 length`,
+      });
+    }
+    const product = {
+      name: req.body.name,
+      category_id: req.body.category,
+      price: req.body.price,
+      qty: req.body.qty,
+      farmer_id: req.params.farmerid,
+      state: "EXPECTED",
+      size: req.body.size,
+      unit_of_measure: req.body.unit_of_measure,
+    };
+
+    let productId;
+
+    try {
+      productId = await dao.insertTupleProductWEEK(product);
+    } catch (err) {
+      res.status(503).json({
+        error: `Database error during insertion into product_week table.`,
+      });
+      return;
+    }
+
+    //All went fine
+    res.status(201).json({ productId: productId });
+  }
+);
+
 
 module.exports = products;

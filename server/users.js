@@ -157,4 +157,75 @@ users.put("/api/walletbalance", isLoggedIn, async (req, res) => {
   }
 });
 
+// GET /api/acksNew to get all acks with NEW state
+users.get("/api/acksNew", isLoggedIn, async (req, res) => {
+  dao
+    .getAcksStateNew()
+    .then((acks) => {
+      res.status(200).json(acks);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+//POST /api/acknowledge
+users.post("/api/acknowledge", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+
+  if (!validator.isEmail(`${req.body.email}`)) {
+    return res.status(422).json({ error: `Invalid farmer email` });
+  }
+
+  const ack = {
+    idFarmer: req.body.idFarmer,
+    email: req.body.email,
+    state: "NEW",
+  };
+
+  let ackId;
+
+  try {
+    ackId = await dao.createAcknowledge(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json({ idAck: ackId });
+});
+
+//PUT /api/ackstate
+users.put("/api/ackstate", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid ack id, it must be positive` });
+  }
+
+  const ack = {
+    id: req.body.id,
+    state: req.body.state,
+  };
+
+  let result;
+
+  try {
+    result = await dao.editStateAck(ack);
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during the put of ack state: ${result}.`,
+    });
+  }
+
+  //All went fine
+  res.status(201).json(result);
+});
+
 module.exports = users;

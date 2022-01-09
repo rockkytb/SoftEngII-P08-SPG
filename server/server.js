@@ -13,6 +13,7 @@ const telegramBot = require("./telegrambot/SendMessage.js");
 const products = require("./products.js");
 const sessions = require("./session.js");
 const users = require("./users.js");
+const bookings = require("./bookings.js");
 
 //Per validazione aggiuntiva
 const validator = require("validator");
@@ -31,6 +32,7 @@ const switchTestMode = () => {
   products.testmode = true;
   sessions.testmode = true;
   users.testmode = true;
+  bookings.testmode=true;
 };
 
 // init express
@@ -67,15 +69,16 @@ passport.use(
           });
 
         // check if the user is suspended or not
-        if (user.suspensionDate != null) //mighe be suspended
-        {
+        if (user.suspensionDate != null) {
+          //mighe be suspended
           // check the date
-          let suspensionDate = new Date(user.suspensionDate)
+          let suspensionDate = new Date(user.suspensionDate);
           let now = new Date(clockDate);
           let freeDate = new Date(suspensionDate);
           freeDate.setDate(suspensionDate.getDate() + 30);
-          if (now >= freeDate && user.missedCount < 5) // user is not suspended
-          { // count the number of missed pickups and send message if it is 3 or 4
+          if (now >= freeDate && user.missedCount < 5) {
+            // user is not suspended
+            // count the number of missed pickups and send message if it is 3 or 4
             if (user.missedCount == 3 || user.missedCount == 4) {
               return done(null, user, {
                 message: `You have ${user.missedCount} missed pickups!\n
@@ -83,13 +86,14 @@ passport.use(
               });
             }
             return done(null, user);
-          }
-          else {
+          } else {
             return done(null, false, {
-              message: `You are Suspended for ${freeDate.getDate() - now.getDate()} more days`,
+              message: `You are Suspended for ${
+                freeDate.getDate() - now.getDate()
+              } more days`,
             });
           }
-        }else{
+        } else {
           // count the number of missed pickups and send message if it is 3 or 4
           if (user.missedCount == 3 || user.missedCount == 4) {
             return done(null, user, {
@@ -275,6 +279,7 @@ app.use(express.json());
 app.use(products);
 app.use(sessions);
 app.use(users);
+app.use(bookings);
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {
@@ -287,66 +292,6 @@ const isLoggedIn = (req, res, next) => {
 };
 
 //WRITE API HERE
-
-//POST /api/acknowledge
-app.post("/api/acknowledge", isLoggedIn, async (req, res) => {
-  if (!validator.isInt(`${req.body.idFarmer}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid farmer id, it must be positive` });
-  }
-
-  if (!validator.isEmail(`${req.body.email}`)) {
-    return res.status(422).json({ error: `Invalid farmer email` });
-  }
-
-  const ack = {
-    idFarmer: req.body.idFarmer,
-    email: req.body.email,
-    state: "NEW",
-  };
-
-  let ackId;
-
-  try {
-    ackId = await dao.createAcknowledge(ack);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the creation of acknowledge for famer: ${ack.email}.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json({ idAck: ackId });
-});
-
-//POST /api/bookings
-app.post("/api/bookings", isLoggedIn, async (req, res) => {
-  if (!validator.isInt(`${req.body.idClient}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid client id, it must be positive` });
-  }
-
-  const booking = {
-    idClient: req.body.idClient,
-    state: "BOOKED",
-  };
-
-  let bookingId;
-
-  try {
-    bookingId = await dao.createBooking(booking);
-  } catch (err) {
-    return res.status(503).json({
-      error: `Database error during the creation of booking for client: ${booking.idClient}.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json({ idBooking: bookingId });
-});
-
 
 // POST /api/farmers/:farmerid/products
 app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
@@ -401,315 +346,6 @@ app.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
   }
 });
 
-// POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
-app.post(
-  "/api/farmers/:farmerid/productsExpected",
-  isLoggedIn,
-  async (req, res) => {
-    if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid category id, it must be positive` });
-    }
-    if (!validator.isFloat(`${req.body.price}`, { min: 0 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid product price, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.farmerid}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid farmer id, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid quantity, it must be positive` });
-    }
-    if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
-      return res
-        .status(422)
-        .json({ error: `Invalid size, it must be positive` });
-    }
-    if (!validator.isLength(`${req.body.unit_of_measure}`, { max: 15 })) {
-      return res.status(422).json({
-        error: `Invalid unit of measure, it must be a string of max 15 length`,
-      });
-    }
-    const product = {
-      name: req.body.name,
-      category_id: req.body.category,
-      price: req.body.price,
-      qty: req.body.qty,
-      farmer_id: req.params.farmerid,
-      state: "EXPECTED",
-      size: req.body.size,
-      unit_of_measure: req.body.unit_of_measure,
-    };
-
-    let productId;
-
-    try {
-      productId = await dao.insertTupleProductWEEK(product);
-    } catch (err) {
-      res.status(503).json({
-        error: `Database error during insertion into product_week table.`,
-      });
-      return;
-    }
-
-    //All went fine
-    res.status(201).json({ productId: productId });
-  }
-);
-
-//PUT /api/bookingstate
-app.put("/api/bookingstate", isLoggedIn, async (req, res) => {
-  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid product id, it must be positive` });
-  }
-
-  const booking = {
-    id: req.body.id,
-    state: req.body.state,
-  };
-
-  let result;
-
-  try {
-    result = await dao.editStateBooking(booking);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the put of booking state: ${result}.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json(result);
-});
-
-//PUT /api/ackstate
-app.put("/api/ackstate", isLoggedIn, async (req, res) => {
-  if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid ack id, it must be positive` });
-  }
-
-  const ack = {
-    id: req.body.id,
-    state: req.body.state,
-  };
-
-  let result;
-
-  try {
-    result = await dao.editStateAck(ack);
-  } catch (err) {
-    res.status(503).json({
-      error: `Database error during the put of ack state: ${result}.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json(result);
-});
-
-// GET /api/acksNew to get all acks with NEW state
-app.get("/api/acksNew", isLoggedIn, async (req, res) => {
-  dao
-    .getAcksStateNew()
-    .then((acks) => {
-      res.status(200).json(acks);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-
-//GET /api/farmers/:farmerid/products_expected to get a list of all products
-app.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) => {
-  if (!validator.isInt(`${req.params.farmerid}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid farmer id, it must be positive` });
-  }
-
-  dao
-    .getAllProductsExpectedForFarmer(req.params.farmerid)
-    .then((products) => {
-      res.status(200).json(products);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-//GET /api/bookingModesPreparation
-app.get("/api/bookingModesPreparation", isLoggedIn, (req, res) => {
-  dao
-    .getbookingModesPreparation()
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-// GET /api/bookingModesNew/pickup
-app.get("/api/bookingModesNew/pickup", isLoggedIn, (req, res) => {
-  dao
-    .getbookingModesNewPickup()
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-//GET /api/products/farmers/:id to get a list of all CONFIRMED products for a particular farmer
-app.get("/api/products/farmers/:id", isLoggedIn, (req, res) => {
-  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid farmer id, it must be positive` });
-  }
-  const id = req.params.id;
-  dao
-    .getAllProductsConfirmedForFarmer(id)
-    .then((product) => {
-      res.status(200).json(product);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-//GET /api/bookings to get a list of all bookings
-app.get("/api/bookings", isLoggedIn, (req, res) => {
-  dao
-    .getAllBookings()
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-//GET /api/bookings/clients/{id} to get a list of all bookings for a particular cllient
-app.get("/api/bookings/clients/:id", isLoggedIn, (req, res) => {
-  const id = req.params.id;
-  dao
-    .getAllBookingsForClient(id)
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-//GET /api/bookings/booked/clients/:id
-
-app.get("/api/bookings/booked/clients/:id", isLoggedIn, (req, res) => {
-  const id = req.params.id;
-  if (!validator.isInt(`${req.params.id}`, { min: 1 })) {
-    return res.status(422).json({
-      error: `Invalid product id of a element on the array, it must be positive`,
-    });
-  }
-
-  dao
-    .getAllBookingsForClientBooked(id)
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-///GET /api/bookingProducts/:bookingId
-app.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
-  const id = req.params.bookingId;
-  console.log(req.params.bookingId);
-  if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
-    return res.status(422).json({
-      error: `Invalid product id of a element on the array, it must be positive`,
-    });
-  }
-
-  dao
-    .productsOfBooking(id)
-    .then((products) => {
-      res.status(200).json(products);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-// GET /api/bookingsPendingCancelation to get all bookings with PENDINGCANCELATION state
-app.get("/api/bookingsPendingCancelation", isLoggedIn, async (req, res) => {
-  dao
-    .getBookingsStatePendingCancelation()
-    .then((bookings) => {
-      res.status(200).json(bookings);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-app.get("/api/bookingsUnretrieved", isLoggedIn, async (req, res) => {
-  dao
-    .getBookingsUnretrieved()
-    .then((list) => {
-      res.status(200).json(list);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
-
-// POST /api/products_expected receive a vector of tuples of products expected
-
-app.post("/api/products_expected", isLoggedIn, async (req, res) => {
-  var idProduct;
-  var results = [];
-  var problem = 0;
-  for (var key in req.body) {
-    if (req.body.hasOwnProperty(key)) {
-      //do something with e.g. req.body[key]
-      try {
-        idProduct = await dao.insertTupleProductExpected(req.body[key]);
-      } catch (err) {
-        problem = 1;
-        break;
-      }
-      const product = {
-        id: idProduct,
-        nameProduct: req.body[key].name,
-      };
-      results.push(product);
-    }
-  }
-  if (problem == 0) {
-    //All went fine
-    res.status(201).json(results);
-  } else {
-    res.status(503).json({
-      error: `Database error during the post of ProductExpected`,
-    });
-  }
-});
-
 // put /api/clientsPreparation
 app.put("/api/clientsPreparation", isLoggedIn, async (req, res) => {
   let result = [];
@@ -752,53 +388,6 @@ app.put("/api/clientsPreparation", isLoggedIn, async (req, res) => {
     return result.indexOf(item) == pos;
   });
   res.status(201).json(result);
-});
-
-//POST /api/bookings_mode
-app.post("/api/bookings_mode", isLoggedIn, async (req, res) => {
-  const booking_mode = {
-    idBooking: req.body.idBooking,
-    delivery: req.body.delivery,
-    street: req.body.street,
-    city: req.body.city,
-    province: req.body.province,
-    postal_code: req.body.postal_code,
-    country: req.body.country,
-    date: req.body.date,
-    time: req.body.time,
-    extra_fee: req.body.extra_fee,
-  };
-
-  let bookingModeId;
-
-  try {
-    bookingModeId = await dao.createBookingMode(booking_mode);
-  } catch (err) {
-    return res.status(503).json({
-      error: `Database error during the creation of booking mode.`,
-    });
-  }
-
-  //All went fine
-  res.status(201).json({ idBookingMode: bookingModeId });
-});
-
-//PUT /api/bookings_mode/{id}
-app.put("/api/bookings_mode/:id", isLoggedIn, async (req, res) => {
-  const id = req.params.id;
-  if (!validator.isInt(id, { min: 1 })) {
-    return res
-      .status(422)
-      .json({ error: `Invalid booking mode id, it must be positive` });
-  }
-  dao
-    .updateStateBookingMode(id)
-    .then(() => {
-      res.status(200).json({ bookingModeId: id });
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
 });
 
 //#region VIRTUAL CLOCK FUNCTIONS
