@@ -668,7 +668,7 @@ exports.getWallet = (id) => {
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
+      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE, MISSEDCOUNT) VALUES(?, ?, ?, ?, ?, 0)";
     db.run(
       sql,
       [
@@ -1470,18 +1470,38 @@ exports.resetProductWeekVC = () => {
 };
 
 // Counting missed pickups for a customer
-exports.countMissedPickupsForACustomer = (customerId, preSuspensionDate) => {
+exports.countMissedPickupsForACustomer = (customerId/*, preSuspensionDate*/) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
-    db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
-      if (err) {
-        reject(err);
-        return;
-      } else {
-        resolve(rows[0]);
-      }
-    });
+    let sql;
+    // if (preSuspensionDate) {
+    //   sql =
+    //     "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
+
+    //   db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
+    //     if (err) {
+    //       reject(err);
+    //       return;
+    //     } else {
+    //       resolve(rows[0]);
+    //     }
+    //   });
+    // }
+    // else {
+      sql =
+        "SELECT MISSEDCOUNT as total from CLIENT where ID=?";
+      db.all(sql, [customerId], (err, rows) => {
+
+        if (err) {
+          reject(err);
+          return;
+        } else {
+          resolve(rows[0]);
+        }
+      });
+
+    // }
+
+
   });
 };
 
@@ -1502,8 +1522,9 @@ exports.findClientbyBooking = (bookingId) => {
 
 // update the client missed pickups count
 exports.updateClientMissedCount = (clientId, count) => {
+  console.log("updateClientMissedCount->" + count)
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE CLIENT set missedCount=? where ID=?";
+    const sql = "UPDATE CLIENT set MISSEDCOUNT=? where ID=?";
     db.all(sql, [count, clientId], (err) => {
       if (err) {
         reject(err);
@@ -1518,7 +1539,7 @@ exports.updateClientMissedCount = (clientId, count) => {
 // update the client susspensionDate
 exports.updateClientSusspensionDate = (clientId, date) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE CLIENT set susspensionDate=? where ID=?";
+    const sql = "UPDATE CLIENT set SUSPENSIONDATE=? where ID=?";
     db.all(sql, [date, clientId], (err) => {
       if (err) {
         reject(err);
@@ -1533,7 +1554,7 @@ exports.updateClientSusspensionDate = (clientId, date) => {
 // get a client suspension date
 exports.getLatestSuspensionDate = (clientId) => {
   return new Promise((resolve, reject) => {
-    const sql = "select suspenssionDate as date from CLIENT where ID=?";
+    const sql = "select SUSPENSIONDATE as date from CLIENT where ID=?";
     db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);

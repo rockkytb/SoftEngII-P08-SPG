@@ -1045,30 +1045,35 @@ async function clockActions() {
           // get the clientId based on the bookingId
           const client = await dao.findClientbyBooking(booking.id);
 
-          // get the client suspension date if exists
+         /* // get the client suspension date if exists
           var suspension = await dao.getLatestSuspensionDate(client.id);
-
           if (suspension.date) suspension = suspension.date;
-          else suspension = "2000-01-01";
+          else suspension = null;*/
+
           // check the number of missed pickups
           const missedPikcups = await dao.countMissedPickupsForACustomer(
-            client.id,
-            suspension
+            client.id/*,
+            suspension*/
           );
 
+          // calculate new missed counts
+          const missedCount = missedPikcups.total+1;
+
           //update the client table
-          await dao.updateClientMissedCount(client.id, missedPikcups.total);
+          await dao.updateClientMissedCount(client.id, missedCount);
 
           // check the number of missed pickups
-          if (missedPikcups.total > 2 || missedPikcups.total < 5) {
-            //Send telegram message
+          if (missedCount > 2 && missedCount < 5) {// send alarm
+           
+            console.log( `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
+            \nYour account will be susspended on the 5th time.`)
             telegramBot.SendMessage(
               booking.client,
-              `This is a reminder to inform you that you have missed picking up your order for ${missedPikcups.total} times!
+              `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
           \nYour account will be susspended on the 5th time.`
             );
-          } else if (missedPikcups.total == 5) {
-            // susspend the client
+          } else if (missedCount == 5) {// susspend the client
+            
             // Calculate NOW date
             var now = new Date(clockDate);
             now = now.toISOString().split("T")[0];
@@ -1078,6 +1083,12 @@ async function clockActions() {
 
             //set the number of missed pickups to zero
             await dao.updateClientMissedCount(client.id, 0);
+
+            console.log(`You have reached your limit. We are sorry to say that your account has been suspended.`)
+            telegramBot.SendMessage(
+              booking.client,
+              `You have reached your limit. We are sorry to say that your account has been suspended.`
+            );
           }
         }
         //Other cases, we delete the booking and we move in state canceled
