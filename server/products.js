@@ -289,36 +289,6 @@ products.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) 
     });
 });
 
-products.post("/api/products_expected", isLoggedIn, async (req, res) => {
-  var idProduct;
-  var results = [];
-  var problem = 0;
-  for (var key in req.body) {
-    if (req.body.hasOwnProperty(key)) {
-      //do something with e.g. req.body[key]
-      try {
-        idProduct = await dao.insertTupleProductExpected(req.body[key]);
-      } catch (err) {
-        problem = 1;
-        break;
-      }
-      const product = {
-        id: idProduct,
-        nameProduct: req.body[key].name,
-      };
-      results.push(product);
-    }
-  }
-  if (problem == 0) {
-    //All went fine
-    return res.status(201).json();
-  } else {
-    return res.status(503).json({
-      error: `Database error during the post of ProductExpected`,
-    });
-  }
-});
-
 // POST /api/farmers/:farmerid/products
 products.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
@@ -372,7 +342,7 @@ products.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) =>
   }
 });
 
-// POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
+// POST /api/farmers/:farmerid/productsExpected 
 products.post(
   "/api/farmers/:farmerid/productsExpected",
   isLoggedIn,
