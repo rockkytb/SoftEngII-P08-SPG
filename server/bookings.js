@@ -8,6 +8,10 @@ const validator = require("validator");
 
 let testmode = false;
 
+const switchTestMode = () => {
+  testmode = true;
+};
+
 const isLoggedIn = (req, res, next) => {
   if (testmode) {
     return next();
@@ -208,5 +212,5 @@ bookings.put("/api/bookings_mode/:id", isLoggedIn, async (req, res) => {
     });
 });
 
-
-module.exports = bookings;
+exports.bookings = bookings;
+exports.switchTestMode = switchTestMode;

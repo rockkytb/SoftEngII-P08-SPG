@@ -12,6 +12,10 @@ let testmode = false;
 sessions.use(passport.initialize());
 sessions.use(passport.session());
 
+const switchTestMode = () => {
+  testmode = true;
+};
+
 const isLoggedIn = (req, res, next) => {
     if (testmode) {
       return next();
@@ -146,4 +150,5 @@ sessions.get("/api/userinfo", isLoggedIn, (req, res) => {
   res.status(200).json(req.user);
 });
 
-module.exports = sessions;
+exports.sessions = sessions;
+exports.switchTestMode = switchTestMode;
