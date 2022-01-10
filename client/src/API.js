@@ -13,7 +13,7 @@ function addUser(newUser) {
         name: newUser.name,
         surname: newUser.surname,
         password: newUser.password,
-        phone: newUser.phone
+        phone: newUser.phone,
       }),
     })
       .then((response) => {
@@ -121,8 +121,6 @@ async function logOut() {
   await fetch(url + "/logout", { method: "DELETE" });
 }
 
-
-
 async function getUserInfo() {
   const response = await fetch(url + "/userinfo");
   const userInfo = await response.json();
@@ -142,15 +140,13 @@ async function getClientByEmail(email) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: email }),
-    }).then((response)=>{
-
+    }).then((response) => {
       if (response.ok) {
-        resolve (response.json());
+        resolve(response.json());
       } else {
-        resolve (-1);
+        resolve(-1);
       }
-    })
-    
+    });
   });
 }
 
@@ -210,7 +206,6 @@ async function setNewWallet(id, amount) {
 async function newBooking(clientId, products) {
   //call: POST /api/bookings
   const getId = async (clientId) => {
-
     const response = await fetch(url + "/bookings", {
       method: "POST",
       headers: {
@@ -567,8 +562,7 @@ async function confirmPreparation(id) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-      }
-
+      },
     })
       .then((response) => {
         if (response.ok) {
@@ -634,7 +628,6 @@ async function confirmPreparationFarmer(productList) {
 }
 
 async function updateOrder(product) {
-
   const update = async (product) => {
     const response = await fetch(url + "/bookingproducts", {
       method: "PUT",
@@ -642,21 +635,19 @@ async function updateOrder(product) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(product),
-    })
+    });
 
     const result = await response.json();
     if (response.ok) {
-      return result
+      return result;
     } else {
       return "error";
     }
-  }
+  };
 
   let mrTorgue = update(product);
   return mrTorgue;
 }
-
-
 
 //TODO: move clock to backend
 //SHORT-TERM: post to server to receive date-time
@@ -717,8 +708,6 @@ async function enableDisableVirtualClock() {
 
 async function deleteProductBooking(product) {
   // call: DELETE /api/bookingProduct
-  console.log("dentro api")
-  console.log(product)
   await fetch(url + "/bookingProduct", {
     method: "DELETE",
     headers: {
@@ -728,7 +717,7 @@ async function deleteProductBooking(product) {
     body: JSON.stringify({
       ID_Product: product.ID_Product,
       ID_Booking: product.ID_Booking,
-      Inc_Qty: product.Inc_Qty
+      Inc_Qty: product.Inc_Qty,
     }),
   });
 }
@@ -736,7 +725,6 @@ async function deleteProductBooking(product) {
 async function attaccoDoS(userdata) {
   const getProducts = async () => {
     // call: GET /api/products
-
 
     if (userdata && userdata.id && userdata.id.charAt(0) === "F") {
       let prodi = [];
@@ -746,7 +734,7 @@ async function attaccoDoS(userdata) {
         );
         const productList = await response.json();
         if (response.ok) {
-          productList.map((p)=> prodi.push(p))
+          productList.map((p) => prodi.push(p));
         }
       };
       const getConfirmed = async (userdata) => {
@@ -755,7 +743,7 @@ async function attaccoDoS(userdata) {
         );
         const productList2 = await response2.json();
         if (response2.ok) {
-          productList2.map((p)=> prodi.push(p))
+          productList2.map((p) => prodi.push(p));
         }
       };
 
@@ -774,36 +762,40 @@ async function attaccoDoS(userdata) {
 
   const getBookings = async () => {
     // call: GET /api/bookings (S), GET api/bookings/clients/:id (C), GET /api/bookingModesNew/pickup (M)
-    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
-      const response = await fetch("/api/bookingModesPreparation");
-      const bookingList = await response.json();
-      if (response.ok) {
-        return bookingList;
-      }
-    } else if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
-      const response = await fetch(
-        "/api/bookings/clients/" + userdata.id.substring(1)
-      );
-      const bookingList = await response.json();
-      if (response.ok) {
-        return bookingList;
-      }
-    } else if (userdata && userdata.id && userdata.id.charAt(0) === "M") {
-      const response = await fetch(
-        "/api/bookingModesNew/pickup"
-      );
-      const bookingList = await response.json();
-      if (response.ok) {
-        return bookingList;
-      }
-    }
-    else if (userdata && userdata.id && userdata.id.charAt(0) === "W") {
-      const response = await fetch(
-        "/api/bookingModesNew/pickup"
-      );
-      const bookingList = await response.json();
-      if (response.ok) {
-        return bookingList;
+    if (userdata && userdata.id) {
+      let response = 0;
+      let bookingList = [];
+      switch (userdata.id.charAt(0)) {
+        case "S":
+          response = await fetch("/api/bookingModesPreparation");
+          bookingList = await response.json();
+          if (response.ok) {
+            return bookingList;
+          }
+          break;
+        case "C":
+          response = await fetch(
+            "/api/bookings/clients/" + userdata.id.substring(1)
+          );
+          bookingList = await response.json();
+          if (response.ok) {
+            return bookingList;
+          }
+          break;
+        case "M":
+          response = await fetch("/api/bookingModesNew/pickup");
+          bookingList = await response.json();
+          if (response.ok) {
+            return bookingList;
+          }
+          break;
+        case "W":
+          response = await fetch("/api/bookingModesNew/pickup");
+          bookingList = await response.json();
+          if (response.ok) {
+            return bookingList;
+          }
+          break;
       }
     }
   };
@@ -819,6 +811,13 @@ async function attaccoDoS(userdata) {
     }
   };
 
+  const getWallet = async () => {
+    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      const wallet = await getWalletById(userdata.id.substring(1));
+      return wallet;
+    }
+  };
+
   const getCategories = async () => {
     // call: GET /api/categories
     const response = await fetch("/api/categories");
@@ -828,7 +827,7 @@ async function attaccoDoS(userdata) {
     }
   };
 
-  const getAllBookings = async ()=>{
+  const getAllBookings = async () => {
     // call: GET /api/clients
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       const response = await fetch("/api/bookings");
@@ -837,9 +836,9 @@ async function attaccoDoS(userdata) {
         return bookings;
       }
     }
-  }
+  };
 
-  const getBookingsUnretrieved = async () =>{
+  const getBookingsUnretrieved = async () => {
     // call: GET /api/bookingsUnretrieved
     if (userdata && userdata.id && userdata.id.charAt(0) === "A") {
       const response = await fetch("/api/bookingsUnretrieved");
@@ -848,19 +847,26 @@ async function attaccoDoS(userdata) {
         return bookingsUnretrieved;
       }
     }
-  }
-  
+  };
+
   let products = await getProducts();
   let bookings = await getBookings();
   let clients = await getClients();
   let categories = await getCategories();
   let allBookings = await getAllBookings();
   let bookingsUnretrieved = await getBookingsUnretrieved();
+  let wallet = await getWallet();
 
-  return { products, bookings, clients, categories, allBookings, bookingsUnretrieved };
+  return {
+    products,
+    bookings,
+    clients,
+    categories,
+    allBookings,
+    bookingsUnretrieved,
+    wallet,
+  };
 }
-
-
 
 const API = {
   addUser,
@@ -886,6 +892,6 @@ const API = {
   updateOrder,
   getTime,
   enableDisableVirtualClock,
-  deleteProductBooking
+  deleteProductBooking,
 };
 export default API;
