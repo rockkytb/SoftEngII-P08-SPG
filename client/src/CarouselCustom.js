@@ -32,7 +32,7 @@ function CarouselCustom(props) {
           {props.logged ? (<>{/*<Link to="/products">
             <Button> Show the catalogue </Button></Link>*/}</>):(
             <>  
-            <Link to="/login"> <Button variant="warning"> Login </Button> </Link>
+            <Link to="/login"> <Button variant="warning" id="loginButton"> Login </Button> </Link>
             </>
           )}
           

@@ -115,7 +115,6 @@ export default function ProductsList(props) {
       // names must be equal
       return a.id - b.id;
     }).map((product) => {
-      console.log(product);
       return (
         <Col>
           <Card className="text-dark">

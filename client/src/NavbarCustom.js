@@ -15,8 +15,6 @@ function NavbarCustom(props) {
   const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
   const [showNotificationMissedcounter, setShowNotificationMissedcounter] = useState(false);
 
-  console.log("aaaaaaaaaaaaah");
-  console.log(props.bookings);
 
   const popover = (
     <Popover id="popover-basic">
