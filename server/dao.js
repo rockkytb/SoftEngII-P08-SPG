@@ -4,11 +4,15 @@
 const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
-//Set to true to enable testdatabase
+//Set to true to run tests only
+const databaseonlyfortests=false;
+
+//Set to true to enable testdatabase to test the tasks
 const testmode = true;
 
 // open the database
 const db = new sqlite.Database(
+  databaseonlyfortests ? "databasefortests.db" : 
   testmode ? "testdatabase.db" : "database.db",
   (err) => {
     if (err) throw err;
@@ -476,8 +480,7 @@ exports.IncrementQtyProductWeek = (Inc_Qty, ID_Product) => {
       if (err) {
         reject(err);
       } else {
-        let updatedProduct = getProduct(ID_Product);
-        resolve(updatedProduct);
+        resolve(true);
       }
     });
   });

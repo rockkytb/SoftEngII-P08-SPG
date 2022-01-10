@@ -73,7 +73,7 @@ describe("Test suite Integration Server", () => {
         state: "",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Bad request");
+      expect(res.body).toHaveProperty("error", "state not allowed");
     });
   });
 
@@ -84,7 +84,7 @@ describe("Test suite Integration Server", () => {
         state: "EXPECTED",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Bad request");
+      expect(res.body).toHaveProperty("error", "invalid id");
     });
   });
 
@@ -311,7 +311,7 @@ describe("Test suite Integration Server", () => {
       expect(res.statusCode).toEqual(503);
       expect(res.body).toHaveProperty(
         "error",
-        "Error: marco.bianchi@mail.it already used"
+        "Error: marco.bianchi@mail.it already used."
       );
     });
   });
@@ -531,17 +531,7 @@ describe("Test suite Integration Server", () => {
         Inc_Qty: 2,
       });
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual({
-        ID: 1,
-        NAME: "Mele",
-        CATEGORY_ID: 1,
-        PRICE: 14,
-        QTY: 12,
-        FARMER_ID: 1,
-        STATE: "EXPECTED",
-        SIZE: 1,
-        UNIT_OF_MEASURE: "kg",
-      });
+      expect(res.body).toEqual("");
     });
   });
 
@@ -925,7 +915,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Bad request`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -958,7 +948,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Invalid product data`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -974,7 +964,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Invalid product data`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -1277,7 +1267,7 @@ describe("Test suite Integration Server", () => {
       ]);
 
       expect(response.body).toHaveLength(1);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
   });
 
@@ -1505,25 +1495,6 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  describe("post a vector of product expected", () => {
-    it("test with a no valid body, without a name field", async () => {
-      const res = await request(app)
-        .post("/api/products_expected")
-        .send([
-          {
-            category: 2,
-            price: 1.99,
-            qty: 2,
-            farmer_id: 3,
-          },
-        ]);
-      expect(res.statusCode).toEqual(503);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Database error during the post of ProductExpected"
-      );
-    });
-  });
 
   describe("Post ack success", () => {
     it("should create a new ack", async () => {
@@ -1556,7 +1527,7 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual(true);
+      expect(res.body).toEqual("");
     });
   });
 
@@ -1574,9 +1545,9 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Invalid product id of a element on the array, it must be positive"
+      expect(res.body).toEqual({
+        "error":
+        "invalid id"}
       );
     });
   });
@@ -1595,9 +1566,9 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Invalid product id of a element on the array, it must be positive"
+      expect(res.body).toEqual({
+        "error":
+        "invalid id"}
       );
     });
   });

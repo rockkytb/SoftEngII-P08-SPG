@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.23% </span>
+                <span class="strong">80.68% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>69/86</span>
+                <span class='fraction'>71/88</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.17% </span>
+                <span class="strong">81.6% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>69/85</span>
+                <span class='fraction'>71/87</span>
             </div>
         
             
@@ -292,18 +292,22 @@
 <a name='L233'></a><a href='#L233'>233</a>
 <a name='L234'></a><a href='#L234'>234</a>
 <a name='L235'></a><a href='#L235'>235</a>
-<a name='L236'></a><a href='#L236'>236</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">98x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">97x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -382,10 +386,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -398,12 +403,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -449,9 +454,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -527,15 +532,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">//File for managing user data
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">//File for managing user data
 "use strict";
 &nbsp;
 const express = require("express");
 const users = express.Router();
 const dao = require("./dao");
 const validator = require("validator");
+const telegramBot = require("./telegrambot/SendMessage.js");
 &nbsp;
-let testmode = false;
+let testmode = true;
 &nbsp;
 const switchTestMode = () =&gt; {
   testmode = true;
@@ -616,20 +623,21 @@ users.post("/api/newclient", async (req, res) =&gt; {
     phone: req.body.phone,
   };
 &nbsp;
-  dao
-    .getClientByEmail(client.email)
-    .then((c) =&gt; {
+  try{
+  const c = await dao.getClientByEmail(client.email);
+    
       if (c !== -1) {
         return res.status(503).json({
           error: `Error: ${client.email} already used.`,
         });
       }
-    })
-    .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
+    
+  }
+    catch(err)  {
 <span class="cstat-no" title="statement not covered" >      return res.status(500).json({</span>
         errors: `Database errors: ${err}.`,
       });
-    });
+    };
 &nbsp;
   let clientId;
 &nbsp;
@@ -638,7 +646,7 @@ users.post("/api/newclient", async (req, res) =&gt; {
     await dao.createWallet(clientId);
     res.status(201).json({ idClient: clientId });
   } catch (err) {
-    res.status(503).json({
+<span class="cstat-no" title="statement not covered" >    res.status(503).json({</span>
       error: `Database error during the creation of client: ${client.email}.`,
     });
   }
@@ -684,9 +692,9 @@ users.put("/api/walletbalance", isLoggedIn, async (req, res) =&gt; {
       wallet.id,
       `Your wallet was modified. New balance : ${wallet.amount} €`
     );
-<span class="cstat-no" title="statement not covered" >    res.status(200).json(wallet);</span>
+    return res.status(200).json(wallet);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 });
 &nbsp;
@@ -762,14 +770,15 @@ users.put("/api/ackstate", isLoggedIn, async (req, res) =&gt; {
 });
 &nbsp;
 exports.users = users;
-exports.switchTestMode = switchTestMode;</pre></td></tr></table></pre>
+exports.switchTestMode = switchTestMode;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jan 10 2022 02:24:29 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Jan 10 2022 16:14:52 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="../prettify.js"></script>
