@@ -566,7 +566,8 @@ function App() {
                           setCart={(val) => setCart(val)}
                           categories={categories}
                           loggedIn={loggedIn}
-                          //farmers = {farmers} //???
+                          user={userdata}
+                        //farmers = {farmers} //???
                         />
                       </>
                     )}
@@ -1079,6 +1080,8 @@ function App() {
                               className="below-nav main-content"
                               bookings={bookings}
                               products={products}
+                              user={userdata}
+
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
                                 toast.success(

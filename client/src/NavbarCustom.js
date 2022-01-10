@@ -32,8 +32,9 @@ function NavbarCustom(props) {
     toPrint = props.bookings && props.bookings.length > 0 ?
       props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION")
       :
-      "";
-
+      "" ;
+      console.log("toprint")
+      console.log(toPrint)
     if (firstTime && toPrint.length !== 0) {
       setShowNotification(true);
       setFirstTime(false);
@@ -75,10 +76,12 @@ function NavbarCustom(props) {
   }
 
   if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
-    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "" )
-    if (firstTime && toPrintMissed.length !== 0) {
+    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "No" )
+    if (firstTime && toPrintMissed === "Yes") {
       setShowNotificationMissedcounter(true);
       setFirstTime(false);
+    } else{
+      props.loggedIn && setShowNotificationMissedcounter(false);
     }
   }
 
@@ -107,7 +110,7 @@ function NavbarCustom(props) {
                       , { position: "top-right" }, { toastId: 28 })
                   )
 
-                  showNotificationMissedcounter && toast.error(<>
+                  toPrintMissed === "Yes" && showNotificationMissedcounter && toast.error(<>
                     <b>Warning:</b><br />
                     {`You have ${props.user.missedCount} missed pickups!\n
                  You will be suspeneded for 30 days on the 5th time.`}
