@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>8/9</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -131,23 +131,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -156,9 +145,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -170,8 +157,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,17 +187,17 @@ import {
     Button,
 } from "react-bootstrap";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >BookingAcceptance(</span>props) {
+export default function BookingAcceptance(props) {
 &nbsp;
 &nbsp;
-    function <span class="fstat-no" title="function not covered" >bookingActions(</span>) {
+    function bookingActions() {
         //FIX il filtro prende tutto quello che non è completed
-        let toPrint = <span class="cstat-no" title="statement not covered" >props.bookings.filter(<span class="fstat-no" title="function not covered" >(b</span>k) =&gt; <span class="cstat-no" title="statement not covered" >bk.state !== "COMPLETED")</span>;</span>
-<span class="cstat-no" title="statement not covered" >        if(toPrint.length === 0){</span>
+        let toPrint = props.bookings.filter((bk) =&gt; bk.state !== "COMPLETED");
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(toPrint.length === 0){
 <span class="cstat-no" title="statement not covered" >            return (&lt;&gt;No pending bookings present&lt;/&gt;);</span>
         }
-<span class="cstat-no" title="statement not covered" >        return toPrint.map(<span class="fstat-no" title="function not covered" >(b</span>ooking) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >            &lt;Col&gt;</span>
+        return toPrint.map((booking) =&gt; (
+            &lt;Col&gt;
                 &lt;Card&gt;
                     &lt;Card.Body&gt;
                         &lt;Card.Text className="text-dark"&gt;
@@ -205,8 +205,8 @@ export default function <span class="fstat-no" title="function not covered" >Boo
                             &lt;b&gt;Client:&lt;/b&gt; {booking.name + " " + booking.surname}&lt;br /&gt;
                             &lt;b&gt;Client email:&lt;/b&gt; {booking.email} &lt;br /&gt;
                             &lt;b&gt;Product list:&lt;/b&gt;&lt;br /&gt;
-                            {booking.products.map(<span class="fstat-no" title="function not covered" >p=</span>&gt;{
-<span class="cstat-no" title="statement not covered" >                                return &lt;&gt;</span>
+                            {booking.products.map(p=&gt;{
+                                return &lt;&gt;
                                     Product: {p.product}&lt;br /&gt;
                                     Quantity: {p.qty}&lt;br /&gt;&lt;br /&gt;
                                 &lt;/&gt;
@@ -217,9 +217,9 @@ export default function <span class="fstat-no" title="function not covered" >Boo
                             variant="warning"
                             disabled={booking.state=="COMPLETED"}
                             id={"setAsCompleted"+booking.id}
-                            onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >                                props.confirmBooking(booking.id);</span>
-<span class="cstat-no" title="statement not covered" >                                booking.state="COMPLETED"</span>
+                            onClick={() =&gt; {
+                                props.confirmBooking(booking.id);
+                                booking.state="COMPLETED"
                                 
                             }}
                             
@@ -232,7 +232,7 @@ export default function <span class="fstat-no" title="function not covered" >Boo
         ));
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className= "below-nav no-flickr"&gt;
 &nbsp;
             &lt;CardColumns xs={1} md={5}&gt;
@@ -247,7 +247,7 @@ export default function <span class="fstat-no" title="function not covered" >Boo
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jan 10 2022 13:48:26 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Jan 10 2022 13:56:02 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
