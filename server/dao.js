@@ -5,12 +5,9 @@ const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
 //Set to true to run tests only
-let databaseonlyfortests=false;
-exports.enabledbTestMode = () =>{
-  databaseonlyfortests=true;
-}
+const databaseonlyfortests=false;
 
-//Set to true to enable testdatabase
+//Set to true to enable testdatabase to test the tasks
 const testmode = true;
 
 // open the database

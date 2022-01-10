@@ -13,7 +13,6 @@ describe("Test suite Integration Server", () => {
   beforeEach(async () => {
     // code to run before each test
     switchTestMode();
-    dao.enabledbTestMode();
     await dao.cleanDb();
   });
 
