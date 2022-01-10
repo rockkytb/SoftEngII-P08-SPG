@@ -531,17 +531,7 @@ describe("Test suite Integration Server", () => {
         Inc_Qty: 2,
       });
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual({
-        ID: 1,
-        NAME: "Mele",
-        CATEGORY_ID: 1,
-        PRICE: 14,
-        QTY: 12,
-        FARMER_ID: 1,
-        STATE: "EXPECTED",
-        SIZE: 1,
-        UNIT_OF_MEASURE: "kg",
-      });
+      expect(res.body).toEqual("");
     });
   });
 
