@@ -489,44 +489,6 @@ function App() {
             )}
           />
 
-          <Route //display next week products
-            path="/trunksproducts"
-            exact
-            render={() => (
-              <>
-                {update ? (
-                  <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id &&
-                          (userdata.id.charAt(0) === "C" ||
-                            userdata.id.charAt(0) === "S") ? (
-                          <>
-                            <ProductsList
-                              className="below-nav main-content"
-                              products={products.filter((f) => f.state === "EXPECTED")}
-                              cart={cart}
-                              categories={categories}
-                            //farmers = {farmers} //??? //eh metti mai che serve //SEI UN FOLLE FREEZEEEEERRRRRR!!!!!!!
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <Redirect to="/home" />
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-          />
-
           <Route //add next week products
             path="/addFutureproducts"
             exact
