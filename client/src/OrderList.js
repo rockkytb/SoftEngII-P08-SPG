@@ -103,6 +103,7 @@ export default function OrderList(props) {
                     <Row className="justify-content-center">
                       <Button
                         variant="warning"
+                        id="updButton"
                         onClick={() => {
                           if (
                             (props.calendarday.getDay() === 6 &&
@@ -128,7 +129,7 @@ export default function OrderList(props) {
                     </Row>
 
                     <Row className="justify-content-center">
-                      <Button variant="danger" className="mt-1"
+                      <Button variant="danger" className="mt-1" id="rmButton"
                         onClick={() => {
 
                           if (
@@ -179,6 +180,7 @@ export default function OrderList(props) {
           <div className="d-flex justify-content-end">
             <Button
               variant="warning"
+              id="closeButton2"
               onClick={() => {
                 setShowAlertTime(false);
               }}
