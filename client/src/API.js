@@ -841,7 +841,7 @@ async function attaccoDoS(userdata) {
 
   const getBookingsUnretrieved = async () =>{
     // call: GET /api/bookingsUnretrieved
-    if (userdata && userdata.id && userdata.id.charAt(0) === "M") {
+    if (userdata && userdata.id && userdata.id.charAt(0) === "A") {
       const response = await fetch("/api/bookingsUnretrieved");
       const bookingsUnretrieved = await response.json();
       if (response.ok) {
