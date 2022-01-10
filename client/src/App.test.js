@@ -240,7 +240,7 @@ test('renders ProductList', () => {
   const products = [{ id: 1, name: "prod1", farmer_email:"ab@mail.it", category:"fruit", quantity: 3, price: 3.50 },
   { id: 2, name: "prod2",category:"fruit",farmer_email:"ab@mail.it", quantity: 3, price: 3.50 }]
   const categories = [{id:1,name:"fruit"},{id:2,name:"vegetables"}]
-  const pl = shallow(<ProductsList products={products} categories={categories} setCart={function setCart(){}} setProducts={function setProducts(){}}/>);
+  const pl = shallow(<ProductsList products={products} loggedIn={true} categories={categories} setCart={function setCart(){}} setProducts={function setProducts(){}}/>);
   pl.find('#addCart1').simulate('click');
   pl.find('#catFilterfruit').simulate('click');
   pl.find('#farmerFilterab').simulate('click');
@@ -254,7 +254,7 @@ test('renders PickupSchedule', () => {
   const bookings = [{state:"BOOKED",idBooking:1,idClient:1, date:"2021-12-08", time:"20:57"},
   {state:"BOOKED",idBooking:2,idClient:2, date:"2021-12-09", time:"20:57"},
   {state:"BOOKED",idBooking:3,idClient:3, date:"2021-12-18", time:"20:57"}];
-  const ps =shallow(<PickupSchedule bookings={bookings} confirmPreparation={function confirmPreparation(){}}/>);
+  const ps =shallow(<PickupSchedule bookings={bookings} userdata={{id:"W1"}} confirmPreparation={function confirmPreparation(){}}/>);
   ps.find('#confirmButton1').simulate('click');
 });
 
