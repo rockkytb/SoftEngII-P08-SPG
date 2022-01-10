@@ -155,9 +155,9 @@ users.put("/api/walletbalance", isLoggedIn, async (req, res) => {
       wallet.id,
       `Your wallet was modified. New balance : ${wallet.amount} €`
     );
-    res.status(200).json(wallet);
+    return res.status(200).json(wallet);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 });
 

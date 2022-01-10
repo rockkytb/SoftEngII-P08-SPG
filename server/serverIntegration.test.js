@@ -68,7 +68,7 @@ describe("Test suite Integration Server", () => {
 
   describe("edit the state of a product", () => {
     it("send a invalid state", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: 1,
         state: "",
       });
@@ -79,21 +79,18 @@ describe("Test suite Integration Server", () => {
 
   describe("edit the state of a product", () => {
     it("send a invalid id product", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: -1,
         state: "EXPECTED",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Bad request"
-      );
+      expect(res.body).toHaveProperty("error", "Bad request");
     });
   });
 
   describe("edit the state of a product", () => {
     it("send a valid body", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: 1,
         state: "EXPECTED",
       });
@@ -305,16 +302,16 @@ describe("Test suite Integration Server", () => {
     it("create a new client but the client email already used", async () => {
       const hash = bcrypt.hashSync("testpassword", 10);
       const res = await request(app).post("/api/newclient").send({
-        email: "antonio.bianchi@mail.it",
+        email: "marco.bianchi@mail.it",
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
-        phone: "3331231212"
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(503);
       expect(res.body).toHaveProperty(
         "error",
-        "antonio.bianchi@mail.it already used"
+        "Error: marco.bianchi@mail.it already used"
       );
     });
   });
@@ -404,7 +401,7 @@ describe("Test suite Integration Server", () => {
         email: "antonio.bianchi@mail.it",
         name: "",
         surname: "Bianchi",
-        phone: "3331231212"
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty("error", "Invalid client's name");
@@ -433,7 +430,7 @@ describe("Test suite Integration Server", () => {
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
-        phone: "3331231212"
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
@@ -451,7 +448,7 @@ describe("Test suite Integration Server", () => {
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
-        phone: "3331231212"
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toHaveProperty("idClient", 2);
@@ -533,7 +530,7 @@ describe("Test suite Integration Server", () => {
         ID_Product: 1,
         Inc_Qty: 2,
       });
-      expect(res.statusCode).toEqual(200);
+      expect(res.statusCode).toEqual(201);
       expect(res.body).toEqual({
         ID: 1,
         NAME: "Mele",
@@ -912,7 +909,7 @@ describe("Test suite Integration Server", () => {
       const res = await request(app)
         .delete(`/api/products/${productId}`)
         .send();
-      expect(res.statusCode).toEqual(204);
+      expect(res.statusCode).toEqual(201);
     });
   });
 
@@ -1208,7 +1205,7 @@ describe("Test suite Integration Server", () => {
         },
       ]);
       expect(response.body).toHaveLength(1);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
   });
 
@@ -1552,16 +1549,10 @@ describe("Test suite Integration Server", () => {
 
   describe("Put products with new state", () => {
     it("right put with all right fields", async () => {
-      const parameter = [
-        {
-          id: 1,
-          state: "EXPECTED",
-        },
-        {
-          id: 2,
-          state: "CONFIRMED",
-        },
-      ];
+      const parameter = {
+        id: 1,
+        state: "EXPECTED",
+      };
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(201);

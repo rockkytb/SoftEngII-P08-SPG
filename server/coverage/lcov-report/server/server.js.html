@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.51% </span>
+                <span class="strong">38.98% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>115/277</span>
+                <span class='fraction'>108/277</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.81% </span>
+                <span class="strong">25.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>35/110</span>
+                <span class='fraction'>28/110</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.33% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>17/60</span>
+                <span class='fraction'>15/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.97% </span>
+                <span class="strong">39.41% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>115/274</span>
+                <span class='fraction'>108/274</span>
             </div>
         
             
@@ -1228,17 +1228,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1269,7 +1269,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1277,7 +1277,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1350,9 +1350,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1389,8 +1389,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1492,7 +1492,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1959,9 +1959,9 @@ app.post("/api/clock", isLoggedIn, <span class="fstat-no" title="function not co
 //VIRTUAL CLOCK MANAGEMENT
 let virtualTime = false;
 let clockDate = new Date();
-let timers = setInterval(async () =&gt; {
-  clockDate = new Date();
-  await clockActions();
+let timers = setInterval(<span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
+<span class="cstat-no" title="statement not covered" >  clockDate = new Date();</span>
+<span class="cstat-no" title="statement not covered" >  await clockActions();</span>
 }, 30000);
 //FLAG to execute queries once a day, resetted every sunday
 let once = [true, true, true, true, true, true, true];
@@ -2000,8 +2000,8 @@ app.get("/api/virtualTime", <span class="fstat-no" title="function not covered" 
 });
 &nbsp;
 //Function to manage flow of SPG according to days
-async function clockActions() {
-  try {
+async function <span class="fstat-no" title="function not covered" >clockActions(</span>) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
@@ -2009,7 +2009,7 @@ async function clockActions() {
     Periodic telegram message is sent if customer needs to top up
     A message is sent if booking is confirmed*/
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (clockDate.getDay() === 2) {
+<span class="cstat-no" title="statement not covered" >    if (clockDate.getDay() === 2) {</span>
 <span class="cstat-no" title="statement not covered" >      if (once[2]) {</span>
         //Delete from bookings all product still expected, so unconfirmed
 <span class="cstat-no" title="statement not covered" >        await dao.deleteBookingProductsExpected();</span>
@@ -2082,7 +2082,7 @@ async function clockActions() {
     in state PENDINGCANCELATION. If they do and the balance is enough, their orders will return in
     CONFIRMED state, otherwise they will be CANCELED. 
     A message is sent if booking is confirmed*/
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (clockDate.getDay() === 3 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >once[3])</span> {
+<span class="cstat-no" title="statement not covered" >    if (clockDate.getDay() === 3 &amp;&amp; once[3]) {</span>
       const bookings = <span class="cstat-no" title="statement not covered" >await dao.getTotalPendingCancelation();</span>
 <span class="cstat-no" title="statement not covered" >      bookings.forEach(<span class="fstat-no" title="function not covered" >as</span>ync (booking) =&gt; {</span>
         //Get the wallet  of the customer and put in variable wallet
@@ -2121,7 +2121,7 @@ async function clockActions() {
     about this state now (it's for future stories). 
     
     Moreover, we move all products to EXPECTED state and we add 10 to every quantity*/
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (clockDate.getDay() === 6 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >once[6])</span> {
+<span class="cstat-no" title="statement not covered" >    if (clockDate.getDay() === 6 &amp;&amp; once[6]) {</span>
       const startDate = <span class="cstat-no" title="statement not covered" >new Date(clockDate);</span>
       //If this happens only on saturday, starday will be monday
 <span class="cstat-no" title="statement not covered" >      startDate.setDate(startDate.getDate() - 5);</span>
@@ -2224,7 +2224,7 @@ async function clockActions() {
     }
 &nbsp;
     //On sunday set all once to true
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (clockDate.getDay() === 0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >once[0])</span> {
+<span class="cstat-no" title="statement not covered" >    if (clockDate.getDay() === 0 &amp;&amp; once[0]) {</span>
 <span class="cstat-no" title="statement not covered" >      for (let i = <span class="cstat-no" title="statement not covered" >1;</span> i &lt; 7; i++) {</span>
 <span class="cstat-no" title="statement not covered" >        once[i] = true;</span>
       }
@@ -2260,7 +2260,7 @@ exports.switchTestMode = switchTestMode;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jan 10 2022 01:22:28 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Jan 10 2022 02:24:29 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="../prettify.js"></script>

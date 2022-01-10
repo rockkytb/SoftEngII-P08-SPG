@@ -27,10 +27,10 @@ products.get("/api/categories", isLoggedIn, (req, res) => {
   dao
     .getCategories()
     .then((categories) => {
-      res.status(200).json(categories);
+      return res.status(200).json(categories);
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         errors: `Database errors: ${err}.`,
       });
     });
@@ -40,19 +40,19 @@ products.get("/api/products", (req, res) => {
   dao
     .getAllProducts()
     .then((product) => {
-      res.status(200).json(product);
+      return res.status(200).json(product);
     })
     .catch((error) => {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     });
 });
 
 products.put("/api/products", isLoggedIn, async (req, res) => {
-  if (!validator.isLength(`${req.body.state}`, { min: 1 })) {
-    return 1;
+  if (!validator.isLength(`${req.body.state}`, { min: 1})) {
+    return res.status(422).json({ error: "state not allowed" });
   }
   if (!validator.isInt(`${req.body.id}`, { min: 1 })) {
-    return 1;
+    return res.status(422).json({ error: "invalid id" });
   }
 
   const product = {
@@ -62,9 +62,9 @@ products.put("/api/products", isLoggedIn, async (req, res) => {
 
   try {
     await dao.editStateProductWeek(product);
-    return 0;
+    return res.status(201).json();
   } catch (err) {
-    return 2;
+    return res.status(503).json({ error: "db error" });
   }
 });
 
@@ -88,14 +88,15 @@ products.put("/api/productqty", isLoggedIn, async (req, res) => {
 
   try {
     await dao.editQtyProductWeek(product);
+    return res.status(201).json();
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the put of bookingProduct: ${product}.`,
     });
   }
 
   //All went fine
-  res.status(201).json(product);
+  
 });
 
 products.put("/api/incrementProductQty", isLoggedIn, async (req, res) => {
@@ -115,14 +116,13 @@ products.put("/api/incrementProductQty", isLoggedIn, async (req, res) => {
   let updatedProduct;
   try {
     updatedProduct = await dao.IncrementQtyProductWeek(product);
+    return res.status(201).json();
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during incrementing product qty: ${product}.`,
     });
   }
 
-  //All went fine
-  res.status(200).json(updatedProduct);
 });
 
 //DELETE /api/products/{id}
@@ -136,14 +136,13 @@ products.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 
   try {
     await dao.deleteProduct(id);
+    return res.status(201).json();
   } catch (err) {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the deletation of productId: ${id}.`,
     });
   }
 
-  //All went fine
-  res.status(204).json();
 });
 
 ///GET /api/bookingProducts/:bookingId
@@ -159,10 +158,10 @@ products.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
   dao
     .productsOfBooking(id)
     .then((products) => {
-      res.status(200).json(products);
+      return res.status(200).json(products);
     })
     .catch((error) => {
-      res.status(500).json(error);
+      return res.status(503).json(error);
     });
 });
 
@@ -184,7 +183,7 @@ products.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
           { min: 1 } || i.id <= 0 || id.qty <= 0
         )
       ) {
-        return 1;
+        return res.status(422).json({ error: "bad request" });
       }
       let bookingProduct = {
         ID_Booking: req.body.ID_Booking,
@@ -200,25 +199,24 @@ products.post("/api/bookingproducts", isLoggedIn, async (req, res) => {
       try {
         await dao.createBookingProduct(bookingProduct);
         await dao.editQtyProductWeek(product);
-        return true;
       } catch (err) {
         problems++;
       }
     }
   } else {
-    return 1;
+    return res.status(422).json({ error: "bad request" });
   }
 
   if (problems == 0) {
     //All went fine
-    return true;
+    return res.status(201).json();
   } else {
-    return problems;
+    return res.status(503).json({error: "db errors"});
   }
 });
 
 products.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
-  let problems = 0;
+
   if (
     req.body &&
     req.body.ID_Product &&
@@ -232,33 +230,27 @@ products.put("/api/bookingproducts", isLoggedIn, async (req, res) => {
     };
     try {
       await dao.updateBookingProduct(bookingProduct);
+      return res.status(201).json({ error: "state not allowed" });
     } catch (err) {
-      return 1;
-    }
-
-    if (problems == 0) {
-      //All went fine
-      return 0;
-    } else {
-      return problems;
+      return res.status(503).json({ error: "db error" });
     }
   }
 });
 
 products.delete("/api/bookingProduct", isLoggedIn, async (req, res) => {
   if (!validator.isInt(`${req.body.ID_Product}`, { min: 1 })) {
-    return 1;
+    return res.status(422).json({ error: "bad request" });
   }
   if (!validator.isInt(`${req.body.ID_Booking}`, { min: 1 })) {
-    return 1;
+    return res.status(422).json({ error: "bad request" });
   }
 
   try {
     await dao.deleteBookingProduct(req.body.ID_Product, req.body.ID_Booking);
     await dao.IncrementQtyProductWeek(req.body.Inc_Qty, req.body.ID_Product);
-    return 0;
+    return res.status(201).json();
   } catch (err) {
-    return 2;
+    return res.status(503).json({ error: "db error" });
   }
 });
 
@@ -273,10 +265,10 @@ products.get("/api/products/farmers/:id", isLoggedIn, (req, res) => {
   dao
     .getAllProductsConfirmedForFarmer(id)
     .then((product) => {
-      res.status(200).json(product);
+      return res.status(201).json(product);
     })
     .catch((error) => {
-      res.status(500).json(error);
+      return res.status(503).json(error);
     });
 });
 
@@ -291,10 +283,10 @@ products.get("/api/farmers/:farmerid/products_expected", isLoggedIn, (req, res) 
   dao
     .getAllProductsExpectedForFarmer(req.params.farmerid)
     .then((products) => {
-      res.status(200).json(products);
+      return res.status(200).json(products);
     })
     .catch((error) => {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     });
 });
 
@@ -320,9 +312,9 @@ products.post("/api/products_expected", isLoggedIn, async (req, res) => {
   }
   if (problem == 0) {
     //All went fine
-    res.status(201).json(results);
+    return res.status(201).json();
   } else {
-    res.status(503).json({
+    return res.status(503).json({
       error: `Database error during the post of ProductExpected`,
     });
   }
@@ -378,15 +370,15 @@ products.post(
 
     try {
       productId = await dao.insertTupleProductWEEK(product);
+      return res.status(201).json();
     } catch (err) {
-      res.status(503).json({
+      return res.status(503).json({
         error: `Database error during insertion into product_week table.`,
       });
-      return;
     }
 
     //All went fine
-    res.status(201).json({ productId: productId });
+    
   }
 );
 
