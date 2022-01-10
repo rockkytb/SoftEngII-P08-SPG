@@ -1,5 +1,9 @@
 # SoftEngII-P08-SPG
 
+## IMPORTANT NOTE
+
+Only for testing purpose we have included a feature for which at the end of every week instead of deleting products we readvertise them automatically and increase their quantity by 10. Obviously this will not be included in a hypotetichal final release. It's only for improving the testing of the application by you teachers.
+
 ## LIST OF ACCOUNTS
 
 Only with testmode disabled
@@ -12,14 +16,15 @@ Password is always : <b> testpassword </b>
 ### Shop Employee
 
 1. email: susan@employee.spg.com
+2. email: mario@employee.spg.com
 
 ### Manager
 
-1. email: mike@manager.spg.com
+1. email: john@manager.spg.com
 
 ### Warehouse Manager
 
-1. email: john@whmanager.spg.com
+1. email: mike@whmanager.spg.com
 
 ### Warehouse Worker
 

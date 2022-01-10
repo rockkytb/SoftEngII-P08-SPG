@@ -60,6 +60,7 @@ function App() {
   const [ackState, setAckState] = useState(true);
   const [productsExpectedFarmer, setProductsExpectedFarmer] = useState([]);
   const [bookingsUnretrieved, setBookingsUnretrieved] = useState([]);
+  const [customerWallet, setCustomerWallet] = useState (0);
 
   //const [booking, setBooking] = useState();
   //const history = useHistory();
@@ -248,6 +249,9 @@ function App() {
     }
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       setAllBookings(tmp.allBookings);
+    }
+    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
+      setCustomerWallet(tmp.wallet.balance.toFixed(2));
     }
     if (userdata && userdata.id && userdata.id.charAt(0) === "A") {
       setBookingsUnretrieved(tmp.bookingsUnretrieved);
@@ -1039,7 +1043,7 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "C" ? (
                           <>
                             {/*<SidebarCustom /> */}
-                            <Customer className="below-nav main-content" />
+                            <Customer className="below-nav main-content" wallet={customerWallet}/>
                           </>
                         ) : (
                           <>
