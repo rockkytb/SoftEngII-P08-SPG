@@ -289,8 +289,6 @@ const isLoggedIn = (req, res, next) => {
 
 //WRITE API HERE
 
-
-
 // put /api/clientsPreparation
 app.put("/api/clientsPreparation", isLoggedIn, async (req, res) => {
   let result = [];
@@ -677,4 +675,3 @@ const server = app.listen(port, () => {
 
 exports.server = server;
 exports.switchTestMode = switchTestMode;
-exports.isLoggedIn = isLoggedIn;
