@@ -980,8 +980,21 @@ describe("Test suite Integration Server", () => {
       expect(res.body).toHaveProperty("name", `Marco`);
     });
   });
-
-  describe("Client Session fails", () => {
+  describe("Client Session success with alarm", () => {
+    it("send a valid user", async () => {
+      //manually set the missed count to 3
+      await dao.updateClientMissedCount(1, 3)
+      const res = await request(app).post("/api/clientSessions").send({
+        username: "marco.bianchi@mail.it",
+        password: "testpassword",
+      });
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toHaveProperty("id", `C1`);
+      expect(res.body).toHaveProperty("name", `Marco`);
+      expect(res.body).toHaveProperty("message", `You have 3 missed pickups! You will be suspeneded for 30 days on the 5th time.`);
+    });
+  });
+  describe("Client Session fails because of wrong credentials", () => {
     it("send a wrong psw", async () => {
       const res = await request(app).post("/api/clientSessions").send({
         username: "marco.bianchi@mail.it",
@@ -992,6 +1005,18 @@ describe("Test suite Integration Server", () => {
         "message",
         `Incorrect username and/or password`
       );
+    });
+  });
+
+  describe("Client Session fails because of being suspended", () => {
+    it("send right credentials", async () => {
+      // manually suspend client
+      await dao.updateClientSusspensionDate("2022-01-9")
+      const res = await request(app).post("/api/clientSessions").send({
+        username: "marco.bianchi@mail.it",
+        password: "test",
+      });
+      expect(res.statusCode).toEqual(401);
     });
   });
 
