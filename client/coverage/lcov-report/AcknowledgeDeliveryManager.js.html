@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -117,23 +117,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -145,7 +133,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,14 +162,14 @@ import {
     Button,
 } from "react-bootstrap";
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >AcknowledgeDeliveryFarmer(</span>props) {
+export default function AcknowledgeDeliveryFarmer(props) {
 &nbsp;
-    function <span class="fstat-no" title="function not covered" >acknowledgeActions(</span>) {
-<span class="cstat-no" title="statement not covered" >        if(props.acknowledges.length === 0){</span>
+    function acknowledgeActions() {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(props.acknowledges.length === 0){
 <span class="cstat-no" title="statement not covered" >            return (&lt;&gt;No deliveries to Acknowledge&lt;/&gt;);</span>
         }
-<span class="cstat-no" title="statement not covered" >        return props.acknowledges.map(<span class="fstat-no" title="function not covered" >(a</span>ck) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >            &lt;Col&gt;</span>
+        return props.acknowledges.map((ack) =&gt; (
+            &lt;Col&gt;
                 &lt;Card&gt;
                     &lt;Card.Body&gt;
                         &lt;Card.Text className="text-dark"&gt;
@@ -179,9 +179,9 @@ export default function <span class="fstat-no" title="function not covered" >Ack
                         &lt;Button
                             variant="warning"
                             id={"confirm"+ack.farmer}
-                            onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+                            onClick={() =&gt; {
                                 
-<span class="cstat-no" title="statement not covered" >                                props.confirmAck(ack.id);</span>
+                                props.confirmAck(ack.id);
                             }}
                             
                         &gt;
@@ -193,7 +193,7 @@ export default function <span class="fstat-no" title="function not covered" >Ack
         ));
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;div className= "below-nav"&gt;
 &nbsp;
             &lt;CardColumns xs={1} md={5}&gt;
@@ -208,7 +208,7 @@ export default function <span class="fstat-no" title="function not covered" >Ack
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Jan 10 2022 13:48:26 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Jan 10 2022 13:56:02 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
