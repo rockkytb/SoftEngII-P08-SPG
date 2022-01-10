@@ -88,20 +88,21 @@ users.post("/api/newclient", async (req, res) => {
     phone: req.body.phone,
   };
 
-  dao
-    .getClientByEmail(client.email)
-    .then((c) => {
+  try{
+  const c = await dao.getClientByEmail(client.email);
+    
       if (c !== -1) {
         return res.status(503).json({
           error: `Error: ${client.email} already used.`,
         });
       }
-    })
-    .catch((err) => {
+    
+  }
+    catch(err)  {
       return res.status(500).json({
         errors: `Database errors: ${err}.`,
       });
-    });
+    };
 
   let clientId;
 

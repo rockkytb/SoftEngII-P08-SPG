@@ -1495,25 +1495,6 @@ describe("Test suite Integration Server", () => {
     });
   });
 
-  describe("post a vector of product expected", () => {
-    it("test with a no valid body, without a name field", async () => {
-      const res = await request(app)
-        .post("/api/products_expected")
-        .send([
-          {
-            category: 2,
-            price: 1.99,
-            qty: 2,
-            farmer_id: 3,
-          },
-        ]);
-      expect(res.statusCode).toEqual(503);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Database error during the post of ProductExpected"
-      );
-    });
-  });
 
   describe("Post ack success", () => {
     it("should create a new ack", async () => {

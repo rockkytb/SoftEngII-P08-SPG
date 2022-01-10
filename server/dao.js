@@ -480,8 +480,7 @@ exports.IncrementQtyProductWeek = (Inc_Qty, ID_Product) => {
       if (err) {
         reject(err);
       } else {
-        let updatedProduct = getProduct(ID_Product);
-        resolve(updatedProduct);
+        resolve(true);
       }
     });
   });
