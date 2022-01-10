@@ -818,8 +818,7 @@ async function attaccoDoS(userdata) {
   };
 
   const getWallet = async () => {
-    // call: GET /api/clients
-    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+    if (userdata && userdata.id && userdata.id.charAt(0) === "C") {
       const response = await getWalletById(userdata.id.substring(1));
       const wallet = await response.json();
       if (response.ok) {
@@ -865,8 +864,9 @@ async function attaccoDoS(userdata) {
   let categories = await getCategories();
   let allBookings = await getAllBookings();
   let bookingsUnretrieved = await getBookingsUnretrieved();
+  let wallet = await getWallet()
 
-  return { products, bookings, clients, categories, allBookings, bookingsUnretrieved };
+  return { products, bookings, clients, categories, allBookings, bookingsUnretrieved, wallet };
 }
 
 
