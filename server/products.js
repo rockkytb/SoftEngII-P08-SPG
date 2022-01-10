@@ -5,7 +5,6 @@ const express = require("express");
 const products = express.Router();
 const dao = require("./dao");
 const validator = require("validator");
-const sessions = require("./session.js")
 
 let testmode = false;
 
