@@ -69,7 +69,7 @@ function CarouselCustom(props) {
 
         <Carousel.Caption className="caption-middle">
           <h3>Browse products!</h3>
-          {<Link to="/products"> <Button variant="warning"> Show the catalogue </Button> </Link>}
+          {<Link to="/products"> <Button variant="warning" id="catalogue"> Show the catalogue </Button> </Link>}
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

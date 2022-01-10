@@ -2,11 +2,12 @@
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {act} from 'react-dom/test-utils';
-import Enzyme from 'enzyme';
+import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {createMemoryHistory} from 'history'
 import React from 'react'
 import {Router} from 'react-router-dom'
+import { StaticRouter } from "react-router";
 
 import '@testing-library/jest-dom'
 
@@ -17,7 +18,7 @@ global.fetch = jest.fn().mockImplementation(() => mockFetch);
 
 Enzyme.configure({ adapter: new Adapter() })
 
-test('full app rendering/navigating', async () => {
+test('Renders home and goes to login', async () => {
   const history = createMemoryHistory()
   await act( async () => 
         render(
@@ -26,54 +27,24 @@ test('full app rendering/navigating', async () => {
         </Router>
       )
     );
+    const aboutItem = screen.getByText('Login');
+     expect(aboutItem).toBeInTheDocument();
+    userEvent.click(aboutItem);
 })
 
-test('landing on a bad page', async () => {
-  const history = createMemoryHistory()
-  history.push('/some/bad/route')
-  await act( async () => 
-        render(
-        <Router history={history}>
-          <App />
-        </Router>
-      )
-    );
-})
-
-test('landing on login page', async () => {
+  test('Renders home and goes to register', async () => {
     const history = createMemoryHistory()
-    history.push('/login')
+    history.location='/home';
     await act( async () => 
-        render(
-        <Router history={history}>
-          <App />
-        </Router>
-      )
-    );
-  })
-
-  test('landing on products page', async () => {
-    const history = createMemoryHistory()
-    history.push('/products')
-    await act( async () => 
-        render(
-        <Router history={history}>
-          <App />
-        </Router>
-      )
-    );
-  })
-
-  test('landing on addFutureproducts page', async () => {
-    const history = createMemoryHistory()
-    history.push('/addFutureproducts')
-    await act( async () => 
-        v=render(
-        <Router history={history}>
-          <App />
-        </Router>
-      )
-    );
+          render(
+          <Router history={history}>
+            <App />
+          </Router>
+        )
+      );
+      const aboutItem = screen.getByText('Create a new account');
+       expect(aboutItem).toBeInTheDocument();
+      userEvent.click(aboutItem);
   })
 
   
