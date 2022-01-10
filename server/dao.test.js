@@ -132,12 +132,12 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT BY EMAIL
   test("get client return -1 because no email provided", () => {
-    return expect(dao.getClientByEmail()).resolves.toHaveProperty(-1);
+    return expect(dao.getClientByEmail()).resolves.toEqual(-1);
   });
 
   test("get client return -1 because no user with that email exists", () => {
     const email = "luca.bianchi@mail.it";
-    return expect(dao.getClientByEmail(email)).resolves.toHaveProperty(-1);
+    return expect(dao.getClientByEmail(email)).resolves.toEqual(-1);
   });
 
   test("get client return success", async () => {

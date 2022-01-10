@@ -73,7 +73,7 @@ describe("Test suite Integration Server", () => {
         state: "",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Bad request");
+      expect(res.body).toHaveProperty("error", "state not allowed");
     });
   });
 
@@ -84,7 +84,7 @@ describe("Test suite Integration Server", () => {
         state: "EXPECTED",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Bad request");
+      expect(res.body).toHaveProperty("error", "invalid id");
     });
   });
 
@@ -311,7 +311,7 @@ describe("Test suite Integration Server", () => {
       expect(res.statusCode).toEqual(503);
       expect(res.body).toHaveProperty(
         "error",
-        "Error: marco.bianchi@mail.it already used"
+        "Error: marco.bianchi@mail.it already used."
       );
     });
   });
@@ -925,7 +925,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Bad request`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -958,7 +958,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Invalid product data`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -974,7 +974,7 @@ describe("Test suite Integration Server", () => {
           ],
         });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", `Invalid product data`);
+      expect(res.body).toHaveProperty("error", `bad request`);
     });
   });
 
@@ -1277,7 +1277,7 @@ describe("Test suite Integration Server", () => {
       ]);
 
       expect(response.body).toHaveLength(1);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
   });
 
@@ -1556,7 +1556,7 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(201);
-      expect(res.body).toEqual(true);
+      expect(res.body).toEqual("");
     });
   });
 
@@ -1574,9 +1574,9 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Invalid product id of a element on the array, it must be positive"
+      expect(res.body).toEqual({
+        "error":
+        "invalid id"}
       );
     });
   });
@@ -1595,9 +1595,9 @@ describe("Test suite Integration Server", () => {
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Invalid product id of a element on the array, it must be positive"
+      expect(res.body).toEqual({
+        "error":
+        "invalid id"}
       );
     });
   });
