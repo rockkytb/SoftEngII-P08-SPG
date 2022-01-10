@@ -342,7 +342,7 @@ products.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) =>
   }
 });
 
-// POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
+// POST /api/farmers/:farmerid/productsExpected 
 products.post(
   "/api/farmers/:farmerid/productsExpected",
   isLoggedIn,
