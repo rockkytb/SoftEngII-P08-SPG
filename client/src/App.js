@@ -1239,37 +1239,6 @@ function App() {
             )}
           />
 
-          <Route
-            path="/emp/pagah"
-            exact
-            render={() => (
-
-              <>
-                {update ? (
-                  <>
-                    {loggedIn ? (
-                      <>
-                        {userdata.id && userdata.id.charAt(0) === "S" ? (
-                          <>
-                            <SidebarCustom className="below-nav" />
-                          </>
-                        ) : (
-                          <>
-                            <Redirect to="/home" />
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <Redirect to="/login" />
-                    )}{" "}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-          />
-
           <Route //homepage
             exact
             path="/home"
