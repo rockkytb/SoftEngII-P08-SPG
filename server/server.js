@@ -617,7 +617,11 @@ async function clockActions() {
             START_DATE: startDate.toISOString().split("T")[0],
             END_DATE: endDate.toISOString().split("T")[0],
           });
-        } else if (booking.state === "CONFIRMED" && booking.delivery === 0) {
+        } else if (booking.state === "CONFIRMED" ) {
+
+           // get the clientId based on the bookingId
+           const client = await dao.findClientbyBooking(booking.id);
+
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
@@ -627,9 +631,7 @@ async function clockActions() {
             END_DATE: endDate.toISOString().split("T")[0],
           });
 
-          // get the clientId based on the bookingId
-          const client = await dao.findClientbyBooking(booking.id);
-
+         
          /* // get the client suspension date if exists
           var suspension = await dao.getLatestSuspensionDate(client.id);
           if (suspension.date) suspension = suspension.date;
@@ -653,7 +655,7 @@ async function clockActions() {
             console.log( `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
             \nYour account will be susspended on the 5th time.`)
             telegramBot.SendMessage(
-              booking.client,
+              client.id,
               `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
           \nYour account will be susspended on the 5th time.`
             );
@@ -671,7 +673,7 @@ async function clockActions() {
 
             console.log(`You have reached your limit. We are sorry to say that your account has been suspended.`)
             telegramBot.SendMessage(
-              booking.client,
+              client.id,
               `You have reached your limit. We are sorry to say that your account has been suspended.`
             );
           }
