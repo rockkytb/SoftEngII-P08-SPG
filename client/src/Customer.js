@@ -8,6 +8,7 @@ function Customer(props) {
   return (
     <>
           <h1 className="below-nav main-content text-center">I'm a customer</h1>
+          <h4 className="text-center">Wallet Balance {props.wallet} €</h4>
 
           <Container fluid className = "text-center">
             <Row md={12}>
