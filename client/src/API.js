@@ -121,8 +121,6 @@ async function logOut() {
   await fetch(url + "/logout", { method: "DELETE" });
 }
 
-
-
 async function getUserInfo() {
   const response = await fetch(url + "/userinfo");
   const userInfo = await response.json();
