@@ -7,7 +7,7 @@ const dao = require("./dao");
 const validator = require("validator");
 const sessions = require("./session.js")
 
-let testmode = true;
+let testmode = false;
 
 const switchTestMode = () => {
   testmode = true;

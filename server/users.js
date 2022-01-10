@@ -6,7 +6,7 @@ const users = express.Router();
 const dao = require("./dao");
 const validator = require("validator");
 
-let testmode = true;
+let testmode = false;
 
 const switchTestMode = () => {
   testmode = true;

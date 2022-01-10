@@ -17,7 +17,7 @@ const bookings = require("./bookings.js");
 
 //Per validazione aggiuntiva
 const validator = require("validator");
-let testmode = true;
+let testmode = false;
 
 //SWAGGER
 const swaggerUi = require("swagger-ui-express"),
