@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1641822179632" clover="3.2.0">
-  <project timestamp="1641822179632" name="All files">
-    <metrics statements="988" coveredstatements="561" conditionals="697" coveredconditionals="303" methods="380" coveredmethods="214" elements="2065" coveredelements="1078" complexity="0" loc="988" ncloc="988" packages="1" files="30" classes="30"/>
+<coverage generated="1641822606332" clover="3.2.0">
+  <project timestamp="1641822606332" name="All files">
+    <metrics statements="988" coveredstatements="575" conditionals="697" coveredconditionals="306" methods="380" coveredmethods="219" elements="2065" coveredelements="1100" complexity="0" loc="988" ncloc="988" packages="1" files="30" classes="30"/>
     <file name="API.js" path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\client\src\API.js">
-      <metrics statements="264" coveredstatements="146" conditionals="106" coveredconditionals="56" methods="112" coveredmethods="67"/>
+      <metrics statements="264" coveredstatements="160" conditionals="106" coveredconditionals="59" methods="112" coveredmethods="72"/>
       <line num="1" count="3" type="stmt"/>
       <line num="5" count="1" type="stmt"/>
       <line num="6" count="1" type="stmt"/>
@@ -120,20 +120,20 @@
       <line num="437" count="0" type="stmt"/>
       <line num="440" count="0" type="stmt"/>
       <line num="449" count="0" type="stmt"/>
-      <line num="455" count="1" type="stmt"/>
-      <line num="456" count="1" type="stmt"/>
-      <line num="464" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="455" count="2" type="stmt"/>
+      <line num="456" count="2" type="stmt"/>
+      <line num="464" count="2" type="cond" truecount="1" falsecount="1"/>
       <line num="465" count="0" type="stmt"/>
-      <line num="467" count="1" type="stmt"/>
-      <line num="470" count="1" type="stmt"/>
+      <line num="467" count="2" type="stmt"/>
+      <line num="470" count="2" type="stmt"/>
       <line num="473" count="0" type="stmt"/>
       <line num="482" count="0" type="stmt"/>
-      <line num="489" count="1" type="stmt"/>
-      <line num="490" count="1" type="stmt"/>
-      <line num="498" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="489" count="2" type="stmt"/>
+      <line num="490" count="2" type="stmt"/>
+      <line num="498" count="2" type="cond" truecount="1" falsecount="1"/>
       <line num="499" count="0" type="stmt"/>
-      <line num="501" count="1" type="stmt"/>
-      <line num="504" count="1" type="stmt"/>
+      <line num="501" count="2" type="stmt"/>
+      <line num="504" count="2" type="stmt"/>
       <line num="507" count="0" type="stmt"/>
       <line num="516" count="0" type="stmt"/>
       <line num="523" count="1" type="stmt"/>
@@ -162,14 +162,14 @@
       <line num="613" count="0" type="stmt"/>
       <line num="616" count="0" type="stmt"/>
       <line num="625" count="0" type="stmt"/>
-      <line num="631" count="0" type="stmt"/>
-      <line num="632" count="0" type="stmt"/>
-      <line num="640" count="0" type="stmt"/>
-      <line num="641" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="631" count="1" type="stmt"/>
+      <line num="632" count="1" type="stmt"/>
+      <line num="640" count="1" type="stmt"/>
+      <line num="641" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="642" count="0" type="stmt"/>
-      <line num="644" count="0" type="stmt"/>
-      <line num="648" count="0" type="stmt"/>
-      <line num="649" count="0" type="stmt"/>
+      <line num="644" count="1" type="stmt"/>
+      <line num="648" count="1" type="stmt"/>
+      <line num="649" count="1" type="stmt"/>
       <line num="655" count="1" type="stmt"/>
       <line num="657" count="1" type="stmt"/>
       <line num="666" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -178,15 +178,15 @@
       <line num="672" count="1" type="stmt"/>
       <line num="675" count="0" type="stmt"/>
       <line num="687" count="0" type="stmt"/>
-      <line num="694" count="0" type="stmt"/>
-      <line num="695" count="0" type="stmt"/>
-      <line num="696" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="694" count="1" type="stmt"/>
+      <line num="695" count="1" type="stmt"/>
+      <line num="696" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="697" count="0" type="stmt"/>
-      <line num="702" count="0" type="stmt"/>
-      <line num="703" count="0" type="stmt"/>
-      <line num="704" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="702" count="1" type="stmt"/>
+      <line num="703" count="1" type="stmt"/>
+      <line num="704" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="705" count="0" type="stmt"/>
-      <line num="711" count="0" type="stmt"/>
+      <line num="711" count="1" type="stmt"/>
       <line num="726" count="7" type="stmt"/>
       <line num="729" count="7" type="cond" truecount="5" falsecount="0"/>
       <line num="730" count="1" type="stmt"/>
