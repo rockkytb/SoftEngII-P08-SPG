@@ -68,32 +68,29 @@ describe("Test suite Integration Server", () => {
 
   describe("edit the state of a product", () => {
     it("send a invalid state", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: 1,
         state: "",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty("error", "Invalid state lenght");
+      expect(res.body).toHaveProperty("error", "Bad request");
     });
   });
 
   describe("edit the state of a product", () => {
     it("send a invalid id product", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: -1,
         state: "EXPECTED",
       });
       expect(res.statusCode).toEqual(422);
-      expect(res.body).toHaveProperty(
-        "error",
-        "Invalid product id, it must be positive"
-      );
+      expect(res.body).toHaveProperty("error", "Bad request");
     });
   });
 
   describe("edit the state of a product", () => {
     it("send a valid body", async () => {
-      const res = await request(app).put("/api/productstate").send({
+      const res = await request(app).put("/api/products").send({
         id: 1,
         state: "EXPECTED",
       });
@@ -305,15 +302,16 @@ describe("Test suite Integration Server", () => {
     it("create a new client but the client email already used", async () => {
       const hash = bcrypt.hashSync("testpassword", 10);
       const res = await request(app).post("/api/newclient").send({
-        email: "antonio.bianchi@mail.it",
+        email: "marco.bianchi@mail.it",
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(503);
       expect(res.body).toHaveProperty(
         "error",
-        "antonio.bianchi@mail.it already used"
+        "Error: marco.bianchi@mail.it already used"
       );
     });
   });
@@ -403,6 +401,7 @@ describe("Test suite Integration Server", () => {
         email: "antonio.bianchi@mail.it",
         name: "",
         surname: "Bianchi",
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty("error", "Invalid client's name");
@@ -413,6 +412,7 @@ describe("Test suite Integration Server", () => {
     it("create a new client fails due to invalid surname", async () => {
       const res = await request(app).post("/api/newclient").send({
         email: "antonio.bianchi@mail.it",
+        phone: "3331231212",
         name: "Antonio",
         surname:
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -430,6 +430,7 @@ describe("Test suite Integration Server", () => {
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(422);
       expect(res.body).toHaveProperty(
@@ -447,6 +448,7 @@ describe("Test suite Integration Server", () => {
         name: "Antonio",
         surname: "Bianchi",
         password: hash,
+        phone: "3331231212",
       });
       expect(res.statusCode).toEqual(201);
       expect(res.body).toHaveProperty("idClient", 2);
@@ -528,7 +530,7 @@ describe("Test suite Integration Server", () => {
         ID_Product: 1,
         Inc_Qty: 2,
       });
-      expect(res.statusCode).toEqual(200);
+      expect(res.statusCode).toEqual(201);
       expect(res.body).toEqual({
         ID: 1,
         NAME: "Mele",
@@ -907,7 +909,7 @@ describe("Test suite Integration Server", () => {
       const res = await request(app)
         .delete(`/api/products/${productId}`)
         .send();
-      expect(res.statusCode).toEqual(204);
+      expect(res.statusCode).toEqual(201);
     });
   });
 
@@ -940,7 +942,7 @@ describe("Test suite Integration Server", () => {
         ID_Booking: 101,
         ID_Product: 121,
       });
-      expect(res.statusCode).toEqual(204);
+      expect(res.statusCode).toEqual(201);
     });
   });
 
@@ -1024,10 +1026,10 @@ describe("Test suite Integration Server", () => {
   describe("Get client by email fails", () => {
     it("send a wrong email", async () => {
       const res = await request(app).post("/api/client").send({
-        email: "bianchi@mail.it",
+        email: "bianchi@.it",
       });
-      expect(res.statusCode).toEqual(401);
-      expect(res.body).toHaveProperty("id", -1);
+      expect(res.statusCode).toEqual(422);
+      expect(res.body).toHaveProperty("error", "Invalid email");
     });
   });
 
@@ -1041,6 +1043,7 @@ describe("Test suite Integration Server", () => {
           id: "C1",
           username: "marco.bianchi@mail.it",
           name: "Marco",
+          phone: "3331231212",
           surname: "Bianchi",
         },
       ]);
@@ -1195,14 +1198,14 @@ describe("Test suite Integration Server", () => {
           name: "Lamponi",
           category: "Fruit",
           price: 1.78,
-          qty: 10,
+          qty: 20,
           farmer_email: "antonio.bianchi@mail.it",
           size: 1,
           unit_of_measure: "g",
         },
       ]);
       expect(response.body).toHaveLength(1);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
     });
   });
 
@@ -1266,7 +1269,7 @@ describe("Test suite Integration Server", () => {
           name: "Lamponi",
           category: "Fruit",
           price: 1.78,
-          qty: 10,
+          qty: 20,
           farmer_email: "antonio.bianchi@mail.it",
           size: 1,
           unit_of_measure: "g",
@@ -1305,7 +1308,7 @@ describe("Test suite Integration Server", () => {
       const response = await request(app).get("/api/bookingModesPreparation");
       expect(response.body).toEqual([
         {
-          date: "2021-12-15",
+          date: "2022-01-12",
           email: "marco.bianchi@mail.it",
           id: 1,
           name: "Marco",
@@ -1323,7 +1326,7 @@ describe("Test suite Integration Server", () => {
           ],
           state: "PENDINGCANCELATION",
           surname: "Bianchi",
-          time: "18:07",
+          time: "11:11",
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -1340,8 +1343,8 @@ describe("Test suite Integration Server", () => {
           idBooking: 2,
           idClient: 1,
           state: "BOOKED",
-          date: "2021-12-15",
-          time: "14:20",
+          date: "2022-01-12",
+          time: "12:12",
         },
       ]);
       expect(response.body).toHaveLength(1);
@@ -1354,21 +1357,38 @@ describe("Test suite Integration Server", () => {
       const response = await request(app).get("/api/bookings/clients/1");
       expect(response.body).toEqual([
         {
-          id: 1,
-          state: "PENDINGCANCELATION",
           email: "marco.bianchi@mail.it",
+          id: 1,
           name: "Marco",
+          state: "PENDINGCANCELATION",
           surname: "Bianchi",
-          qty: 3,
-          product: "Mele",
+          products: [
+            {
+              category: "Fruit",
+              email: "antonio.bianchi@mail.it",
+              id_product: 1,
+              price: 14,
+              product: "Mele",
+              qty: 3,
+              state: "EXPECTED",
+            },
+            {
+              category: "Fruit",
+              email: "antonio.bianchi@mail.it",
+              id_product: 2,
+              price: 1.78,
+              product: "Lamponi",
+              qty: 1,
+              state: "CONFIRMED",
+            },
+          ],
         },
         {
           email: "marco.bianchi@mail.it",
-          id: 1,
+          id: 2,
           name: "Marco",
-          product: "Lamponi",
-          qty: 1,
-          state: "PENDINGCANCELATION",
+          products: [],
+          state: "BOOKED",
           surname: "Bianchi",
         },
       ]);
@@ -1529,16 +1549,10 @@ describe("Test suite Integration Server", () => {
 
   describe("Put products with new state", () => {
     it("right put with all right fields", async () => {
-      const parameter = [
-        {
-          id: 1,
-          state: "EXPECTED",
-        },
-        {
-          id: 2,
-          state: "CONFIRMED",
-        },
-      ];
+      const parameter = {
+        id: 1,
+        state: "EXPECTED",
+      };
 
       const res = await request(app).put("/api/products").send(parameter);
       expect(res.statusCode).toEqual(201);
@@ -1617,10 +1631,10 @@ describe("Test suite Integration Server", () => {
       const result = [
         {
           id_product: 1,
-          name_product: "Mele",
+          product: "Mele",
           category: "Fruit",
           price: 14.0,
-          qty_booking: 3,
+          qty: 3,
           email: "antonio.bianchi@mail.it",
           state: "EXPECTED",
         },
@@ -1628,9 +1642,9 @@ describe("Test suite Integration Server", () => {
           category: "Fruit",
           email: "antonio.bianchi@mail.it",
           id_product: 2,
-          name_product: "Lamponi",
+          product: "Lamponi",
           price: 1.78,
-          qty_booking: 1,
+          qty: 1,
           state: "CONFIRMED",
         },
       ];

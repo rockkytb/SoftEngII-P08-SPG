@@ -80,6 +80,8 @@ exports.getClient = (email, password) => {
           name: row.NAME,
           surname: row.SURNAME,
           phone: row.PHONE,
+          missedCount: row.MISSEDCOUNT,
+          suspensionDate: row.SUSPENSIONDATE
         };
 
         bcrypt.compare(password, row.PASSWORD).then((result) => {
@@ -422,8 +424,6 @@ exports.updateBookingProduct = async (bookingProduct) => {
 
     update = current - bookingProduct.Qty;
 
-    console.log(update);
-
     if (week + update >= 0) {
       db.run(
         sql2,
@@ -535,7 +535,6 @@ function getCurrentProducts(productId, bookingId) {
       if (err) {
         reject(err);
       } else {
-        console.log(row)
         resolve(row.E);
       }
     });
@@ -546,7 +545,6 @@ exports.deleteBookingProduct = async (productId, bookingId) => {
 
   let current = await getCurrentProducts(productId, bookingId);
   const sql2 = "DELETE from BOOKING WHERE ID_BOOKING = ?";
-  console.log(current);
   return new Promise((resolve, reject) => {
     const sql =
       "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";
@@ -666,7 +664,7 @@ exports.getWallet = (id) => {
 exports.createClient = (client) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE) VALUES(?, ?, ?, ?, ?)";
+      "INSERT INTO CLIENT (EMAIL, NAME, SURNAME, PASSWORD, PHONE, MISSEDCOUNT) VALUES(?, ?, ?, ?, ?, 0)";
     db.run(
       sql,
       [
@@ -1171,7 +1169,7 @@ exports.insertTupleBookingHistory = (booking) => {
 exports.getBookingsUnretrieved = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
+      "SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY, bh.END_DATE FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1185,6 +1183,7 @@ exports.getBookingsUnretrieved = () => {
           productID: e.ID_PRODUCT,
           name: e.NAME,
           qty: e.QTY,
+          end_date: e.END_DATE,
         }));
 
         const bookings = [];
@@ -1198,6 +1197,7 @@ exports.getBookingsUnretrieved = () => {
             bookings[p.idBooking] = {
               idBooking: p.idBooking,
               idClient: p.idClient,
+              end_date: p.end_date,
               products: [
                 {
                   productID: p.productID,
@@ -1468,18 +1468,38 @@ exports.resetProductWeekVC = () => {
 };
 
 // Counting missed pickups for a customer
-exports.countMissedPickupsForACustomer = (customerId, preSuspensionDate) => {
+exports.countMissedPickupsForACustomer = (customerId/*, preSuspensionDate*/) => {
   return new Promise((resolve, reject) => {
-    const sql =
-      "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
-    db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
-      if (err) {
-        reject(err);
-        return;
-      } else {
-        resolve(rows[0]);
-      }
-    });
+    let sql;
+    // if (preSuspensionDate) {
+    //   sql =
+    //     "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
+
+    //   db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
+    //     if (err) {
+    //       reject(err);
+    //       return;
+    //     } else {
+    //       resolve(rows[0]);
+    //     }
+    //   });
+    // }
+    // else {
+      sql =
+        "SELECT MISSEDCOUNT as total from CLIENT where ID=?";
+      db.all(sql, [customerId], (err, rows) => {
+
+        if (err) {
+          reject(err);
+          return;
+        } else {
+          resolve(rows[0]);
+        }
+      });
+
+    // }
+
+
   });
 };
 
@@ -1500,8 +1520,9 @@ exports.findClientbyBooking = (bookingId) => {
 
 // update the client missed pickups count
 exports.updateClientMissedCount = (clientId, count) => {
+  console.log("updateClientMissedCount->" + count)
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE CLIENT set missedCount=? where ID=?";
+    const sql = "UPDATE CLIENT set MISSEDCOUNT=? where ID=?";
     db.all(sql, [count, clientId], (err) => {
       if (err) {
         reject(err);
@@ -1516,7 +1537,7 @@ exports.updateClientMissedCount = (clientId, count) => {
 // update the client susspensionDate
 exports.updateClientSusspensionDate = (clientId, date) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE CLIENT set susspensionDate=? where ID=?";
+    const sql = "UPDATE CLIENT set SUSPENSIONDATE=? where ID=?";
     db.all(sql, [date, clientId], (err) => {
       if (err) {
         reject(err);
@@ -1531,7 +1552,7 @@ exports.updateClientSusspensionDate = (clientId, date) => {
 // get a client suspension date
 exports.getLatestSuspensionDate = (clientId) => {
   return new Promise((resolve, reject) => {
-    const sql = "select suspenssionDate as date from CLIENT where ID=?";
+    const sql = "select SUSPENSIONDATE as date from CLIENT where ID=?";
     db.all(sql, [clientId], (err, rows) => {
       if (err) {
         reject(err);

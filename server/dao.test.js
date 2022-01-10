@@ -91,6 +91,7 @@ describe("Test suite DAO", () => {
       name: "Antonio",
       surname: "Bianchi",
       password: hash,
+      phone: "3331231212"
     };
     return expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
   });
@@ -113,6 +114,7 @@ describe("Test suite DAO", () => {
       name: "Antonio",
       surname: "Bianchi",
       password: hash,
+      phone: "3331231212"
     };
 
     expect(dao.createClient(client)).resolves.toBeGreaterThanOrEqual(1);
@@ -131,15 +133,12 @@ describe("Test suite DAO", () => {
 
   //TEST DAO FUNCTION GET CLIENT BY EMAIL
   test("get client return -1 because no email provided", () => {
-    return expect(dao.getClientByEmail()).resolves.toHaveProperty("id", -1);
+    return expect(dao.getClientByEmail()).resolves.toHaveProperty(-1);
   });
 
   test("get client return -1 because no user with that email exists", () => {
     const email = "luca.bianchi@mail.it";
-    return expect(dao.getClientByEmail(email)).resolves.toHaveProperty(
-      "id",
-      -1
-    );
+    return expect(dao.getClientByEmail(email)).resolves.toHaveProperty(-1);
   });
 
   test("get client return success", async () => {
@@ -159,6 +158,7 @@ describe("Test suite DAO", () => {
         username: "marco.bianchi@mail.it",
         name: "Marco",
         surname: "Bianchi",
+        phone: "3331231212"
       },
     ]);
   }, 10000);
@@ -370,7 +370,7 @@ test("get all all CONFIRMED products for a particular farmer success", async () 
       category: "Fruit",
       farmer_email: "antonio.bianchi@mail.it",
       price: 1.78,
-      qty: 10,
+      qty: 20,
       size: 1,
       unit_of_measure: "g",
     },
@@ -406,7 +406,7 @@ test("get all bookings success", async () => {
 test("get all bookings modes in preparation success", async () => {
   const received = [
     {
-      date: "2021-12-15",
+      date: "2022-01-12",
       email: "marco.bianchi@mail.it",
       id: 1,
       name: "Marco",
@@ -424,7 +424,7 @@ test("get all bookings modes in preparation success", async () => {
       ],
       state: "PENDINGCANCELATION",
       surname: "Bianchi",
-      time: "18:07",
+      time: "11:11",
     },
   ];
   return expect(dao.getbookingModesPreparation()).resolves.toEqual(received);
@@ -436,9 +436,9 @@ test("get all the records from BOOKING_MODE table WHERE delivery = 0 and state =
     {
       idBooking: 2,
       idClient: 1,
-      date: "2021-12-15",
+      date: "2022-01-12",
       state: "BOOKED",
-      time: "14:20",
+      time: "12:12",
     },
   ];
   return expect(dao.getbookingModesNewPickup()).resolves.toEqual(received);
@@ -453,16 +453,33 @@ test("get all bookings for a client success", async () => {
       email: "marco.bianchi@mail.it",
       name: "Marco",
       surname: "Bianchi",
-      qty: 3,
-      product: "Mele",
+      products: [
+        {
+          category: "Fruit",
+          email: "antonio.bianchi@mail.it",
+          id_product: 1,
+          price: 14,
+          product: "Mele",
+          qty: 3,
+          state: "EXPECTED",
+        },
+        {
+          category: "Fruit",
+          email: "antonio.bianchi@mail.it",
+          id_product: 2,
+          price: 1.78,
+          product: "Lamponi",
+          qty: 1,
+          state: "CONFIRMED",
+        },
+      ],
     },
     {
       email: "marco.bianchi@mail.it",
-      id: 1,
+      id: 2,
       name: "Marco",
-      product: "Lamponi",
-      qty: 1,
-      state: "PENDINGCANCELATION",
+      products: [],
+      state: "BOOKED",
       surname: "Bianchi",
     },
   ];
@@ -708,19 +725,19 @@ test("GET all the product associated to a particular booking", () => {
   const result = [
     {
       id_product: 1,
-      name_product: "Mele",
+      product: "Mele",
       category: "Fruit",
       price: 14.0,
-      qty_booking: 3,
+      qty: 3,
       email: "antonio.bianchi@mail.it",
       state: "EXPECTED",
     },
     {
       id_product: 2,
-      name_product: "Lamponi",
+      product: "Lamponi",
       category: "Fruit",
       price: 1.78,
-      qty_booking: 1,
+      qty: 1,
       email: "antonio.bianchi@mail.it",
       state: "CONFIRMED",
     },

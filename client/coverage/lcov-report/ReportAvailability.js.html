@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.89% </span>
+                <span class="strong">47.82% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/38</span>
+                <span class='fraction'>22/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.52% </span>
+                <span class="strong">64.7% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>25/34</span>
+                <span class='fraction'>22/34</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">55% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/33</span>
+                <span class='fraction'>22/40</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -244,7 +244,15 @@
 <a name='L185'></a><a href='#L185'>185</a>
 <a name='L186'></a><a href='#L186'>186</a>
 <a name='L187'></a><a href='#L187'>187</a>
-<a name='L188'></a><a href='#L188'>188</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -281,21 +289,29 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -446,10 +462,10 @@ function ReportAvailability(props) {
 &nbsp;
     const [productname, setName] = useState("");
     const [category, setCategory] = useState(props.categories &amp;&amp; props.categories[0] &amp;&amp; props.categories[0].id ? props.categories[0].id : -1);
-    const [price, setPrice] = useState(0.0);
-    const [qty, setQty] = useState(0);
-    const [size, setSize] = useState(0);
-    const [unitOfMeasure, setUnitOfMeasure] = useState("");
+    const [price, setPrice] = useState(0.01);
+    const [qty, setQty] = useState(1);
+    const [size, setSize] = useState(1);
+    const [unitOfMeasure, setUnitOfMeasure] = useState("kg");
 &nbsp;
     //const [measure, setMeasure] = useState("");
     //const [state, setState] = useState("");
@@ -466,6 +482,7 @@ function ReportAvailability(props) {
     const handleSubmit = <span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
 <span class="cstat-no" title="statement not covered" >        event.preventDefault();</span>
         const form = <span class="cstat-no" title="statement not covered" >event.currentTarget;</span>
+<span class="cstat-no" title="statement not covered" >        setValidated(true);</span>
 <span class="cstat-no" title="statement not covered" >        if (form.checkValidity() === false || !props.id || category == -1) {</span>
 <span class="cstat-no" title="statement not covered" >            event.stopPropagation();</span>
         } else {
@@ -479,11 +496,18 @@ function ReportAvailability(props) {
                 farmerid: props.id.substring(1),
             };
 <span class="cstat-no" title="statement not covered" >            console.log(product);</span>
-&nbsp;
+            
 <span class="cstat-no" title="statement not covered" >            props.addFutureProducts(props.id, product);</span>
-<span class="cstat-no" title="statement not covered" >            setValidated(true);</span>
 <span class="cstat-no" title="statement not covered" >            toast.success("Succesfully added", { position: "top-center" },{toastId: 29});</span>
+<span class="cstat-no" title="statement not covered" >            setName(""); </span>
+<span class="cstat-no" title="statement not covered" >            setCategory(props.categories[0].id); </span>
+<span class="cstat-no" title="statement not covered" >            setPrice(0.01); </span>
+<span class="cstat-no" title="statement not covered" >            setQty(1);</span>
+<span class="cstat-no" title="statement not covered" >            setSize(1); </span>
+<span class="cstat-no" title="statement not covered" >            setUnitOfMeasure("kg"); </span>
+<span class="cstat-no" title="statement not covered" >            setValidated(false);</span>
         }
+        
     };
 &nbsp;
     return (
@@ -541,8 +565,8 @@ function ReportAvailability(props) {
                         &lt;Col xs={8}&gt;
                             &lt;Form.Group&gt;
                                 &lt;Form.Label&gt;Price per item:&lt;/Form.Label&gt;
-                                &lt;Form.Control type="number" min="0" step="0.01" id="priceField" value={price} onChange={ev =&gt; setPrice(ev.target.value)} /&gt;
-                                {price &lt;= 0.0 &amp;&amp; &lt;Form.Control.Feedback type="invalid"&gt;
+                                &lt;Form.Control type="number" min="0.01" step="0.01" id="priceField" value={price} onChange={ev =&gt; setPrice(ev.target.value)} /&gt;
+                                {price &lt;= 0.0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Form.Control.Feedback type="invalid"&gt;</span>
                                     Please insert a valid price.
                                 &lt;/Form.Control.Feedback&gt;}
                             &lt;/Form.Group&gt;
@@ -555,8 +579,8 @@ function ReportAvailability(props) {
                         &lt;Col xs={8}&gt;
                             &lt;Form.Group controlId='text'&gt;
                                 &lt;Form.Label&gt;Quantity:&lt;/Form.Label&gt;
-                                &lt;Form.Control type="number" min="0" step="1" id="quantityField" value={qty} onChange={ev =&gt; setQty(ev.target.value)} /&gt;
-                                {qty &lt;= 0 &amp;&amp; &lt;Form.Control.Feedback type="invalid"&gt;
+                                &lt;Form.Control type="number" min="1" step="1" id="quantityField" value={qty} onChange={ev =&gt; setQty(ev.target.value)} /&gt;
+                                {qty &lt;= 0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Form.Control.Feedback type="invalid"&gt;</span>
                                     Please insert a quantity.
                                 &lt;/Form.Control.Feedback&gt;}
                             &lt;/Form.Group&gt;
@@ -569,8 +593,8 @@ function ReportAvailability(props) {
                         &lt;Col xs={8}&gt;
                             &lt;Form.Group controlId='text'&gt;
                                 &lt;Form.Label&gt;Size:&lt;/Form.Label&gt;
-                                &lt;Form.Control type="number" min="0" step="1" value={size} id="sizeField" onChange={ev =&gt; setSize(ev.target.value)} /&gt;
-                                {qty &lt;= 0 &amp;&amp; &lt;Form.Control.Feedback type="invalid"&gt;
+                                &lt;Form.Control type="number" min="1" step="1" value={size} id="sizeField" onChange={ev =&gt; setSize(ev.target.value)} /&gt;
+                                {qty &lt;= 0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;Form.Control.Feedback type="invalid"&gt;</span>
                                     Please insert the size of a single product.
                                 &lt;/Form.Control.Feedback&gt;}
                             &lt;/Form.Group&gt;
@@ -603,7 +627,7 @@ function ReportAvailability(props) {
                     &lt;Row&gt;
                         &lt;Col xs={8} /&gt;
                         &lt;Col xs={1}&gt;
-                            &lt;Button id="clearButton" onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; { <span class="cstat-no" title="statement not covered" >setName(""); <span class="cstat-no" title="statement not covered" ></span>setCategory(props.categories[0].id); <span class="cstat-no" title="statement not covered" ></span>setPrice(0.0); <span class="cstat-no" title="statement not covered" ></span>setQty(0); <span class="cstat-no" title="statement not covered" ></span>setUnitOfMeasure(""); <span class="cstat-no" title="statement not covered" ></span>setValidated(false); </span>}} type="button" variant="secondary" className="float-right"&gt;Clear&lt;/Button&gt;
+                            &lt;Button id="clearButton" onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; { <span class="cstat-no" title="statement not covered" >setName(""); <span class="cstat-no" title="statement not covered" ></span>setCategory(props.categories[0].id); <span class="cstat-no" title="statement not covered" ></span>setPrice(0.01); <span class="cstat-no" title="statement not covered" ></span>setQty(1); <span class="cstat-no" title="statement not covered" ></span>setUnitOfMeasure(""); <span class="cstat-no" title="statement not covered" ></span>setSize(1); <span class="cstat-no" title="statement not covered" ></span>setValidated(false); </span>}} type="button" variant="secondary" className="float-right"&gt;Clear&lt;/Button&gt;
                         &lt;/Col&gt;
                         &lt;Col xs={1} className="pl-5"&gt;
                             &lt;Button type="submit" id="submitButton" variant="warning" className="float-right "&gt;Add&lt;/Button&gt;
@@ -625,7 +649,7 @@ export default ReportAvailability;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jan 08 2022 10:02:49 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Jan 10 2022 09:58:28 GMT+0100 (Ora standard dell’Europa centrale)
             </div>
         </div>
         <script src="prettify.js"></script>
