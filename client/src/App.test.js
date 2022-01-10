@@ -28,6 +28,9 @@ import Clock from './Clock.js';
 import ReportAvailability from './ReportAvailability.js';
 import PickupSchedule from './PickupSchedule.js';
 import PreparationConfirmFarmer from './PreparationConfirmFarmer.js';
+import WarehouseManager from "./WarehouseManager";
+import OrderList from "./OrderList";
+import BookingsUnretrieved from "./BookingsUnretrieved";
 Enzyme.configure({ adapter: new Adapter() })
 
 //IF SOMETHING IS WRONG, TEST WILL FAIL
@@ -299,5 +302,45 @@ test('renders ReportAvailability', () => {
 
 test('renders ReportAvailability empty', () => {
   const categories=[]
-  const ra = shallow(<ReportAvailability categories={categories} setDirty={function setDirty(){}}/>);
+  shallow(<ReportAvailability categories={categories} setDirty={function setDirty(){}}/>);
 });
+
+test('renders WarehouseManager', () => {
+  shallow(<WarehouseManager/>);
+});
+
+test('renders OrderList', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3,id_product:1}]}];
+   const products = [{ id: 1, name: "prod1", farmer_email:"ab@mail.it", category:"fruit", qty: 3, price: 3.50 },
+  { id: 2, name: "prod2",category:"fruit",farmer_email:"ab@mail.it", qty: 3, price: 3.50 }];
+  
+  const ol = shallow(<OrderList bookings={bookings} products={products} 
+    deleteProductBooking={function deleteProductBooking(){}} updateOrder={function updateOrder(){}} 
+  calendarday={new Date('January 22, 2022 10:24:00')}/>);
+  ol.find('#updButton').simulate('click');
+  ol.find('#rmButton').simulate('click');
+  ol.find('#qtyButton').simulate('change',{target:10});
+  ol.find('#submitButton').simulate('click', {
+    preventDefault: () => {
+    },
+    currentTarget: {
+      checkValidity: () => {
+        return true;
+      }
+    }
+   });
+   ol.find('#closeButton').simulate('click');
+   ol.find('#closeButton2').simulate('click');
+});
+
+test('renders BookingsUnretrieved', () => {
+  const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",
+                    end_date:new Date(),
+                    email:"antonio.bianchi@mail.it",
+                    products:[{product:"apple",qty:3,id_product:1}]}];
+  const bu=shallow(<BookingsUnretrieved bookingsUnretrieved={bookings} setDirty={function setDirty(){}}/>);
+  bu.find('#All').simulate('click');
+  bu.find('#weekly').simulate('click');
+  bu.find('#monthly').simulate('click');
+}); 

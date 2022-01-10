@@ -95,3 +95,27 @@ test('Call API getUserInfo', async() => {
    test('Call API confirmPreparation', async () => {
     expect(API.confirmPreparation()).rejects.toEqual(true);
    });
+
+   test('Call API confirmProductsFarmer', async () => {
+    expect(API.confirmProductsFarmer()).rejects.toEqual(true);
+   });
+
+   test('Call API newAck', async () => {
+    expect(API.newAck()).rejects.toEqual(true);
+   });
+
+   test('Call API updateOrder', async () => {
+    expect(API.updateOrder()).rejects.toEqual(true);
+   });
+
+   test('Call API getTime', async () => {
+    expect(API.getTime()).rejects.toEqual(true);
+   });
+
+   test('Call API enableDisableVirtualClock', async () => {
+    expect(API.enableDisableVirtualClock()).rejects.toEqual(true);
+   });
+
+   test('Call API deleteProductBooking', async () => {
+    expect(API.deleteProductBooking()).rejects.toEqual(true);
+   });
