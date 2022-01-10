@@ -287,6 +287,55 @@ describe("Test suite DAO", () => {
     ).resolves.toHaveProperty("id", "S1");
   }, 10000);
 
+  //TEST GET Manager
+  test("get manager return false because no email provided", () => {
+    return expect(dao.getManager()).resolves.toBe(false);
+  });
+
+  test("get manager return false because no user with that email exists", () => {
+    const email = "marco.bianchi@mail.it";
+    return expect(dao.getManager(email, "testpassword")).resolves.toBe(
+      false
+    );
+  });
+
+  test("get manager return false because wrong psw", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(dao.getManager(email, "testp")).resolves.toBe(false);
+  }, 10000);
+
+  test("getManager return success", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(
+      dao.getManager(email, "testpassword")
+    ).resolves.toHaveProperty("id", "A1");
+  }, 10000);
+
+  //TEST GET WH Manager
+  test("get wh manager return false because no email provided", () => {
+    return expect(dao.getWarehouseManager()).resolves.toBe(false);
+  });
+
+  test("get wh manager return false because no user with that email exists", () => {
+    const email = "marco.bianchi@mail.it";
+    return expect(dao.getWarehouseManager(email, "testpassword")).resolves.toBe(
+      false
+    );
+  });
+
+  test("get wh manager return false because wrong psw", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(dao.getWarehouseManager(email, "testp")).resolves.toBe(false);
+  }, 10000);
+
+  test("get wh Manager return success", () => {
+    const email = "antonio.bianchi@mail.it";
+    return expect(
+      dao.getWarehouseManager(email, "testpassword")
+    ).resolves.toHaveProperty("id", "M1");
+  }, 10000);
+
+
   //TEST GET SHOP EMPLOYEE BY ID
   test("get shop employee by id return false because no shop employee with that id exists", () => {
     const id = 12;
@@ -301,6 +350,38 @@ describe("Test suite DAO", () => {
       "S1"
     );
   }, 10000);
+
+  //TEST GET WAREHOUSE MANAGER BY ID
+  test("get warehouse manager by id return false because no wh manager with that id exists", () => {
+    const id = 12;
+    return expect(dao.getWarehouseManagerById(id)).resolves.toBe(false);
+  });
+
+  test("get warehouse manager by id return a warehouse manager", async () => {
+    const id = 1;
+
+    return expect(dao.getWarehouseManagerById(id)).resolves.toHaveProperty(
+      "id",
+      "M1"
+    );
+  }, 10000);
+
+  //TEST GET MANAGER BY ID
+  test("get manager by id return false because no manager with that id exists", () => {
+    const id = 12;
+    return expect(dao.getManagerById(id)).resolves.toBe(false);
+  });
+
+  test("get manager by id return a manager", async () => {
+    const id = 1;
+
+    return expect(dao.getManagerById(id)).resolves.toHaveProperty(
+      "id",
+      "A1"
+    );
+  }, 10000);
+
+  
 
   //TEST GET WAREHOUSE WORKER BY ID
   test("get warehouse worker by id return false because no shop worker with that id exists", () => {
@@ -733,5 +814,6 @@ test("GET all the product associated to a particular booking", () => {
   ];
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
 });
+
 
 });
