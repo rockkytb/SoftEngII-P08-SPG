@@ -8,6 +8,10 @@ const validator = require("validator");
 
 let testmode = false;
 
+const switchTestMode = () => {
+  testmode = true;
+};
+
 const isLoggedIn = (req, res, next) => {
   if (testmode) {
     return next();
@@ -228,4 +232,5 @@ users.put("/api/ackstate", isLoggedIn, async (req, res) => {
   res.status(201).json(result);
 });
 
-module.exports = users;
+exports.users = users;
+exports.switchTestMode = switchTestMode;

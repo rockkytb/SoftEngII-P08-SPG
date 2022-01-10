@@ -424,8 +424,6 @@ exports.updateBookingProduct = async (bookingProduct) => {
 
     update = current - bookingProduct.Qty;
 
-    console.log(update);
-
     if (week + update >= 0) {
       db.run(
         sql2,
@@ -537,7 +535,6 @@ function getCurrentProducts(productId, bookingId) {
       if (err) {
         reject(err);
       } else {
-        console.log(row)
         resolve(row.E);
       }
     });
@@ -548,7 +545,6 @@ exports.deleteBookingProduct = async (productId, bookingId) => {
 
   let current = await getCurrentProducts(productId, bookingId);
   const sql2 = "DELETE from BOOKING WHERE ID_BOOKING = ?";
-  console.log(current);
   return new Promise((resolve, reject) => {
     const sql =
       "DELETE from BOOKING_PRODUCTS WHERE ID_BOOKING = ? and ID_PRODUCT=?";

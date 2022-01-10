@@ -29,10 +29,10 @@ let date = 0;
 //DO NOT DELETE, NEEDED ONLY FOR INTEGRATION TESTS
 const switchTestMode = () => {
   testmode = true;
-  products.testmode = true;
-  sessions.testmode = true;
-  users.testmode = true;
-  bookings.testmode=true;
+  products.switchTestMode();
+  sessions.switchTestMode();
+  users.switchTestMode();
+  bookings.switchTestMode();
 };
 
 // init express
@@ -276,10 +276,10 @@ passport.deserializeUser((id, done) => {
 // set-up the middlewares
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(products);
-app.use(sessions);
-app.use(users);
-app.use(bookings);
+app.use(products.products);
+app.use(sessions.sessions);
+app.use(users.users);
+app.use(bookings.bookings);
 
 // custom middleware: check if a given request is coming from an authenticated user
 const isLoggedIn = (req, res, next) => {

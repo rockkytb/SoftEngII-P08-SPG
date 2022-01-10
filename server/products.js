@@ -9,6 +9,10 @@ const sessions = require("./session.js")
 
 let testmode = false;
 
+const switchTestMode = () => {
+  testmode = true;
+};
+
 const isLoggedIn = (req, res, next) => {
   if (testmode) {
     return next();
@@ -387,4 +391,5 @@ products.post(
 );
 
 
-module.exports = products;
+exports.products = products;
+exports.switchTestMode = switchTestMode;
