@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
 //Set to true to run tests only
-const databaseonlyfortests=false;
+const databaseonlyfortests=true;
 
 //Set to true to enable testdatabase to test the tasks
 const testmode = true;
@@ -632,7 +632,7 @@ exports.editStateAck = (ack) => {
 // get a booking
 exports.getBooking = (id) => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM BOOKING WHERE ID = ?";
+    const sql = "SELECT * FROM BOOKING WHERE ID_BOOKING = ?";
     db.get(sql, [id], function (err, row) {
       if (err) {
         reject(err);

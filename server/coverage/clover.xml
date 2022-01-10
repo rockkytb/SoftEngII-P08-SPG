@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< Updated upstream
 <coverage generated="1641848459089" clover="3.2.0">
   <project timestamp="1641848459090" name="All files">
     <metrics statements="1293" coveredstatements="854" conditionals="477" coveredconditionals="240" methods="397" coveredmethods="271" elements="2167" coveredelements="1365" complexity="0" loc="1293" ncloc="1293" packages="2" files="7" classes="7"/>
     <package name="server">
       <metrics statements="1276" coveredstatements="839" conditionals="469" coveredconditionals="236" methods="393" coveredmethods="267"/>
       <file name="bookings.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/bookings.js">
+=======
+<coverage generated="1641852591809" clover="3.2.0">
+  <project timestamp="1641852591810" name="All files">
+    <metrics statements="1293" coveredstatements="881" conditionals="477" coveredconditionals="249" methods="397" coveredmethods="283" elements="2167" coveredelements="1413" complexity="0" loc="1293" ncloc="1293" packages="2" files="7" classes="7"/>
+    <package name="server">
+      <metrics statements="1276" coveredstatements="866" conditionals="469" coveredconditionals="245" methods="393" coveredmethods="279"/>
+      <file name="bookings.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\bookings.js">
+>>>>>>> Stashed changes
         <metrics statements="75" coveredstatements="60" conditionals="12" coveredconditionals="9" methods="29" coveredmethods="19"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -82,8 +91,8 @@
         <line num="215" count="1" type="stmt"/>
         <line num="216" count="1" type="stmt"/>
       </file>
-      <file name="dao.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/dao.js">
-        <metrics statements="636" coveredstatements="447" conditionals="216" coveredconditionals="112" methods="241" coveredmethods="188"/>
+      <file name="dao.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\dao.js">
+        <metrics statements="636" coveredstatements="476" conditionals="216" coveredconditionals="122" methods="241" coveredmethods="200"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
@@ -116,12 +125,21 @@
         <line num="75" count="8" type="stmt"/>
         <line num="76" count="8" type="cond" truecount="1" falsecount="1"/>
         <line num="77" count="0" type="stmt"/>
+<<<<<<< Updated upstream
         <line num="78" count="8" type="cond" truecount="2" falsecount="0"/>
         <line num="79" count="2" type="stmt"/>
         <line num="81" count="6" type="stmt"/>
         <line num="91" count="6" type="stmt"/>
         <line num="92" count="6" type="cond" truecount="2" falsecount="0"/>
         <line num="93" count="3" type="stmt"/>
+=======
+        <line num="78" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="81" count="3" type="stmt"/>
+        <line num="91" count="3" type="stmt"/>
+        <line num="92" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="93" count="1" type="stmt"/>
+>>>>>>> Stashed changes
         <line num="101" count="2" type="stmt"/>
         <line num="102" count="2" type="stmt"/>
         <line num="103" count="2" type="stmt"/>
@@ -385,26 +403,26 @@
         <line num="624" count="0" type="stmt"/>
         <line num="626" count="1" type="stmt"/>
         <line num="633" count="2" type="stmt"/>
-        <line num="634" count="0" type="stmt"/>
-        <line num="635" count="0" type="stmt"/>
-        <line num="636" count="0" type="stmt"/>
-        <line num="637" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="634" count="2" type="stmt"/>
+        <line num="635" count="2" type="stmt"/>
+        <line num="636" count="2" type="stmt"/>
+        <line num="637" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="638" count="0" type="stmt"/>
         <line num="639" count="0" type="stmt"/>
-        <line num="640" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="641" count="0" type="stmt"/>
-        <line num="643" count="0" type="stmt"/>
-        <line num="644" count="0" type="stmt"/>
+        <line num="640" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="641" count="1" type="stmt"/>
+        <line num="643" count="1" type="stmt"/>
+        <line num="644" count="1" type="stmt"/>
         <line num="651" count="2" type="stmt"/>
-        <line num="652" count="0" type="stmt"/>
-        <line num="653" count="0" type="stmt"/>
-        <line num="654" count="0" type="stmt"/>
-        <line num="655" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="652" count="2" type="stmt"/>
+        <line num="653" count="2" type="stmt"/>
+        <line num="654" count="2" type="stmt"/>
+        <line num="655" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="656" count="0" type="stmt"/>
-        <line num="657" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="658" count="0" type="stmt"/>
-        <line num="660" count="0" type="stmt"/>
-        <line num="661" count="0" type="stmt"/>
+        <line num="657" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="658" count="1" type="stmt"/>
+        <line num="660" count="1" type="stmt"/>
+        <line num="661" count="1" type="stmt"/>
         <line num="667" count="2" type="stmt"/>
         <line num="668" count="7" type="stmt"/>
         <line num="670" count="7" type="stmt"/>
@@ -586,22 +604,22 @@
         <line num="1163" count="0" type="stmt"/>
         <line num="1165" count="0" type="stmt"/>
         <line num="1172" count="2" type="stmt"/>
-        <line num="1173" count="0" type="stmt"/>
-        <line num="1175" count="0" type="stmt"/>
-        <line num="1176" count="0" type="stmt"/>
-        <line num="1177" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="1173" count="1" type="stmt"/>
+        <line num="1175" count="1" type="stmt"/>
+        <line num="1176" count="1" type="stmt"/>
+        <line num="1177" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="1178" count="0" type="stmt"/>
-        <line num="1179" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="1179" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="1180" count="0" type="stmt"/>
         <line num="1181" count="0" type="stmt"/>
-        <line num="1183" count="0" type="stmt"/>
-        <line num="1192" count="0" type="stmt"/>
-        <line num="1193" count="0" type="stmt"/>
-        <line num="1194" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="1195" count="0" type="stmt"/>
-        <line num="1200" count="0" type="stmt"/>
-        <line num="1214" count="0" type="stmt"/>
-        <line num="1215" count="0" type="stmt"/>
+        <line num="1183" count="2" type="stmt"/>
+        <line num="1192" count="1" type="stmt"/>
+        <line num="1193" count="1" type="stmt"/>
+        <line num="1194" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="1195" count="1" type="stmt"/>
+        <line num="1200" count="1" type="stmt"/>
+        <line num="1214" count="1" type="stmt"/>
+        <line num="1215" count="1" type="stmt"/>
         <line num="1221" count="2" type="stmt"/>
         <line num="1222" count="0" type="stmt"/>
         <line num="1223" count="0" type="stmt"/>
@@ -610,6 +628,7 @@
         <line num="1226" count="0" type="stmt"/>
         <line num="1228" count="0" type="stmt"/>
         <line num="1235" count="2" type="stmt"/>
+<<<<<<< Updated upstream
         <line num="1236" count="181" type="stmt"/>
         <line num="1237" count="2168" type="cond" truecount="1" falsecount="1"/>
         <line num="1238" count="0" type="stmt"/>
@@ -638,6 +657,36 @@
         <line num="1305" count="181" type="stmt"/>
         <line num="1308" count="181" type="stmt"/>
         <line num="1312" count="181" type="stmt"/>
+=======
+        <line num="1236" count="184" type="stmt"/>
+        <line num="1237" count="2205" type="cond" truecount="1" falsecount="1"/>
+        <line num="1238" count="0" type="stmt"/>
+        <line num="1241" count="184" type="cond" truecount="1" falsecount="1"/>
+        <line num="1244" count="184" type="stmt"/>
+        <line num="1248" count="184" type="stmt"/>
+        <line num="1252" count="184" type="stmt"/>
+        <line num="1253" count="183" type="stmt"/>
+        <line num="1255" count="184" type="stmt"/>
+        <line num="1256" count="183" type="stmt"/>
+        <line num="1258" count="184" type="stmt"/>
+        <line num="1262" count="183" type="stmt"/>
+        <line num="1265" count="184" type="stmt"/>
+        <line num="1269" count="184" type="stmt"/>
+        <line num="1273" count="184" type="stmt"/>
+        <line num="1274" count="184" type="stmt"/>
+        <line num="1276" count="184" type="stmt"/>
+        <line num="1280" count="184" type="stmt"/>
+        <line num="1284" count="184" type="stmt"/>
+        <line num="1288" count="184" type="stmt"/>
+        <line num="1292" count="184" type="stmt"/>
+        <line num="1296" count="184" type="stmt"/>
+        <line num="1300" count="184" type="stmt"/>
+        <line num="1301" count="184" type="stmt"/>
+        <line num="1304" count="184" type="stmt"/>
+        <line num="1305" count="184" type="stmt"/>
+        <line num="1308" count="184" type="stmt"/>
+        <line num="1312" count="184" type="stmt"/>
+>>>>>>> Stashed changes
         <line num="1321" count="2" type="stmt"/>
         <line num="1322" count="0" type="stmt"/>
         <line num="1330" count="0" type="stmt"/>
@@ -721,7 +770,7 @@
         <line num="1550" count="0" type="stmt"/>
         <line num="1552" count="2" type="stmt"/>
       </file>
-      <file name="products.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/products.js">
+      <file name="products.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\products.js">
         <metrics statements="150" coveredstatements="119" conditionals="75" coveredconditionals="59" methods="26" coveredmethods="20"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -874,8 +923,13 @@
         <line num="408" count="1" type="stmt"/>
         <line num="409" count="1" type="stmt"/>
       </file>
+<<<<<<< Updated upstream
       <file name="server.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/server.js">
         <metrics statements="258" coveredstatements="93" conditionals="96" coveredconditionals="17" methods="59" coveredmethods="14"/>
+=======
+      <file name="server.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\server.js">
+        <metrics statements="258" coveredstatements="91" conditionals="96" coveredconditionals="16" methods="59" coveredmethods="14"/>
+>>>>>>> Stashed changes
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -1135,7 +1189,7 @@
         <line num="676" count="1" type="stmt"/>
         <line num="677" count="1" type="stmt"/>
       </file>
-      <file name="session.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/session.js">
+      <file name="session.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\session.js">
         <metrics statements="70" coveredstatements="49" conditionals="40" coveredconditionals="16" methods="22" coveredmethods="13"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -1208,7 +1262,7 @@
         <line num="153" count="1" type="stmt"/>
         <line num="154" count="1" type="stmt"/>
       </file>
-      <file name="users.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/users.js">
+      <file name="users.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\users.js">
         <metrics statements="87" coveredstatements="71" conditionals="30" coveredconditionals="23" methods="16" coveredmethods="13"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -1301,7 +1355,7 @@
     </package>
     <package name="server.telegrambot">
       <metrics statements="17" coveredstatements="15" conditionals="8" coveredconditionals="4" methods="4" coveredmethods="4"/>
-      <file name="SendMessage.js" path="/Users/Khatere/SoftEngII-P08-SPG/server/telegrambot/SendMessage.js">
+      <file name="SendMessage.js" path="C:\Users\dadix\Desktop\scuola\magistrale\sofEngII\SPG3\SoftEngII-P08-SPG\server\telegrambot\SendMessage.js">
         <metrics statements="17" coveredstatements="15" conditionals="8" coveredconditionals="4" methods="4" coveredmethods="4"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
