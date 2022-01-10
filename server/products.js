@@ -320,6 +320,59 @@ products.post("/api/products_expected", isLoggedIn, async (req, res) => {
   }
 });
 
+// POST /api/farmers/:farmerid/products
+products.post("/api/farmers/:farmerid/products", isLoggedIn, async (req, res) => {
+  if (!validator.isInt(`${req.body.category}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid category id, it must be positive` });
+  }
+  if (!validator.isFloat(`${req.body.price}`, { min: 0 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid product price, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.farmerid}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid farmer id, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.qty}`, { min: 1 })) {
+    return res
+      .status(422)
+      .json({ error: `Invalid quantity, it must be positive` });
+  }
+  if (!validator.isInt(`${req.body.size}`, { min: 1 })) {
+    return res.status(422).json({ error: `Invalid size, it must be positive` });
+  }
+  if (!validator.isLength(`${req.body.unit_of_measure}`, { max: 15 })) {
+    return res.status(422).json({
+      error: `Invalid unit of measure, it must be a string of max 15 length`,
+    });
+  }
+  const product = {
+    name: `${req.body.name}`,
+    category_id: req.body.category,
+    price: req.body.price,
+    qty: req.body.qty,
+    farmer_id: req.params.farmerid,
+    state: "CONFIRMED",
+    size: req.body.size,
+    unit_of_measure: `${req.body.unit_of_measure}`,
+  };
+
+  let productId;
+
+  try {
+    productId = await dao.insertTupleProductWEEK(product);
+    res.status(201).json({ productId: productId });
+  } catch (err) {
+    res.status(503).json({
+      error: `Database error during insertion into product_week table.`,
+    });
+  }
+});
+
 // POST /api/farmers/:farmerid/productsExpected receive a vector of tuples of products expected
 products.post(
   "/api/farmers/:farmerid/productsExpected",
