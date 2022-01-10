@@ -9,65 +9,81 @@ import { toast } from "react-toastify";
 
 
 function NavbarCustom(props) {
-const [firstTime, setFirstTime] = useState(true);
-const [showNotification, setShowNotification] = useState(false);
-const [showNotificationEmpty, setShowNotificationEmpty] = useState(false);
-const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
+  const [showNotificationEmpty, setShowNotificationEmpty] = useState(false);
+  const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
+  const [showNotificationMissedcounter, setShowNotificationMissedcounter] = useState(false);
 
-console.log("aaaaaaaaaaaaah");
-console.log(props.bookings);
+  console.log("aaaaaaaaaaaaah");
+  console.log(props.bookings);
 
-const popover = (
-  <Popover id="popover-basic">
-    <Popover.Content>
-      
-       <Clock mobile={true} date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
-      
-    </Popover.Content>
-  </Popover>
-);
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Content>
 
-let toPrint,toPrintConfirm,toPrintEmpty;
+        <Clock mobile={true} date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
 
-if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
-  toPrint = props.bookings && props.bookings.length>0 ? 
-  props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION") 
-  :
-  "";
+      </Popover.Content>
+    </Popover>
+  );
 
-  if (firstTime && toPrint.length !== 0) {
-    setShowNotification(true);
-    setFirstTime(false);
+  let toPrint, toPrintConfirm, toPrintEmpty, toPrintMissed;
+
+  if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
+    toPrint = props.bookings && props.bookings.length > 0 ?
+      props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION")
+      :
+      "";
+
+    if (firstTime && toPrint.length !== 0) {
+      setShowNotification(true);
+      setFirstTime(false);
+    }
+
+    toPrintEmpty = props.bookings && props.bookings.length > 0 ?
+      props.bookings.filter((bk) => bk.state === "EMPTY")
+      :
+      "";
+
+    if (firstTime && toPrintEmpty.length !== 0) {
+      setShowNotificationEmpty(true);
+      setFirstTime(false);
+    }
+
+    toPrintConfirm = props.bookings && props.bookings.length > 0 ?
+      props.bookings.filter((bk) => bk.state === "CONFIRMED")
+      :
+      "";
+    //Total price
+    let total = 0;
+    if (toPrintConfirm) {
+      toPrintConfirm = toPrintConfirm.map((bk) => {
+        bk.total = 0 * 1;
+        bk.total += bk.products.map((p) => p.qty * p.price) * 1;
+        return bk;
+      });
+      toPrintConfirm.forEach((bk) => total += bk.total);
+    }
+    if (firstTime && toPrintConfirm.length !== 0) {
+
+
+      setShowNotificationPreparation(true);
+      setFirstTime(false);
+    }
+
+
+   
   }
 
-  toPrintEmpty = props.bookings && props.bookings.length>0 ? 
-  props.bookings.filter((bk) => bk.state === "EMPTY") 
-  :
-  "";
-
-  if (firstTime && toPrintEmpty.length !== 0) {
-    setShowNotificationEmpty(true);
-    setFirstTime(false);
+  if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
+    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "" )
+    if (firstTime && toPrintMissed.length !== 0) {
+      setShowNotificationMissedcounter(true);
+      setFirstTime(false);
+    }
   }
 
-  toPrintConfirm = props.bookings && props.bookings.length>0 ? 
-  props.bookings.filter((bk) => bk.state === "CONFIRMED")
-  :
-  "";
-  //Total price
-  let total =0;
-  if(toPrintConfirm){
-  toPrintConfirm = toPrintConfirm.map((bk)=>{bk.total = 0*1;
-  bk.total += bk.products.map((p) => p.qty * p.price ) * 1;
-    return bk;});
-  toPrintConfirm.forEach((bk)=>total += bk.total);}
-  if (firstTime && toPrintConfirm.length !== 0) {
-    
-    
-    setShowNotificationPreparation(true);
-    setFirstTime(false);
-  }
-}
 
   function checkType() {
     if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
@@ -75,29 +91,37 @@ if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
         <>
           <Row>
             <div className="notificationIcon" >
-              <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={()=> {
-                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" },{toastId: 30});
+              <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={() => {
+                
+                showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }, { toastId: 30 });
+                
                 showNotificationEmpty && toast.error(<>
-                <b>Warning:</b><br/>
-                {toPrintEmpty.map((bk)=><><b>Booking {bk.id}</b> canceled because no products were confirmed from farmers.</>)}<br/>
-                </>, { position: "top-right" },{toastId: 31});  
-                showNotificationPreparation && 
-                toPrintConfirm.map((bk)=>
-                  toast.success(<>
-                    <b>Purchase confirmation, booking #{bk.id}:</b><br/>
-                    {bk.products.map((p)=>p.qty +" " +p.product)}<br/>
-                    <b>Total: {bk.total} €</b></>
-                    , {position: "top-right"},{toastId: 28})
-                )
-                 
-              
-              
+                  <b>Warning:</b><br />
+                  {toPrintEmpty.map((bk) => <><b>Booking {bk.id}</b> canceled because no products were confirmed from farmers.</>)}<br />
+                </>, { position: "top-right" }, { toastId: 31 });
+                
+                showNotificationPreparation &&
+                  toPrintConfirm.map((bk) =>
+                    toast.success(<>
+                      <b>Purchase confirmation, booking #{bk.id}:</b><br />
+                      {bk.products.map((p) => p.qty + " " + p.product)}<br />
+                      <b>Total: {bk.total} €</b></>
+                      , { position: "top-right" }, { toastId: 28 })
+                  )
+
+                  showNotificationMissedcounter && toast.error(<>
+                    <b>Warning:</b><br />
+                    {`You have ${props.user.missedCount} missed pickups!\n
+                 You will be suspeneded for 30 days on the 5th time.`}
+                    </>,
+                   { position: "top-right" }, { toastId: 32 } )
+
               }
 
 
-                } />
-            
-            {(showNotification || showNotificationPreparation || showNotificationEmpty) && <div className="notificationCounter"> </div>}
+              } />
+
+              {(showNotification || showNotificationPreparation || showNotificationEmpty || showNotificationMissedcounter) && <div className="notificationCounter"> </div>}
             </div>
 
             <Link to="/cust" style={{ color: 'white' }}>
@@ -170,7 +194,7 @@ if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
         <Clock date={props.date} virtualTime={props.virtualTime} setVirtualTime={props.setVirtualTime}></Clock>
       </Col>
 
-      
+
       <Col md={4} xs={2} className="d-flex justify-content-center ml-3">
         <NavLink className="navbar-brand">
           <Link to="/home" style={{ textDecoration: 'none', color: 'white' }}>
@@ -181,7 +205,7 @@ if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
 
       <Col xs={1} className="d-flex d-md-none justify-content-center ml-3 p-0">
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-          <ClockFill style={{color: 'white'}} size={30}/>
+          <ClockFill style={{ color: 'white' }} size={30} />
         </OverlayTrigger>
       </Col>
 
