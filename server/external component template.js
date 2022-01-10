@@ -6,7 +6,7 @@ const template = express.Router();
 const dao = require("./dao");
 const validator = require("validator");
 
-let testmode = false;
+let testmode = true;
 
 const isLoggedIn = (req, res, next) => {
   if (testmode) {
