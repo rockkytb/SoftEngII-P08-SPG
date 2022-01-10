@@ -7,6 +7,7 @@ import ImageFinder from "./ImageFinder.js";
 function BookingsUnretrieved(props) {
     const bookings = props.bookingsUnretrieved ? props.bookingsUnretrieved : [];
     const [filter, setFilter] = useState("All");
+    console.log(bookings);
 
     function getWeek(in_date){
         let date = in_date;
@@ -48,8 +49,9 @@ function BookingsUnretrieved(props) {
                         </Dropdown>
                     </Col>
                     </Row>
-            </div>
-            <h1 className="below-nav main-content text-center">Unretrieved Bookings</h1>
+            
+            <h2 className="text-center">Unretrieved Bookings - {filter}</h2>
+            <Row>
             {bookings.filter((book) => {
                 if(filter == "All")
                     return true;
@@ -62,7 +64,7 @@ function BookingsUnretrieved(props) {
                 return false;
             }).map((book) => {
                 return (
-                    <Col>
+                    <Col xs={4}>
                         <Card className="text-dark">
                             {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
                             <Card.Body>
@@ -96,11 +98,14 @@ function BookingsUnretrieved(props) {
                                 })}
                             </Card.Body>
                         </Card>
+                        <br />
                     </Col>
 
                 )
             })
             }
+            </Row>
+            </div>
         </>
     );
 }
