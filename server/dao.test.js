@@ -8,7 +8,7 @@ jest.useRealTimers();
 describe("Test suite DAO", () => {
   beforeEach(async () => {
     // code to run before each test
-
+    dao.enabledbTestMode();
     await dao.cleanDb();
   });
 

@@ -4,11 +4,18 @@
 const sqlite = require("sqlite3");
 const bcrypt = require("bcrypt");
 
+//Set to true to run tests only
+const databaseonlyfortests=false;
+exports.enabledbTestMode = () =>{
+  databaseonlyfortests=true;
+}
+
 //Set to true to enable testdatabase
 const testmode = true;
 
 // open the database
 const db = new sqlite.Database(
+  databaseonlyfortests ? "databasefortests.db" : 
   testmode ? "testdatabase.db" : "database.db",
   (err) => {
     if (err) throw err;
