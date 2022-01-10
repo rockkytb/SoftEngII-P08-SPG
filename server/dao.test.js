@@ -815,5 +815,38 @@ test("GET all the product associated to a particular booking", () => {
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
 });
 
+  // test counting missed pickups for a customer
+  test("get missed pickups total count for a customer ", async () => {
+
+    const received =
+    {
+      "total": 0
+    }
+
+    return expect(dao.countMissedPickupsForACustomer(1)).resolves.toEqual(received);
+  }, 10000);
+
+    // test find clientId with bookingId
+    test("find a client id given the his booking id", async () => {
+
+      const received =
+      {
+        "id": 1
+      }
+  
+      return expect(dao.findClientbyBooking(1)).resolves.toEqual(received);
+    }, 10000);
+
+  // update a client missedcount number
+  test("updating the client missedcount number", () => {
+    const response = { "id": 1, "missedCount": 1 }
+    return expect(dao.updateClientMissedCount(1, 1)).resolves.toEqual(response);
+  });
+
+  // update a client suspension Date
+  test("updating the client  suspension Date", () => {
+    const response = { "id": 1, "suspensionDate": "2022-01-01" }
+    return expect(dao.updateClientSusspensionDate(1, "2022-01-01")).resolves.toEqual(response);
+  });
 
 });

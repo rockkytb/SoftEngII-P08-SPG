@@ -12,8 +12,8 @@ const testmode = true;
 
 // open the database
 const db = new sqlite.Database(
-  databaseonlyfortests ? "databasefortests.db" : 
-  testmode ? "testdatabase.db" : "database.db",
+  databaseonlyfortests ? "databasefortests.db" :
+    testmode ? "testdatabase.db" : "database.db",
   (err) => {
     if (err) throw err;
   }
@@ -1301,6 +1301,10 @@ exports.cleanDb = async () => {
       errTest(err);
     });
 
+    await db.run("UPDATE CLIENT SET MISSEDCOUNT = ?, SUSPENSIONDATE=? WHERE ID = ?", [0, null, 1], (err) => {
+      errTest(err);
+    });
+
     await db.run(
       "UPDATE sqlite_sequence SET seq = ? WHERE name = ? OR name = ? OR name = ?",
       [1, "CLIENT", "BOOKING", "MANAGER_ACKNOWLEDGE"],
@@ -1488,17 +1492,17 @@ exports.countMissedPickupsForACustomer = (customerId/*, preSuspensionDate*/) => 
     //   });
     // }
     // else {
-      sql =
-        "SELECT MISSEDCOUNT as total from CLIENT where ID=?";
-      db.all(sql, [customerId], (err, rows) => {
+    sql =
+      "SELECT MISSEDCOUNT as total from CLIENT where ID=?";
+    db.all(sql, [customerId], (err, rows) => {
 
-        if (err) {
-          reject(err);
-          return;
-        } else {
-          resolve(rows[0]);
-        }
-      });
+      if (err) {
+        reject(err);
+        return;
+      } else {
+        resolve(rows[0]);
+      }
+    });
 
     // }
 
@@ -1523,7 +1527,6 @@ exports.findClientbyBooking = (bookingId) => {
 
 // update the client missed pickups count
 exports.updateClientMissedCount = (clientId, count) => {
-  console.log("updateClientMissedCount->" + count)
   return new Promise((resolve, reject) => {
     const sql = "UPDATE CLIENT set MISSEDCOUNT=? where ID=?";
     db.all(sql, [count, clientId], (err) => {
@@ -1531,7 +1534,7 @@ exports.updateClientMissedCount = (clientId, count) => {
         reject(err);
         return;
       } else {
-        resolve(true);
+        resolve({ "id": clientId, "missedCount": count });
       }
     });
   });
@@ -1546,14 +1549,14 @@ exports.updateClientSusspensionDate = (clientId, date) => {
         reject(err);
         return;
       } else {
-        resolve(true);
+        resolve({ "id": clientId, "suspensionDate": date });
       }
     });
   });
 };
 
 // get a client suspension date
-exports.getLatestSuspensionDate = (clientId) => {
+/*exports.getLatestSuspensionDate = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql = "select SUSPENSIONDATE as date from CLIENT where ID=?";
     db.all(sql, [clientId], (err, rows) => {
@@ -1565,6 +1568,6 @@ exports.getLatestSuspensionDate = (clientId) => {
       }
     });
   });
-};
+};*/
 
 //END OF VIRTUAL CLOCK DAO FUNCTIONS
