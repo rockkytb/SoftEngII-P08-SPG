@@ -80,10 +80,8 @@ passport.use(
             // user is not suspended
             // count the number of missed pickups and send message if it is 3 or 4
             if (user.missedCount == 3 || user.missedCount == 4) {
-              return done(null, user, {
-                message: `You have ${user.missedCount} missed pickups!\n
-                 You will be suspeneded for 30 days on the 5th time.`,
-              });
+              user.message = `You have ${user.missedCount} missed pickups! You will be suspeneded for 30 days on the 5th time.`;
+              return done(null, user);
             }
             return done(null, user);
           } else {
@@ -96,11 +94,9 @@ passport.use(
         } else {
           // count the number of missed pickups and send message if it is 3 or 4
           if (user.missedCount == 3 || user.missedCount == 4) {
-            return done(null, user, {
-              message: `You have ${user.missedCount} missed pickups!\n
-               You will be suspeneded for 30 days on the 5th time.`,
-            });
-          }
+            user.message = `You have ${user.missedCount} missed pickups! You will be suspeneded for 30 days on the 5th time.`;
+              return done(null, user);
+            }
           return done(null, user);
         }
       })
@@ -621,7 +617,11 @@ async function clockActions() {
             START_DATE: startDate.toISOString().split("T")[0],
             END_DATE: endDate.toISOString().split("T")[0],
           });
-        } else if (booking.state === "CONFIRMED" && booking.delivery === 0) {
+        } else if (booking.state === "CONFIRMED" ) {
+
+           // get the clientId based on the bookingId
+           const client = await dao.findClientbyBooking(booking.id);
+
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
@@ -631,9 +631,7 @@ async function clockActions() {
             END_DATE: endDate.toISOString().split("T")[0],
           });
 
-          // get the clientId based on the bookingId
-          const client = await dao.findClientbyBooking(booking.id);
-
+         
          /* // get the client suspension date if exists
           var suspension = await dao.getLatestSuspensionDate(client.id);
           if (suspension.date) suspension = suspension.date;
@@ -657,7 +655,7 @@ async function clockActions() {
             console.log( `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
             \nYour account will be susspended on the 5th time.`)
             telegramBot.SendMessage(
-              booking.client,
+              client.id,
               `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
           \nYour account will be susspended on the 5th time.`
             );
@@ -675,7 +673,7 @@ async function clockActions() {
 
             console.log(`You have reached your limit. We are sorry to say that your account has been suspended.`)
             telegramBot.SendMessage(
-              booking.client,
+              client.id,
               `You have reached your limit. We are sorry to say that your account has been suspended.`
             );
           }
