@@ -1173,7 +1173,7 @@ exports.insertTupleBookingHistory = (booking) => {
 exports.getBookingsUnretrieved = () => {
   return new Promise((resolve, reject) => {
     const sql =
-      "SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
+      "SELECT bh.ID_BOOKING, bh.CLIENT_ID, ID_PRODUCT, NAME, bp.QTY, bh.END_DATE FROM BOOKING_HISTORY bh JOIN BOOKING_PRODUCTS bp ON bh.ID_BOOKING=bp.ID_BOOKING JOIN PRODUCT_WEEK pw ON bp.ID_PRODUCT=pw.ID  WHERE bh.STATE='UNRETRIEVED'";
     db.all(sql, (err, rows) => {
       if (err) {
         reject(err);
@@ -1187,6 +1187,7 @@ exports.getBookingsUnretrieved = () => {
           productID: e.ID_PRODUCT,
           name: e.NAME,
           qty: e.QTY,
+          end_date: e.END_DATE,
         }));
 
         const bookings = [];
@@ -1200,6 +1201,7 @@ exports.getBookingsUnretrieved = () => {
             bookings[p.idBooking] = {
               idBooking: p.idBooking,
               idClient: p.idClient,
+              end_date: p.end_date,
               products: [
                 {
                   productID: p.productID,

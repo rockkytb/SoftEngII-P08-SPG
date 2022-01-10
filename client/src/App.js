@@ -228,7 +228,7 @@ function App() {
     if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
       setAllBookings(tmp.allBookings);
     }
-    if (userdata && userdata.id && userdata.id.charAt(0)==="M"){
+    if (userdata && userdata.id && userdata.id.charAt(0)==="A"){
       setBookingsUnretrieved(tmp.bookingsUnretrieved);
     }
 
