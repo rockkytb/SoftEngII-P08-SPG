@@ -717,8 +717,6 @@ async function enableDisableVirtualClock() {
 
 async function deleteProductBooking(product) {
   // call: DELETE /api/bookingProduct
-  console.log("dentro api")
-  console.log(product)
   await fetch(url + "/bookingProduct", {
     method: "DELETE",
     headers: {
@@ -815,6 +813,17 @@ async function attaccoDoS(userdata) {
       const clientList = await response.json();
       if (response.ok) {
         return clientList;
+      }
+    }
+  };
+
+  const getWallet = async () => {
+    // call: GET /api/clients
+    if (userdata && userdata.id && userdata.id.charAt(0) === "S") {
+      const response = await getWalletById(userdata.id.substring(1));
+      const wallet = await response.json();
+      if (response.ok) {
+        return wallet;
       }
     }
   };
