@@ -46,7 +46,7 @@ Password is always : <b> testpassword </b>
 2. CONFIRMED = confirmed by farmer on monday
 3. DELIVERED = delivered by farmer on tuesday evening
 
-## LIST OF APIs (not updated anymore, use swagger: http://localhost:3001/api-docs )
+## LIST OF APIs (not updated anymore, to check all API use swagger: http://localhost:3001/api-docs )
 
 ### http://localhost:3000 is the default path
 
