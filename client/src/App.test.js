@@ -106,7 +106,7 @@ test('renders Acknowledge delivery farmer', () => {
 
 test('renders Acknowledge delivery farmer empty', () => {
   const acknowledges=[]
-  const adf = shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
+  shallow(<AcknowledgeDeliveryFarmer acknowledges={acknowledges} confirmAck={function confirmAck(){}}/>);
 });
 
 test('renders BookingAcceptance', () => {
@@ -119,7 +119,7 @@ test('renders BookingAcceptance', () => {
 
 test('renders BookingAcceptance empty', () => {
   const bookings = [];
-  const ba =shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
+  shallow(<BookingAcceptance bookings={bookings} confirmBooking={function confirmBooking(){}}/>);
 
 });
 
@@ -132,7 +132,7 @@ test('renders BookingConfirmFarmer', () => {
 
 test('renders BookingConfirmFarmer empty', () => {
   const expectedProducts = [];
-  const bcf =shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
+  shallow(<BookingConfirmFarmer calendarday={new Date()} expectedProducts={expectedProducts} confirmProducts={function confirmProducts(){}}/>);
 });
 
 test('renders BookingDeliveryFarmer', () => {
@@ -144,7 +144,7 @@ test('renders BookingDeliveryFarmer', () => {
 
 test('renders BookingDeliveryFarmer empty', () => {
   const confirmedProducts = [];
-  const bdf =shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
+  shallow(<BookingDeliveryFarmer calendarday={new Date()} confirmedProducts={confirmedProducts} confirmDelivery={function confirmDelivery(){}}/>);
 });
 
 test('renders BookingReview', () => {
@@ -184,13 +184,13 @@ test('renders BookingReview', () => {
 test('renders CheckPending', () => {
   const bookings = [{state:"PENDINGCANCELATION",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
                     products:[{product:"apple",qty:3}]}];
-  const ba =shallow(<CheckPending bookings={bookings}/>);
+  shallow(<CheckPending bookings={bookings}/>);
 });
 
 test('renders CheckPending Empty', () => {
   const bookings = [{state:"BOOKED",id:1,name:"Antonio",surname:"Bianchi",email:"antonio.bianchi@mail.it",
   products:[{product:"apple",qty:3}]}];
-  const ba =shallow(<CheckPending bookings={bookings}/>);
+  shallow(<CheckPending bookings={bookings}/>);
 });
 
 test('renders ClientData', () => {
