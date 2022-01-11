@@ -132,7 +132,7 @@ function App() {
       setLoggedIn(true);
     } catch (err) {
       toast.error(
-        "Wrong email or/and password, try again",
+        err,
         {
           position: "top-center",
         },

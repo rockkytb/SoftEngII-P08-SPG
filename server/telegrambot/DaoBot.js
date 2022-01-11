@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const { Telegraf, Telegram } = require("telegraf");
 
 //Set to true to enable testdatabase
-const testmode = true;
+const testmode = false;
 
 // open the database for bot methods
 const db = new sqlite.Database(

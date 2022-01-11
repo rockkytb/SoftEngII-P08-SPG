@@ -461,7 +461,7 @@ async function confirmProductsFarmer(product) {
     })
       .then((response) => {
         if (response.ok) {
-          resolve(response.json());
+          resolve(true);
         } else {
           response
             .json()
@@ -648,7 +648,7 @@ async function updateOrder(product) {
   return mrTorgue;
 }
 
-//TODO: move clock to backend
+
 //SHORT-TERM: post to server to receive date-time
 async function setDate(date) {
   return new Promise(

@@ -66,6 +66,7 @@ passport.use(
         if (!user)
           return done(null, false, {
             message: "Incorrect username and/or password",
+            error : "credential"
           });
 
         // check if the user is suspended or not
@@ -76,7 +77,7 @@ passport.use(
           let now = new Date(clockDate);
           let freeDate = new Date(suspensionDate);
           freeDate.setDate(suspensionDate.getDate() + 30);
-          if (now >= freeDate && user.missedCount < 5) {
+          if (now.getTime() >= freeDate.getTime() && user.missedCount < 5) {
             // user is not suspended
             // count the number of missed pickups and send message if it is 3 or 4
             if (user.missedCount == 3 || user.missedCount == 4) {
@@ -85,10 +86,11 @@ passport.use(
             }
             return done(null, user);
           } else {
-            return done(null, user, {
+            return done(null, false, {
               message: `You are Suspended for ${
-                freeDate.getDate() - now.getDate()
+                ((freeDate.getTime() - now.getTime()) / (1000 * 3600 * 24)).toFixed(0)
               } more days`,
+              error : "suspended"
             });
           }
         } else {
@@ -422,6 +424,42 @@ app.get("/api/virtualTime", async (req, res) => {
 //Function to manage flow of SPG according to days
 async function clockActions() {
   try {
+          const utenti = await dao.getClients();
+          utenti.forEach(async(u)=>{
+            const id= u.id.substring(1);
+            // get the client suspension date if exists
+            let suspension = await dao.getLatestSuspensionDate(id);
+            if (suspension.date) suspension = suspension.date;
+              else suspension = null;
+            const missedPikcups = await dao.countMissedPickupsForACustomer(
+              id,
+              suspension
+            );
+            const missedCount = missedPikcups.total;
+            //update the client table
+            await dao.updateClientMissedCount(id, missedCount);
+            if (missedCount == 5) {// suspend the client
+            
+              // Calculate NOW date
+              var now = new Date(clockDate);
+              now = now.toISOString().split("T")[0];
+  
+              //update the susspensionDate column of CLIENT table
+              await dao.updateClientSusspensionDate(id, now);
+  
+              //set the number of missed pickups to zero
+              await dao.updateClientMissedCount(id, 0);
+  
+              console.log(`You have reached your limit. We are sorry to say that your account has been suspended.`)
+              telegramBot.SendMessage(
+                id,
+                `You have reached your limit. We are sorry to say that your account has been suspended.`
+              );
+            }
+          })
+     
+
+          
     /* On TUESDAY farmers have delivered their products. Now it's time to check if all the bookings that are 
     BOOKED should become CONFIRMED or PENDINGCANCELATION. We should keep in the booking only the products
     CONFIRMED BY FARMERS. If all products of a booking are not confirmed the booking become EMPTY 
@@ -485,11 +523,11 @@ async function clockActions() {
             telegramBot.SendMessage(
               booking.client,
               `Your current balance (${
-                wallet.balance
+                wallet.balance.toFixed(2)
               } €) is insufficient to complete the order #${
                 booking.id
               }. Please top-up at least ${
-                booking.total - wallet.balance
+                (booking.total - wallet.balance).toFixed(2)
               }€ to complete the order.`
             );
             alreadySent.push(booking.client);
@@ -565,10 +603,6 @@ async function clockActions() {
             END_DATE: endDate.toISOString().split("T")[0],
           });
         } else if (booking.state === "CONFIRMED" ) {
-
-           // get the clientId based on the bookingId
-           const client = await dao.findClientbyBooking(booking.id);
-
           await dao.deleteBooking(booking.id);
           await dao.insertTupleBookingHistory({
             ID_BOOKING: booking.id,
@@ -578,52 +612,6 @@ async function clockActions() {
             END_DATE: endDate.toISOString().split("T")[0],
           });
 
-         
-         /* // get the client suspension date if exists
-          var suspension = await dao.getLatestSuspensionDate(client.id);
-          if (suspension.date) suspension = suspension.date;
-          else suspension = null;*/
-
-          // check the number of missed pickups
-          const missedPikcups = await dao.countMissedPickupsForACustomer(
-            client.id/*,
-            suspension*/
-          );
-
-          // calculate new missed counts
-          const missedCount = missedPikcups.total+1;
-
-          //update the client table
-          await dao.updateClientMissedCount(client.id, missedCount);
-
-          // check the number of missed pickups
-          if (missedCount > 2 && missedCount < 5) {// send alarm
-           
-            console.log( `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
-            \nYour account will be susspended on the 5th time.`)
-            telegramBot.SendMessage(
-              client.id,
-              `This is a reminder to inform you that you have missed picking up your order for ${missedCount} times!
-          \nYour account will be susspended on the 5th time.`
-            );
-          } else if (missedCount == 5) {// susspend the client
-            
-            // Calculate NOW date
-            var now = new Date(clockDate);
-            now = now.toISOString().split("T")[0];
-
-            //update the susspensionDate column of CLIENT table
-            await dao.updateClientSusspensionDate(client.id, now);
-
-            //set the number of missed pickups to zero
-            await dao.updateClientMissedCount(client.id, 0);
-
-            console.log(`You have reached your limit. We are sorry to say that your account has been suspended.`)
-            telegramBot.SendMessage(
-              client.id,
-              `You have reached your limit. We are sorry to say that your account has been suspended.`
-            );
-          }
         }
         //Other cases, we delete the booking and we move in state canceled
         else {
@@ -663,7 +651,7 @@ async function clockActions() {
   } catch (err) {
     return err;
   }
-  //TODO, what happens if quantity confirmed is less than expected? Handle this
+  
 }
 
 //#endregion VIRTUAL CLOCK

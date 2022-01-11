@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const databaseonlyfortests=false;
 
 //Set to true to enable testdatabase to test the tasks
-const testmode = true;
+const testmode = false;
 
 // open the database
 const db = new sqlite.Database(
@@ -1475,25 +1475,25 @@ exports.resetProductWeekVC = () => {
 };
 
 // Counting missed pickups for a customer
-exports.countMissedPickupsForACustomer = (customerId/*, preSuspensionDate*/) => {
+exports.countMissedPickupsForACustomer = (customerId, preSuspensionDate) => {
   return new Promise((resolve, reject) => {
     let sql;
-    // if (preSuspensionDate) {
-    //   sql =
-    //     "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
+    if (preSuspensionDate) {
+       sql =
+         "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED' and date(bh.START_DATE) > date(?, '+30 day')";
 
-    //   db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
-    //     if (err) {
-    //       reject(err);
-    //       return;
-    //     } else {
-    //       resolve(rows[0]);
-    //     }
-    //   });
-    // }
-    // else {
+       db.all(sql, [customerId, preSuspensionDate], (err, rows) => {
+         if (err) {
+           reject(err);
+           return;
+         } else {
+           resolve(rows[0]);
+         }
+       });
+     }
+     else {
     sql =
-      "SELECT MISSEDCOUNT as total from CLIENT where ID=?";
+      "SELECT COUNT(*) as total FROM BOOKING_HISTORY bh WHERE  bh.CLIENT_ID = ? and bh.STATE='UNRETRIEVED'";
     db.all(sql, [customerId], (err, rows) => {
 
       if (err) {
@@ -1504,7 +1504,7 @@ exports.countMissedPickupsForACustomer = (customerId/*, preSuspensionDate*/) => 
       }
     });
 
-    // }
+     }
 
 
   });
@@ -1556,7 +1556,7 @@ exports.updateClientSusspensionDate = (clientId, date) => {
 };
 
 // get a client suspension date
-/*exports.getLatestSuspensionDate = (clientId) => {
+exports.getLatestSuspensionDate = (clientId) => {
   return new Promise((resolve, reject) => {
     const sql = "select SUSPENSIONDATE as date from CLIENT where ID=?";
     db.all(sql, [clientId], (err, rows) => {
@@ -1568,6 +1568,6 @@ exports.updateClientSusspensionDate = (clientId, date) => {
       }
     });
   });
-};*/
+};
 
 //END OF VIRTUAL CLOCK DAO FUNCTIONS

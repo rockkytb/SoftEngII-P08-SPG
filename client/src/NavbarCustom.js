@@ -14,6 +14,7 @@ function NavbarCustom(props) {
   const [showNotificationEmpty, setShowNotificationEmpty] = useState(false);
   const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
   const [showNotificationMissedcounter, setShowNotificationMissedcounter] = useState(false);
+  const [firstTimeMC, setFirstTimeMC] = useState(true);
 
 
   const popover = (
@@ -75,10 +76,12 @@ function NavbarCustom(props) {
   }
 
   if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
-    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "No" )
-    if (firstTime && toPrintMissed === "Yes") {
+    ((props.user.missedCount == 3 || props.user.missedCount == 4) ? toPrintMissed = "Yes" : toPrintMissed = "No" )
+    console.log(props.user.missedCount);
+    console.log(toPrintMissed);
+    if (firstTimeMC && toPrintMissed === "Yes") {
       setShowNotificationMissedcounter(true);
-      setFirstTime(false);
+      setFirstTimeMC(false);
     } else{
       props.loggedIn && setShowNotificationMissedcounter(false);
     }
@@ -107,13 +110,13 @@ function NavbarCustom(props) {
                       <b>Total: {bk.total} €</b></>
                       , { position: "top-right" }, { toastId: 28 })
                   )
-
+                  
                   toPrintMissed === "Yes" && showNotificationMissedcounter && toast.error(<>
                     <b>Warning:</b><br />
                     {`You have ${props.user.missedCount} missed pickups!\n
                  You will be suspeneded for 30 days on the 5th time.`}
                     </>,
-                   { position: "top-right" }, { toastId: 32 } )
+                   { position: "top-right" }, { toastId: 50 } )
 
               }
 
