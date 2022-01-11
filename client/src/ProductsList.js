@@ -224,7 +224,7 @@ export default function ProductsList(props) {
                 <Dropdown.Menu>
                 {availableFarmers.map((f,farmerid)=>(<>
                   <Dropdown.Item id={"farmerFilter"+f.charAt(0)+f.charAt(1)} onClick={() => {
-                        console.log(farmerFilter);
+
                         if(farmerFilter.includes(f)){
                           setFarmerFilter(oldList => {return oldList.filter(farmer => farmer !== f);});
                         }

@@ -33,9 +33,7 @@ function NavbarCustom(props) {
       props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION")
       :
       "" ;
-      console.log("toprint")
-      console.log(toPrint)
-      console.log(firstTime)
+
     if (firstTime && toPrint.length !== 0) {
       setShowNotification(true);
       setFirstTime(false);
@@ -94,7 +92,6 @@ function NavbarCustom(props) {
           <Row>
             <div className="notificationIcon" >
               <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={() => {
-                console.log(showNotification)
                 showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }, { toastId: 30 });
                 
                 showNotificationEmpty && toast.error(<>

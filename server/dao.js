@@ -809,7 +809,7 @@ exports.getAllBookings = () => {
       resolve(list);
     });
   });
-  //veloce
+
 };
 
 // GET /api/bookingModesNew/pickup
