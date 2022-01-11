@@ -21,7 +21,7 @@ function NewClientForm(props) {
         setValidated(true);
         const form = event.currentTarget;
         usedMail = await props.getClientbyEmail(email);
-        console.log("valore setUsedMail " + usedMail);
+
         if (form.checkValidity() === false || usedMail !== -1 ) {
             event.stopPropagation();
             if (usedMail !== -1) {

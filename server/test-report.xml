@@ -1,182 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\dao.test.js">
-    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="7"/>
-    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="4"/>
-    <testCase name="Test suite DAO the creation of a new booking is done" duration="24"/>
-    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="92"/>
-    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="80"/>
-    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="83"/>
-    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="3"/>
-    <testCase name="Test suite DAO the creation of a new client is done" duration="91"/>
-    <testCase name="Test suite DAO get client return false because no email provided" duration="25"/>
+    <testCase name="Test suite DAO the get of a booking fails because id booking is missing" duration="10"/>
+    <testCase name="Test suite DAO the get of a booking is done" duration="7"/>
+    <testCase name="Test suite DAO the get of the wallet of a client fails because id client is missing" duration="5"/>
+    <testCase name="Test suite DAO the get of the wallet of a client is done" duration="4"/>
+    <testCase name="Test suite DAO the get of the booking unretrieved is done" duration="6"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because id client is missing" duration="5"/>
+    <testCase name="Test suite DAO the creation of a new booking fails because state is missing" duration="5"/>
+    <testCase name="Test suite DAO the creation of a new booking is done" duration="15"/>
+    <testCase name="Test suite DAO the creation of a new client fails because email is missing" duration="106"/>
+    <testCase name="Test suite DAO the creation of a new client fails because name is missing" duration="81"/>
+    <testCase name="Test suite DAO the creation of a new client fails because surname is missing" duration="86"/>
+    <testCase name="Test suite DAO the creation of a new client fails because password is missing" duration="5"/>
+    <testCase name="Test suite DAO the creation of a new client is done" duration="90"/>
+    <testCase name="Test suite DAO get client return false because no email provided" duration="24"/>
     <testCase name="Test suite DAO get client return false because no user with that email exists" duration="5"/>
-    <testCase name="Test suite DAO get client return false because wrong password" duration="170"/>
-    <testCase name="Test suite DAO get client return success" duration="103"/>
+    <testCase name="Test suite DAO get client return false because wrong password" duration="171"/>
+    <testCase name="Test suite DAO get client return success" duration="98"/>
     <testCase name="Test suite DAO get client return -1 because no email provided" duration="4"/>
-    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="3"/>
-    <testCase name="Test suite DAO get client return success" duration="3"/>
-    <testCase name="Test suite DAO get client return success" duration="4"/>
-    <testCase name="Test suite DAO get clients preparation return success" duration="4"/>
-    <testCase name="Test suite DAO get categories return success" duration="4"/>
-    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="4"/>
-    <testCase name="Test suite DAO get client by id return success" duration="3"/>
-    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="3"/>
-    <testCase name="Test suite DAO get products expected by farmer return success" duration="4"/>
-    <testCase name="Test suite DAO get farmer return false because no email provided" duration="3"/>
-    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="3"/>
-    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="112"/>
+    <testCase name="Test suite DAO get client return -1 because no user with that email exists" duration="5"/>
+    <testCase name="Test suite DAO get client return success" duration="5"/>
+    <testCase name="Test suite DAO get client return success" duration="9"/>
+    <testCase name="Test suite DAO get clients preparation return success" duration="5"/>
+    <testCase name="Test suite DAO get categories return success" duration="5"/>
+    <testCase name="Test suite DAO get client by id return false because no user with that id exists" duration="5"/>
+    <testCase name="Test suite DAO get client by id return success" duration="5"/>
+    <testCase name="Test suite DAO get products expected by farmer id return empty array because no farmer with that id exists" duration="5"/>
+    <testCase name="Test suite DAO get products expected by farmer return success" duration="6"/>
+    <testCase name="Test suite DAO get farmer return false because no email provided" duration="6"/>
+    <testCase name="Test suite DAO get farmer return false because no user with that email exists" duration="6"/>
+    <testCase name="Test suite DAO get farmer return false because wrong psw" duration="85"/>
     <testCase name="Test suite DAO get farmer return success" duration="81"/>
     <testCase name="Test suite DAO get farmer by id return false because no farmer with that id exists" duration="5"/>
-    <testCase name="Test suite DAO get farmer by id return a farmer" duration="6"/>
-    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="3"/>
-    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="3"/>
-    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="90"/>
-    <testCase name="Test suite DAO get shop employee return success" duration="125"/>
+    <testCase name="Test suite DAO get farmer by id return a farmer" duration="4"/>
+    <testCase name="Test suite DAO get shop employee return false because no email provided" duration="4"/>
+    <testCase name="Test suite DAO get shop employee return false because no user with that email exists" duration="9"/>
+    <testCase name="Test suite DAO get shop employee return false because wrong psw" duration="111"/>
+    <testCase name="Test suite DAO get shop employee return success" duration="85"/>
     <testCase name="Test suite DAO get manager return false because no email provided" duration="5"/>
-    <testCase name="Test suite DAO get manager return false because no user with that email exists" duration="3"/>
-    <testCase name="Test suite DAO get manager return false because wrong psw" duration="91"/>
-    <testCase name="Test suite DAO getManager return success" duration="80"/>
+    <testCase name="Test suite DAO get manager return false because no user with that email exists" duration="4"/>
+    <testCase name="Test suite DAO get manager return false because wrong psw" duration="85"/>
+    <testCase name="Test suite DAO getManager return success" duration="83"/>
     <testCase name="Test suite DAO get wh manager return false because no email provided" duration="4"/>
     <testCase name="Test suite DAO get wh manager return false because no user with that email exists" duration="4"/>
-    <testCase name="Test suite DAO get wh manager return false because wrong psw" duration="90"/>
-    <testCase name="Test suite DAO get wh Manager return success" duration="77"/>
+    <testCase name="Test suite DAO get wh manager return false because wrong psw" duration="92"/>
+    <testCase name="Test suite DAO get wh Manager return success" duration="78"/>
     <testCase name="Test suite DAO get shop employee by id return false because no shop employee with that id exists" duration="4"/>
     <testCase name="Test suite DAO get shop employee by id return a shop employee" duration="3"/>
-    <testCase name="Test suite DAO get warehouse manager by id return false because no wh manager with that id exists" duration="3"/>
-    <testCase name="Test suite DAO get warehouse manager by id return a warehouse manager" duration="3"/>
-    <testCase name="Test suite DAO get manager by id return false because no manager with that id exists" duration="3"/>
-    <testCase name="Test suite DAO get manager by id return a manager" duration="3"/>
-    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="4"/>
-    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="3"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="6"/>
-    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="3"/>
+    <testCase name="Test suite DAO get warehouse manager by id return false because no wh manager with that id exists" duration="4"/>
+    <testCase name="Test suite DAO get warehouse manager by id return a warehouse manager" duration="4"/>
+    <testCase name="Test suite DAO get manager by id return false because no manager with that id exists" duration="5"/>
+    <testCase name="Test suite DAO get manager by id return a manager" duration="4"/>
+    <testCase name="Test suite DAO get warehouse worker by id return false because no shop worker with that id exists" duration="5"/>
+    <testCase name="Test suite DAO get shop employee by id return a warehouse worker" duration="5"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no email provided" duration="5"/>
+    <testCase name="Test suite DAO get warehouse worker return false because no user with that email exists" duration="4"/>
     <testCase name="Test suite DAO get warehouse worker return false because wrong psw" duration="81"/>
-    <testCase name="Test suite DAO get warehouse worker return success" duration="88"/>
+    <testCase name="Test suite DAO get warehouse worker return success" duration="83"/>
     <testCase name="Test suite DAO get all products success" duration="5"/>
     <testCase name="Test suite DAO get all all CONFIRMED products for a particular farmer success" duration="5"/>
     <testCase name="Test suite DAO get all bookings success" duration="5"/>
-    <testCase name="Test suite DAO get all bookings modes in preparation success" duration="6"/>
-    <testCase name="Test suite DAO get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW" duration="4"/>
-    <testCase name="Test suite DAO get all bookings for a client success" duration="5"/>
+    <testCase name="Test suite DAO get all bookings modes in preparation success" duration="5"/>
+    <testCase name="Test suite DAO get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW" duration="5"/>
+    <testCase name="Test suite DAO get all bookings for a client success" duration="7"/>
     <testCase name="Test suite DAO get all bookings for a non-existing client success" duration="4"/>
-    <testCase name="Test suite DAO the creation of a new booking mode success" duration="15"/>
-    <testCase name="Test suite DAO updating the wallet failed bacause client was not found" duration="13"/>
+    <testCase name="Test suite DAO the creation of a new booking mode success" duration="26"/>
+    <testCase name="Test suite DAO updating the wallet failed bacause client was not found" duration="5"/>
     <testCase name="Test suite DAO updating the wallet failed bacause client id was not provided" duration="5"/>
     <testCase name="Test suite DAO update of wallet balance was successfull" duration="12"/>
     <testCase name="Test suite DAO Creation of wallet with balance= 0.0 was successfull" duration="14"/>
-    <testCase name="Test suite DAO Creation of wallet fails,id 1 already exists" duration="14"/>
+    <testCase name="Test suite DAO Creation of wallet fails,id 1 already exists" duration="13"/>
     <testCase name="Test suite DAO Edit the state of a booking with a valid request" duration="5"/>
-    <testCase name="Test suite DAO create a row in the booking product table" duration="44"/>
-    <testCase name="Test suite DAO get all bookings with pendingcancelation state" duration="21"/>
-    <testCase name="Test suite DAO Insert a new Product expected without a field category" duration="8"/>
+    <testCase name="Test suite DAO create a row in the booking product table" duration="14"/>
+    <testCase name="Test suite DAO get all bookings with pendingcancelation state" duration="14"/>
+    <testCase name="Test suite DAO Insert a new Product expected without a field category" duration="4"/>
     <testCase name="Test suite DAO INSERT into Product_WEEK by receiving a product confirmed by farmer with state = CONFIRMED success" duration="14"/>
-    <testCase name="Test suite DAO edit state of a product receiving an array with id-state" duration="13"/>
+    <testCase name="Test suite DAO edit state of a product receiving an array with id-state" duration="14"/>
     <testCase name="Test suite DAO increment qty of a product success" duration="1"/>
-    <testCase name="Test suite DAO delete a product with a given id success" duration="1"/>
+    <testCase name="Test suite DAO delete a product with a given id success" duration="2"/>
     <testCase name="Test suite DAO delete a booking product success" duration="1"/>
-    <testCase name="Test suite DAO get all acks with NEW state success" duration="26"/>
-    <testCase name="Test suite DAO the creation of ack success" duration="38"/>
+    <testCase name="Test suite DAO get all acks with NEW state success" duration="27"/>
+    <testCase name="Test suite DAO the creation of ack success" duration="35"/>
     <testCase name="Test suite DAO get all bookings for a particular client with the booked state " duration="23"/>
     <testCase name="Test suite DAO GET all the product associated to a particular booking" duration="5"/>
+    <testCase name="Test suite DAO get missed pickups total count for a customer " duration="5"/>
+    <testCase name="Test suite DAO find a client id given the his booking id" duration="5"/>
+    <testCase name="Test suite DAO updating the client missedcount number" duration="14"/>
+    <testCase name="Test suite DAO updating the client  suspension Date" duration="22"/>
   </file>
   <file path="C:\Users\rocco\AppData\Roaming\SPB_Data\git\SPG-P08\SoftEngII-P08-SPG\server\serverIntegration.test.js">
-    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="108"/>
-    <testCase name="Test suite Integration Server Get id Client by email get with an invalid email" duration="11"/>
-    <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="6"/>
-    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="17"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="15"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="7"/>
-    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="6"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="17"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="22"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="9"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="14"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="7"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="8"/>
-    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="7"/>
-    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="7"/>
-    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="6"/>
-    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="10"/>
-    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="6"/>
-    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="6"/>
-    <testCase name="Test suite Integration Server Post new client create a new client but the client email already used" duration="93"/>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="5"/>
-    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="5"/>
-    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="18"/>
-    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="32"/>
-    <testCase name="Test suite Integration Server updating booking mode status success should update a booking mode status to PREPERATION" duration="23"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="15"/>
+    <testCase name="Test suite Integration Server Get id Client by email get with a valid email" duration="243"/>
+    <testCase name="Test suite Integration Server Get id Client by email get with an invalid email" duration="19"/>
+    <testCase name="Test suite Integration Server Create a Acknowledge send a invalid id farmer" duration="16"/>
+    <testCase name="Test suite Integration Server Decrement the qty of a product send a valid body" duration="25"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid state" duration="55"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a invalid id product" duration="17"/>
+    <testCase name="Test suite Integration Server edit the state of a product send a valid body" duration="12"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a valid body" duration="43"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid category" duration="26"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid price" duration="22"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid farmer id" duration="16"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid qty" duration="16"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="10"/>
+    <testCase name="Test suite Integration Server insert tuples in PRODUCT_WEEK send a invalid size" duration="11"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a valid body" duration="10"/>
+    <testCase name="Test suite Integration Server edit state of a ack send a invalid id" duration="11"/>
+    <testCase name="Test suite Integration Server get all bookings of a client rigth get" duration="21"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a valid body" duration="14"/>
+    <testCase name="Test suite Integration Server update the state of booking mode send a invalid id" duration="11"/>
+    <testCase name="Test suite Integration Server Post new client create a new client but the client email already used" duration="103"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = 0" duration="13"/>
+    <testCase name="Test suite Integration Server Post booking fail create a new booking fails due to idClient = -1" duration="20"/>
+    <testCase name="Test suite Integration Server Post booking success should create a new booking" duration="21"/>
+    <testCase name="Test suite Integration Server Post booking mode success should create a new booking mode" duration="39"/>
+    <testCase name="Test suite Integration Server updating booking mode status success should update a booking mode status to PREPERATION" duration="33"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid email" duration="18"/>
     <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid name" duration="10"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="11"/>
-    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="5"/>
-    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="107"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid surname" duration="17"/>
+    <testCase name="Test suite Integration Server Post new client fail create a new client fails due to invalid password" duration="15"/>
+    <testCase name="Test suite Integration Server Post new client success create a new client success" duration="134"/>
     <testCase name="Test suite Integration Server Get a wallet fail send a invalid id of client" duration="34"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="5"/>
-    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="5"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="5"/>
-    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="5"/>
-    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="6"/>
-    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="15"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="16"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid qty" duration="7"/>
+    <testCase name="Test suite Integration Server Put a qty of a product send a invalid id product" duration="6"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid qty" duration="7"/>
+    <testCase name="Test suite Integration Server increment product qty send an invalid id product" duration="6"/>
+    <testCase name="Test suite Integration Server increment product qty send a valid request body" duration="8"/>
+    <testCase name="Test suite Integration Server delete a product send an invalid product id" duration="6"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="17"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="19"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="13"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="12"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="12"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="21"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="16"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="26"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="19"/>
     <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="10"/>
     <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="9"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="6"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="13"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="19"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products success" duration="17"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong category id" duration="16"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong price" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong farmer id" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="5"/>
-    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="13"/>
-    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="29"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="7"/>
-    <testCase name="Test suite Integration Server delete a booking product send a valid product id and booking id" duration="26"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="5"/>
-    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="5"/>
-    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="89"/>
-    <testCase name="Test suite Integration Server Client Session fails send a wrong psw" duration="79"/>
-    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="5"/>
-    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="5"/>
-    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="5"/>
-    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="6"/>
-    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="10"/>
-    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="9"/>
-    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="81"/>
-    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="86"/>
-    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="79"/>
-    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="84"/>
-    <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="79"/>
-    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="83"/>
-    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="6"/>
-    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="7"/>
-    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id fail" duration="6"/>
-    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint fail" duration="5"/>
-    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="9"/>
-    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="6"/>
-    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="7"/>
-    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="7"/>
-    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="6"/>
-    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="7"/>
-    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="10"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="6"/>
-    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="8"/>
-    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="6"/>
-    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="58"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="7"/>
-    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="7"/>
-    <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="6"/>
-    <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="16"/>
-    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="25"/>
-    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="6"/>
-    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="4"/>
-    <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="4"/>
-    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a valid id" duration="6"/>
-    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="5"/>
-    <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="37"/>
-    <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="7"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="12"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong quantity" duration="8"/>
+    <testCase name="Test suite Integration Server insert a product POST /api/farmers/:farmerid/products fail for wrong unit of measure" duration="8"/>
+    <testCase name="Test suite Integration Server delete a product send a valid product id" duration="30"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid Booking id" duration="6"/>
+    <testCase name="Test suite Integration Server delete a booking product send a valid product id and booking id" duration="35"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid product id" duration="10"/>
+    <testCase name="Test suite Integration Server Put a row in the table BOOKING_PRODUCTS send a invalid qty" duration="9"/>
+    <testCase name="Test suite Integration Server Client Session success send a valid user" duration="95"/>
+    <testCase name="Test suite Integration Server Client Session success with alarm send a valid user" duration="107"/>
+    <testCase name="Test suite Integration Server Client Session fails because of wrong credentials send a wrong psw" duration="96"/>
+    <testCase name="Test suite Integration Server Client Session fails because of being suspended send right credentials" duration="90"/>
+    <testCase name="Test suite Integration Server Get client by email success send a valid email" duration="10"/>
+    <testCase name="Test suite Integration Server Get client by email fails don&apos;t send an email" duration="7"/>
+    <testCase name="Test suite Integration Server Get client by email fails send a wrong email" duration="6"/>
+    <testCase name="Test suite Integration Server Get clients success ask the list of clients" duration="8"/>
+    <testCase name="Test suite Integration Server Get clients preparation success ask the list of clients with products in preparation" duration="9"/>
+    <testCase name="Test suite Integration Server Get categories success ask the list of categories" duration="8"/>
+    <testCase name="Test suite Integration Server Farmer Session success send a valid user" duration="95"/>
+    <testCase name="Test suite Integration Server Farmer Session fails send a wrong psw" duration="90"/>
+    <testCase name="Test suite Integration Server Shop Employee Session success send a valid user" duration="91"/>
+    <testCase name="Test suite Integration Server Shop Employee Session fails send a wrong psw" duration="83"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session success send a valid user" duration="95"/>
+    <testCase name="Test suite Integration Server Warehouse worker Session fails send a wrong psw" duration="85"/>
+    <testCase name="Test suite Integration Server get all products success test get api/products endpoint" duration="8"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id success" duration="8"/>
+    <testCase name="Test suite Integration Server get all CONFIRMED products for a particular farmer success test //GET /api/products/farmers/:id fail" duration="9"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint fail" duration="10"/>
+    <testCase name="Test suite Integration Server get all products expected by farmer id success test get /api/farmers/:farmerid/products_expected endpoint" duration="12"/>
+    <testCase name="Test suite Integration Server get all confirmed products expected by farmer id success test get /api/products/farmers/1 endpoint" duration="9"/>
+    <testCase name="Test suite Integration Server get all bookings success test get api/bookings endpoint" duration="12"/>
+    <testCase name="Test suite Integration Server Get all the bookings from BOOKING_MODE with delivery = 0 and state = PREPARATION test GET /api/bookingModesPreparation" duration="15"/>
+    <testCase name="Test suite Integration Server Get all the records from BOOKING_MODE table WHERE delivery = 0 and state = NEW test /api/bookingModesNew/pickup" duration="9"/>
+    <testCase name="Test suite Integration Server get all bookings for a client success test get api/bookings/clients/1 endpoint" duration="12"/>
+    <testCase name="Test suite Integration Server get all bookings for a non-existing client success test get api/bookings/clients/100 endpoint" duration="9"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a negative balance amount" duration="11"/>
+    <testCase name="Test suite Integration Server update wallet balance fails send a client id which does not exist" duration="9"/>
+    <testCase name="Test suite Integration Server update wallet balance fails  do not send a client id " duration="8"/>
+    <testCase name="Test suite Integration Server update wallet balance success send a valid body" duration="59"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a invalid id booking" duration="9"/>
+    <testCase name="Test suite Integration Server edit the state of a booking send a valid body" duration="8"/>
+    <testCase name="Test suite Integration Server get all bookings with PENDINGCANCELATION state test /api/bookingsPendingCancelation endpoint" duration="9"/>
+    <testCase name="Test suite Integration Server Post ack success should create a new ack" duration="26"/>
+    <testCase name="Test suite Integration Server get acks with state NEW success should retrieve a list of acks with state NEW" duration="43"/>
+    <testCase name="Test suite Integration Server Put products with new state right put with all right fields" duration="7"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a element without id field" duration="9"/>
+    <testCase name="Test suite Integration Server Put products with new state wrong put with a invalid id" duration="6"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a valid id" duration="9"/>
+    <testCase name="Test suite Integration Server get all bookings of a client with the booked state get with a invalid id" duration="11"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a valid id" duration="8"/>
+    <testCase name="Test suite Integration Server get all products of a particular booking get with a invalid id" duration="6"/>
   </file>
 </testExecutions>

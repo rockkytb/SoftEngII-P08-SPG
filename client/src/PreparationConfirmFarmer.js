@@ -16,7 +16,7 @@ export default function PreparationConfirmFarmer(props) {
     const [showAlertTime, setShowAlertTime] = useState(false);
 
     function confirmActions() {
-        console.log(props.confirmedProducts)
+
         if (props.confirmedProducts.length === 0) {
             return (<>No products to confirm</>);
         }

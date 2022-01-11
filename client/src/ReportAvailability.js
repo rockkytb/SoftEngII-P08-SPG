@@ -46,7 +46,7 @@ function ReportAvailability(props) {
                 unit_of_measure: unitOfMeasure,
                 farmerid: props.id.substring(1),
             };
-            console.log(product);
+
             
             props.addFutureProducts(props.id, product);
             toast.success("Succesfully added", { position: "top-center" },{toastId: 29});

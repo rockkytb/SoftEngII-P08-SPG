@@ -99,7 +99,7 @@ async function logIn(credentials, type) {
       });
       break;
     default:
-      //error: wtf are you
+      //error: 
       console.log("How did you get that?");
       return null;
   }
@@ -263,7 +263,6 @@ async function newBooking(clientId, products) {
   }
 
   let id = await getId(clientId);
-  console.log(id);
   let result = await newBookingProduct(id, products);
 
   return result;

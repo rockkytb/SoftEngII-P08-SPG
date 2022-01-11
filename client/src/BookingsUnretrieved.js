@@ -8,7 +8,7 @@ import ImageFinder from "./ImageFinder.js";
 function BookingsUnretrieved(props) {
     const bookings = props.bookingsUnretrieved ? props.bookingsUnretrieved : [];
     const [filter, setFilter] = useState("All");
-    console.log(bookings);
+
 
     function getWeek(in_date){
         let date = in_date;
@@ -58,7 +58,7 @@ function BookingsUnretrieved(props) {
                     return true;
                 let today = new Date();
                 let bookDate = new Date(book.end_date);
-                console.log(bookDate);
+
                 if(today.getFullYear() == bookDate.getFullYear() && today.getMonth() == bookDate.getMonth() && ((filter == "weekly"  && getWeek(today) == getWeek(bookDate))
                  || (filter == "monthly")))
                     return true;

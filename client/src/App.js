@@ -204,9 +204,7 @@ function App() {
 
   //add booking to system db
   const newBooking = async (clientID, products) => {
-    // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
-    // sì però stai calmo
-    // ora sono sordo
+
     const book = async () => {
       const res = await API.newBooking(clientID, products);
       if (res && res.idBooking) {
@@ -566,7 +564,8 @@ function App() {
                           setCart={(val) => setCart(val)}
                           categories={categories}
                           loggedIn={loggedIn}
-                          //farmers = {farmers} //???
+                          user={userdata}
+                        //farmers = {farmers} //???
                         />
                       </>
                     )}
@@ -1079,6 +1078,8 @@ function App() {
                               className="below-nav main-content"
                               bookings={bookings}
                               products={products}
+                              user={userdata}
+
                               updateOrder={async (product) => {
                                 await API.updateOrder(product);
                                 toast.success(
@@ -1285,7 +1286,6 @@ function App() {
                         {userdata.id && userdata.id.charAt(0) === "S" ? (
                           <>
                             {/*<SidebarCustom />*/ setAttaccoDDOS("update13")}
-                            {console.log(bookings)}
                             <BookingAcceptance
                               className="below-nav main-content"
                               bookings={bookings}

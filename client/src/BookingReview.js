@@ -61,8 +61,7 @@ function BookingReview(props) {
   }
 
   async function newBooking(IDclient) {
-    // DA VERIFICARE CON API È PER INSERIRE UN NUOVO BOOKING. MANDA ALL'API IL CLIENTID PRESO DAL BOOKING
-    // sì però stai calmo
+
     let tmp = 0;
 
     const book = async () => {

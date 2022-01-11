@@ -11,7 +11,55 @@ describe("Test suite DAO", () => {
     await dao.cleanDb();
   });
 
-  
+  //TEST DAO FUNCTION GET BOOKING
+  test("the get of a booking fails because id booking is missing", ()=>{
+    return expect(dao.getBooking()).resolves.toBe(false);
+  });
+
+  test("the get of a booking is done", ()=>{
+    return expect(dao.getBooking(1)).resolves.toHaveProperty(
+      "id", 
+      1 
+    );
+  });
+
+  //TEST DAO FUNCTION GET WALLET
+  test("the get of the wallet of a client fails because id client is missing", ()=>{
+    return expect(dao.getWallet()).resolves.toBe(false);
+  });
+
+  test("the get of the wallet of a client is done", ()=>{
+    return expect(dao.getWallet(1)).resolves.toHaveProperty(
+      "balance", 
+      20.99 
+    );
+  });
+
+  //TEST DAO FUNCTION GET BOOKING UNRETRIEVED
+  test("the get of the booking unretrieved is done", ()=>{
+    return expect(dao.getBookingsUnretrieved()).resolves.toEqual(
+      [{
+      end_date: "2022-01-09",
+      idBooking: 1,
+      idClient: 1,
+      products:[
+          {
+            product: "Mele",
+            productID: 1, 
+            qty: 3
+          }, 
+          {
+            product: "Lamponi",
+            productID: 2, 
+            qty: 1
+          }
+        ]
+      }]
+    );
+  });
+
+  //
+
   //TEST DAO FUNCTION CREATE BOOKING
   test("the creation of a new booking fails because id client is missing", () => {
     const booking = {
@@ -815,5 +863,38 @@ test("GET all the product associated to a particular booking", () => {
   return expect(dao.productsOfBooking(id)).resolves.toEqual(result);
 });
 
+  // test counting missed pickups for a customer
+  test("get missed pickups total count for a customer ", async () => {
+
+    const received =
+    {
+      "total": 0
+    }
+
+    return expect(dao.countMissedPickupsForACustomer(1)).resolves.toEqual(received);
+  }, 10000);
+
+    // test find clientId with bookingId
+    test("find a client id given the his booking id", async () => {
+
+      const received =
+      {
+        "id": 1
+      }
+  
+      return expect(dao.findClientbyBooking(1)).resolves.toEqual(received);
+    }, 10000);
+
+  // update a client missedcount number
+  test("updating the client missedcount number", () => {
+    const response = { "id": 1, "missedCount": 1 }
+    return expect(dao.updateClientMissedCount(1, 1)).resolves.toEqual(response);
+  });
+
+  // update a client suspension Date
+  test("updating the client  suspension Date", () => {
+    const response = { "id": 1, "suspensionDate": "2022-01-01" }
+    return expect(dao.updateClientSusspensionDate(1, "2022-01-01")).resolves.toEqual(response);
+  });
 
 });

@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 
 
 function NavbarCustom(props) {
-  const [firstTime, setFirstTime] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
   const [showNotificationEmpty, setShowNotificationEmpty] = useState(false);
   const [showNotificationPreparation, setShowNotificationPreparation] = useState(false);
   const [showNotificationMissedcounter, setShowNotificationMissedcounter] = useState(false);
@@ -32,7 +32,7 @@ function NavbarCustom(props) {
     toPrint = props.bookings && props.bookings.length > 0 ?
       props.bookings.filter((bk) => bk.state === "PENDINGCANCELATION")
       :
-      "";
+      "" ;
 
     if (firstTime && toPrint.length !== 0) {
       setShowNotification(true);
@@ -57,8 +57,8 @@ function NavbarCustom(props) {
     let total = 0;
     if (toPrintConfirm) {
       toPrintConfirm = toPrintConfirm.map((bk) => {
-        bk.total = 0 * 1;
-        bk.total += bk.products.map((p) => p.qty * p.price) * 1;
+        bk.total = 0;
+        bk.products.map((p) => bk.total += p.qty * p.price)
         return bk;
       });
       toPrintConfirm.forEach((bk) => total += bk.total);
@@ -75,10 +75,12 @@ function NavbarCustom(props) {
   }
 
   if (props.user && props.user.id && props.user.id.charAt(0) == 'C') {
-    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "" )
-    if (firstTime && toPrintMissed.length !== 0) {
+    ((props.user.missedCount === 3 || props.user.missedCount === 4) ? toPrintMissed = "Yes" : toPrintMissed = "No" )
+    if (firstTime && toPrintMissed === "Yes") {
       setShowNotificationMissedcounter(true);
       setFirstTime(false);
+    } else{
+      props.loggedIn && setShowNotificationMissedcounter(false);
     }
   }
 
@@ -90,7 +92,6 @@ function NavbarCustom(props) {
           <Row>
             <div className="notificationIcon" >
               <BellFill size={30} className="notificationIcon mr-3" fill="white" id="notificationBell" onClick={() => {
-                
                 showNotification && toast.error("Insufficient money in the wallet ", { position: "top-right" }, { toastId: 30 });
                 
                 showNotificationEmpty && toast.error(<>
@@ -102,12 +103,12 @@ function NavbarCustom(props) {
                   toPrintConfirm.map((bk) =>
                     toast.success(<>
                       <b>Purchase confirmation, booking #{bk.id}:</b><br />
-                      {bk.products.map((p) => p.qty + " " + p.product)}<br />
+                      {bk.products.map((p) => p.qty + " " + p.product + " ")}<br />
                       <b>Total: {bk.total} €</b></>
                       , { position: "top-right" }, { toastId: 28 })
                   )
 
-                  showNotificationMissedcounter && toast.error(<>
+                  toPrintMissed === "Yes" && showNotificationMissedcounter && toast.error(<>
                     <b>Warning:</b><br />
                     {`You have ${props.user.missedCount} missed pickups!\n
                  You will be suspeneded for 30 days on the 5th time.`}

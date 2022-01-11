@@ -147,7 +147,7 @@ products.delete("/api/products/:id", isLoggedIn, async (req, res) => {
 ///GET /api/bookingProducts/:bookingId
 products.get("/api/bookingProducts/:bookingId", isLoggedIn, (req, res) => {
   const id = req.params.bookingId;
-  console.log(req.params.bookingId);
+
   if (!validator.isInt(`${req.params.bookingId}`, { min: 1 })) {
     return res.status(422).json({
       error: `Invalid product id of a element on the array, it must be positive`,

@@ -33,7 +33,7 @@ export default function OrderList(props) {
       ID_Product: productId,
       quantity: orderQuantity,
     };
-    console.log(product);
+
     props.updateOrder(product);
 
 
@@ -46,7 +46,7 @@ export default function OrderList(props) {
       ID_Product: pId,
       Inc_Qty: qty,
     };
-    console.log(product)
+
     props.deleteProductBooking(product);
   }
 
@@ -101,7 +101,7 @@ export default function OrderList(props) {
                     </Card.Text>
 
                     <Row className="justify-content-center">
-                      <Button
+                       <Button
                         variant="warning"
                         id="updButton"
                         onClick={() => {
@@ -217,7 +217,7 @@ export default function OrderList(props) {
                       if (e.target.value > quantity) {
                         setOrderQuantity(quantity);
                       }
-                      console.log(quantity);
+
                     }}
                   />
                 </Form.Group>

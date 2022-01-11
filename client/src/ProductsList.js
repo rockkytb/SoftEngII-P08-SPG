@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CardColumns, Card, Row,Col, Button, Modal, Form } from "react-bootstrap";
+import { CardColumns, Card, Row,Col, Button, Modal, Form, Alert } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import ImageFinder from "./ImageFinder.js";
@@ -15,7 +15,7 @@ export default function ProductsList(props) {
   const [price, setPrice] = useState(0);
   const [size, setSize] = useState(0);
   const [unitOfMeasure, setUnitOfMeasure] = useState("");
-
+  const [showAlertBanned, setShowAlertbanned] = useState((props.loggedIn && props.user.missedCount>=5) ? true : false);
   //FILTERS
   const[categoryFilter,setCategoryFilter]= useState([]);
   const[farmerFilter,setFarmerFilter]= useState([]);
@@ -25,6 +25,7 @@ export default function ProductsList(props) {
 
   const availableCategories = Array.from(new Set(props.products.map(p=>p.category)));
   const availableFarmers = Array.from(new Set(props.products.map(p=>p.farmer_email)));
+
 
   
   function handleAddToCart() {
@@ -116,6 +117,7 @@ export default function ProductsList(props) {
       return a.id - b.id;
     }).map((product) => {
       return (
+
         <Col>
           <Card className="text-dark">
             {/*TODO: <Card.Img variant="top" src={templateTraduction(props.template)}/>*/}
@@ -137,7 +139,7 @@ export default function ProductsList(props) {
                   </Col>
                 </Row>
               </Card.Text>
-              {props.loggedIn && <Button
+              {props.loggedIn && props.user.missedCount<5 && <Button
                 variant="warning"
                 id={"addCart"+product.id}
                 onClick={() => {
@@ -162,6 +164,25 @@ export default function ProductsList(props) {
   return (
     <>
       <div className="below-nav no-flickr">
+        {props.user && <Row className="pb-4">
+        <Alert show={showAlertBanned} variant="danger" className="width100">
+          <Alert.Heading>You can't place new orders</Alert.Heading>
+          <p>
+            You will not be able to place new orders until {props.user.suspensionDate} because you have 5 or more bookings unretrieved
+          </p>
+          <hr />
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="warning"
+              onClick={() => {
+                setShowAlertbanned(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </Alert>
+        </Row>}
         <Row className="pb-4">
           <Col md={3} xs={4} className="pr-1 text-right">
             <Dropdown>
@@ -203,7 +224,7 @@ export default function ProductsList(props) {
                 <Dropdown.Menu>
                 {availableFarmers.map((f,farmerid)=>(<>
                   <Dropdown.Item id={"farmerFilter"+f.charAt(0)+f.charAt(1)} onClick={() => {
-                        console.log(farmerFilter);
+
                         if(farmerFilter.includes(f)){
                           setFarmerFilter(oldList => {return oldList.filter(farmer => farmer !== f);});
                         }
@@ -226,7 +247,7 @@ export default function ProductsList(props) {
           </Col>
           <Col md={6} xs={4} className="text-left p-0">
             <Link to={"/newOrder"}>
-             {props.loggedIn && <Button variant="warning" className="mr-2 md-2 ">View cart</Button>}
+             {props.loggedIn && props.user.missedCount<5 &&  <Button variant="warning" className="mr-2 md-2 ">View cart</Button>}
             </Link>
           </Col>
         </Row>

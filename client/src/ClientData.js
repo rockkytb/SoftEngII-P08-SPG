@@ -16,7 +16,7 @@ function ClientData(props) {
         
         setWallet(response.toFixed(2));
         setNewWallet(response.toFixed(2));
-        console.log(wallet);
+
       };
       getWallet();
     }

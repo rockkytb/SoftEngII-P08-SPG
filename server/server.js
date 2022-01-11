@@ -85,7 +85,7 @@ passport.use(
             }
             return done(null, user);
           } else {
-            return done(null, false, {
+            return done(null, user, {
               message: `You are Suspended for ${
                 freeDate.getDate() - now.getDate()
               } more days`,
