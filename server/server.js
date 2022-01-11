@@ -438,7 +438,7 @@ async function clockActions() {
             const missedCount = missedPikcups.total;
             //update the client table
             await dao.updateClientMissedCount(id, missedCount);
-            if (missedCount == 5) {// suspend the client
+            if (missedCount >= 5) {// suspend the client
             
               // Calculate NOW date
               var now = new Date(clockDate);
