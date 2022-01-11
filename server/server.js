@@ -651,7 +651,7 @@ async function clockActions() {
   } catch (err) {
     return err;
   }
-  //TODO, what happens if quantity confirmed is less than expected? Handle this
+  
 }
 
 //#endregion VIRTUAL CLOCK
