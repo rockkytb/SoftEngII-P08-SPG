@@ -897,4 +897,53 @@ test("GET all the product associated to a particular booking", () => {
     return expect(dao.updateClientSusspensionDate(1, "2022-01-01")).resolves.toEqual(response);
   });
 
+  // update a updateBookingProduct 
+  test("updating updateBookingProduct ", async () => {
+    const item = {
+      name: "Apple",
+      category_id: 2,
+      price: 1.99,
+      qty: 200,
+      farmer_id: "1",
+      state: "CONFIRMED",
+      size: 1,
+      unit_of_measure: "kg",
+    };
+    const id=await dao.insertTupleProductWEEK(item);
+    let bookingProduct = {
+      ID_Booking: 100,
+      ID_Product: 120,
+      Qty: 15,
+    };
+    // insert a test booking product
+    await dao.createBookingProduct(bookingProduct);
+
+    const response = await dao.updateBookingProduct(bookingProduct)
+  
+    await dao.deleteProduct(id);
+    await dao.deleteBookingProduct({
+        ID_Booking: 100,
+        ID_Product: 120,
+      });
+    
+    return expect(response).toEqual(true);
+  });
+
+  // update a updateBookingProduct 
+  test("deleteBooking  ", async () => {
+    
+    const booking = {
+      idClient: 2,
+      state: "BOOKED",
+    };
+    const id = await dao.createBooking(booking);
+    await dao.getTotal();
+    await dao.getTotalPendingCancelation();
+    await dao.getEmptyBookings();
+    await dao.getAllBookingsVC();
+    const response = await dao.deleteBooking(id);
+    
+    return expect(response).toEqual(true);
+  });
+
 });
