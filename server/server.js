@@ -487,11 +487,11 @@ async function clockActions() {
             telegramBot.SendMessage(
               booking.client,
               `Your current balance (${
-                wallet.balance
+                wallet.balance.toFixed(2)
               } €) is insufficient to complete the order #${
                 booking.id
               }. Please top-up at least ${
-                booking.total - wallet.balance
+                (booking.total - wallet.balance).toFixed(2)
               }€ to complete the order.`
             );
             alreadySent.push(booking.client);
