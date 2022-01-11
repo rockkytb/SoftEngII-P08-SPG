@@ -76,7 +76,7 @@ passport.use(
           let now = new Date(clockDate);
           let freeDate = new Date(suspensionDate);
           freeDate.setDate(suspensionDate.getDate() + 30);
-          if (now >= freeDate && user.missedCount < 5) {
+          if (now.getTime() >= freeDate.getTime() && user.missedCount < 5) {
             // user is not suspended
             // count the number of missed pickups and send message if it is 3 or 4
             if (user.missedCount == 3 || user.missedCount == 4) {
@@ -85,9 +85,9 @@ passport.use(
             }
             return done(null, user);
           } else {
-            return done(null, user, {
+            return done(null, false, {
               message: `You are Suspended for ${
-                freeDate.getDate() - now.getDate()
+                ((freeDate.getTime() - now.getTime()) / (1000 * 3600 * 24)).toFixed(0)
               } more days`,
             });
           }
