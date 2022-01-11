@@ -127,9 +127,9 @@ exports.getWalletBalance = (chatid) => {
 };
 
 exports.SaveChatId = (chatId, userName) => {
-  // const bot = new Telegram(TOKEN);
+  
   return new Promise((resolve, reject) => {
-    // bot.sendMessage(chatId, "test riuscito");
+    
     const id_sql = "SELECT CHATID  FROM TELEGRAM Where CHATID=?";
     db.get(id_sql, [chatId], (err, row) => {
       if (err) {
