@@ -365,7 +365,7 @@ app.post("/api/clock", isLoggedIn, async (req, res) => {
           }
         });
 
-        //res.status(200).json(clients);
+        
       })
       .catch((err) => {
         res.status(500).json({
