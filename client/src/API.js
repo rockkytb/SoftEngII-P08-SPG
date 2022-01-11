@@ -461,7 +461,7 @@ async function confirmProductsFarmer(product) {
     })
       .then((response) => {
         if (response.ok) {
-          resolve(response.json());
+          resolve(true);
         } else {
           response
             .json()
