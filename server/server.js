@@ -66,6 +66,7 @@ passport.use(
         if (!user)
           return done(null, false, {
             message: "Incorrect username and/or password",
+            error : "credential"
           });
 
         // check if the user is suspended or not
@@ -89,6 +90,7 @@ passport.use(
               message: `You are Suspended for ${
                 ((freeDate.getTime() - now.getTime()) / (1000 * 3600 * 24)).toFixed(0)
               } more days`,
+              error : "suspended"
             });
           }
         } else {
