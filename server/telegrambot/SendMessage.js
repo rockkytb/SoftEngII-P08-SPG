@@ -5,7 +5,7 @@ const sqlite = require("sqlite3");
 const { Telegraf, Telegram } = require("telegraf");
 
 //Set to true to enable testdatabase
-const testmode = true;
+const testmode = false;
 
 // open the database for sendMessage method
 const db = new sqlite.Database(

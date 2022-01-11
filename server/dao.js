@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const databaseonlyfortests=false;
 
 //Set to true to enable testdatabase to test the tasks
-const testmode = true;
+const testmode = false;
 
 // open the database
 const db = new sqlite.Database(
