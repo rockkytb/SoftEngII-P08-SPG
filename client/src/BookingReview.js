@@ -159,7 +159,7 @@ function BookingReview(props) {
                 <Col xs={7}>
                   <b>Price:</b> {product.price} € <br />
                 
-                  <b>Total Price:</b> {product.price * product.quantity} € <br />
+                  <b>Total Price:</b> {(product.price * product.quantity).toFixed(2)} € <br />
                 
                   <b>Quantity:</b> {product.quantity}
                 </Col>
