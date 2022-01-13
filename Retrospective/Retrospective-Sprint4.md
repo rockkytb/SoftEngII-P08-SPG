@@ -75,18 +75,18 @@ Frontend -> code is working in a consistent way, integration with backend produc
 ## ASSESSMENT
 
 - What caused your errors in estimation (if any)?
-  Not having to write code from scratch has not been taken into account when estimating new apis and frontend, on the contrary some operations of refactoring and testing took slightly more than anticipated due to some strange behaviors from the code
+  Refactoring went way more smoothly than anticipated but due to some changes on the db backend stories have been more complex to handle and by direct consequence so did all test cases
 
 - What lessons did you learn (both positive and negative) in this sprint?
-  Code does not always need additional functions, we can recycle components and manage what has already been written in order to meet the requirements. Testing on the other end can and should be conducted in a more efficient and automated way (expecially in frontend), fortunately manual testing is still manageable due to the relatively small size of the code and to how the logic of the application has been distributed
+  Having files with thousands of lines of code is impossible to deal with, expecially when the project is growing by a significant amount every week, that said the framework we selected for this project is very easily scalable and with little work the project can be greatly improved
 
 - Which improvement goals set in the previous retrospective were you able to achieve?
-  We returned to the previous configuration of the team, resulting in smoother planning and estimation as well as a better coordination between the two sides.
+  We managed to commit more stories again as well as refactoring the code
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
-  More cleanup and refactoring are needed but can be handled alongside the usual amount of stories to commit, the goal for the week is to refine the code as well as committing more stories
+  At this point the refactoring process should have left a modular code to help any further development effort, for next sprint we plan additional fixes to the code and to improve automated testing
 
 > Propose one or two
 
 - One thing you are proud of as a Team!!
-  We are getting more and more proficient at determining, assessing and approaching each mid term and long term goal we set along the sprint, resulting in high performance and coordination among the members.
+  The group is well organized and we managed to divide well the workload according to personal preferences and skills, there was space for learning as well due to the large variety of tools we used during development and this had an impact on the evolution of the project itself.
