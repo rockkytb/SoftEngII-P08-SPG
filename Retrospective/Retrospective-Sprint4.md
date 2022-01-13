@@ -56,7 +56,7 @@ Frontend -> code is working in a consistent way, integration with backend produc
   - Total hours estimated 21h
   - Total hours spent 19h55m
   - Nr of automated unit test cases 188
-  - Coverage (if available) 65.6%
+  - Coverage (if available) 68.6% (overall code)
 - E2E testing:
   - Total hours estimated 11h
   - Total hours spent 9h
@@ -66,11 +66,11 @@ Frontend -> code is working in a consistent way, integration with backend produc
 - Technical Debt management:
   - Total hours estimated (frontend) 16h
   - Total hours spent (frontend) 23h
-  - Hours estimated for remediation by SonarQube: 3d 7h
-  - Hours estimated for remediation by SonarQube only for the selected and planned issues: 2h 53min
-  - Hours spent on remediation: 3h
-  - debt ratio (as reported by SonarQube under "Measures-Maintainability"): 0.9%
-  - rating for each quality characteristic reported in SonarQube under "Measures" (namely reliability, security, maintainability ): RELIABILITY A, MAINTAINABILITY A, SECURITY A, SECURITY REVIEW A, COVERAGE 54.6%, DUPLICATIONS 16.6%. N.B. See sonar Readme for major informations
+  - Hours estimated for remediation by SonarQube: 1d 2h
+  - Hours estimated for remediation by SonarQube only for the selected and planned issues: 6h 17min
+  - Hours spent on remediation: 5h
+  - debt ratio (as reported by SonarQube under "Measures-Maintainability"): 0.1%
+  - rating for each quality characteristic reported in SonarQube under "Measures" (namely reliability, security, maintainability ): RELIABILITY A, MAINTAINABILITY A, SECURITY A, SECURITY REVIEW A, COVERAGE 68.6% (overall code), DUPLICATIONS 7.4%.
 
 ## ASSESSMENT
 
